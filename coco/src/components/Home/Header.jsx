@@ -17,8 +17,6 @@ export const Header = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(userInfo);
-
   const movdPage = (n) => {
     switch (n) {
       case 1:
@@ -42,9 +40,9 @@ export const Header = () => {
 
   return (
     <div className="navbar">
-      <div className="titleLogo">
+      <div className="titleLogo"  onClick={() => movdPage(1)}>
         <img src="/image/logo.png" alt="" />
-        <h2 onClick={() => movdPage(1)}>COCO : Coding Coach</h2>
+        <h2>COCO : Coding Coach</h2>
       </div>
       <div className="menus">
         <h3 onClick={() => movdPage(2)}>문제</h3>

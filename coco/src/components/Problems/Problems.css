@@ -18,10 +18,9 @@
     border-bottom: 1px solid gray;
     display: grid;
     grid-template-columns: 1.5fr 4fr 2fr 1fr;
-    align-items: flex-end;
-    margin: 3rem 0px 1rem 0px;
+    align-items: center;
+    padding: 3rem 0px 3rem 0px;
     width: 100%;
-    padding: 0 3vw 1rem 3vw;
     cursor: pointer;
 }
 
@@ -38,10 +37,6 @@
     color: black;
     font-size: 1em;
     padding: .6rem 0px .5rem 0px;
-}
-
-.problemsTitle{
-    border: 2px solid blue;
 }
 
 .problemsNum{
@@ -62,11 +57,10 @@
 }
 
 .problemsRate {
-    width: 10vw;
-    display: flex;
-    flex-direction: row;
+    width: 12vw;
+    display: grid;
     justify-content: center;
-    margin-bottom: 10px;
+    align-items: center;
     font-size: 1.5em;
 }
 
@@ -75,6 +69,5 @@
     color: black;
     width: 10vw;
     text-align: center;
-    margin-bottom: 5px;
     font-size: 1.2em;
 }

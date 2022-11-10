@@ -9,6 +9,9 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { CgPassword } from "react-icons/cg";
+import { BiPencil } from "react-icons/bi";
+import { MdOutlineSchool } from "react-icons/md";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 axios.defaults.withCredentials = true;
 
@@ -26,6 +29,8 @@ export const SignUp = () => {
 
   const [student, setStudent] = useState(false);
   const [teacher, setTeacher] = useState(false);
+
+  const [checkId, setCheckId] = useState(false);
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -46,8 +51,10 @@ export const SignUp = () => {
         })
         .then(function (response) {
           if (response.data.code === 1) {
+            setCheckId(true);
             return alert(`사용할 수 있는 아이디입니다.`);
           } else {
+            setCheckId(true);
             return alert("사용할 수 없는 아이디입니다.");
           }
         });
@@ -104,21 +111,19 @@ export const SignUp = () => {
   return (
     <div className="loginForm">
       <div className="loginBox">
-        <FaRegUserCircle size="24" />
-        <input
-          placeholder={"이름을 입력하세요"}
-          onChange={onNameHandler}
-        />
+        <FaRegUserCircle size="25" />
+        <input placeholder={"이름을 입력하세요"} onChange={onNameHandler} />
       </div>
       <div className="loginBox">
-        <FaRegUser size="24" />
+        <FaRegUser size="25" />
         <div className="checkID">
           <input placeholder={"아이디를 입력하세요"} onChange={onIDHandler} />
-          <button onClick={checkIDs}>중복 확인</button>
+          <span onClick={checkIDs} title={'중복 확인'}><IoMdCheckmarkCircleOutline size={'25'}
+          color={checkId === true ? '#00ff00': 'black'}/></span>
         </div>
       </div>
       <form className="loginBox">
-        <CgPassword size="24" />
+        <CgPassword size="25" />
         <input
           placeholder={"영문자, 숫자, 특수문자 포함 최소 8~20자"}
           type={"password"}
@@ -127,7 +132,7 @@ export const SignUp = () => {
         />
       </form>
       <form className="loginBox">
-        <RiLockPasswordLine size="24" />
+        <RiLockPasswordLine size="25" />
         <input
           placeholder={"비밀번호를 확인해주세요"}
           type={"password"}
@@ -137,11 +142,21 @@ export const SignUp = () => {
       </form>
       <div className="loginBox signUpTypes">
         <div className="signUpType">
-          <span>학생</span>
+          <div className="signUpRadio">
+            <div>
+              <BiPencil size={'25'} />
+            </div>
+            <span>학생</span>
+          </div>
           <input type={"radio"} onChange={radioHandler1} checked={student} />
         </div>
         <div className="signUpType">
-          <span>선생님</span>
+          <div className="signUpRadio">
+            <div>
+              <MdOutlineSchool size={'25'}/>
+            </div>
+            <span>선생님</span>
+          </div>
           <input type={"radio"} onChange={radioHandler2} checked={teacher} />
         </div>
       </div>

@@ -25,7 +25,7 @@ export const Header = () => {
     }
   }
 
-  
+
   return (
     <div className="navbar">
       <h2 onClick={() => movdPage(1)}>COCO : Coding Coach</h2>

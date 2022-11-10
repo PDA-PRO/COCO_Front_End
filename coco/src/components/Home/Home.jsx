@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { SlPin } from "react-icons/sl";
 
 export const Home = () => {
+
   return (
     <div className="home">
       <Header />

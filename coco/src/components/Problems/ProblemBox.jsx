@@ -58,12 +58,12 @@ export default Rating;
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
+  // padding-top: 15px;
 `;
 
 const Stars = styled.div`
   display: flex;
-  padding-top: 5px;
+  // padding-top: 5px;
 
   & svg {
     color: gray;

@@ -16,11 +16,26 @@ import {
 import { Link, NavLink, useParams } from "react-router-dom";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
+import { useState } from "react";
 
 export const PBD = () => {
-  let { id } = useParams();
+  const { id } = useParams();
 
-  var num = parseInt(id);
+  const num = parseInt(id);
+
+  const [code, setCode] = useState("");
+
+  const onCodeHandler = (e) => {
+    setCode(e.currentTarget.value);
+  };
+
+  const submitCode = () => {
+    Promise.resolve()
+      .then(alert("제출성공"))
+      .then(() => {
+        console.log(code);
+      });
+  };
 
   return (
     <>
@@ -99,13 +114,14 @@ export const PBD = () => {
                 as="textarea"
                 aria-label="With textarea"
                 style={{ minHeight: "700px" }}
+                onChange={onCodeHandler}
               />
             </InputGroup>
 
             <Button
               variant="outline-secondary"
               id="submit_btn"
-              onClick={() => alert("제출성공!")}
+              onClick={submitCode}
             >
               SUBMIT
             </Button>

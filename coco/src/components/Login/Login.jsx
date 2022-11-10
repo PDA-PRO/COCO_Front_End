@@ -11,15 +11,18 @@ export const Login = () => {
   return (
     <div>
       <Header />
-      <div className="loginContainer">
-        <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-          <Tab eventKey="home" title="Sign In">
-            <SignIn/>
-          </Tab>
-          <Tab eventKey="profile" title="Sign Up">
-            <SignUp/>
-          </Tab>
-        </Tabs>
+      <div className="loginWhole">
+        <div className="loginContainer">
+          <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+            <Tab eventKey="home" title="Sign In" className="loginTab">
+              <SignIn />
+            </Tab>
+            <Tab eventKey="profile" title="Sign Up" className="loginTab">
+              <SignUp />
+            </Tab>
+          </Tabs>
+        </div>
+        <div className="loginImg"></div>
       </div>
       <Footer />
     </div>

@@ -6,8 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { login, logout } from "../app/loginSlice";
-
 
 export const SignIn = () => {
     const navigate = useNavigate();
@@ -80,10 +78,8 @@ export const SignIn = () => {
         </Button>
       </div>
       <div className="loginBox loginOptions">
-        <div className="loginFind">
           <span style={{ marginRight: "10px" }}>아이디 찾기</span>
           <span>비밀번호 찾기</span>
-        </div>
       </div>
     </div>
   );

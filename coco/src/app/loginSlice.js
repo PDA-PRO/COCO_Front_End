@@ -12,7 +12,10 @@ export const loginSlice = createSlice({
     login:(state, action) => {
       state.id = action.id
       state.pw = action.pw
-      console.log(state.id, state.pw);
+    },
+    logout:(state) => {
+      state.id = "";
+      state.pw = "";
     }
   },
 });

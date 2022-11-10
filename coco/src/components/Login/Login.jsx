@@ -12,7 +12,7 @@ export const Login = () => {
     <div>
       <Header />
       <div className="loginContainer">
-        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+        <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
           <Tab eventKey="home" title="Sign In">
             <SignIn/>
           </Tab>

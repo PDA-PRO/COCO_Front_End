@@ -5,20 +5,16 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-//import { login, logout } from "../app/loginSlice";
+import { useDispatch } from "react-redux";
+// import { login, logout } from "../app/loginSlice";
+
 
 export const SignIn = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const userId = useSelector((state) => state.loginState.id);
   
     const navigateToHome = () => {
       navigate("/");
-    };
-  
-    const navigateToSignUp = () => {
-      navigate("/signup");
     };
   
     const [id, setId] = useState("");
@@ -47,8 +43,7 @@ export const SignIn = () => {
             if (response.data.code === 1) {
               alert(`${id}님 안녕하세요`);
               dispatch({ type: "loginSlice/login", id: id, pw: pw });
-              console.log(userId);
-              // navigateToHome();
+              navigateToHome();
             } else {
               alert("아이디 또는 비밀번호가 일치하지 않습니다");
             }
@@ -63,18 +58,18 @@ export const SignIn = () => {
         <FaRegUserCircle size="24" />
         <input
           placeholder={"아이디를 입력하세요"}
-          id="IdInput"
           onChange={onIDHandler}
         />
       </div>
-      <div className="loginBox">
+      <form className="loginBox">
         <CgPassword size="24" />
         <input
           placeholder={"비밀번호를 입력하세요"}
           type={"password"}
+          autoComplete={"false"}
           onChange={onPWHandler}
         />
-      </div>
+      </form>
       <div className="loginBox loginConfirm">
         <Button
           className="signUpConfirmBtn"
@@ -89,9 +84,6 @@ export const SignIn = () => {
           <span style={{ marginRight: "10px" }}>아이디 찾기</span>
           <span>비밀번호 찾기</span>
         </div>
-        <span className="loginRegister" onClick={navigateToSignUp}>
-          회원가입
-        </span>
       </div>
     </div>
   );

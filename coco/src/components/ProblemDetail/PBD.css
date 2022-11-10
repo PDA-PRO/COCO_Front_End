@@ -104,8 +104,8 @@
 }
 
 .PBD-body .PBD-problem .PBD-exBox .PBD-txt2{
-  min-width: 330px;
-  max-width: 330px;
+  min-width: 300px;
+  max-width: 300px;
   white-space: pre-wrap;
   min-height: 200px;
   max-height: 200px;
@@ -128,3 +128,9 @@
 #submit_btn{
   margin-top: 3rem !important;
 }
+
+#submit_btn:hover{
+  border: 1px solid #5fe45f;
+  background-color: #5fe45f;
+}
+

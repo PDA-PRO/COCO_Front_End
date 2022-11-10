@@ -25,10 +25,11 @@ export const Problems = () => {
     <div>
       <Header />
       <div className="problemsContainer">
-        <div className="problemsBox">
-          <div className="problemsName problemsTitle">문제 제목</div>
-          <div className="problemsRate problemsTitle">난이도</div>
-          <div className="problemsAns problemsTitle">정답률</div>
+        <div className="problemsBox problemsTitle">
+          <div className="problemsNum">문제 번호</div>
+          <div className="problemsName">문제 제목</div>
+          <div className="problemsRate">난이도</div>
+          <div className="problemsAns">정답률</div>
         </div>
         {
           problemList.map((e) => {

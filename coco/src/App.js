@@ -18,8 +18,7 @@ function App() {
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/problems" element={<Problems/>}/>
-            <Route path={`${/problems/}:id`} element={<PBD/>}/>
-            <Route path="/PBD" element={<PBD/>}/>
+            <Route path="/problems/:id" element={<PBD/>}/>
           </Routes>
         </div>
       </Router>

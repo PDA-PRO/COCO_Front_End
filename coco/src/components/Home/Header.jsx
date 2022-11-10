@@ -43,7 +43,7 @@ export const Header = () => {
   return (
     <div className="navbar">
       <div className="titleLogo">
-        <img src="./image/logo.png" alt="" />
+        <img src="/image/logo.png" alt="" />
         <h2 onClick={() => movdPage(1)}>COCO : Coding Coach</h2>
       </div>
       <div className="menus">

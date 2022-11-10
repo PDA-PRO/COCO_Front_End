@@ -8,6 +8,7 @@ import { SignUp } from "./components/Login/SignUp";
 import { Login } from "./components/Login/Login";
 import { Problems } from "./components/Problems/Problems";
 import { PBD } from "./components/ProblemDetail/PBD";
+import {Result} from "./components/Result/Result";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/problems" element={<Problems/>}/>
             <Route path="/problems/:id" element={<PBD/>}/>
+            <Route path="/result/:id" element={<Result/>}/>
+            <Route path="/res" element={<Result/>}/>
           </Routes>
         </div>
       </Router>

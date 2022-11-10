@@ -1,6 +1,6 @@
 import React from "react";
 import "./SignUp.css";
-import "./Home.css";
+//import "./Home.css";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useState } from "react";

@@ -3,10 +3,10 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Home } from "./components/Home";
-import { SignUp } from "./components/SignUp";
-import { Login } from "./components/Login";
-import { Counter } from "./components/counter";
+import { Home } from "./components/Home/Home";
+import { SignUp } from "./components/Login/SignUp";
+import { Login } from "./components/Login/Login";
+import { Counter } from "./components/Login/counter";
 // import { Goods } from './components/Goods';
 // import { About } from './components/About';
 // import {Service} from './components/Service';

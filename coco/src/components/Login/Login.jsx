@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {login, logout} from "../app/loginSlice"
+import {login, logout} from "../../app/loginSlice"
 
 export const Login = () => {
   const navigate = useNavigate();

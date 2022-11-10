@@ -13,13 +13,15 @@ import {
   BsQuestionLg,
   BsExclamationLg,
 } from "react-icons/bs";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import { useState } from "react";
+import { Result } from "../Result/Result";
 
 export const PBD = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const num = parseInt(id);
 
@@ -29,11 +31,18 @@ export const PBD = () => {
     setCode(e.currentTarget.value);
   };
 
+  const goToResult = (e) => {
+    console.log(code);
+    navigate(`/result/${e}/`, {state: {code: code}});
+    // window.location.href = `/result/${e}/`;
+  };
+
   const submitCode = () => {
     Promise.resolve()
       .then(alert("제출성공"))
       .then(() => {
-        console.log(code);
+        goToResult(num);
+        // <Result code='asdfasdf'/>
       });
   };
 

@@ -12,7 +12,11 @@ export const Header = () => {
   
   return (
     <div className="navbar">
-      <h2>COCO : Coding Coach</h2>
+      <div className="titleLogo">
+        <img src="./image/logo.png" alt=""/>
+        <h2>COCO : Coding Coach</h2>
+      </div>
+      
 
       <div className="menus">
         <h3>문제</h3>

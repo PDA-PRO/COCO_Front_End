@@ -14,7 +14,7 @@ export const Footer = () => {
   const move=(e)=> {
     switch (e){
       case 1:
-        window.open('https://www.instagram.com/lookinmin/');
+        window.open('https://www.instagram.com/lookin_min/');
         break;
       case 3:
         window.open('https://www.festival-ing.org');

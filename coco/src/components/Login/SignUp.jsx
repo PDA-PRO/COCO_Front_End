@@ -1,10 +1,8 @@
 import React from "react";
 import "./SignUp.css";
 import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -16,10 +14,9 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 axios.defaults.withCredentials = true;
 
 export const SignUp = () => {
-  const navigate = useNavigate();
 
   const navigateToLogin = () => {
-    navigate("/login");
+    window.location.replace("/login");
   };
 
   const [name, setName] = useState("");

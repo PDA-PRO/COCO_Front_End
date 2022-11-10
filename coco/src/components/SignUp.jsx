@@ -103,71 +103,52 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="signUpForm">
-      <div className="signUpLeft">회원가입 문구</div>
-      <div className="signUpRight">
-        <h3>Sign Up</h3>
-        <div className="signUpContainer">
-          <div className="signUpBox">
-            <FaRegUserCircle size="24" />
-            <input
-              placeholder={"이름을 입력하세요"}
-              id="IdInput"
-              onChange={onNameHandler}
-            />
-          </div>
-          <div className="signUpBox signUpID">
-            <FaRegUser size="24"/>
-            <input
-              placeholder={"아이디를 입력하세요"}
-              onChange={onIDHandler}
-            />
-            <button onClick={checkIDs}>중복확인</button>
-          </div>
-          <div className="signUpBox">
-            <CgPassword size="24" />
-            <input
-              placeholder={"영문자, 숫자, 특수문자 포함 최소 8~20자"}
-              type={"password"}
-              onChange={onPWHandler}
-            />
-          </div>
-          <div className="signUpBox">
-            <RiLockPasswordLine size="24" />
-            <input
-              placeholder={"비밀번호를 확인해주세요"}
-              type={"password"}
-              onChange={onConfirmHandler}
-            />
-          </div>
-          <div className="siguUpBox signUpTypes">
-            <div className="signUpType">
-              <label>학생</label>
-              <input
-                type={"radio"}
-                onChange={radioHandler1}
-                checked={student}
-              />
-            </div>
-            <div className="signUpType">
-              <label>선생님</label>
-              <input
-                type={"radio"}
-                onChange={radioHandler2}
-                checked={teacher}
-              />
-            </div>
-          </div>
-          <div className="signUpConfirm">
-            <Button
-              className="signUpConfirmBtn"
-              variant="outline-secondary"
-              onClick={onSubmitHandler}
-            >
-              가입하기
-            </Button>
-          </div>
+    <div className="loginForm">
+      <div className="loginBox">
+        <FaRegUserCircle size="24" />
+        <input
+          placeholder={"이름을 입력하세요"}
+          id="IdInput"
+          onChange={onNameHandler}
+        />
+      </div>
+      <div className="loginBox">
+        <FaRegUser size="24" />
+        <div className="checkID">
+          <input placeholder={"아이디를 입력하세요"} onChange={onIDHandler} />
+          <button onClick={checkIDs}>중복 확인</button>
         </div>
+      </div>
+      <div className="loginBox">
+        <CgPassword size="24" />
+        <input
+          placeholder={"영문자, 숫자, 특수문자 포함 최소 8~20자"}
+          type={"password"}
+          onChange={onPWHandler}
+        />
+      </div>
+      <div className="loginBox">
+        <RiLockPasswordLine size="24" />
+        <input
+          placeholder={"비밀번호를 확인해주세요"}
+          type={"password"}
+          onChange={onConfirmHandler}
+        />
+      </div>
+      <div className="loginBox signUpTypes">
+        <div className="signUpType">
+          <span>학생</span>
+          <input type={"radio"} onChange={radioHandler1} checked={student} />
+        </div>
+        <div className="signUpType">
+          <span>선생님</span>
+          <input type={"radio"} onChange={radioHandler2} checked={teacher} />
+        </div>
+      </div>
+      <div className="loginBox loginConfirm">
+        <Button variant="outline-secondary" onClick={onSubmitHandler}>
+          가입하기
+        </Button>
       </div>
     </div>
   );

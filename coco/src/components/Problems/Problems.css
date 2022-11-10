@@ -1,0 +1,48 @@
+.problemsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.problemsBox{
+    border-bottom: 2px solid gray;
+    display: flex;
+    flex-direction: row;    align-items: end;
+    margin: 20px 0px;
+    width: 75%;
+    padding: 0 5vw;
+}
+
+.problemsName{
+    width: 50%;
+}
+
+.problemsName > div:nth-child(1){
+    border: 1px solid red;
+    color: red;
+    display: flex;
+    width: fit-content;
+    padding: 0px 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.problemsName > div:nth-child(2){
+    font-size: xx-large;
+}
+
+.problemsRate{
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.problemsAns{
+    font-size: x-large;
+    color: skyblue;
+    width: 20%;
+    text-align: center;
+    margin-bottom: 5px;
+}

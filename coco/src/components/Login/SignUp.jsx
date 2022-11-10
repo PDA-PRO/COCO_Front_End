@@ -107,7 +107,6 @@ export const SignUp = () => {
         <FaRegUserCircle size="24" />
         <input
           placeholder={"이름을 입력하세요"}
-          id="IdInput"
           onChange={onNameHandler}
         />
       </div>
@@ -118,22 +117,24 @@ export const SignUp = () => {
           <button onClick={checkIDs}>중복 확인</button>
         </div>
       </div>
-      <div className="loginBox">
+      <form className="loginBox">
         <CgPassword size="24" />
         <input
           placeholder={"영문자, 숫자, 특수문자 포함 최소 8~20자"}
           type={"password"}
+          autoComplete={"false"}
           onChange={onPWHandler}
         />
-      </div>
-      <div className="loginBox">
+      </form>
+      <form className="loginBox">
         <RiLockPasswordLine size="24" />
         <input
           placeholder={"비밀번호를 확인해주세요"}
           type={"password"}
+          autoComplete={"false"}
           onChange={onConfirmHandler}
         />
-      </div>
+      </form>
       <div className="loginBox signUpTypes">
         <div className="signUpType">
           <span>학생</span>

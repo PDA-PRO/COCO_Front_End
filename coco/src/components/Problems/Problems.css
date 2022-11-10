@@ -19,7 +19,7 @@
     display: grid;
     grid-template-columns: 1.5fr 4fr 2fr 1fr;
     align-items: center;
-    padding: 3rem 0px 3rem 0px;
+    padding: 3rem 3vw;
     width: 100%;
     cursor: pointer;
 }
@@ -28,7 +28,8 @@
     border: 1px solid gray;
     display: grid;
     grid-template-columns: 1.5fr 4fr 2fr 1fr;
-    padding: 0 3vw 0 3vw;
+    padding: 0 3vw;
+    margin-top: 4rem;
 }
 
 .problemsBox:nth-child(1)>div{

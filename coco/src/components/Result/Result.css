@@ -1,11 +1,17 @@
+.Res{
+  display: flex;
+  flex-flow: column;
+  padding-left: 15vw;
+  padding-right: 15vw;
+  padding-top: 2rem;
+  padding-bottom: 8rem;
+}
+
 .Res-Body{
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 3vw;
-  padding-left: 15vw;
-  padding-right: 15vw;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-top: 3rem;
 }
 
 .Res-Body .Res-yourCode{
@@ -19,6 +25,13 @@
   border: 2px solid rgb(202, 202, 202);
   border-radius: 50px;
   background-color: rgb(255, 255, 240);
+}
+
+.Res-Body .Res-yourCode .Res-code #R-Code{
+  padding: 1.5rem;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.2em;
+  white-space: pre-wrap;
 }
 
 .Res-pbTitle{

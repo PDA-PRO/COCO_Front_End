@@ -1,5 +1,3 @@
-
-
 @font-face {
   font-family: 'yg-jalnan';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
@@ -30,16 +28,22 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'ONE-Mobile-POP';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /*--------------------------------------------- HEADER -------------------------------------------------------*/
 .navbar{
   display: flex;
   flex-flow: row;
-  padding-top: 4rem;
+  padding-top: 3rem;
   padding-left: 15vw;
   padding-right: 15vw;
-  padding-bottom: 2rem;
-  border-bottom: 2px solid #696464;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid #dbdbdb;
   margin-bottom: 1rem;
   justify-content: space-between;
 }
@@ -68,7 +72,82 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
-  height: 500px;
+}
+
+.home .home-body{
+  display: flex;
+  flex-flow: column wrap;
+  padding-left: 15vw;
+  padding-right: 15vw;
+  padding-top: 7rem;
+}
+
+.home .home-body .txt-box{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  font-family: 'ONE-Mobile-POP';
+  width: 45vw;
+  row-gap: 80px;
+  margin-left: 8vw;
+}
+
+.home .home-body .txt-box #t1{
+  grid-row: 1/2;
+  grid-column: 1/3;
+  font-size: 5em;
+}
+
+.home .home-body .txt-box #t2{
+  grid-row: 2/3;
+  grid-column: 2/4;
+  font-size: 5em;
+}
+
+.home .notice{
+  display: flex;
+  flex-flow: column;
+  margin-top: 10rem;
+  background-color: hsl(69, 100%, 90%);
+  border-radius: 50px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.notice .title-notice{
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: 'GmarketSansMedium';
+  align-items: center;
+  padding-left: 2rem;
+}
+
+.title-notice h2{
+  margin: 0 !important;
+  font-size: 2em;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-family: 'LeferiPoint-BlackA';
+}
+
+.notice .body-notice{
+  list-style-type: upper-roman;
+  font-size: 1.5em;
+  padding-left: 4rem;
+  margin-top: 1rem;
+  max-height: 400px;
+}
+.body-notice li{
+  padding-bottom: 0.6em;
+  font-family: 'Pretendard-Regular';
+}
+
+.home-body .ad-box{
+  margin-top: 8rem;
+  border: 2px solid red;
+  height: 300px;
+  width: 69vw;
+  margin-bottom: 10rem;
 }
 
 
@@ -128,7 +207,7 @@
   display: flex;
   flex-flow: row nowrap;
   margin-bottom: 1rem;
-  width: 330px;
+  width: 240px;
   align-items: baseline;
   justify-content: space-between;
   cursor: pointer;

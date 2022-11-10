@@ -11,7 +11,6 @@ export const Login = () => {
   return (
     <div>
       <Header />
-
       <div className="loginContainer">
         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
           <Tab eventKey="home" title="Sign In">
@@ -22,7 +21,6 @@ export const Login = () => {
           </Tab>
         </Tabs>
       </div>
-
       <Footer />
     </div>
   );

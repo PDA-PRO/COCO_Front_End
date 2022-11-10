@@ -18,7 +18,6 @@ export const Header = () => {
         <h3>문제</h3>
         <h3>게시판</h3>
       </div>
-
       <div className="login" onClick={goToLogin}>
         <h3>LOGIN</h3>
       </div>

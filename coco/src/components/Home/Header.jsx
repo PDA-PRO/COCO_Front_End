@@ -9,7 +9,7 @@ export const Header = () => {
   const goToLogin = () => {
     navigate('/login');
   }
-  
+
   return (
     <div className="navbar">
       <div className="titleLogo">

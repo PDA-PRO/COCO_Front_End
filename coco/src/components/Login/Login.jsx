@@ -8,9 +8,6 @@ import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 
 export const Login = () => {
-
-
-
   return (
     <div>
       <Header />

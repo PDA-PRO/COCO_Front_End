@@ -7,6 +7,7 @@ import { Home } from "./components/Home/Home";
 import { SignUp } from "./components/Login/SignUp";
 import { Login } from "./components/Login/Login";
 import { Problems } from "./components/Problems/Problems";
+import { PBD } from "./components/ProblemDetail/PBD";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/problems" element={<Problems/>}/>
+            <Route path={`${/problems/}:id`} element={<PBD/>}/>
+            <Route path="/PBD" element={<PBD/>}/>
           </Routes>
         </div>
       </Router>

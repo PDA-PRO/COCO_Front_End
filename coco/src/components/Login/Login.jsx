@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignUp.css";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
+import { Header } from "../Home/Header";
+import { Footer } from "../Home/Footer";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { SignIn } from "./SignIn";

@@ -9,20 +9,18 @@ import { SlPin } from "react-icons/sl";
 export const Home = () => {
   const navigate = useNavigate();
 
-  const NavigateToSignUp = () => {
-    console.log("Asdf");
-    navigate('/signup');
-  }
+  // const NavigateToSignUp = () => {
+  //   console.log("Asdf");
+  //   navigate('/signup');
+  // }
 
   return (
     <div className="home">
       <Header/>
-      <div className="homebody">
-        <button onClick={NavigateToSignUp}>회원가입</button>
       <div className="home-body">
         <div className="txt-box">
           <h2 id='t1'>코딩, 초보자라면?</h2>
-          <h2 id='t2'>COCO와 함께!</h2>
+          <h2 id='t2'><span id='t2-1'>COCO </span>와 함께!</h2>
         </div>
 
         <div className="notice">

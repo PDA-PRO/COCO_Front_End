@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignUp.css";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
+import { Header } from "../Home/Header";
+import { Footer } from "../Home/Footer";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { SignIn } from "./SignIn";
@@ -12,7 +12,7 @@ export const Login = () => {
     <div>
       <Header />
       <div className="loginContainer">
-        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+        <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
           <Tab eventKey="home" title="Sign In">
             <SignIn/>
           </Tab>

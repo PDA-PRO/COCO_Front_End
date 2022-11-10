@@ -10,9 +10,9 @@ export const loginSlice = createSlice({
   initialState, 
   reducers: {
     login:(state, action) => {
-      console.log(action);
-      state.id += action.id
-      state.pw += action.pw
+      state.id = action.id
+      state.pw = action.pw
+      console.log(state.id, state.pw);
     }
   },
 });

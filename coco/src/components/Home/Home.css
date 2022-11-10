@@ -6,6 +6,12 @@
 }
 
 @font-face {
+  font-family: 'KyoboHandwriting2020A';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'GmarketSansMedium';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
   font-weight: normal;
@@ -180,7 +186,7 @@
 }
 .body-notice li{
   padding-bottom: 0.6em;
-  font-family: 'Pretendard-Regular';
+  font-family: 'KyoboHandwriting2020A';
 }
 
 .home-body .ad-box{

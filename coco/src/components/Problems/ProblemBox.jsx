@@ -4,11 +4,18 @@ import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
 
 export const ProblemBox = (info) => {
+
+  const goDetail = (e) => {
+    window.location.href = `/problems/${e}`
+  }
+
   return (
-    <div className="problemsBox">
+    <div className="problemsBox" onClick={()=>goDetail(info.info.num)}>
+      <div className="problemsNum">
+        No.{info.info.num}
+      </div>
       <div className="problemsName">
-        <div>No.{info.info.num}</div>
-        <div>{info.info.title}</div>
+        {info.info.title}
       </div>
       <div className="problemsRate">{Rating(`${info.info.rate}`)}</div>
       <div
@@ -36,7 +43,7 @@ function Rating(n) {
           return (
             <FaStar
               key={idx}
-              size="40"
+              size="23"
               className={colored[el] && "yellowStar"}
             />
           );
@@ -60,7 +67,7 @@ const Stars = styled.div`
 
   & svg {
     color: gray;
-    margin: 0 10px;
+    margin: 0 5px;
   }
 
   .yellowStar {

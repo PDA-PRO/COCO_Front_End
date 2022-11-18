@@ -1,26 +1,30 @@
 @font-face {
-  font-family: 'yg-jalnan';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+  font-family: "yg-jalnan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'KyoboHandwriting2020A';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+  font-family: "KyoboHandwriting2020A";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: 'GmarketSansMedium';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
@@ -28,184 +32,186 @@
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
 @font-face {
-  font-family: 'LeferiPoint-BlackA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-BlackA.woff') format('woff');
+  font-family: "LeferiPoint-BlackA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-BlackA.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'ONE-Mobile-POP';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-family: "ONE-Mobile-POP";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'OTWelcomeRA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+  font-family: "OTWelcomeRA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2")
+    format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 /*--------------------------------------------- HEADER -------------------------------------------------------*/
-.navbar{
+.navbar {
   display: flex;
   flex-flow: row;
   padding-top: 1rem;
   padding-left: 15vw;
   padding-right: 15vw;
   padding-bottom: 0.5rem;
-  border-bottom: 3px solid #dbdbdb;
+  border-bottom: 1px solid #ececec;
   /* margin-bottom: 1rem; */
   justify-content: space-between;
   align-items: center;
 }
 
-.navbar h2{
-  font-family: 'GmarketSansMedium';
+.navbar h2 {
+  font-family: "GmarketSansMedium";
   margin: 0 !important;
-  font-size: 1.8em;
+  font-size: 1.6em;
   font-weight: 650;
   padding-top: 0.3rem;
 }
 
-.navbar h3{
-  font-family: 'GmarketSansMedium';
+.navbar h3 {
+  font-family: "Pretendard-Regular";
   margin: 0 !important;
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-weight: 600;
 }
 
-.navbar .titleLogo{
+.navbar .titleLogo {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   cursor: pointer;
 }
 
-.navbar .titleLogo img{
+.navbar .titleLogo img {
   height: 45px;
   width: 45px;
   margin-right: 15px;
 }
 
-.menus{
+.menus {
   display: flex;
   flex-flow: row;
   justify-content: space-evenly;
   width: 30vw;
 }
 
-.navbar h3:hover{
+.navbar h3:hover {
   font-weight: 700;
   cursor: pointer;
 }
 
-.logoutModal{
-    padding: 5px 10px;
+.logoutModal {
+  padding: 5px 10px;
 }
 
-.logoutModal > *{
+.logoutModal > * {
   margin-left: 10px;
 }
 
-.logoutModal > *:hover{
+.logoutModal > *:hover {
   cursor: pointer;
   color: #00ff00;
 }
 
 /*--------------------------------------------- BODY -------------------------------------------------------*/
-.home{
+.home {
   display: flex;
   flex-flow: column;
   justify-content: center;
 }
 
-.home .home-body{
+.home .home-body {
   display: flex;
   flex-flow: column wrap;
   padding-left: 15vw;
   padding-right: 15vw;
-  padding-top: 10rem;
-  background-image: url(../../../public/image/coding.png);
+  padding-top: 13rem;
+  background-image: url(../../../public/image/aa.png);
   background-repeat: no-repeat;
   background-position: 75% 100px;
-  background-size: 230px;
+  background-size: 360px;
 }
 
-.home .home-body .txt-box{
+.home .home-body .txt-box {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr;
-  font-family: 'OTWelcomeRA';
+  font-family: "Pretendard-Regular";
   width: 45vw;
-  row-gap: 80px;
-  margin-left: 8vw;
-  
+  row-gap: 40px;
+  margin-left: 1vw;
 }
 
-.home .home-body .txt-box #t1{
+.home .home-body .txt-box #t1 {
   grid-row: 1/2;
   grid-column: 1/3;
-  font-size: 3.5em;
+  font-size: 2em;
   font-weight: 800;
 }
 
-.home .home-body .txt-box #t2{
+.home .home-body .txt-box #t2 {
   grid-row: 2/3;
-  grid-column: 2/4;
-  font-size: 3.5em;
+  grid-column: 1/3;
+  font-size: 2em;
   font-weight: 800;
 }
 
-.home .home-body .txt-box #t2-1{
+.home .home-body .txt-box #t2-1 {
   grid-row: 2/3;
   grid-column: 2/4;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: 800;
   color: #00ff00;
 }
 
-.home .notice{
+.home .notice {
   display: flex;
   flex-flow: column;
-  margin-top: 10rem;
+  margin-top: 15rem;
   background-color: hsl(69, 100%, 90%);
   border-radius: 50px;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
-.notice .title-notice{
+.notice .title-notice {
   display: flex;
   flex-flow: row nowrap;
-  font-family: 'GmarketSansMedium';
+  font-family: "GmarketSansMedium";
   align-items: center;
   padding-left: 2rem;
 }
 
-.title-notice h2{
+.title-notice h2 {
   margin: 0 !important;
   font-size: 2em;
   padding-top: 1rem;
   padding-left: 1rem;
-  font-family: 'LeferiPoint-BlackA';
+  font-family: "LeferiPoint-BlackA";
 }
 
-.notice .body-notice{
+.notice .body-notice {
   list-style-type: upper-roman;
   font-size: 1.5em;
   padding-left: 4rem;
   margin-top: 1rem;
   max-height: 400px;
 }
-.body-notice li{
+.body-notice li {
   padding-bottom: 0.6em;
-  font-family: 'KyoboHandwriting2020A';
+  font-family: "KyoboHandwriting2020A";
 }
 
-.home-body .ad-box{
+.home-body .ad-box {
   margin-top: 8rem;
   border: 2px solid red;
   height: 300px;
@@ -213,9 +219,8 @@
   margin-bottom: 10rem;
 }
 
-
 /*--------------------------------------------- FOOTER -------------------------------------------------------*/
-.footer{
+.footer {
   display: flex;
   flex-flow: column wrap;
   background-color: #696464;
@@ -225,7 +230,7 @@
   color: #fff;
 }
 
-.footer2{
+.footer2 {
   display: flex;
   flex-flow: column wrap;
   background-color: #696464;
@@ -235,7 +240,7 @@
   color: #fff;
 }
 
-.footer3{
+.footer3 {
   display: flex;
   flex-flow: column wrap;
   background-color: #696464;
@@ -245,25 +250,25 @@
   color: #fff;
 }
 
-.footer h2{
-  font-family: 'GmarketSansMedium';
+.footer h2 {
+  font-family: "GmarketSansMedium";
   font-size: 1.5rem;
   color: rgb(80, 70, 70);
 }
 
-.footer2 h2{
-  font-family: 'GmarketSansMedium';
+.footer2 h2 {
+  font-family: "GmarketSansMedium";
   font-size: 1.5rem;
   color: rgb(80, 70, 70);
 }
 
-.footer3 h2{
-  font-family: 'GmarketSansMedium';
+.footer3 h2 {
+  font-family: "GmarketSansMedium";
   font-size: 1.3rem;
   color: rgb(80, 70, 70);
 }
 
-.pageIcons{
+.pageIcons {
   display: flex;
   flex-flow: row nowrap;
   margin-bottom: 1rem;
@@ -276,12 +281,12 @@
   cursor: pointer;
 }
 
-.pageIcons .icons{
+.pageIcons .icons {
   margin: 0 3rem 0 0;
   cursor: pointer;
 }
 
-.footerLogo{
+.footerLogo {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -290,61 +295,60 @@
   padding-bottom: 0.5rem;
 }
 
-.footerLogo h2{
+.footerLogo h2 {
   color: #00ff00 !important;
 }
 
-
-.txts{
+.txts {
   display: flex;
   flex-flow: row wrap;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-size: 1.1rem;
 }
 
-.txt2{
+.txt2 {
   display: flex;
   flex-flow: column wrap;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-size: 0.8rem;
 }
 
-.txtz2{
+.txtz2 {
   display: flex;
   flex-flow: row wrap;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-size: 1rem;
 }
 
-.txtz2 p{
+.txtz2 p {
   margin-right: 5rem;
   cursor: pointer;
 }
 
-.txts .TT{
-  font-family: 'GmarketSansMedium';
+.txts .TT {
+  font-family: "GmarketSansMedium";
   font-size: 1.2rem;
   margin-right: 1rem;
 }
 
-.txts2 .TT{
-  font-family: 'GmarketSansMedium';
+.txts2 .TT {
+  font-family: "GmarketSansMedium";
   font-size: 1rem;
   margin-right: 1rem;
 }
 
-.txts2 .div1{
+.txts2 .div1 {
   margin-bottom: 2rem !important;
 }
 
-.txts2 .div2{
+.txts2 .div2 {
   margin-bottom: 2rem !important;
 }
 
-.div1{
+.div1 {
   margin-right: 4rem;
 }
 
-.div2{
+.div2 {
   margin-right: 4rem;
 }

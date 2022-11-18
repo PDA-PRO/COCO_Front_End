@@ -1,0 +1,70 @@
+.Res{
+  display: flex;
+  flex-flow: column;
+  padding-left: 15vw;
+  padding-right: 15vw;
+  padding-top: 2rem;
+  padding-bottom: 8rem;
+}
+
+.Res-Body{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3vw;
+  padding-top: 3rem;
+}
+
+.Res-Body .Res-yourCode{
+  grid-column: 1/2;
+}
+
+.Res-Body .Res-yourCode .Res-code{
+  margin-top: 2rem;
+  width: 100%;
+  height: 800px;
+  border: 2px solid rgb(202, 202, 202);
+  border-radius: 50px;
+  background-color: rgb(255, 255, 240);
+}
+
+.Res-Body .Res-yourCode .Res-code #R-Code{
+  padding: 1.5rem;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.2em;
+  white-space: pre-wrap;
+}
+
+.Res-pbTitle{
+  display: flex;
+  flex-flow: row nowrap;
+  border-bottom: 2px solid lightgray;
+  gap: 20px;
+  align-items: flex-start;
+  font-size: 1em;
+  font-family: 'GmarketSansMedium';
+  padding-bottom: 1rem;
+}
+
+.Res-pbTitle h2{
+  margin: 0 !important;
+  padding-top: 0.3rem;
+}
+
+.Res-Body .Res-others{
+  grid-column: 2/3;
+  display: flex;
+  flex-flow: column;
+}
+
+.Res-Body .Res-others #Res-out{
+  font-family: 'Pretendard-Regular';
+  text-decoration: underline;
+  font-size: 1.3em;
+  color: gray;
+  text-align: right;
+  margin-top: 5rem;
+  cursor: pointer;
+}
+
+
+

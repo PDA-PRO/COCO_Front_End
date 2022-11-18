@@ -57,7 +57,7 @@
   padding-right: 15vw;
   padding-bottom: 0.5rem;
   border-bottom: 3px solid #dbdbdb;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   justify-content: space-between;
   align-items: center;
 }
@@ -81,10 +81,12 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  cursor: pointer;
 }
 
 .navbar .titleLogo img{
   height: 45px;
+  width: 45px;
   margin-right: 15px;
 }
 
@@ -99,6 +101,20 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+.logoutModal{
+    padding: 5px 10px;
+}
+
+.logoutModal > *{
+  margin-left: 10px;
+}
+
+.logoutModal > *:hover{
+  cursor: pointer;
+  color: #00ff00;
+}
+
 /*--------------------------------------------- BODY -------------------------------------------------------*/
 .home{
   display: flex;

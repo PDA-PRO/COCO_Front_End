@@ -6,25 +6,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Home } from "./components/Home/Home";
 import { SignUp } from "./components/Login/SignUp";
 import { Login } from "./components/Login/Login";
-import { Counter } from "./components/Login/counter";
-// import { Goods } from './components/Goods';
-// import { About } from './components/About';
-// import {Service} from './components/Service';
-// import {Personal} from './components/Personal';
+import { Problems } from "./components/Problems/Problems";
+import { PBD } from "./components/ProblemDetail/PBD";
+import {Result} from "./components/Result/Result";
 
 function App() {
   return (
       <Router>
         <div className="App">
           <Routes>
-            <Route path="/counter" element={<Counter/>}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/login" element={<Login />}></Route>
-            {/* <Route path="/goods" element={<Goods/>}></Route>
-          <Route path="/about" element={<About/>}></Route>
-          <Route path="/personal" element={<Personal/>}></Route>
-          <Route path="/service" element={<Service/>}></Route> */}
+            <Route path="/problems" element={<Problems/>}/>
+            <Route path="/problems/:id" element={<PBD/>}/>
+            <Route path="/result/:id" element={<Result/>}/>
+            <Route path="/res" element={<Result/>}/>
           </Routes>
         </div>
       </Router>

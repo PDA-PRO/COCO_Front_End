@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { SlPin } from "react-icons/sl";
 
 export const Home = () => {
-
   return (
     <div className="home">
       <Header />
@@ -14,7 +13,10 @@ export const Home = () => {
         <div className="home-body">
           <div className="txt-box">
             <h2 id="t1">코딩, 초보자라면?</h2>
-            <h2 id="t2"><span id="t2-1">COCO </span>와 함께!</h2>
+            <h2 id="t2">
+              Coding Coach,
+              <span id="t2-1"> COCO</span>
+            </h2>
           </div>
 
           <div className="notice">

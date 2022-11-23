@@ -60,13 +60,13 @@
   display: flex;
   flex-flow: row;
   padding-top: 1rem;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 18vw;
+  padding-right: 18vw;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #ececec;
   /* margin-bottom: 1rem; */
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .navbar h2 {
@@ -97,11 +97,18 @@
   margin-right: 15px;
 }
 
+.navbar .leftDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 6vw;
+}
+
 .menus {
   display: flex;
   flex-flow: row;
-  justify-content: space-evenly;
-  width: 30vw;
+  gap: 5vw;
+  width: fit-content;
 }
 
 .navbar h3:hover {
@@ -132,8 +139,8 @@
 .home .home-body {
   display: flex;
   flex-flow: column wrap;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 18vw;
+  padding-right: 18vw;
   padding-top: 13rem;
   background-image: url(../../../public/image/aa.png);
   background-repeat: no-repeat;
@@ -176,11 +183,13 @@
 .home .notice {
   display: flex;
   flex-flow: column;
-  margin-top: 15rem;
-  background-color: hsl(69, 100%, 90%);
-  border-radius: 50px;
+  margin-top: 5rem;
+  background-color: #9e9e9e;
+  border-radius: 30px;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  color: white;
+  margin-bottom: 10rem;
 }
 
 .notice .title-notice {
@@ -200,23 +209,21 @@
 }
 
 .notice .body-notice {
-  list-style-type: upper-roman;
-  font-size: 1.5em;
+  list-style-type: disc;
+  font-size: 1.4em;
   padding-left: 4rem;
   margin-top: 1rem;
   max-height: 400px;
 }
 .body-notice li {
   padding-bottom: 0.6em;
-  font-family: "KyoboHandwriting2020A";
+  font-family: "Pretendard-Regular";
 }
 
 .home-body .ad-box {
-  margin-top: 8rem;
-  border: 2px solid red;
-  height: 300px;
-  width: 69vw;
+  margin-top: 15rem;
   margin-bottom: 10rem;
+  margin-left: 4vw;
 }
 
 /*--------------------------------------------- FOOTER -------------------------------------------------------*/
@@ -225,7 +232,7 @@
   flex-flow: column wrap;
   background-color: #696464;
   padding-top: 4rem;
-  padding-left: 15vw;
+  padding-left: 18vw;
   padding-bottom: 3rem;
   color: #fff;
 }

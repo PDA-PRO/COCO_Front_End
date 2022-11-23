@@ -34,20 +34,23 @@ export const Header = () => {
   };
 
   const logoutHandler = () => {
-    dispatch({ type: "loginSlice/logout"});
-    navigate('/');
-  }
+    dispatch({ type: "loginSlice/logout" });
+    navigate("/");
+  };
 
   return (
     <div className="navbar">
-      <div className="titleLogo"  onClick={() => movdPage(1)}>
-        <img src="/image/logo.png" alt="" />
-        <h2>COCO : Coding Coach</h2>
+      <div className="leftDiv">
+        <div className="titleLogo" onClick={() => movdPage(1)}>
+          <img src="/image/logo.png" alt="" />
+          <h2>COCO</h2>
+        </div>
+        <div className="menus">
+          <h3 onClick={() => movdPage(2)}>문제</h3>
+          <h3 onClick={() => movdPage(3)}>게시판</h3>
+        </div>
       </div>
-      <div className="menus">
-        <h3 onClick={() => movdPage(2)}>문제</h3>
-        <h3 onClick={() => movdPage(3)}>게시판</h3>
-      </div>
+
       <div className="login">
         {userInfo.id === "" ? (
           <h3 onClick={() => movdPage(4)}>LOGIN</h3>
@@ -76,4 +79,3 @@ export const Header = () => {
     </div>
   );
 };
-

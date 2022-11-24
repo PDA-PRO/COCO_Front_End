@@ -56,11 +56,11 @@
 }
 
 .m-upload-context .m-desc #m-timeLimit {
-  margin-top: 40px;
+  margin-top: 47px;
 }
 
 .m-upload-context .m-desc #m-memLimit {
-  margin-top: 40px;
+  margin-top: 47px;
 }
 
 .m-upload-context .m-inOut {
@@ -87,5 +87,9 @@
 }
 
 .m-choLen {
-  margin-top: 60px;
+  margin-top: 30px;
+}
+
+.m-testCase {
+  margin-top: 30px;
 }

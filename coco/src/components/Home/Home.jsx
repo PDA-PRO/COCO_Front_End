@@ -20,7 +20,13 @@ export const Home = () => {
           </div>
 
           <div className="ad-box">
-            <img src="/image/ad.png" alt="" style={{ borderRadius: "30px" }} />
+            <img
+              src="/image/ad.png"
+              alt=""
+              loading="lazy"
+              style={{ borderRadius: "30px" }}
+              width="100%"
+            />
           </div>
 
           <div className="notice">

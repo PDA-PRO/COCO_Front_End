@@ -1,11 +1,11 @@
-.PBD{
+.PBD {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 18vw;
+  padding-right: 18vw;
 }
-.PBD-title{
+.PBD-title {
   display: flex;
   flex-flow: row;
   margin-top: 3rem;
@@ -15,13 +15,13 @@
   padding-right: 10vw;
 }
 
-.problemsName-pbd{
+.problemsName-pbd {
   display: flex;
   flex-flow: row nowrap;
-  align-items:flex-end;
+  align-items: flex-end;
 }
 
-.problemsName-pbd > div:nth-child(1){
+.problemsName-pbd > div:nth-child(1) {
   border: 3px solid red;
   color: red;
   display: flex;
@@ -33,20 +33,20 @@
   font-size: 1.5em;
 }
 
-.problemsName-pbd > div:nth-child(2){
+.problemsName-pbd > div:nth-child(2) {
   font-size: 2em;
-  font-family: 'GmarketSansMedium';
+  font-family: "GmarketSansMedium";
   align-self: center;
   padding-top: 0.4rem;
 }
 
-.problemsRate-pbd{
+.problemsRate-pbd {
   display: flex;
   flex-direction: row;
   margin-bottom: 8px;
 }
 
-.problemsAns-pbd{
+.problemsAns-pbd {
   color: skyblue;
   text-align: center;
   margin-bottom: 8px;
@@ -55,82 +55,91 @@
   margin: 0 !important;
 }
 
-.PBD-body{
+.PBD-body {
   display: grid;
-  grid-template-columns: 2fr 2fr;
-  column-gap: 60px;
+  grid-template-columns: 46% 46%;
+  gap: 5vw;
   margin-top: 3rem;
 }
 
-.PBD-body .PBD-problem{
+.PBD-body .PBD-problem {
   grid-column: 1/2;
   display: flex;
   flex-flow: column;
   justify-content: center;
 }
 
-.PBD-problem .PBD-pbTxt{
+.PBD-problem .PBD-pbTxt {
   min-height: 500px;
 }
 
-.PBD-pbTitle{
+.PBD-pbTitle {
   display: flex;
   flex-flow: row nowrap;
   border-bottom: 2px solid lightgray;
   gap: 20px;
   align-items: flex-start;
-
-  font-family: 'GmarketSansMedium';
+  font-family: "GmarketSansMedium";
 }
 
-.PBD-problem .PBD-pbTxt h2{
+.PBD-problem .PBD-pbTxt h2 {
   white-space: pre-wrap;
-  font-family: 'GmarketSansMedium';
+  font-family: "GmarketSansMedium";
 }
 
-.PBD-problem .PBD-pbTxt #PBD-txt{
+.PBD-problem .PBD-pbTxt #PBD-txt {
   white-space: pre-wrap;
-  font-family: 'GmarketSansMedium';
+  font-family: "GmarketSansMedium";
   font-size: 1.1em;
   padding-left: 1rem;
   padding-top: 2rem;
 }
 
-.PBD-body .PBD-problem .PBD-exBox{
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
+.PBD-body .PBD-problem .PBD-exBox {
+  display: grid;
+  grid-template-columns: 47% 47%;
+  gap: 3vw;
 }
 
-.PBD-body .PBD-problem .PBD-exBox .PBD-txt2{
-  min-width: 300px;
-  max-width: 300px;
+.PBD-body .PBD-problem .PBD-exBox .exInput {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.PBD-body .PBD-problem .PBD-exBox .exOutput {
+  grid-column: 2/3;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.PBD-body .PBD-problem .PBD-exBox .PBD-txt2 {
+  min-width: 13vw;
+  max-width: 13vw;
   white-space: pre-wrap;
   min-height: 200px;
   max-height: 200px;
   padding-left: 0.5rem;
-  font-family: 'GmarketSansMedium';
+  font-family: "GmarketSansMedium";
   font-size: 1.1em;
   padding-top: 1rem;
 }
 
-.PBD-body .PBD-input{
+.PBD-body .PBD-input {
   grid-column: 2/3;
   display: flex;
   flex-flow: column;
 }
 
-.PBD-body .PBD-input .PBD-pbTitle{
+.PBD-body .PBD-input .PBD-pbTitle {
   margin-bottom: 2rem;
 }
 
-#submit_btn{
+#submit_btn {
   margin-top: 3rem !important;
 }
 
-#submit_btn:hover{
+#submit_btn:hover {
   border: 1px solid #5fe45f;
   background-color: #5fe45f;
 }
-

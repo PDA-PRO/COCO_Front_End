@@ -1,0 +1,51 @@
+.board {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.boardContent {
+  padding-left: 18vw;
+  padding-right: 18vw;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.boardContent .boardHead {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.boardContent .boardHead .boardTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.boardContent .boardHead .boardTitle h2 {
+  font-family: "GmarketSansMedium";
+  margin: 0 !important;
+  font-weight: 700;
+}
+
+.boardHead .boardMenu {
+  display: flex;
+  flex-flow: row;
+  gap: 4vw;
+}
+
+.boardHead .boardMenu li {
+  list-style-type: square;
+  font-family: "Pretendard-Regular";
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.boardHead .boardMenu li:hover {
+  color: #00ff00;
+}

@@ -10,6 +10,7 @@ import { Problems } from "./components/Problems/Problems";
 import { PBD } from "./components/ProblemDetail/PBD";
 import { Result } from "./components/Result/Result";
 import { Manage } from "./components/Manage/Manage";
+import { Board } from "./components/Board/Board";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
           <Route path="/result/:id" element={<Result />} />
+          <Route path="/board" element={<Board />} />
           <Route path="/manage" element={<Manage />} />
         </Routes>
       </div>

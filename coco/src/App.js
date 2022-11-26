@@ -3,31 +3,29 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Home } from "./components/Home";
-import { SignUp } from "./components/SignUp";
-import { Login } from "./components/Login";
-import { Counter } from "./components/counter";
-// import { Goods } from './components/Goods';
-// import { About } from './components/About';
-// import {Service} from './components/Service';
-// import {Personal} from './components/Personal';
+import { Home } from "./components/Home/Home";
+import { SignUp } from "./components/Login/SignUp";
+import { Login } from "./components/Login/Login";
+import { Problems } from "./components/Problems/Problems";
+import { PBD } from "./components/ProblemDetail/PBD";
+import { Result } from "./components/Result/Result";
+import { Manage } from "./components/Manage/Manage";
 
 function App() {
   return (
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route path="/counter" element={<Counter/>}></Route>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/signup" element={<SignUp />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            {/* <Route path="/goods" element={<Goods/>}></Route>
-          <Route path="/about" element={<About/>}></Route>
-          <Route path="/personal" element={<Personal/>}></Route>
-          <Route path="/service" element={<Service/>}></Route> */}
-          </Routes>
-        </div>
-      </Router>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/problems" element={<Problems />} />
+          <Route path="/problems/:id" element={<PBD />} />
+          <Route path="/result/:id" element={<Result />} />
+          <Route path="/manage" element={<Manage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -12,7 +12,6 @@ import axios from "axios";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { CgPassword } from "react-icons/cg";
 import { BiPencil } from "react-icons/bi";
 import { MdOutlineSchool, MdInsertEmoticon } from "react-icons/md";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -57,7 +56,7 @@ export const SignUp = () => {
             setCheckId(true);
             return alert(`사용할 수 있는 아이디입니다.`);
           } else {
-            setCheckId(true);
+            setCheckId(false);
             return alert("사용할 수 없는 아이디입니다.");
           }
         });
@@ -75,12 +74,12 @@ export const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log("submit");
-    if (name == "" || id == "" || pw == "") {
+    if (name === "" || id === "" || pw === "") {
       return alert("필수정보를 입력해주세요");
     } else {
-      if (pw != confirm) {
+      if (pw !== confirm) {
         return alert("비밀번호가 일치하지 않습니다");
-      } else if (student == false && teacher == false) {
+      } else if (student === false && teacher === false) {
         return alert("유형을 선택해주세요");
       } else {
         axios
@@ -88,7 +87,7 @@ export const SignUp = () => {
             name: name,
             id: id,
             pw: pw,
-            role: student == true ? 1 : 2,
+            role: student === true ? 0 : 1,
             age: age,
           })
           .then(function (response) {
@@ -189,7 +188,6 @@ export const SignUp = () => {
           <input type={"radio"} onChange={radioHandler2} checked={teacher} />
         </div>
       </div>
-
       <div className="loginBox loginConfirm">
         <Button variant="outline-secondary" onClick={onSubmitHandler}>
           가입하기

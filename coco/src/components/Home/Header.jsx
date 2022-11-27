@@ -35,7 +35,8 @@ export const Header = () => {
 
   const logoutHandler = () => {
     dispatch({ type: "loginSlice/logout" });
-    navigate("/");
+    // navigate("/");
+    window.location.href = '/';
   };
 
   return (

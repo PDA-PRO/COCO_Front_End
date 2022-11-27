@@ -8,11 +8,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 export const SignIn = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
   
     const navigateToHome = () => {
-      navigate("/");
+      window.location.href = "/";
     };
   
     const [id, setId] = useState("");
@@ -29,7 +28,7 @@ export const SignIn = () => {
     const onSubmitHandler = (e) => {
       e.preventDefault();
       console.log("submit");
-      if (id == "" || pw == "") {
+      if (id === "" || pw === "") {
         return alert("아이디 또는 비밀번호를 입력해주세요");
       } else {
         axios

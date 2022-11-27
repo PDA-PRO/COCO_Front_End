@@ -26,6 +26,7 @@ export const Header = () => {
         navigate("/problems");
         break;
       case 3:
+        navigate("/board");
         break;
       case 4:
         navigate("/login");

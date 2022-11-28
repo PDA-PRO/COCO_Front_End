@@ -139,6 +139,7 @@ export const Manage = () => {
           {
             title: title,
             description: desc,
+            desPic: desPic,
             diff: diff,
             timeLimit: time,
             memLimit: mem,

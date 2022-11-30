@@ -1,12 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Manage.css";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import {
   BsArrowDownRight,
   BsArrowUpLeft,
-  BsPlus,
   BsImages,
   BsUiChecksGrid,
   BsFileEarmarkZip,
@@ -37,12 +36,10 @@ export const Manage = () => {
   const [inputDesc, setInputDesc] = useState(""); // 입력 설명 State !필수
   const [inputEx1, setInputEx1] = useState(""); // 입력 예시 State !필수
   const [inputEx2, setInputEx2] = useState("");
-  const [inputFile, setInputFile] = useState(null); // 입력 예시 사진 State
 
   const [outputDesc, setOutputDesc] = useState(""); // 출력 설명 State !필수
   const [outputEx1, setOutputEx1] = useState(""); // 출력 예시 State !필수
   const [outputEx2, setOutputEx2] = useState("");
-  const [outputFile, setOutputFile] = useState(null); // 출력 예시 사진 State
 
   const [py, setPy] = useState(true); // 설정 언어 State !필수
   const [cLan, setCLan] = useState(false); // 설정 언어 State !필수
@@ -142,17 +139,16 @@ export const Manage = () => {
           {
             title: title,
             description: desc,
+            desPic: desPic,
             diff: diff,
             timeLimit: time,
             memLimit: mem,
             inputDescription: inputDesc,
             inputEx1: inputEx1,
             inputEx2: inputEx2,
-            inputFile: inputFile, // 파일
             outputDescription: outputDesc,
             outputEx1: outputEx1,
             outputEx2: outputEx2,
-            outputFile: outputFile, // 파일
             python: py,
             C_Lan: cLan,
             testCase: testCase, // 파일
@@ -185,7 +181,7 @@ export const Manage = () => {
             Title
           </InputGroup.Text>
           <Form.Control
-            placeholder="문제 제목을 입력해주세요."
+            placeholder="문제 제목을 입력해주세요. (문제 제목은 40자 이내)"
             onChange={onTitleHandler}
           />
         </InputGroup>
@@ -299,30 +295,11 @@ export const Manage = () => {
               />
             </FloatingLabel>
 
-            <Form.Group controlId="formFileMultiple" id="m-input-three">
-              <Form.Label>
-                <BsImages size={20} style={{ marginRight: "15px" }} />
-                입력 예시에 추가할 사진 선택
-              </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={(e) => {
-                  setInputFile(e.currentTarget.value);
-                  setImage(e.target.files[0]);
-                  uploader(e);
-                }}
-              />
-            </Form.Group>
-            {result && (
-              <img ref={imageRef} src={result} style={{ maxWidth: "100%" }} />
-            )}
-
             {/* 문제 입력에 대한 설명 */}
 
             {/* 문제 출력에 대한 설명 */}
 
-            <InputGroup className="m-output" style={{ marginTop: "55px" }}>
+            <InputGroup className="m-output" style={{ marginTop: "100px" }}>
               <InputGroup.Text id="inputGroup-sizing-default">
                 <BsArrowUpLeft size={30} />
               </InputGroup.Text>
@@ -357,25 +334,6 @@ export const Manage = () => {
                 onChange={onOutputEx2Handler}
               />
             </FloatingLabel>
-
-            <Form.Group controlId="formFileMultiple" id="m-output-three">
-              <Form.Label>
-                <BsImages size={20} style={{ marginRight: "15px" }} />
-                출력 예시에 추가할 사진 선택
-              </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={(e) => {
-                  setOutputFile(e.currentTarget.value);
-                  setImage(e.target.files[0]);
-                  uploader(e);
-                }}
-              />
-            </Form.Group>
-            {result && (
-              <img ref={imageRef} src={result} style={{ maxWidth: "100%" }} />
-            )}
 
             {/* 문제 입력에 대한 설명 */}
 

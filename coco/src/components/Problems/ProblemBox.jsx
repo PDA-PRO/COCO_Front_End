@@ -2,27 +2,28 @@ import React from "react";
 import "./Problems.css";
 import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const ProblemBox = (info) => {
-
+  console.log(info.info)
   const goDetail = (e) => {
     window.location.href = `/problems/${e}`
   }
 
   return (
-    <div className="problemsBox" onClick={()=>goDetail(info.info.num)}>
+    <div className="problemsBox" onClick={()=>goDetail(info.info.id)}>
       <div className="problemsNum">
-        No.{info.info.num}
+        No.{info.info.id}
       </div>
       <div className="problemsName">
         {info.info.title}
       </div>
-      <div className="problemsRate">{Rating(`${info.info.rate}`)}</div>
+      <div className="problemsRate">{Rating(`${info.info.diff}`)}</div>
       <div
         className="problemsAns"
-        style={{ color: info.info.ans >= 40 ? "skyblue" : "rgb(218, 55, 55)" }}
+        style={{ color: info.info.rate >= 40 ? "skyblue" : "rgb(218, 55, 55)" }}
       >
-        {info.info.ans}%
+        {info.info.rate}%
       </div>
     </div>
   );

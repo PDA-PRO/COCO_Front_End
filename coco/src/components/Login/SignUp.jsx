@@ -1,20 +1,24 @@
 import React from "react";
 import "./SignUp.css";
-import { Button } from "react-bootstrap";
+import {
+  Button,
+  OverlayTrigger,
+  Popover,
+  InputGroup,
+  Form,
+} from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { CgPassword } from "react-icons/cg";
 import { BiPencil } from "react-icons/bi";
-import { MdOutlineSchool } from "react-icons/md";
+import { MdOutlineSchool, MdInsertEmoticon } from "react-icons/md";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 axios.defaults.withCredentials = true;
 
 export const SignUp = () => {
-
   const navigateToLogin = () => {
     window.location.replace("/login");
   };
@@ -26,6 +30,7 @@ export const SignUp = () => {
 
   const [student, setStudent] = useState(false);
   const [teacher, setTeacher] = useState(false);
+  const [age, setAge] = useState(0);
 
   const [checkId, setCheckId] = useState(false);
 
@@ -51,7 +56,7 @@ export const SignUp = () => {
             setCheckId(true);
             return alert(`사용할 수 있는 아이디입니다.`);
           } else {
-            setCheckId(true);
+            setCheckId(false);
             return alert("사용할 수 없는 아이디입니다.");
           }
         });
@@ -69,12 +74,12 @@ export const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log("submit");
-    if (name == "" || id == "" || pw == "") {
+    if (name === "" || id === "" || pw === "") {
       return alert("필수정보를 입력해주세요");
     } else {
-      if (pw != confirm) {
+      if (pw !== confirm) {
         return alert("비밀번호가 일치하지 않습니다");
-      } else if (student == false && teacher == false) {
+      } else if (student === false && teacher === false) {
         return alert("유형을 선택해주세요");
       } else {
         axios
@@ -82,7 +87,8 @@ export const SignUp = () => {
             name: name,
             id: id,
             pw: pw,
-            type: student == true ? 1 : 2,
+            role: student === true ? 0 : 1,
+            age: age,
           })
           .then(function (response) {
             if (response.data.code === 1) {
@@ -105,8 +111,12 @@ export const SignUp = () => {
     setStudent(false);
   };
 
+  const onAgeHandler = (e) => {
+    setAge(e.target.value);
+  };
+
   return (
-    <div className="loginForm">
+    <form className="loginForm">
       <div className="loginBox">
         <FaRegUserCircle size="25" />
         <input placeholder={"이름을 입력하세요"} onChange={onNameHandler} />
@@ -115,20 +125,24 @@ export const SignUp = () => {
         <FaRegUser size="25" />
         <div className="checkID">
           <input placeholder={"아이디를 입력하세요"} onChange={onIDHandler} />
-          <span onClick={checkIDs} title={'중복 확인'}><IoMdCheckmarkCircleOutline size={'25'}
-          color={checkId === true ? '#00ff00': 'black'}/></span>
+          <span onClick={checkIDs} title={"중복 확인"}>
+            <IoMdCheckmarkCircleOutline
+              size={"25"}
+              color={checkId === true ? "#00ff00" : "black"}
+            />
+          </span>
         </div>
       </div>
-      <form className="loginBox">
-        <CgPassword size="25" />
+      <div className="loginBox">
+        <RiLockPasswordLine size="25" />
         <input
           placeholder={"영문자, 숫자, 특수문자 포함 최소 8~20자"}
           type={"password"}
           autoComplete={"false"}
           onChange={onPWHandler}
         />
-      </form>
-      <form className="loginBox">
+      </div>
+      <div className="loginBox">
         <RiLockPasswordLine size="25" />
         <input
           placeholder={"비밀번호를 확인해주세요"}
@@ -136,21 +150,38 @@ export const SignUp = () => {
           autoComplete={"false"}
           onChange={onConfirmHandler}
         />
-      </form>
-      <div className="loginBox signUpTypes">
-        <div className="signUpType">
-          <div className="signUpRadio">
-            <div>
-              <BiPencil size={'25'} />
+      </div>
+      <div className="loginBox signUpTypes" style={{ marginBottom: "0px" }}>
+        <OverlayTrigger
+          trigger="click"
+          key={"left"}
+          placement={"left"}
+          overlay={
+            <Popover id={`popover-positioned-left`}>
+                <InputGroup>
+                  <InputGroup.Text>{<MdInsertEmoticon size="25"/>}</InputGroup.Text>
+                  <Form.Control className="stdAge"
+                    placeholder={"나이를 입력하세요"}
+                    onChange={onAgeHandler}
+                  />
+                </InputGroup>
+            </Popover>
+          }
+        >
+          <div className="signUpType">
+            <div className="signUpRadio">
+              <div>
+                <BiPencil size={"25"} />
+              </div>
+              <span>학생</span>
             </div>
-            <span>학생</span>
+            <input type={"radio"} onChange={radioHandler1} checked={student} />
           </div>
-          <input type={"radio"} onChange={radioHandler1} checked={student} />
-        </div>
+        </OverlayTrigger>
         <div className="signUpType">
           <div className="signUpRadio">
             <div>
-              <MdOutlineSchool size={'25'}/>
+              <MdOutlineSchool size={"25"} />
             </div>
             <span>선생님</span>
           </div>
@@ -162,6 +193,6 @@ export const SignUp = () => {
           가입하기
         </Button>
       </div>
-    </div>
+    </form>
   );
 };

@@ -1,0 +1,95 @@
+.boardDetail {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-left: 18vw;
+  padding-right: 18vw;
+  margin-top: 5rem;
+}
+
+.boardDetail .BDtitle {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.boardDetail .BDtitle .BD_idAndTime {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 26vw;
+}
+
+.boardDetail .BDtitle h2 {
+  font-family: "GmarketSansMedium" !important;
+  font-weight: 700;
+  font-size: 2.1em;
+}
+
+.boardDetail .BDtitle .BD_idAndTime h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 1.2em;
+}
+
+.boardDetail .BDContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 3rem;
+  min-width: 70%;
+  min-height: 600px;
+  column-gap: 5vw;
+
+  margin-bottom: 5rem;
+}
+
+.BDContent .BDTxt {
+  grid-column: 1/2;
+  border: 1px solid black;
+  padding-left: 15px;
+  padding-top: 20px;
+}
+
+.BDContent .BDCode {
+  grid-column: 2/3;
+}
+
+.BDCode {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.BDCode .BD_codeTop {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid lightgray;
+}
+
+.BDCode h2 {
+  text-align: center;
+  color: #89d0ff;
+  font-family: "GmarketSansMedium" !important;
+  font-weight: 700;
+  font-size: 1.7em;
+  margin: 0 !important;
+  padding-top: 6px;
+}
+
+.BDCode .BD_showCode {
+  padding-left: 30px;
+  padding-top: 20px;
+  min-height: 550px;
+  border-radius: 50px;
+}
+
+.BDContent p {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 1.1em;
+}

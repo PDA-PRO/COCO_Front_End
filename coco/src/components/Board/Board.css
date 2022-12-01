@@ -68,7 +68,7 @@
 }
 
 .boardContentTop {
-  margin-top: 3rem;
+  margin-top: 5rem;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
   text-align: center;

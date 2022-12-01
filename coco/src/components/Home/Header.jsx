@@ -37,7 +37,7 @@ export const Header = () => {
   const logoutHandler = () => {
     dispatch({ type: "loginSlice/logout" });
     // navigate("/");
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   return (
@@ -49,7 +49,7 @@ export const Header = () => {
         </div>
         <div className="menus">
           <h3 onClick={() => movdPage(2)}>문제</h3>
-          <h3 onClick={() => movdPage(3)}>게시판</h3>
+          <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
         </div>
       </div>
 

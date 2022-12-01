@@ -9,8 +9,8 @@ import {
 } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
-import { FaRegUserCircle } from "react-icons/fa";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
+import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { BiPencil } from "react-icons/bi";
 import { MdOutlineSchool, MdInsertEmoticon } from "react-icons/md";
@@ -26,6 +26,7 @@ export const SignUp = () => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [email, setEmail] = useState("");
   const [confirm, setConfirm] = useState("");
 
   const [student, setStudent] = useState(false);
@@ -63,6 +64,10 @@ export const SignUp = () => {
     }
   };
 
+  const onEmailHandler = (e) => {
+    setEmail(e.currentTarget.value);
+  }
+
   const onPWHandler = (e) => {
     setPw(e.currentTarget.value);
   };
@@ -74,7 +79,7 @@ export const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log("submit");
-    if (name === "" || id === "" || pw === "") {
+    if (name === "" || id === "" || pw === "" || email === "") {
       return alert("필수정보를 입력해주세요");
     } else {
       if (pw !== confirm) {
@@ -87,6 +92,7 @@ export const SignUp = () => {
             name: name,
             id: id,
             pw: pw,
+            email: email,
             role: student === true ? 0 : 1,
             age: age,
           })
@@ -118,11 +124,11 @@ export const SignUp = () => {
   return (
     <form className="loginForm">
       <div className="loginBox">
-        <FaRegUserCircle size="25" />
+        <FaRegUser size="25" />
         <input placeholder={"이름을 입력하세요"} onChange={onNameHandler} />
       </div>
       <div className="loginBox">
-        <FaRegUser size="25" />
+        <FaRegUserCircle size="25" />
         <div className="checkID">
           <input placeholder={"아이디를 입력하세요"} onChange={onIDHandler} />
           <span onClick={checkIDs} title={"중복 확인"}>
@@ -132,6 +138,10 @@ export const SignUp = () => {
             />
           </span>
         </div>
+      </div>
+      <div className="loginBox">
+        <FiMail size="25" />
+        <input placeholder={"이메일을 입력하세요"}  onChange={onEmailHandler}/>
       </div>
       <div className="loginBox">
         <RiLockPasswordLine size="25" />

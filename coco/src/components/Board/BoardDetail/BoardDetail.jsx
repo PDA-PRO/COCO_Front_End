@@ -2,7 +2,13 @@ import React from "react";
 import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
 import "./BD.css";
-import { BsCode, BsCodeSlash } from "react-icons/bs";
+import {
+  BsCode,
+  BsCodeSlash,
+  BsFillEyeFill,
+  BsFillChatSquareDotsFill,
+  BsFillHeartFill,
+} from "react-icons/bs";
 
 export const BoardDetail = () => {
   return (
@@ -13,7 +19,28 @@ export const BoardDetail = () => {
           <h2>No.1 모르겠어요!</h2>
           <div className="BD_idAndTime">
             <h3>작성자 : sncalphs</h3>
-            <h3>2022.11.30. 22:50:23</h3>
+            <h3>2022.11.30</h3>
+          </div>
+        </div>
+
+        <div className="BDsubTitle">
+          <div id="bun1">
+            <div className="BDun">
+              <BsFillEyeFill size={25} color="gray" />
+              <p>25</p>
+            </div>
+
+            <div className="BDun">
+              <BsFillChatSquareDotsFill size={20} color="gray" />
+              <p>2</p>
+            </div>
+          </div>
+
+          <div id="bun2">
+            <div className="BDun">
+              <BsFillHeartFill size={23} />
+              <p>6</p>
+            </div>
           </div>
         </div>
 

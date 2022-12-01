@@ -11,15 +11,51 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: baseline;
+  padding-bottom: 1em;
+}
+
+.boardDetail .BDsubTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid lightgray;
+  justify-content: space-between;
+}
+
+.BDsubTitle #bun1 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 3vw;
+}
+
+#bun2 {
+  cursor: pointer;
+  color: gray;
+}
+
+#bun2:hover {
+  color: red;
+}
+
+.BDsubTitle .BDun {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.boardDetail .BDsubTitle p {
+  margin: 0 0 0 15px !important;
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
 }
 
 .boardDetail .BDtitle .BD_idAndTime {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  width: 26vw;
+  width: 18vw;
 }
 
 .boardDetail .BDtitle h2 {
@@ -31,29 +67,25 @@
 .boardDetail .BDtitle .BD_idAndTime h3 {
   font-family: "Pretendard-Regular";
   font-weight: 550;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .boardDetail .BDContent {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 3rem;
-  min-width: 70%;
-  min-height: 600px;
-  column-gap: 5vw;
-
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 100%;
   margin-bottom: 5rem;
 }
 
 .BDContent .BDTxt {
-  grid-column: 1/2;
-  border: 1px solid black;
   padding-left: 15px;
   padding-top: 20px;
+  min-height: 200px;
 }
 
 .BDContent .BDCode {
-  grid-column: 2/3;
 }
 
 .BDCode {

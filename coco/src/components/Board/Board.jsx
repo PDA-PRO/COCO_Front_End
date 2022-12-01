@@ -24,7 +24,7 @@ export const Board = () => {
         <div className="boardHead">
           <div className="boardTitle">
             <img src="./image/corkboard.png" alt="게시판" />
-            <h2>COCO 게시판</h2>
+            <h2>COCO community</h2>
           </div>
           <div className="boardMenu">
             <li

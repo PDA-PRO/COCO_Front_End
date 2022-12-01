@@ -3,8 +3,8 @@ import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import "./Problems.css";
 import { ProblemBox } from "./ProblemBox";
-import Spinner from 'react-bootstrap/Spinner';
-import fetchData from '../../api/fetchTask';
+import Spinner from "react-bootstrap/Spinner";
+import fetchData from "../../api/fetchTask";
 
 // class ProblemInfo {
 //   constructor(
@@ -55,26 +55,23 @@ export const Problems = () => {
           <div className="problemsRate">난이도</div>
           <div className="problemsAns">정답률</div>
         </div>
-        <Suspense fallback={<Spinner/>}>
-          <GetProblems/>
-        </Suspense>
+        <Suspense fallback={<Spinner />}>{/* <GetProblems /> */}</Suspense>
       </div>
       <Footer />
     </div>
   );
 };
 
+//const resource = fetchData("http://127.0.0.1:8000/problems");
 
-const resource = fetchData("http://127.0.0.1:8000/problems");
-
-const GetProblems = () => {
-  const problemList = resource.read();
-  console.log(problemList);
-  return (
-    <>
-      {problemList.map((e) => {
-        return <ProblemBox info={e} key={e.id} />;
-      })}
-    </>
-  );
-}
+// const GetProblems = () => {
+//   const problemList = resource.read();
+//   console.log(problemList);
+//   return (
+//     <>
+//       {problemList.map((e) => {
+//         return <ProblemBox info={e} key={e.id} />;
+//       })}
+//     </>
+//   );
+// };

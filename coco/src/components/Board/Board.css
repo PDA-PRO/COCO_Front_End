@@ -18,6 +18,8 @@
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 3rem;
 }
 
 .boardContent .boardHead .boardTitle {
@@ -31,23 +33,7 @@
   font-family: "GmarketSansMedium";
   margin: 0 !important;
   font-weight: 700;
-}
-
-.boardHead .boardMenu {
-  display: flex;
-  flex-flow: row;
-  gap: 4vw;
-}
-
-.boardHead .boardMenu li {
-  list-style-type: square;
-  font-family: "Pretendard-Regular";
-  font-size: 1.3em;
-  cursor: pointer;
-}
-
-.boardHead .boardMenu li:hover {
-  color: #00ff00;
+  padding-top: 10px;
 }
 
 .board .boardOn {
@@ -56,76 +42,24 @@
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .board .boardOn h3 {
   font-family: "Pretendard-Regular";
-  cursor: pointer;
   font-weight: 650;
   font-size: 1.2em;
   margin: 0 !important;
   padding-left: 15px;
 }
 
-.boardContentTop {
-  margin-top: 5rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-  text-align: center;
-  font-family: "Pretendard-Regular";
-  font-weight: 650;
-  border: 1px solid black;
-}
-
-.boardContentTop h2 {
-  font-size: 1.1em;
-  margin: 0 !important;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
 .boardBody {
-  display: flex;
-  flex-flow: column;
-}
-
-.boardBody .boardList {
   display: grid;
-  font-family: "Pretendard-Regular";
-  font-weight: 550;
-  font-size: 1.3em;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-  border-bottom: 1px solid lightgray;
-  padding-bottom: 1.25rem;
-  padding-top: 1.25rem;
-  cursor: pointer;
-}
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 1vw;
+  margin-top: 3rem;
+  align-items: center;
+  justify-items: center;
 
-.boardBody .boardList:hover {
-  background-color: #e2e2e2;
-}
-
-.boardContentTitles {
-  grid-column: 1/2;
-  text-align: center;
-}
-
-.boardContentCategory {
-  grid-column: 2/3;
-  text-align: center;
-}
-
-.boardContentWriter {
-  grid-column: 3/4;
-  text-align: center;
-}
-
-.boardContentComments {
-  grid-column: 4/5;
-  text-align: center;
-}
-
-.boardContentTime {
-  grid-column: 5/6;
-  text-align: center;
+  max-height: 1200px;
 }

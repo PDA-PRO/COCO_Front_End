@@ -1,26 +1,39 @@
 import React from "react";
 import "./Guel.css";
+import { useNavigate } from "react-router-dom";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
   BsHeart,
   BsHeartFill,
+  BsFillLightbulbFill,
+  BsMegaphoneFill,
+  BsQuestionLg,
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 
 export const Guel = (props) => {
+  const navigate = useNavigate();
   const moveDetail = (e) => {
-    window.location.href = `/board/${e}`;
+    navigate(`/board/${e}`);
   };
 
   const [category, setCategory] = useState("");
+  const [bgColor, setBgColor] = useState("white");
+  const [cateIcon, setCateIcon] = useState();
   const chCate = (e) => {
     if (e === 1) {
       setCategory("Notice");
+      setBgColor("rgb(231, 255, 211)");
+      setCateIcon(<BsMegaphoneFill size={30} color="#00ff00" />);
     } else if (e === 2) {
       setCategory("Help");
+      setBgColor("rgb(255, 248, 211)");
+      setCateIcon(<BsQuestionLg size={30} color="rgb(255, 200, 101)" />);
     } else if (e === 3) {
       setCategory("자유");
+      setBgColor("rgb(227, 249, 255)");
+      setCateIcon(<BsFillLightbulbFill size={30} color="rgb(111, 101, 255)" />);
     }
   };
 
@@ -59,11 +72,16 @@ export const Guel = (props) => {
   return (
     <div
       className="Geul"
+      style={{ backgroundColor: bgColor }}
       onClick={() => {
         moveDetail(props.props.board_id);
       }}
     >
-      <p>{category}</p>
+      <div className="un">
+        <p>{category}</p>
+        {cateIcon}
+      </div>
+
       <div className="guelTitle">
         <h2>{props.props.title}</h2>
       </div>

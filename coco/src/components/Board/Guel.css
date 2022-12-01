@@ -3,12 +3,12 @@
   flex-flow: column nowrap;
   width: 260px;
   height: 260px;
-  border: 1px solid rgb(112, 112, 112);
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 20px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   justify-content: space-between;
+
   cursor: pointer;
 }
 

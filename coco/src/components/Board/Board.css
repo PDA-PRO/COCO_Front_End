@@ -56,10 +56,8 @@
 .boardBody {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 1vw;
   margin-top: 3rem;
   align-items: center;
   justify-items: center;
-
   max-height: 1200px;
 }

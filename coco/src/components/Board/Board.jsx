@@ -3,9 +3,9 @@ import "./Board.css";
 import { useState } from "react";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
-import { BsChatDots } from "react-icons/bs";
 import { BoardBody } from "./BoardBody";
 import { SlPencil } from "react-icons/sl";
+import { IoChatbubblesOutline } from "react-icons/io5";
 
 export const Board = () => {
   // ---------------------------------- 카테고리 변경 State ----------------------
@@ -23,7 +23,7 @@ export const Board = () => {
         {/* title+카테고리 */}
         <div className="boardHead">
           <div className="boardTitle">
-            <BsChatDots size={50} color="navy" />
+            <IoChatbubblesOutline size={50} color="navy" />
             <h2>COCO community</h2>
           </div>
           <div className="boardOn">

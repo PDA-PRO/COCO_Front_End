@@ -8,15 +8,13 @@ export const BoardBody = () => {
   return (
     <div className="boardBody">
       <Suspense fallback={<Spinner />}>
-        <GetList />
+        <GetList resource={fetchData("http://127.0.0.1:8000/board")} />
       </Suspense>
     </div>
   );
 };
 
-const resource = fetchData("http://127.0.0.1:8000/board");
-
-const GetList = () => {
+const GetList = ({ resource }) => {
   const BoardList = resource.read();
   console.log(BoardList[0].title);
 

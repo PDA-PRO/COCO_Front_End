@@ -1,8 +1,8 @@
 .boardDetail {
   display: flex;
   flex-flow: column nowrap;
-  padding-left: 18vw;
-  padding-right: 18vw;
+  padding-left: 22vw;
+  padding-right: 22vw;
   margin-top: 5rem;
 }
 
@@ -74,18 +74,15 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 2rem;
-  margin-top: 2rem;
   width: 100%;
   margin-bottom: 5rem;
 }
 
 .BDContent .BDTxt {
-  padding-left: 15px;
-  padding-top: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
   min-height: 200px;
-}
-
-.BDContent .BDCode {
+  margin-top: 20px;
 }
 
 .BDCode {
@@ -115,8 +112,9 @@
 
 .BDCode .BD_showCode {
   padding-left: 30px;
+  padding-right: 30px;
   padding-top: 20px;
-  min-height: 550px;
+  min-height: 300px;
   border-radius: 50px;
 }
 
@@ -124,4 +122,112 @@
   font-family: "Pretendard-Regular";
   font-weight: 550;
   font-size: 1.1em;
+}
+
+.comments {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.comments .cHead {
+  display: flex;
+  flex-flow: row nowrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.comments h2 {
+  font-family: "GmarketSansMedium" !important;
+  font-weight: 650;
+  font-size: 2em;
+}
+
+.comments .cWrite {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  margin-right: 30px;
+  margin-bottom: 40px;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.comments .cWrite p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+  margin: 0 !important;
+}
+
+.comments .cBody {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-bottom: 5rem;
+}
+
+.commentContext {
+  /* border: 1px solid lightgray; */
+  border-radius: 20px;
+
+  padding: 15px;
+  background-color: #f3f3f3;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.commentContext .commentHead {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.commentContext .commentHead .un {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.commentContext .commentHead .un2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.commentContext .commentHead .un2 :nth-child(1) {
+  color: gray;
+}
+
+.commentContext .commentHead p {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-bottom: 2px;
+}
+
+.commentContext .commentHead .cUserID {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+.commentContext .commentBody {
+  padding-top: 20px;
+}
+
+.commentContext .commentBody p {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 1.1em;
+  margin: 0 !important;
 }

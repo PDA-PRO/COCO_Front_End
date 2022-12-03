@@ -17,57 +17,59 @@ export const Guel = (props) => {
   const moveDetail = (e) => {
     navigate(`/board/${e}`);
   };
-
   const [category, setCategory] = useState("");
   const [bgColor, setBgColor] = useState("white");
   const [cateIcon, setCateIcon] = useState();
-  const chCate = (e) => {
-    if (e === 1) {
-      setCategory("Notice");
-      setBgColor("rgb(231, 255, 211)");
-      setCateIcon(<BsMegaphoneFill size={30} color="#00ff00" />);
-    } else if (e === 2) {
-      setCategory("Help");
-      setBgColor("rgb(255, 248, 211)");
-      setCateIcon(<BsQuestionLg size={30} color="rgb(255, 200, 101)" />);
-    } else if (e === 3) {
-      setCategory("자유");
-      setBgColor("rgb(227, 249, 255)");
-      setCateIcon(<BsFillLightbulbFill size={30} color="rgb(111, 101, 255)" />);
-    }
-  };
-
-  function timeForToday(value) {
-    const today = new Date();
-    const timeValue = new Date(value);
-
-    const betweenTime = Math.floor(
-      (today.getTime() - timeValue.getTime()) / 1000 / 60
-    );
-    if (betweenTime < 1) return "방금전";
-    if (betweenTime < 60) {
-      return `${betweenTime}분전`;
-    }
-
-    const betweenTimeHour = Math.floor(betweenTime / 60);
-    if (betweenTimeHour < 24) {
-      return `${betweenTimeHour}시간전`;
-    }
-
-    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-    if (betweenTimeDay < 365) {
-      return `${betweenTimeDay}일전`;
-    }
-
-    return `${Math.floor(betweenTimeDay / 365)}년전`;
-  }
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    var originTime = props.props.time;
+    const chCate = (e) => {
+      if (e === 1) {
+        setCategory("Notice");
+        setBgColor("rgb(231, 255, 211)");
+        setCateIcon(<BsMegaphoneFill size={30} color="#00ff00" />);
+      } else if (e === 2) {
+        setCategory("Help");
+        setBgColor("rgb(255, 248, 211)");
+        setCateIcon(<BsQuestionLg size={30} color="rgb(255, 200, 101)" />);
+      } else if (e === 3) {
+        setCategory("자유");
+        setBgColor("rgb(227, 249, 255)");
+        setCateIcon(
+          <BsFillLightbulbFill size={30} color="rgb(111, 101, 255)" />
+        );
+      }
+    };
+
+    function timeForToday(value) {
+      const today = new Date();
+      const timeValue = new Date(value);
+
+      const betweenTime = Math.floor(
+        (today.getTime() - timeValue.getTime()) / 1000 / 60
+      );
+      if (betweenTime < 1) return "방금전";
+      if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+      }
+
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+      }
+
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+      }
+
+      return `${Math.floor(betweenTimeDay / 365)}년전`;
+    }
+
     chCate(props.props.category);
+    var originTime = props.props.time;
     setDate(timeForToday(originTime));
-  });
+  }, [props.props]);
 
   return (
     <div

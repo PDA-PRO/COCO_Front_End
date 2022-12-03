@@ -5,10 +5,8 @@
   height: 260px;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
   justify-content: space-between;
-
+  margin-bottom: 30px;
   cursor: pointer;
 }
 

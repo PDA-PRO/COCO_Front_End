@@ -231,3 +231,46 @@
   font-size: 1.1em;
   margin: 0 !important;
 }
+
+#closeState {
+  display: none;
+}
+
+.writeComment {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-items: center;
+}
+
+#commentArea {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 580;
+}
+
+.writeComment .btns {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  width: 100%;
+}
+
+#commentCancel {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 10px;
+  width: 100%;
+}
+
+#commentSubmit {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 10px;
+  width: 100%;
+}

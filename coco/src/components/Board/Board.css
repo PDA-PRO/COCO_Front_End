@@ -118,6 +118,14 @@
   color: #5c5c5c;
 }
 
+#txtTitle {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 580;
+}
+
 #txtInput {
   border-radius: 12px !important;
   font-family: "Pretendard-Regular";

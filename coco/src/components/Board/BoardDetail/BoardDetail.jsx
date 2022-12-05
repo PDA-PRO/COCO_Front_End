@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
 import "./BD.css";
@@ -9,8 +9,26 @@ import {
   BsFillChatSquareDotsFill,
   BsFillHeartFill,
 } from "react-icons/bs";
+import { SlPencil } from "react-icons/sl";
+import { VscCommentDiscussion } from "react-icons/vsc";
+import Spinner from "react-bootstrap/Spinner";
+import fetchData from "../../../api/fetchTask";
+import { Comments } from "./Comments/Comments";
+import { WriteComment } from "./Comments/WriteComment";
+import { useState } from "react";
 
 export const BoardDetail = () => {
+  const [write, setWrite] = useState(false);
+  const commentShoot = (e) => {
+    if (e == 1) {
+      setWrite(true);
+    } else {
+      setWrite(false);
+    }
+
+    console.log(write);
+  };
+
   return (
     <>
       <Header />
@@ -68,8 +86,46 @@ export const BoardDetail = () => {
             <p></p>
           </div>
         </div>
+        <div className="comments">
+          <div className="cHead">
+            <VscCommentDiscussion size={35} color="#6BE52E" />
+            <h2>댓글</h2>
+          </div>
+          <div
+            className="cWrite"
+            onClick={() => {
+              commentShoot(1);
+            }}
+          >
+            <SlPencil size={25} />
+            <p>댓글 작성</p>
+          </div>
+          <div className="cBody">
+            {write ? (
+              <WriteComment commentShoot={commentShoot} />
+            ) : (
+              <div id="closeState"></div>
+            )}
+
+            {/* <GetList resource={fetchData("http://127.0.0.1:8000/board")} /> */}
+            <Comments />
+            <Comments />
+          </div>
+        </div>
       </div>
       <Footer />
+    </>
+  );
+};
+
+const GetList = ({ resource }) => {
+  const commentList = resource.read();
+
+  return (
+    <>
+      {commentList.map((e) => {
+        return <Comments props={e} key={e.id} />;
+      })}
     </>
   );
 };

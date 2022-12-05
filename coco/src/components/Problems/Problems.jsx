@@ -6,44 +6,6 @@ import { ProblemBox } from "./ProblemBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
 
-// class ProblemInfo {
-//   constructor(
-//     id,
-//     title,
-//     desc,
-//     inputEx1,
-//     inputEx2,
-//     outputEx1,
-//     outputEx2,
-//     rate,
-//     memLimit,
-//     timeLimit,
-//     desPic,
-//     diff,
-//     inputDescription,
-//     outputDescription,
-//     C_Lan,
-//     python
-//   ) {
-//     this.id = id;
-//     this.title = title;
-//     this.desc = desc;
-//     this.inputEx1 = inputEx1;
-//     this.inputEx2 = inputEx2;
-//     this.outputEx1 = outputEx1;
-//     this.outputEx2 = outputEx2;
-//     this.rate = rate;
-//     this.memLimit = memLimit;
-//     this.timeLimit = timeLimit;
-//     this.desPic = desPic;
-//     this.diff = diff;
-//     this.inputDescription = inputDescription;
-//     this.outputDescription = outputDescription;
-//     this.C_Lan = C_Lan;
-//     this.python = python;
-//   }
-// }
-
 export const Problems = () => {
   return (
     <div>
@@ -56,7 +18,7 @@ export const Problems = () => {
           <div className="problemsAns">정답률</div>
         </div>
         <Suspense fallback={<Spinner />}>
-          <GetProblems />
+          <GetProblems resource={fetchData("http://127.0.0.1:8000/problems")} />
         </Suspense>
       </div>
       <Footer />
@@ -64,9 +26,9 @@ export const Problems = () => {
   );
 };
 
-const resource = fetchData("http://127.0.0.1:8000/problems");
+// const resource = fetchData("http://127.0.0.1:8000/problems");
 
-const GetProblems = () => {
+const GetProblems = ({ resource }) => {
   const problemList = resource.read();
   console.log(problemList);
   return (

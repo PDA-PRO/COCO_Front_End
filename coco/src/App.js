@@ -12,6 +12,7 @@ import { Result } from "./components/Result/Result";
 import { Manage } from "./components/Manage/Manage";
 import { Board } from "./components/Board/Board";
 import { BoardDetail } from "./components/Board/BoardDetail/BoardDetail";
+import { StatusList } from "./components/StatusList/StatusList";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/manage" element={<Manage />} />
+          <Route path="/status" element={<StatusList />} />
         </Routes>
       </div>
     </Router>

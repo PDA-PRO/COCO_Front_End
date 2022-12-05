@@ -6,7 +6,6 @@ import { ProblemBox } from "./ProblemBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
 
-
 export const Problems = () => {
   return (
     <div>
@@ -29,7 +28,7 @@ export const Problems = () => {
 
 // const resource = fetchData("http://127.0.0.1:8000/problems");
 
-const GetProblems = ({resource}) => {
+const GetProblems = ({ resource }) => {
   const problemList = resource.read();
   console.log(problemList);
   return (

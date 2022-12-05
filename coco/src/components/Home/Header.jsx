@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import "./Home.css";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 import { HiUserCircle } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import Modal from "react-bootstrap/Modal";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.loginState);
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const [show, setShow] = useState(false);
 
@@ -29,10 +29,14 @@ export const Header = () => {
         navigate("/board");
         break;
       case 4:
+        navigate("/status");
+        break;
+      case 5:
         navigate("/login");
         break;
     }
   };
+  console.log(userInfo);
 
   const logoutHandler = () => {
     dispatch({ type: "loginSlice/logout" });
@@ -50,12 +54,13 @@ export const Header = () => {
         <div className="menus">
           <h3 onClick={() => movdPage(2)}>문제</h3>
           <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
+          <h3 onClick={() => movdPage(4)}>채점상황</h3>
         </div>
       </div>
 
       <div className="login">
         {userInfo.id === "" ? (
-          <h3 onClick={() => movdPage(4)}>LOGIN</h3>
+          <h3 onClick={() => movdPage(5)}>LOGIN</h3>
         ) : (
           <>
             <div onClick={handleShow} style={{ cursor: "pointer" }}>

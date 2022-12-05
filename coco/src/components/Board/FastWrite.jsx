@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BsFillLightningFill,
   BsFillExclamationTriangleFill,
 } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
+  const userInfo = useSelector((state) => state.loginState);
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -26,15 +27,17 @@ export const FastWrite = () => {
     if (title == "" || context == "") {
       return alert("완전히 입력해주세요.");
     } else {
+      console.log(userInfo.id);
       axios
-        .post("http://127.0.0.1:8000/fastWrite", {
+        .post("http://127.0.0.1:8000/fastWrite/", {
+          user_id: userInfo.id,
           title: title,
           context: context,
         })
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`${title} 업로드 성공`);
-            window.location.replace("/board");
+            // window.location.replace("/board");
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

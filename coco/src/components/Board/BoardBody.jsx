@@ -23,7 +23,7 @@ export const BoardBody = () => {
 
 const GetList = ({ resource }) => {
   const BoardList = resource.read();
-  console.log(BoardList[0].title);
+  console.log(BoardList);
 
   return (
     <>

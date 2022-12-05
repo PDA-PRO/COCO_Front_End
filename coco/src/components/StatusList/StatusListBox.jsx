@@ -7,7 +7,7 @@ export const StatusListBox = (info) => {
 
   const goDetail = (e) => {
     console.log(e);
-    navigate(`/problems/${e}`, { state: { sub_id: e } });
+    navigate(`/result/${e}`, { state: { info: info.info } });
   };
   var status = "대기";
   switch (info.info.status) {

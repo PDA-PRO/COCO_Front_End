@@ -23,7 +23,7 @@
   width: 100%;
   height: 800px;
   border: 2px solid rgb(202, 202, 202);
-  border-radius: 50px;
+  border-radius: 25px;
   background-color: rgb(255, 255, 240);
 }
 
@@ -66,5 +66,18 @@
   cursor: pointer;
 }
 
+.Res-Body .Res-others .Res-code{
+  margin-top: 2rem;
+  width: 100%;
+  height: 800px;
+  border: 2px solid rgb(202, 202, 202);
+  border-radius: 25px;
+  background-color: rgb(255, 255, 240);
+}
 
-
+.Res-Body .Res-others .Res-code #R-Code{
+  padding: 1.5rem;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.2em;
+  white-space: pre-wrap;
+}

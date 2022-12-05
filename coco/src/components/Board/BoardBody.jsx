@@ -1,33 +1,35 @@
-import React from "react";
-import { All } from "./All";
-import { Free } from "./Free";
-import { Help } from "./Help";
-import { Notice } from "./Notice";
+import React, { Suspense } from "react";
+import "./Board.css";
+import { Guel } from "./Guel";
+import Spinner from "react-bootstrap/Spinner";
+import fetchData from "../../api/fetchTask";
+import { FastWrite } from "./FastWrite";
 
-export const BoardBody = (props) => {
-  if (props.props === 0) {
-    return (
-      <div>
-        <Notice />
+export const BoardBody = () => {
+  return (
+    <div className="boardBody">
+      <div className="Bone">
+        <Suspense fallback={<Spinner />}>
+          <GetList resource={fetchData("http://127.0.0.1:8000/board")} />
+        </Suspense>
       </div>
-    );
-  } else if (props.props === 1) {
-    return (
-      <div>
-        <Free />
+
+      <div className="Btwo">
+        <FastWrite />
       </div>
-    );
-  } else if (props.props === 2) {
-    return (
-      <div>
-        <Help />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <All />
-      </div>
-    );
-  }
+    </div>
+  );
+};
+
+const GetList = ({ resource }) => {
+  const BoardList = resource.read();
+  console.log(BoardList[0].title);
+
+  return (
+    <>
+      {BoardList.map((e) => {
+        return <Guel props={e} key={e.id} />;
+      })}
+    </>
+  );
 };

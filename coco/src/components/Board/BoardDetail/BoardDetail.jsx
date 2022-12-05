@@ -16,44 +16,71 @@ import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
-import Spinner from "react-bootstrap/Spinner";
+import { disposeVariables } from "@tensorflow/tfjs";
 
 export const BoardDetail = () => {
-  const [write, setWrite] = useState(false);
-  const commentShoot = (e) => {
-    if (e == 1) {
-      setWrite(true);
-    } else {
-      setWrite(false);
-    }
-
-    console.log(write);
-  };
+  var path = window.location.pathname;
+  path = path.split("/");
 
   return (
     <>
       <Header />
       <Suspense fallback={<Spinner/>}>
-        {/* 상세 게시판 가져오기 */}
-        <GetBoardDetail />
+        <GetBoardDetail resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}/>
       </Suspense>
-
-
       <Footer />
     </>
   );
 };
 
 const GetBoardDetail = ({resource}) => {
+  const detail = resource.read(); //api fetch 결과
+  console.log(detail)
+  
+  const [write, setWrite] = useState(false);
+
+  const commentShoot = (e) => {
+    if (e == 1) {
+      setWrite(true);
+    } else {
+      setWrite(false);
+    }
+  };
+
+  function timeForToday(value) {
+    const today = new Date();
+    const timeValue = new Date(value);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValue.getTime()) / 1000 / 60
+    );
+    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  }
+  
 
   return(
     <>
           <div className="boardDetail">
         <div className="BDtitle">
-          <h2>No.1 모르겠어요!</h2>
+          <h2>No.{detail.title}</h2>
           <div className="BD_idAndTime">
             <h3>작성자 : sncalphs</h3>
-            <h3>2022.11.30</h3>
+            <h3>{timeForToday(detail.time)}</h3>
           </div>
         </div>
 
@@ -61,19 +88,19 @@ const GetBoardDetail = ({resource}) => {
           <div id="bun1">
             <div className="BDun">
               <BsFillEyeFill size={25} color="gray" />
-              <p>25</p>
+              <p>{detail.views}</p>
             </div>
 
             <div className="BDun">
               <BsFillChatSquareDotsFill size={20} color="gray" />
-              <p>2</p>
+              <p>{detail.comments}</p>
             </div>
           </div>
 
           <div id="bun2">
             <div className="BDun">
               <BsFillHeartFill size={23} />
-              <p>6</p>
+              <p>{detail.likes}</p>
             </div>
           </div>
         </div>
@@ -81,9 +108,7 @@ const GetBoardDetail = ({resource}) => {
         <div className="BDContent">
           <div className="BDTxt">
             <p>
-              아무리 풀어도 모르겠어요
-              <br />
-              고수님들 도와주세요!
+              {detail.context}
             </p>
           </div>
 

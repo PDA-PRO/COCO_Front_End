@@ -11,6 +11,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.loginState);
+  console.log(userInfo.id)
 
   const [show, setShow] = useState(false);
 
@@ -36,8 +37,8 @@ export const Header = () => {
 
   const logoutHandler = () => {
     dispatch({ type: "loginSlice/logout" });
-    // navigate("/");
-    window.location.href = "/";
+    navigate("/");
+    // window.location.href = "/";
   };
 
   return (

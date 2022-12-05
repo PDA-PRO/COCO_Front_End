@@ -16,6 +16,7 @@ import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
+import Spinner from "react-bootstrap/Spinner";
 
 export const BoardDetail = () => {
   const [write, setWrite] = useState(false);
@@ -32,7 +33,22 @@ export const BoardDetail = () => {
   return (
     <>
       <Header />
-      <div className="boardDetail">
+      <Suspense fallback={<Spinner/>}>
+        {/* 상세 게시판 가져오기 */}
+        <GetBoardDetail />
+      </Suspense>
+
+
+      <Footer />
+    </>
+  );
+};
+
+const GetBoardDetail = ({resource}) => {
+
+  return(
+    <>
+          <div className="boardDetail">
         <div className="BDtitle">
           <h2>No.1 모르겠어요!</h2>
           <div className="BD_idAndTime">
@@ -107,16 +123,16 @@ export const BoardDetail = () => {
               <div id="closeState"></div>
             )}
 
+            {/* 댓글불러오기 */}
             {/* <GetList resource={fetchData("http://127.0.0.1:8000/board")} /> */}
             <Comments />
             <Comments />
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
-};
+}
 
 const GetList = ({ resource }) => {
   const commentList = resource.read();

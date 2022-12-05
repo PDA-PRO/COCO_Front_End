@@ -7,12 +7,15 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from 'react-bootstrap/Modal';
 import { FiMail } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 export const SignIn = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
   
     const navigateToHome = () => {
-      window.location.href = "/";
+      // window.location.href = "/";
+      navigate("/");
     };
   
     const [id, setId] = useState("");

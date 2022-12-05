@@ -13,6 +13,7 @@ import { Manage } from "./components/Manage/Manage";
 import { Board } from "./components/Board/Board";
 import { BoardDetail } from "./components/Board/BoardDetail/BoardDetail";
 import { WriteGeul } from "./components/Board/WriteGeul/WriteGuel";
+import { StatusList } from "./components/StatusList/StatusList";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/write" element={<WriteGeul />} />
+          <Route path="/status" element={<StatusList />} />
         </Routes>
       </div>
     </Router>

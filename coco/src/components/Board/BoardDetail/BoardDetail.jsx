@@ -16,7 +16,6 @@ import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
-import { disposeVariables } from "@tensorflow/tfjs";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;

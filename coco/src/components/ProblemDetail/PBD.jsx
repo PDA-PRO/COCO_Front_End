@@ -59,16 +59,7 @@ const GetDetail = ({ resource }) => {
   const submitCode = () => {
     Promise.resolve()
       .then(
-        axios
-          .post("http://127.0.0.1:8000/submissions", {
-            taskid: path.at(-1),
-            userid: "id1", //이거 리덕스값 받기 해주셈 ㅎㅎ
-            sourcecode: code,
-            callbackurl: "string",
-          })
-          .then(function (response) {
-            //결과 처리
-          })
+       
       )
       .then(() => {
         goToResult(detail.id);

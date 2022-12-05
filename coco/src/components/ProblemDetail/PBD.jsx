@@ -19,6 +19,7 @@ import { Footer } from "../Home/Footer";
 import { useState } from "react";
 import { Result } from "../Result/Result";
 import fetchData from "../../api/fetchTask";
+import axios from "axios";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -28,15 +29,16 @@ export const PBD = () => {
     <>
       <Header />
       <Suspense fallback={<>문제가 존재하지 않습니다</>}>
-        <GetDetail resource={fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}/`)}/>
+        <GetDetail
+          resource={fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}/`)}
+        />
       </Suspense>
       <Footer />
     </>
   );
 };
 
-
-const GetDetail = ({resource}) => {
+const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
   const navigate = useNavigate();
   const [code, setCode] = useState(""); //작성한 코드
@@ -56,7 +58,18 @@ const GetDetail = ({resource}) => {
   //코드 submit
   const submitCode = () => {
     Promise.resolve()
-      .then(alert("제출성공"))
+      .then(
+        axios
+          .post("http://127.0.0.1:8000/submissions", {
+            taskid: path.at(-1),
+            userid: "id1", //이거 리덕스값 받기 해주셈 ㅎㅎ
+            sourcecode: code,
+            callbackurl: "string",
+          })
+          .then(function (response) {
+            //결과 처리
+          })
+      )
       .then(() => {
         goToResult(detail.id);
       });

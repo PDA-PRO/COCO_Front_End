@@ -8,7 +8,7 @@
   padding-right: 18vw;
   margin-top: 5rem;
   margin-bottom: 5rem;
-
+  min-height: 800px;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -18,6 +18,8 @@
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 3rem;
 }
 
 .boardContent .boardHead .boardTitle {
@@ -31,23 +33,7 @@
   font-family: "GmarketSansMedium";
   margin: 0 !important;
   font-weight: 700;
-}
-
-.boardHead .boardMenu {
-  display: flex;
-  flex-flow: row;
-  gap: 4vw;
-}
-
-.boardHead .boardMenu li {
-  list-style-type: square;
-  font-family: "Pretendard-Regular";
-  font-size: 1.3em;
-  cursor: pointer;
-}
-
-.boardHead .boardMenu li:hover {
-  color: #00ff00;
+  padding-top: 10px;
 }
 
 .board .boardOn {
@@ -56,56 +42,102 @@
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .board .boardOn h3 {
   font-family: "Pretendard-Regular";
-  cursor: pointer;
   font-weight: 650;
   font-size: 1.2em;
   margin: 0 !important;
   padding-left: 15px;
 }
 
-.boardContentTop {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-  text-align: center;
-  font-family: "Pretendard-Regular";
-  font-weight: 650;
-  border: 1px solid black;
-}
-
-.boardContentTop h2 {
-  font-size: 1.1em;
-  margin: 0 !important;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
 .boardBody {
-  margin-top: 1rem;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  grid-template-columns: 3 1;
+  margin-top: 4rem;
+  align-items: flex-start;
+  max-height: 1200px;
 }
 
-.boardContentTitles {
-  grid-column: 1/2;
+.Bone {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  grid-column: 1/4;
 }
 
-.boardContentCategory {
-  grid-column: 2/3;
-}
-
-.boardContentWriter {
-  grid-column: 3/4;
-}
-
-.boardContentComments {
+.Btwo {
   grid-column: 4/5;
+  justify-self: center;
 }
 
-.boardContentTime {
-  grid-column: 5/6;
+.FastWrite {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 550px;
+  border-radius: 25px;
+  background-color: #f5f5f5;
+  padding: 30px;
+  width: 300px;
+  overflow: auto;
+  justify-content: stretch;
+}
+
+.FastWrite h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  margin: 0 !important;
+  font-size: 1.2em;
+}
+
+.FastWrite .FWHead {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(180, 180, 180);
+  margin-bottom: 20px;
+}
+
+.FastWrite .FWFooter {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.FastWrite .FWFooter p {
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #5c5c5c;
+}
+
+#txtTitle {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 580;
+}
+
+#txtInput {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 580;
+}
+
+#FastSubmit {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 20px;
 }

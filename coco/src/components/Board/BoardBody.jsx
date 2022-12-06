@@ -10,7 +10,7 @@ export const BoardBody = () => {
     <div className="boardBody">
       <div className="Bone">
         <Suspense fallback={<Spinner />}>
-          <GetList resource={fetchData("http://127.0.0.1:8000/board")} />
+          <GetList resource={fetchData("http://127.0.0.1:8000/board")}/>
         </Suspense>
       </div>
 
@@ -23,8 +23,6 @@ export const BoardBody = () => {
 
 const GetList = ({ resource }) => {
   const BoardList = resource.read();
-  console.log(BoardList);
-
   return (
     <>
       {BoardList.map((e) => {

@@ -27,7 +27,6 @@ export const FastWrite = () => {
     if (title == "" || context == "") {
       return alert("완전히 입력해주세요.");
     } else {
-      console.log(userInfo.id);
       axios
         .post("http://127.0.0.1:8000/fastWrite/", {
           user_id: userInfo.id,
@@ -37,7 +36,7 @@ export const FastWrite = () => {
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`${title} 업로드 성공`);
-            // window.location.replace("/board");
+            window.location.replace("/board");
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

@@ -18,6 +18,7 @@ import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
 import { useAppSelector } from "../../../app/store";
 import axios from "axios";
+import { useEffect } from "react";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
@@ -102,7 +103,7 @@ const GetBoardDetail = ({ resource }) => {
         <div className="BDtitle">
           <h2>{detail.title}</h2>
           <div className="BD_idAndTime">
-            <h3>작성자 : sncalphs</h3>
+            <h3>작성자 : {detail.user_id}</h3>
             <h3>{timeForToday(detail.time)}</h3>
           </div>
         </div>

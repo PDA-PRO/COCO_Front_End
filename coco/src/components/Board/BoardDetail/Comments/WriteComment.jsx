@@ -34,7 +34,7 @@ export const WriteComment = ({ commentShoot }) => {
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`댓글 작성 완료`);
-            window.location.replace("/board");
+            window.location.href = `/board/${path.at(-1)}`;
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

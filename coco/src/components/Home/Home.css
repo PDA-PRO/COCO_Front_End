@@ -129,6 +129,16 @@
   color: #00ff00;
 }
 
+.login{
+  display: flex;
+  flex-direction: row;
+}
+
+.login > h3{
+  display: grid;
+  align-content: center;
+}
+
 /*--------------------------------------------- BODY -------------------------------------------------------*/
 .home {
   display: flex;

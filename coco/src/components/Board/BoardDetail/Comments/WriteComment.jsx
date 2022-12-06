@@ -3,9 +3,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import axios from "axios";
+import { useAppSelector } from "../../../../app/store";
 
 export const WriteComment = ({ commentShoot }) => {
-  const [context, setContext] = useState("");
+  const userInfo = useAppSelector((state) => state.loginState);
+  const [context, setContext] = useState("");  
 
   const onContextHandler = (e) => {
     setContext(e.currentTarget.value);
@@ -21,9 +23,13 @@ export const WriteComment = ({ commentShoot }) => {
     if (context == "") {
       return alert("내용을 입력해주세요.");
     } else {
+      var path = window.location.pathname;
+      path = path.split("/");
       axios
         .post("http://127.0.0.1:8000/comment", {
+          user_id: userInfo.id,
           context: context,
+          board_id: path.at(-1)
         })
         .then(function (response) {
           if (response.data.code === 1) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./Manage.css";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
@@ -14,6 +14,8 @@ import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+import fetchData from "../../api/fetchTask";
 
 export const Manage = () => {
   // --------------------------- 페이지 전환 --------------------------------
@@ -403,6 +405,50 @@ export const Manage = () => {
           SUBMIT
         </Button>
       </div>
+      <Suspense fallback={<Spinner />}>
+        <TaskList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
+      </Suspense>
+    </div>
+  );
+};
+
+const TaskList = ({ resource }) => {
+  const problemList = resource.read();
+  const [tasks, settasks] = useState(problemList);
+
+  return (
+    <div className="m-upload">
+      <div className="tasksimple">
+        <div>문제id</div>
+        <div>문제제목</div>
+        <div>제출개수</div>
+      </div>
+      {tasks.map((e) => {
+        return <ListBox info={e} settasks={settasks}></ListBox>;
+      })}
+    </div>
+  );
+};
+
+const ListBox = ({ info, settasks }) => {
+  const loadlist = (e) => {
+    console.log(info[0]);
+    axios
+      .get("http://127.0.0.1:8000/deletetask/" + info[0])
+      .then(function (response) {
+        axios.get("http://127.0.0.1:8000/tasklist").then(function (response) {
+          console.log(response.data);
+          settasks(response.data);
+        });
+        // 성공 핸들링
+      });
+  };
+  return (
+    <div className="tasksimplelist">
+      <div>{info[0]}</div>
+      <div>{info[1]}</div>
+      <div>{info[3] == null ? 0 : info[3]}</div>
+      <Button onClick={loadlist}>삭제</Button>
     </div>
   );
 };

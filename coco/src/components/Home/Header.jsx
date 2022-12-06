@@ -58,12 +58,13 @@ export const Header = () => {
         </div>
       </div>
 
-      <div className="login">
+      <div>
         {userInfo.id === "" ? (
           <h3 onClick={() => movdPage(5)}>LOGIN</h3>
         ) : (
           <>
-            <div onClick={handleShow} style={{ cursor: "pointer" }}>
+            <div onClick={handleShow} style={{ cursor: "pointer" }}  className="login">
+              <h3>{userInfo.id}</h3>
               <HiUserCircle size={40} color={"#00FF00"} />
             </div>
 

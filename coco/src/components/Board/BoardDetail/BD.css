@@ -203,7 +203,7 @@
 }
 
 .commentContext .commentHead .un2 :nth-child(1) {
-  color: gray;
+  /* color: gray; */
 }
 
 .commentContext .commentHead p {

@@ -16,7 +16,9 @@ import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
-import { disposeVariables } from "@tensorflow/tfjs";
+import { useAppSelector } from "../../../app/store";
+import axios from "axios";
+import { useEffect } from "react";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
@@ -25,19 +27,26 @@ export const BoardDetail = () => {
   return (
     <>
       <Header />
-      <Suspense fallback={<Spinner/>}>
-        <GetBoardDetail resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}/>
+      <Suspense fallback={<Spinner />}>
+        <GetBoardDetail
+          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}
+          key={path.at(-1)}
+        />
       </Suspense>
       <Footer />
     </>
   );
 };
 
-const GetBoardDetail = ({resource}) => {
+const GetBoardDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
-  console.log(detail)
-  
+  const userInfo = useAppSelector((state) => state.loginState);
+
   const [write, setWrite] = useState(false);
+  const [like, setLike] = useState(false);
+
+  const [likeNum, setLikeNum] = useState(detail.likes);
+  var numLike = detail.likes
 
   const commentShoot = (e) => {
     if (e == 1) {
@@ -71,15 +80,30 @@ const GetBoardDetail = ({resource}) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
-  
 
-  return(
+  const onLikesHandler = () => {
+    setLike(!like);
+    if(!like){
+      setLikeNum(likeNum+1)
+      numLike+=1;
+    }else{
+      setLikeNum(likeNum-1);
+    }
+    axios.post("http://127.0.0.1:8000/board_likes/", {
+      user_id: userInfo.id,
+      board_id: detail.id,
+      likes: numLike,
+      type: like
+    });
+  }
+
+  return (
     <>
-          <div className="boardDetail">
+      <div className="boardDetail">
         <div className="BDtitle">
-          <h2>No.{detail.title}</h2>
+          <h2>{detail.title}</h2>
           <div className="BD_idAndTime">
-            <h3>작성자 : sncalphs</h3>
+            <h3>작성자 : {detail.user_id}</h3>
             <h3>{timeForToday(detail.time)}</h3>
           </div>
         </div>
@@ -98,18 +122,16 @@ const GetBoardDetail = ({resource}) => {
           </div>
 
           <div id="bun2">
-            <div className="BDun">
-              <BsFillHeartFill size={23} />
-              <p>{detail.likes}</p>
+            <div className="BDun" onClick={onLikesHandler} style={{'color':like === true ? "red": "gray"}}>
+              <BsFillHeartFill size={23}/>
+              <p>{likeNum}</p>
             </div>
           </div>
         </div>
 
         <div className="BDContent">
           <div className="BDTxt">
-            <p>
-              {detail.context}
-            </p>
+            <p>{detail.context}</p>
           </div>
 
           <div className="BDCode">
@@ -148,25 +170,25 @@ const GetBoardDetail = ({resource}) => {
               <div id="closeState"></div>
             )}
 
-            {/* 댓글불러오기 */}
-            {/* <GetList resource={fetchData("http://127.0.0.1:8000/board")} /> */}
-            <Comments />
-            <Comments />
+            {detail.comments_datail.map((e) => {
+              return <Comments props={e} key={e.id} />;
+            })}
+
           </div>
         </div>
       </div>
     </>
   );
-}
-
-const GetList = ({ resource }) => {
-  const commentList = resource.read();
-
-  return (
-    <>
-      {commentList.map((e) => {
-        return <Comments props={e} key={e.id} />;
-      })}
-    </>
-  );
 };
+
+// const GetList = ({ resource }) => {
+//   const commentList = resource.read();
+
+//   return (
+//     <>
+//       {commentList.map((e) => {
+//         return <Comments props={e} key={e.id} />;
+//       })}
+//     </>
+//   );
+// };

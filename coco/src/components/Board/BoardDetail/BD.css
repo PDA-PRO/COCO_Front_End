@@ -174,8 +174,7 @@
 .commentContext {
   /* border: 1px solid lightgray; */
   border-radius: 20px;
-
-  padding: 15px;
+  padding: 15px 30px 15px 30px;
   background-color: #f3f3f3;
   display: flex;
   flex-flow: column nowrap;
@@ -223,6 +222,9 @@
 
 .commentContext .commentBody {
   padding-top: 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 
 .commentContext .commentBody p {
@@ -273,4 +275,27 @@
   font-weight: 600;
   margin-top: 10px;
   width: 100%;
+}
+
+#del_Guel {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  color: red;
+}
+
+#commentCon {
+  width: 80%;
+}
+
+#commentDel {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  color: red;
+  padding-right: 10px;
 }

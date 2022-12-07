@@ -46,8 +46,8 @@ const GetBoardDetail = ({ resource }) => {
   const [like, setLike] = useState(false);
 
   const [likeNum, setLikeNum] = useState(detail.likes);
-  var numLike = detail.likes
-
+  var numLike = detail.likes;
+  const [isMe, setIsMe] = useState(false);
   const commentShoot = (e) => {
     if (e == 1) {
       setWrite(true);
@@ -83,19 +83,19 @@ const GetBoardDetail = ({ resource }) => {
 
   const onLikesHandler = () => {
     setLike(!like);
-    if(!like){
-      setLikeNum(likeNum+1)
-      numLike+=1;
-    }else{
-      setLikeNum(likeNum-1);
+    if (!like) {
+      setLikeNum(likeNum + 1);
+      numLike += 1;
+    } else {
+      setLikeNum(likeNum - 1);
     }
     axios.post("http://127.0.0.1:8000/board_likes/", {
       user_id: userInfo.id,
       board_id: detail.id,
       likes: numLike,
-      type: like
+      type: like,
     });
-  }
+  };
 
   return (
     <>
@@ -119,11 +119,17 @@ const GetBoardDetail = ({ resource }) => {
               <BsFillChatSquareDotsFill size={20} color="gray" />
               <p>{detail.comments}</p>
             </div>
+
+            {isMe ? <p id="del_Guel">삭제</p> : <p></p>}
           </div>
 
           <div id="bun2">
-            <div className="BDun" onClick={onLikesHandler} style={{'color':like === true ? "red": "gray"}}>
-              <BsFillHeartFill size={23}/>
+            <div
+              className="BDun"
+              onClick={onLikesHandler}
+              style={{ color: like === true ? "red" : "gray" }}
+            >
+              <BsFillHeartFill size={23} />
               <p>{likeNum}</p>
             </div>
           </div>
@@ -173,7 +179,6 @@ const GetBoardDetail = ({ resource }) => {
             {detail.comments_datail.map((e) => {
               return <Comments props={e} key={e.id} />;
             })}
-
           </div>
         </div>
       </div>

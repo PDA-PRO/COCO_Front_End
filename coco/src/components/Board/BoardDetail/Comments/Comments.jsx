@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../BD.css";
-import { BsFillHeartFill } from "react-icons/bs";
+import { BsFillHeartFill, BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../../../app/store";
 import axios from "axios";
+import { useEffect } from "react";
 
 export const Comments = (props) => {
   //props: id, context, write_time, likes, user_id, board_id
@@ -11,6 +12,12 @@ export const Comments = (props) => {
   const [like, setLike] = useState(false);
   const [likeNum, setLikeNum] = useState(props.props[3]);
   var numLike = props.props[3];
+
+  useEffect(() => {
+    if (props.props[4] === userInfo.id) {
+      setIsMe(true);
+    }
+  }, [isMe]);
 
   function timeForToday(value) {
     const today = new Date();
@@ -58,6 +65,23 @@ export const Comments = (props) => {
       });
   };
 
+  const onDeleteHandler = () => {
+    axios.post("http://127.0.0.1:8000/delete_comment/", {
+      comment_id: props.props[0],
+      user_id: userInfo.id
+    }).then((res) => {
+      console.log(res.data);
+      if(res.data.code === 1){
+        alert("해당 댓글이 삭제되었습니다");
+      }else{
+        alert("삭제에 실패하였습니다");
+      }
+      var path = window.location.pathname;
+      path = path.split("/");
+      window.location.href = `/board/${path.at(-1)}`;
+    })
+  };
+
   return (
     <div className="commentContext">
       <div className="commentHead">
@@ -76,7 +100,16 @@ export const Comments = (props) => {
       </div>
       <div className="commentBody">
         <p id="commentCon">{props.props[1]}</p>
-        {isMe ? <p id="commentDel">삭제</p> : <p></p>}
+        {isMe ? (
+          <BsTrash
+            size={25}
+            color="red"
+            style={{ cursor: "pointer" }}
+            onClick={onDeleteHandler}
+          />
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );

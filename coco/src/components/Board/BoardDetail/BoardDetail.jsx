@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useAppSelector } from "../../../app/store";
 import axios from "axios";
 import { useEffect } from "react";
+import { BsTrash } from "react-icons/bs";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
@@ -48,6 +49,13 @@ const GetBoardDetail = ({ resource }) => {
   const [likeNum, setLikeNum] = useState(detail.likes);
   var numLike = detail.likes;
   const [isMe, setIsMe] = useState(false);
+
+  useEffect(() => {
+    if (detail.user_id === userInfo.id){
+      setIsMe(true);
+    }
+  }, [isMe]);
+
   const commentShoot = (e) => {
     if (e == 1) {
       setWrite(true);
@@ -97,6 +105,20 @@ const GetBoardDetail = ({ resource }) => {
     });
   };
 
+  const onDeleteHandler = () => {
+    axios
+      .post("http://127.0.0.1:8000/delete_content/", {
+        board_id: detail.id,
+        user_id: userInfo.id,
+      })
+      .then((res) => {
+        if (res.data.code === 1) {
+          alert("게시글이 삭제되었습니다");
+          window.location.href = "/board";
+        }
+      });
+  }
+
   return (
     <>
       <div className="boardDetail">
@@ -120,7 +142,13 @@ const GetBoardDetail = ({ resource }) => {
               <p>{detail.comments}</p>
             </div>
 
-            {isMe ? <p id="del_Guel">삭제</p> : <p></p>}
+            {isMe ? (
+              <p id="del_Guel" onClick={onDeleteHandler}>
+                <BsTrash size={25} color="red" style={{ cursor: "pointer" }} />
+              </p>
+            ) : (
+              <p></p>
+            )}
           </div>
 
           <div id="bun2">

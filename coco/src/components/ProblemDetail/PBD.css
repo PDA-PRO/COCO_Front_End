@@ -4,12 +4,13 @@
   justify-content: center;
   padding-left: 18vw;
   padding-right: 18vw;
+  margin-bottom: 2rem;
 }
 .PBD-title {
   display: flex;
   flex-flow: row;
   margin-top: 3rem;
-  margin-bottom: 5rem;
+  margin-bottom: 1.2rem;
   justify-content: space-between;
   align-items: end;
   padding-right: 10vw;
@@ -22,7 +23,8 @@
 }
 
 .problemsName-pbd > div:nth-child(1) {
-  border: 3px solid red;
+  border: 2px solid red;
+  border-radius: 10px;
   color: red;
   display: flex;
   padding: 0px 40px;
@@ -31,11 +33,16 @@
   align-self: center;
   margin-right: 5rem;
   font-size: 1.5em;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.5em;
 }
 
 .problemsName-pbd > div:nth-child(2) {
   font-size: 2em;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.8em;
   align-self: center;
   padding-top: 0.4rem;
 }
@@ -50,9 +57,27 @@
   color: skyblue;
   text-align: center;
   margin-bottom: 8px;
-  font-size: 1.8em;
-  font-weight: 750;
   margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.5em;
+}
+
+#jung {
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1em;
+}
+
+.PBD-secTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 100px;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-bottom: 2rem;
+  color: #686868;
 }
 
 .PBD-body {
@@ -71,6 +96,9 @@
 
 .PBD-problem .PBD-pbTxt {
   min-height: 500px;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1em;
 }
 
 .PBD-pbTitle {
@@ -79,17 +107,35 @@
   border-bottom: 2px solid lightgray;
   gap: 20px;
   align-items: flex-start;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.5em;
+}
+
+.ttun {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.ttun2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 0.8em;
 }
 
 .PBD-problem .PBD-pbTxt h2 {
   white-space: pre-wrap;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
 .PBD-problem .PBD-pbTxt #PBD-txt {
   white-space: pre-wrap;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
   font-size: 1.1em;
   padding-left: 1rem;
   padding-top: 2rem;
@@ -117,10 +163,11 @@
   min-width: 13vw;
   max-width: 13vw;
   white-space: pre-wrap;
-  min-height: 200px;
+  min-height: 150px;
   max-height: 200px;
   padding-left: 0.5rem;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
   font-size: 1.1em;
   padding-top: 1rem;
 }
@@ -137,9 +184,18 @@
 
 #submit_btn {
   margin-top: 3rem !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
 #submit_btn:hover {
   border: 1px solid #5fe45f;
   background-color: #5fe45f;
+}
+
+#PBD-codeArea {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
 }

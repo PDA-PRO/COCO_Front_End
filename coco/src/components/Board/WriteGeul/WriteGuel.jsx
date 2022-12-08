@@ -11,6 +11,7 @@ import { Free } from "./Free";
 import { Help } from "./Help";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export const WriteGeul = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export const WriteGeul = () => {
   const [title, setTitle] = useState("");
   const [cate, setCate] = useState(1);
   const [context, setContext] = useState("");
+  const userInfo = useSelector((state) => state.loginState);
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -41,9 +43,10 @@ export const WriteGeul = () => {
       return alert("완전히 입력해주세요.");
     } else {
       axios
-        .post("http://127.0.0.1:8000/board", {
+        .post("http://127.0.0.1:8000/fastWrite/", {
+          user_id: userInfo.id,
           title: title,
-          category: cate,
+          //category: cate,
           context: context,
         })
         .then(function (response) {

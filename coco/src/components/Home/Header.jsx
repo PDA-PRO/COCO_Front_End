@@ -63,9 +63,13 @@ export const Header = () => {
           <h3 onClick={() => movdPage(5)}>LOGIN</h3>
         ) : (
           <>
-            <div onClick={handleShow} style={{ cursor: "pointer" }}  className="login">
-              <h3>{userInfo.id}</h3>
+            <div
+              onClick={handleShow}
+              style={{ cursor: "pointer" }}
+              className="login"
+            >
               <HiUserCircle size={40} color={"#00FF00"} />
+              <h3>{userInfo.id}</h3>
             </div>
 
             <Modal show={show} onHide={handleClose}>

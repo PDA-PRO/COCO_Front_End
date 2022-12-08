@@ -20,6 +20,7 @@ import { useState } from "react";
 import { Result } from "../Result/Result";
 import fetchData from "../../api/fetchTask";
 import axios from "axios";
+import { useAppSelector } from "../../app/store";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -42,6 +43,7 @@ const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
   const navigate = useNavigate();
   const [code, setCode] = useState(""); //작성한 코드
+  const userInfo = useAppSelector((state) => state.loginState);
 
   //코드 입력
   const onCodeHandler = (e) => {
@@ -50,20 +52,27 @@ const GetDetail = ({ resource }) => {
 
   //submit이후 결과창 이동
   const goToResult = (e) => {
-    console.log(code);
-    navigate(`/result/${detail.id}/`, { state: { code: code } });
-    // window.location.href = `/result/${e}/`;
+    console.log(e);
+    navigate(`/status?user_id=${userInfo.id}`, {
+      state: { user_id: userInfo.id },
+    });
   };
 
   //코드 submit
   const submitCode = () => {
-    Promise.resolve()
-      .then(
-       
-      )
-      .then(() => {
-        goToResult(detail.id);
-      });
+    Promise.resolve().then(
+      axios
+        .post("http://127.0.0.1:8000/submission", {
+          taskid: detail.id,
+          userid: userInfo.id,
+          sourcecode: code,
+          callbackurl: "string",
+        })
+        .then(function (response) {
+          alert(`${userInfo.id}님 ${detail.id} 제출완료`);
+          goToResult(userInfo.id, { state: { userid: userInfo.id } });
+        })
+    );
   };
 
   return (

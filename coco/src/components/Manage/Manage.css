@@ -93,3 +93,22 @@
 .m-testCase {
   margin-top: 30px;
 }
+.tasksimple{
+  border-bottom: 1px solid gray;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    padding: 0.5rem 3vw;
+    width: 100%;
+    font-size: 1.5em;
+}
+.tasksimplelist{
+  border-bottom: 1px solid gray;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    padding: 0.5rem 3vw;
+    width: 100%;
+}

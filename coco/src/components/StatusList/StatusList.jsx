@@ -5,8 +5,11 @@ import "./StatusList.css";
 import { StatusListBox } from "./StatusListBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
+import { useLocation } from "react-router-dom";
 
-export const StatusList = ({ user_id }) => {
+export const StatusList = () => {
+  const location = useLocation();
+  console.log(location.state);
   return (
     <div>
       <Header />
@@ -20,7 +23,15 @@ export const StatusList = ({ user_id }) => {
           <div>제출시간</div>
         </div>
         <Suspense fallback={<Spinner />}>
-          <Getsubmits resource={fetchData(`http://127.0.0.1:8000/status`)} />
+          <Getsubmits
+            resource={
+              location.state == null
+                ? fetchData(`http://127.0.0.1:8000/status`)
+                : fetchData(
+                    `http://127.0.0.1:8000/status?user_id=${location.state.user_id}`
+                  )
+            }
+          />
         </Suspense>
       </div>
       <Footer />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./Manage.css";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
@@ -14,6 +14,8 @@ import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+import fetchData from "../../api/fetchTask";
 
 export const Manage = () => {
   // --------------------------- 페이지 전환 --------------------------------
@@ -128,41 +130,84 @@ export const Manage = () => {
       inputDesc == "" ||
       inputEx1 == "" ||
       outputDesc == "" ||
-      outputEx1 == "" ||
-      testCase == null
+      outputEx1 == ""
     ) {
       return alert("정보 입력 부족");
     } else {
-      axios
-        .post(
-          "http://127.0.0.1:8000/manage",
-          {
-            title: title,
-            description: desc,
-            desPic: desPic,
-            diff: diff,
-            timeLimit: time,
-            memLimit: mem,
-            inputDescription: inputDesc,
-            inputEx1: inputEx1,
-            inputEx2: inputEx2,
-            outputDescription: outputDesc,
-            outputEx1: outputEx1,
-            outputEx2: outputEx2,
-            python: py,
-            C_Lan: cLan,
-            testCase: testCase, // 파일
-          },
-          { headers: { "Content-Type": `multipart/form-data; ` } }
-        )
-        .then(function (response) {
-          if (response.data.code === 1) {
-            alert(`${title} 업로드 성공`);
-            moveHome();
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
-        });
+      if (testCase == null) {
+        console.log(testCase);
+        console.log(desPic);
+        axios
+          .post(
+            "http://127.0.0.1:8000/manage",
+            {
+              testCase: testCase, // 파일
+            },
+            {
+              headers: { "Content-Type": `multipart/form-data; ` },
+              params: {
+                title: title,
+                description: desc,
+                diff: diff,
+                timeLimit: time,
+                memLimit: mem,
+                inputDescription: inputDesc,
+                inputEx1: inputEx1,
+                inputEx2: inputEx2,
+                outputDescription: outputDesc,
+                outputEx1: outputEx1,
+                outputEx2: outputEx2,
+                python: py,
+                C_Lan: cLan,
+              },
+            }
+          )
+          .then(function (response) {
+            if (response.data.result === 1) {
+              alert(`${title} 업로드 성공`);
+              moveHome();
+            } else {
+              alert("ERROR - SERVER COMMUNICATION FAILED");
+            }
+          });
+      } else {
+        console.log(testCase);
+        console.log(desPic);
+        axios
+          .post(
+            "http://127.0.0.1:8000/manage",
+            {
+              desPic: desPic,
+              testCase: testCase, // 파일
+            },
+            {
+              headers: { "Content-Type": `multipart/form-data; ` },
+              params: {
+                title: title,
+                description: desc,
+                diff: diff,
+                timeLimit: time,
+                memLimit: mem,
+                inputDescription: inputDesc,
+                inputEx1: inputEx1,
+                inputEx2: inputEx2,
+                outputDescription: outputDesc,
+                outputEx1: outputEx1,
+                outputEx2: outputEx2,
+                python: py,
+                C_Lan: cLan,
+              },
+            }
+          )
+          .then(function (response) {
+            if (response.data.result === 1) {
+              alert(`${title} 업로드 성공`);
+              moveHome();
+            } else {
+              alert("ERROR - SERVER COMMUNICATION FAILED");
+            }
+          });
+      }
     }
   };
 
@@ -209,9 +254,7 @@ export const Manage = () => {
                 type="file"
                 multiple
                 onChange={(e) => {
-                  setDesPic(e.currentTarget.value);
-                  setImage(e.target.files[0]);
-                  uploader(e);
+                  setDesPic(e.target.files[0]);
                 }}
               />
             </Form.Group>
@@ -382,11 +425,8 @@ export const Manage = () => {
               </Form.Label>
               <Form.Control
                 type="file"
-                multiple
                 onChange={(e) => {
-                  setImage(e.target.files[0]);
-                  uploader(e);
-                  setTestCase(e.currentTarget.value);
+                  setTestCase(e.target.files[0]);
                 }}
               />
             </Form.Group>
@@ -403,6 +443,50 @@ export const Manage = () => {
           SUBMIT
         </Button>
       </div>
+      <Suspense fallback={<Spinner />}>
+        <TaskList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
+      </Suspense>
+    </div>
+  );
+};
+
+const TaskList = ({ resource }) => {
+  const problemList = resource.read();
+  const [tasks, settasks] = useState(problemList);
+
+  return (
+    <div className="m-upload">
+      <div className="tasksimple">
+        <div>문제id</div>
+        <div>문제제목</div>
+        <div>제출개수</div>
+      </div>
+      {tasks.map((e) => {
+        return <ListBox info={e} settasks={settasks}></ListBox>;
+      })}
+    </div>
+  );
+};
+
+const ListBox = ({ info, settasks }) => {
+  const loadlist = (e) => {
+    console.log(info[0]);
+    axios
+      .get("http://127.0.0.1:8000/deletetask/" + info[0])
+      .then(function (response) {
+        axios.get("http://127.0.0.1:8000/tasklist").then(function (response) {
+          console.log(response.data);
+          settasks(response.data);
+        });
+        // 성공 핸들링
+      });
+  };
+  return (
+    <div className="tasksimplelist">
+      <div>{info[0]}</div>
+      <div>{info[1]}</div>
+      <div>{info[3] == null ? 0 : info[3]}</div>
+      <Button onClick={loadlist}>삭제</Button>
     </div>
   );
 };

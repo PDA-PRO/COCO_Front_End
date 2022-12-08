@@ -83,7 +83,27 @@ const GetDetail = ({ resource }) => {
           <div>{detail.title}</div>
         </div>
         <div className="problemsRate-pbd">{Rating(detail.diff)}</div>
-        <div className="problemsAns-pbd">{detail.rate}</div>
+        <div
+          className="problemsAns-pbd"
+          style={{
+            color:
+              detail.rate == 0
+                ? "gray"
+                : detail.rate >= 40
+                ? "skyblue"
+                : "rgb(218, 55, 55)",
+          }}
+        >
+          <span style={{ color: "gray" }} id="jung">
+            정답률 :{" "}
+          </span>
+          {detail.rate}%
+        </div>
+      </div>
+
+      <div className="PBD-secTitle">
+        <div className="PBD-timeLimit">시간제한 : {detail.timeLimit}sec</div>
+        <div className="PBD-memLimit">메모리 제한 : {detail.memLimit}mbyte</div>
       </div>
 
       <div className="PBD-body">
@@ -94,26 +114,21 @@ const GetDetail = ({ resource }) => {
               <h2>문제 설명</h2>
             </div>
 
-            <p id="PBD-txt">
-              {/* 정수 2개를 입력받아 합을 출력해보자.
-              <br />
-              단, 입력되는 정수는 -2147483648 ~ +2147483648 이다. */}
-              {detail.mainDesc}
-            </p>
+            <p id="PBD-txt">{detail.mainDesc}</p>
           </div>
 
           <div className="PBD-exBox">
             <div className="PBD-exInput">
               <div className="PBD-pbTitle">
                 <BsArrowDownRight size={30} color="red" />
-                <h2>Input</h2>
+                <h2 className="ttun">Input</h2>
               </div>
 
               <p className="PBD-txt2">{detail.inDesc}</p>
 
               <div className="PBD-pbTitle">
                 <BsQuestionLg size={30} color="red" />
-                <h2>입력 예시</h2>
+                <h2 className="ttun">입력 예시</h2>
               </div>
 
               <p className="PBD-txt2">{detail.inputEx1}</p>
@@ -122,14 +137,14 @@ const GetDetail = ({ resource }) => {
             <div className="PBD-exOutput">
               <div className="PBD-pbTitle">
                 <BsArrowUpLeft size={30} color="#00ff00" />
-                <h2>Output</h2>
+                <h2 className="ttun">Output</h2>
               </div>
 
               <p className="PBD-txt2">{detail.outDesc}</p>
 
               <div className="PBD-pbTitle">
                 <BsExclamationLg size={30} color="#00ff00" />
-                <h2>출력 예시</h2>
+                <h2 className="ttun">출력 예시</h2>
               </div>
 
               <p className="PBD-txt2">{detail.outputEx1}</p>
@@ -140,13 +155,14 @@ const GetDetail = ({ resource }) => {
         <div className="PBD-input">
           <div className="PBD-pbTitle">
             <IoLogoPython size={30} color="skyblue" />
-            <h2>코드 입력 : Python3</h2>
+            <h2 className="ttun">코드 입력 : Python3</h2>
           </div>
 
           <InputGroup>
-            <InputGroup.Text>CODE</InputGroup.Text>
+            <InputGroup.Text className="ttun2">CODE</InputGroup.Text>
             <Form.Control
               as="textarea"
+              id="PBD-codeArea"
               aria-label="With textarea"
               style={{ minHeight: "700px" }}
               onChange={onCodeHandler}
@@ -181,7 +197,7 @@ function Rating(n) {
           return (
             <FaStar
               key={idx}
-              size="40"
+              size="30"
               className={colored[el] && "yellowStar"}
             />
           );
@@ -196,7 +212,6 @@ export default Rating;
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
 `;
 
 const Stars = styled.div`
@@ -205,7 +220,7 @@ const Stars = styled.div`
 
   & svg {
     color: gray;
-    margin: 0 10px;
+    margin: 0 6px;
   }
 
   .yellowStar {

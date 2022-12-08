@@ -42,7 +42,6 @@ export const BoardDetail = () => {
 const GetBoardDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
   const userInfo = useAppSelector((state) => state.loginState);
-  print(userInfo)
 
   const [write, setWrite] = useState(false);
   const [like, setLike] = useState(false);
@@ -52,7 +51,7 @@ const GetBoardDetail = ({ resource }) => {
   const [isMe, setIsMe] = useState(false);
 
   useEffect(() => {
-    if (detail.user_id === userInfo.id || userInfo.ismanage === true){
+    if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
   }, [isMe]);
@@ -118,7 +117,26 @@ const GetBoardDetail = ({ resource }) => {
           window.location.href = "/board";
         }
       });
-  }
+  };
+
+  const CodeHere = () => {
+    return (
+      <div className="BDCode">
+        <div className="BD_codeTop">
+          <BsCode size={33} />
+          <h2>CODE HERE</h2>
+          <BsCodeSlash size={33} />
+        </div>
+
+        <div className="BD_showCode">
+          <p>
+            n = int(input()) <br /> print(n+m)
+          </p>
+        </div>
+        <p></p>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -169,35 +187,26 @@ const GetBoardDetail = ({ resource }) => {
             <p>{detail.context}</p>
           </div>
 
-          <div className="BDCode">
-            <div className="BD_codeTop">
-              <BsCode size={33} />
-              <h2>CODE HERE</h2>
-              <BsCodeSlash size={33} />
-            </div>
-
-            <div className="BD_showCode">
-              <p>
-                n = int(input()) <br /> print(n+m)
-              </p>
-            </div>
-            <p></p>
-          </div>
+          {detail.category === 2 ? <CodeHere /> : <></>}
         </div>
         <div className="comments">
           <div className="cHead">
-            <VscCommentDiscussion size={35} color="#6BE52E" />
-            <h2>댓글</h2>
+            <div className="cUn1">
+              <VscCommentDiscussion size={35} color="#6BE52E" />
+              <h2>댓글</h2>
+            </div>
+
+            <div
+              className="cWrite"
+              onClick={() => {
+                commentShoot(1);
+              }}
+            >
+              <SlPencil size={20} />
+              <p>댓글 작성</p>
+            </div>
           </div>
-          <div
-            className="cWrite"
-            onClick={() => {
-              commentShoot(1);
-            }}
-          >
-            <SlPencil size={25} />
-            <p>댓글 작성</p>
-          </div>
+
           <div className="cBody">
             {write ? (
               <WriteComment commentShoot={commentShoot} />

@@ -42,6 +42,7 @@ export const BoardDetail = () => {
 const GetBoardDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
   const userInfo = useAppSelector((state) => state.loginState);
+  print(userInfo)
 
   const [write, setWrite] = useState(false);
   const [like, setLike] = useState(false);
@@ -51,7 +52,7 @@ const GetBoardDetail = ({ resource }) => {
   const [isMe, setIsMe] = useState(false);
 
   useEffect(() => {
-    if (detail.user_id === userInfo.id){
+    if (detail.user_id === userInfo.id || userInfo.ismanage === true){
       setIsMe(true);
     }
   }, [isMe]);

@@ -14,7 +14,7 @@ export const Comments = (props) => {
   var numLike = props.props[3];
 
   useEffect(() => {
-    if (props.props[4] === userInfo.id) {
+    if (props.props[4] === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
   }, [isMe]);

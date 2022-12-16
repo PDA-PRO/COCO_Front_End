@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.statusListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  padding: 0 15vw;
+  margin: 3rem 0 8rem 0;
+  min-height: 700px;
+}
+
+.statusListBox {
+  border-bottom: 1px solid gray;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 0.5rem 3vw;
+  width: 100%;
+}
+
+.statusListBox:nth-child(1) {
+  border: 1px solid gray;
+}
+
+.statusListBox:nth-child(1) > div {
+  border: none;
+  margin: 0px !important;
+  color: red;
+  font-size: 1em;
+  padding: 0.6rem 0px 0.5rem 0px;
+}
+
+.statusListBox .status {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding-top: 0.3rem;
+  height: 2rem;
+  width: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.statusListBox .s1 {
+  background-color: gray;
+}
+.statusListBox .s2 {
+  background-color: yellow;
+}
+.statusListBox .s3 {
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+}
+.statusListBox .s4 {
+  background-color: red;
+  cursor: pointer;
+}

@@ -1,66 +1,30 @@
-import React from "react";
-import { useNavigate, useParams, useLocation  } from "react-router-dom";
+import React, { Suspense } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Footer } from "../Home/Footer";
 import { Header } from "../Home/Header";
-import { IoLogoPython, IoClose, IoRadioButtonOffSharp } from "react-icons/io5";
+import { IoLogoPython } from "react-icons/io5";
 import "./Result.css";
 import { RiEmotionLaughLine, RiEmotionSadLine } from "react-icons/ri";
 import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
+import fetchData from "../../api/fetchTask";
+import Spinner from "react-bootstrap/Spinner";
 
 export const Result = (code) => {
   const { id } = useParams();
-  const location = useLocation();
+  const locate = useLocation();
 
   const num = parseInt(id);
 
-  console.log(location.state.code);
-  const navigate = useNavigate();
-  const whatResult = (e) => {
-    if (e === 1) {
-      return <RiEmotionLaughLine size={40} color="#6666ff" />;
-    } else {
-      return <RiEmotionSadLine size={40} color="red" />;
-    }
-  };
   return (
     <>
       <Header />
-      <div className="Res">
-        <div className="PBD-title">
-          <div className="problemsName-pbd">
-            <div>No.{num}</div>
-            <div>더하기 문제</div>
-          </div>
-          <div className="problemsRate-pbd">{Rating(2)}</div>
-          <div className="problemsAns-pbd">54.6%</div>
-        </div>
-        <div className="Res-Body">
-          <div className="Res-yourCode">
-            <div className="Res-pbTitle">
-              <IoLogoPython size={40} color="skyblue" />
-              <h2>My Code</h2>
-            </div>
-            <div className="Res-code">
-              <p id="R-Code">{location.state.code}</p>
-            </div>
-          </div>
-
-          <div className="Res-others">
-            <div className="Res-pbTitle">
-              {/* <IoLogoPython size={30} color="skyblue" /> */}
-              <img src="/image/logo.png" alt="" height="40px" />
-              <h2>채점 결과 :</h2>
-              {whatResult(1)}
-            </div>
-
-            <h3 id="Res-out" onClick={() => navigate("/problems")}>
-              문제 목록으로..
-            </h3>
-          </div>
-        </div>
-      </div>
-
+      <Suspense fallback={<Spinner />}>
+        <ResultBox
+          resource={fetchData(`http://127.0.0.1:8000/result/${num}`)}
+          info={locate.state.info}
+        />
+      </Suspense>
       <Footer />
     </>
   );
@@ -112,3 +76,51 @@ const Stars = styled.div`
     color: #fcc419;
   }
 `;
+
+const ResultBox = ({ resource, info }) => {
+  const whatResult = (e) => {
+    if (e === 3) {
+      return <RiEmotionLaughLine size={40} color="#6666ff" />;
+    } else {
+      return <RiEmotionSadLine size={40} color="red" />;
+    }
+  };
+  const problemList = resource.read();
+  console.log(problemList);
+  console.log(info);
+  return (
+    <div className="Res">
+      <div className="PBD-title">
+        <div className="problemsName-pbd">
+          <div>{info.sub_id}</div>
+          <div>{info.title}</div>
+        </div>
+        <div className="problemsRate-pbd">{Rating(2)}</div>
+        <div className="problemsAns-pbd">54.6%</div>
+      </div>
+      <div className="Res-Body">
+        <div className="Res-yourCode">
+          <div className="Res-pbTitle">
+            <IoLogoPython size={40} color="skyblue" />
+            <h2>제출 코드</h2>
+          </div>
+          <div className="Res-code">
+            <p id="R-Code">{problemList[2]}</p>
+          </div>
+        </div>
+
+        <div className="Res-others">
+          <div className="Res-pbTitle">
+            {/* <IoLogoPython size={30} color="skyblue" /> */}
+            <img src="/image/logo.png" alt="" height="40px" />
+            <h2>채점 결과 :</h2>
+            {whatResult(problemList[12])}
+          </div>
+          <div className="Res-code">
+            <p id="R-Code">{problemList[9]}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,28 +1,30 @@
-.PBD{
+.PBD {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 18vw;
+  padding-right: 18vw;
+  margin-bottom: 2rem;
 }
-.PBD-title{
+.PBD-title {
   display: flex;
   flex-flow: row;
   margin-top: 3rem;
-  margin-bottom: 5rem;
+  margin-bottom: 1.2rem;
   justify-content: space-between;
   align-items: end;
   padding-right: 10vw;
 }
 
-.problemsName-pbd{
+.problemsName-pbd {
   display: flex;
   flex-flow: row nowrap;
-  align-items:flex-end;
+  align-items: flex-end;
 }
 
-.problemsName-pbd > div:nth-child(1){
-  border: 3px solid red;
+.problemsName-pbd > div:nth-child(1) {
+  border: 2px solid red;
+  border-radius: 10px;
   color: red;
   display: flex;
   padding: 0px 40px;
@@ -31,106 +33,169 @@
   align-self: center;
   margin-right: 5rem;
   font-size: 1.5em;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.5em;
 }
 
-.problemsName-pbd > div:nth-child(2){
+.problemsName-pbd > div:nth-child(2) {
   font-size: 2em;
-  font-family: 'GmarketSansMedium';
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.8em;
   align-self: center;
   padding-top: 0.4rem;
 }
 
-.problemsRate-pbd{
+.problemsRate-pbd {
   display: flex;
   flex-direction: row;
   margin-bottom: 8px;
 }
 
-.problemsAns-pbd{
+.problemsAns-pbd {
   color: skyblue;
   text-align: center;
   margin-bottom: 8px;
-  font-size: 1.8em;
-  font-weight: 750;
   margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.5em;
 }
 
-.PBD-body{
+#jung {
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1em;
+}
+
+.PBD-secTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 100px;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-bottom: 2rem;
+  color: #686868;
+}
+
+.PBD-body {
   display: grid;
-  grid-template-columns: 2fr 2fr;
-  column-gap: 60px;
+  grid-template-columns: 46% 46%;
+  gap: 5vw;
   margin-top: 3rem;
 }
 
-.PBD-body .PBD-problem{
+.PBD-body .PBD-problem {
   grid-column: 1/2;
   display: flex;
   flex-flow: column;
   justify-content: center;
 }
 
-.PBD-problem .PBD-pbTxt{
+.PBD-problem .PBD-pbTxt {
   min-height: 500px;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1em;
 }
 
-.PBD-pbTitle{
+.PBD-pbTitle {
   display: flex;
   flex-flow: row nowrap;
   border-bottom: 2px solid lightgray;
   gap: 20px;
   align-items: flex-start;
-
-  font-family: 'GmarketSansMedium';
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.5em;
 }
 
-.PBD-problem .PBD-pbTxt h2{
-  white-space: pre-wrap;
-  font-family: 'GmarketSansMedium';
+.ttun {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
 }
 
-.PBD-problem .PBD-pbTxt #PBD-txt{
+.ttun2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 0.8em;
+}
+
+.PBD-problem .PBD-pbTxt h2 {
   white-space: pre-wrap;
-  font-family: 'GmarketSansMedium';
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.PBD-problem .PBD-pbTxt #PBD-txt {
+  white-space: pre-wrap;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
   font-size: 1.1em;
   padding-left: 1rem;
   padding-top: 2rem;
 }
 
-.PBD-body .PBD-problem .PBD-exBox{
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
+.PBD-body .PBD-problem .PBD-exBox {
+  display: grid;
+  grid-template-columns: 47% 47%;
+  gap: 3vw;
 }
 
-.PBD-body .PBD-problem .PBD-exBox .PBD-txt2{
-  min-width: 300px;
-  max-width: 300px;
+.PBD-body .PBD-problem .PBD-exBox .exInput {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.PBD-body .PBD-problem .PBD-exBox .exOutput {
+  grid-column: 2/3;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.PBD-body .PBD-problem .PBD-exBox .PBD-txt2 {
+  min-width: 13vw;
+  max-width: 13vw;
   white-space: pre-wrap;
-  min-height: 200px;
+  min-height: 150px;
   max-height: 200px;
   padding-left: 0.5rem;
-  font-family: 'GmarketSansMedium';
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
   font-size: 1.1em;
   padding-top: 1rem;
 }
 
-.PBD-body .PBD-input{
+.PBD-body .PBD-input {
   grid-column: 2/3;
   display: flex;
   flex-flow: column;
 }
 
-.PBD-body .PBD-input .PBD-pbTitle{
+.PBD-body .PBD-input .PBD-pbTitle {
   margin-bottom: 2rem;
 }
 
-#submit_btn{
+#submit_btn {
   margin-top: 3rem !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
-#submit_btn:hover{
+#submit_btn:hover {
   border: 1px solid #5fe45f;
   background-color: #5fe45f;
 }
 
+#PBD-codeArea {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+}

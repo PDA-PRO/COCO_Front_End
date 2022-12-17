@@ -1,9 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./Home.css";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useNavigate } from "react-router-dom";
 import { SlPin } from "react-icons/sl";
+import { Block } from "./Block";
+import Spinner from "react-bootstrap/esm/Spinner";
+import fetchData from "../../api/fetchTask";
 
 export const Home = () => {
   return (
@@ -18,6 +21,9 @@ export const Home = () => {
               <span id="t2-1"> COCO</span>
             </h2>
           </div>
+          <Suspense fallback={<Spinner />}>
+            <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
+          </Suspense>
 
           <div className="ad-box">
             <img
@@ -45,4 +51,10 @@ export const Home = () => {
       </div>
     </div>
   );
+};
+
+const GetHot = ({ resource }) => {
+  const HOT = resource.read();
+  console.log(HOT);
+  return <>{<Block info={HOT} key={HOT.id} />}</>;
 };

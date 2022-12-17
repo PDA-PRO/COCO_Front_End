@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Block = (props) => {
   const navigate = useNavigate();
+  console.log(props.info)
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
   };
@@ -66,10 +67,10 @@ export const Block = (props) => {
       return `${Math.floor(betweenTimeDay / 365)}년전`;
     }
 
-    chCate(props.props.category);
-    var originTime = props.props.time;
+    chCate(props.info.category);
+    var originTime = props.info.time;
     setDate(timeForToday(originTime));
-  }, [props.props]);
+  }, [props.info]);
 
   return (
     <div className="Block">
@@ -83,12 +84,12 @@ export const Block = (props) => {
           className="blockBox"
           style={{ backgroundColor: bgColor }}
           onClick={() => {
-            moveBoard(props.props.board_id);
+            moveBoard(props.info.board_id);
           }}
         >
           <div className="blockContent">
             <div className="blockTop">
-              <h3>{props.props.user_id}</h3>
+              <h3>{props.info.user_id}</h3>
               <h3>{date}</h3>
             </div>
             <div className="blockSec">
@@ -101,7 +102,7 @@ export const Block = (props) => {
                     size={22}
                     style={{ marginBottom: "3px" }}
                   />
-                  <p>{props.props.views}</p>
+                  <p>{props.info.views}</p>
                 </div>
                 <div className="unOne">
                   <BsChatSquareTextFill
@@ -109,18 +110,18 @@ export const Block = (props) => {
                     size={22}
                     style={{ marginLeft: "10px" }}
                   />
-                  <p>{props.props.comments}</p>
+                  <p>{props.info.comments}</p>
                 </div>
 
                 <div className="unOne">
                   <BsHeartFill color="red" size={22} />
-                  <p>{props.props.likes}</p>
+                  <p>{props.info.likes}</p>
                 </div>
               </div>
             </div>
 
             <div className="blockBody">
-              <p>{props.props.content}</p>
+              <p>{props.info.title}</p>
             </div>
           </div>
         </div>
@@ -134,28 +135,28 @@ export const Block = (props) => {
         <div
           className="blockBox"
           onClick={() => {
-            moveTask(props.props.problem_id);
+            moveTask(props.info.problem_id);
           }}
           style={{ backgroundColor: "#fff" }}
         >
           <div className="blockContent">
             <div className="blockTop2">
               <div className="redBox">
-                <h3>No.{props.props.problem_id}</h3>
+                <h3>No.{props.info.problem_id}</h3>
               </div>
 
-              <h3>{props.props.problem_title}</h3>
+              <h3>{props.info.problem_title}</h3>
             </div>
 
             <div className="blockSec2">
-              {Rating(`${props.props.problem_diff}`)}
-              <p>정답률 : {props.props.problem_rate}%</p>
+              {Rating(`${props.info.problem_diff}`)}
+              <p>정답률 : {props.info.problem_rate}%</p>
             </div>
 
             <div className="blockThird">
-              <p>시간 제한 : {props.props.problem_timeLimit}sec</p>
-              <p>메모리 제한 : {props.props.problem_memLimit}mb</p>
-              <p>총 제출수 : {props.props.problem_submitCount}</p>
+              <p>시간 제한 : {props.info.problem_timeLimit}sec</p>
+              <p>메모리 제한 : {props.info.problem_memLimit}mb</p>
+              <p>총 제출수 : {props.info.problem_submitCount}</p>
             </div>
           </div>
         </div>

@@ -15,9 +15,9 @@ export const StatusList = () => {
       <Header />
       <div className="statusListContainer">
         <div className="statusListBox">
-          <div>제출 번호</div>
-          <div>아이디</div>
-          <div>문제</div>
+          <div>Submit No.</div>
+          <div>User ID</div>
+          <div>문제 ID</div>
           <div>문제</div>
           <div>결과</div>
           <div>제출시간</div>

@@ -16,13 +16,13 @@ import { useNavigate } from "react-router-dom";
 
 export const Block = (props) => {
   const navigate = useNavigate();
-  console.log(props.info)
+  console.log(props.info);
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
   };
 
   const moveTask = (e) => {
-    navigate(`/problem/${e}`);
+    navigate(`/problems/${e}`);
   };
   const [category, setCategory] = useState("");
   const [bgColor, setBgColor] = useState("white");
@@ -77,7 +77,7 @@ export const Block = (props) => {
       <div className="box1">
         <div className="boxTitle">
           <FaHotjar size={28} color="red" />
-          <h2>Hot한 게시글</h2>
+          <h2>Hot 게시글</h2>
         </div>
 
         <div
@@ -90,7 +90,7 @@ export const Block = (props) => {
           <div className="blockContent">
             <div className="blockTop">
               <h3>{props.info.user_id}</h3>
-              <h3>{date}</h3>
+              <h4>{date}</h4>
             </div>
             <div className="blockSec">
               <h3 id="blockCat">{category}</h3>
@@ -129,7 +129,7 @@ export const Block = (props) => {
       <div className="box2">
         <div className="boxTitle">
           <FaHotjar size={28} color="red" />
-          <h2>Hot한 문제</h2>
+          <h2>Hot 문제</h2>
         </div>
 
         <div
@@ -137,7 +137,7 @@ export const Block = (props) => {
           onClick={() => {
             moveTask(props.info.problem_id);
           }}
-          style={{ backgroundColor: "#fff" }}
+          style={{ backgroundColor: "#f5f5f5" }}
         >
           <div className="blockContent">
             <div className="blockTop2">

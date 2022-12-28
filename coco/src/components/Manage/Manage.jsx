@@ -470,9 +470,9 @@ const TaskList = ({ resource }) => {
 
 const ListBox = ({ info, settasks }) => {
   const loadlist = (e) => {
-    console.log(info[0]);
+    console.log(info.id);
     axios
-      .get("http://127.0.0.1:8000/deletetask/" + info[0])
+      .get("http://127.0.0.1:8000/deletetask/" + info.id)
       .then(function (response) {
         axios.get("http://127.0.0.1:8000/tasklist").then(function (response) {
           console.log(response.data);
@@ -483,9 +483,9 @@ const ListBox = ({ info, settasks }) => {
   };
   return (
     <div className="tasksimplelist">
-      <div>{info[0]}</div>
-      <div>{info[1]}</div>
-      <div>{info[3] == null ? 0 : info[3]}</div>
+      <div>{info.id}</div>
+      <div>{info.title}</div>
+      <div>{info.count == null ? 0 : info.count}</div>
       <Button onClick={loadlist}>삭제</Button>
     </div>
   );

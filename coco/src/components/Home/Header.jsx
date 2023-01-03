@@ -7,6 +7,7 @@ import { HiUserCircle } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
+import { MyPage } from "../MyPage/MyPage";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const Header = () => {
 
   const handleShow = () => setShow(true);
 
-  const movdPage = (n) => {
+  const movdPage = (n, id) => {
     switch (n) {
       case 1:
         navigate("/");
@@ -40,6 +41,9 @@ export const Header = () => {
         break;
       case 5:
         navigate("/login");
+        break;
+      case 6:
+        navigate(`/mypage/${id}`);
         break;
     }
   };
@@ -107,7 +111,13 @@ export const Header = () => {
                     <img src="/image/user.png" alt="" width="100px" />
                     <h3>{userInfo.id}</h3>
                     <div className="footerOverlay">
-                      <h4>My Page</h4>
+                      <h4
+                        onClick={() => {
+                          movdPage(6, userInfo.id);
+                        }}
+                      >
+                        My Page
+                      </h4>
                       <h4
                         onClick={() => {
                           logoutHandler();

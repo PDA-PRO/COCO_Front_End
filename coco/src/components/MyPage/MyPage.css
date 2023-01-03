@@ -1,0 +1,172 @@
+.myPage {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 5rem 18vw 5rem 18vw;
+}
+
+.myPage h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin: 0 !important;
+  padding-left: 2vw;
+}
+
+.myPage .mp-infoBox {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  padding: 20px 5vw;
+  justify-content: space-between;
+  margin: 20px 0 40px 0;
+}
+
+.picBox {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 30px;
+  align-items: center;
+}
+
+.picBox img {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+}
+
+.picSelect {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 15px;
+}
+
+.picSelect label {
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid skyblue;
+  border-radius: 20px;
+  padding: 5px;
+  width: 160px;
+  text-align: center;
+}
+
+.picSelect label:hover {
+  background-color: skyblue;
+  color: white;
+}
+
+.txtInputBox {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.txtInputBox .mb-3 {
+  width: 400px !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.txtInputBox .ip1 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.ip1 p {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/*-------------------------SECBOX-------------------------------*/
+
+.mp-secBox {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  padding: 30px 5vw;
+  margin: 20px 0 40px 0;
+  gap: 30px;
+}
+
+.mp-secBox .secBox-row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+  align-items: center;
+  gap: 100px;
+}
+
+.secBox-row h3 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.mp-secBox .secBox-col {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.secBox-col h3 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgray;
+}
+
+.secBox-col h3 span {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.secBox-col .taskList-split {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.taskList-split p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.recharts-default-legend {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+tspan {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.recharts-default-tooltip {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1rem;
+}

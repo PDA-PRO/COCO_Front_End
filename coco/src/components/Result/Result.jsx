@@ -105,7 +105,7 @@ const ResultBox = ({ resource, info }) => {
             <h2>제출 코드</h2>
           </div>
           <div className="Res-code">
-            <p id="R-Code">{problemList[2]}</p>
+            <p id="R-Code">{problemList["code"]}</p>
           </div>
         </div>
 
@@ -114,10 +114,10 @@ const ResultBox = ({ resource, info }) => {
             {/* <IoLogoPython size={30} color="skyblue" /> */}
             <img src="/image/logo.png" alt="" height="40px" />
             <h2>채점 결과 :</h2>
-            {whatResult(problemList[12])}
+            {whatResult(problemList["status"])}
           </div>
           <div className="Res-code">
-            <p id="R-Code">{problemList[9]}</p>
+            <p id="R-Code">{problemList["message"]}</p>
           </div>
         </div>
       </div>

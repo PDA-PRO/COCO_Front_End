@@ -2,7 +2,7 @@ import axios from "axios";
 import wrapPromise from "./wrapPromise";
 
 function fetchTask(url, header = null) {
-  const promise = null;
+  let promise = null;
   if (header == null) {
     promise = axios.get(url).then(({ data }) => data);
   } else {

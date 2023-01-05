@@ -14,6 +14,7 @@ import { FirstBox } from "./FirstBox";
 import Spinner from "react-bootstrap/Spinner";
 
 export const MyPage = () => {
+  const path = window.location.pathname.split("/");
   return (
     <>
       <Header />
@@ -28,9 +29,10 @@ export const MyPage = () => {
           </span>
           회원 정보
         </h2>
-        <Suspense fallback={<Spinner />}>
+        <FirstBox />
+        {/* <Suspense fallback={<Spinner />}>
           <GetFirst resource={fetchData("http://127.0.0.1:8000/myPageOne")} />
-        </Suspense>
+        </Suspense> */}
         <h2>
           <span>
             <BsGraphUp
@@ -41,9 +43,10 @@ export const MyPage = () => {
           </span>
           내 역량
         </h2>
-        <Suspense fallback={<Spinner />}>
+        <SecondBox />
+        {/* <Suspense fallback={<Spinner />}>
           <GetSecond resource={fetchData("http://127.0.0.1:8000/myPageTwo")} />
-        </Suspense>
+        </Suspense> */}
         <h2>
           <span>
             <IoClipboardOutline
@@ -55,7 +58,7 @@ export const MyPage = () => {
           내 게시글
         </h2>
         <Suspense fallback={<Spinner />}>
-          <GetThird resource={fetchData("http://127.0.0.1:8000/myPageThree")} />
+          <GetThird resource={fetchData(`http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`)} />
         </Suspense>
       </div>
       <Footer />

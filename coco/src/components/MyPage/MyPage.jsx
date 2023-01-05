@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import "./MyPage.css";
-
+import fetchData from "../../api/fetchTask";
 import { SecondBox } from "./SecondBox";
 import {
   IoInformationCircleOutline,
@@ -11,6 +11,7 @@ import {
 import { BsGraphUp } from "react-icons/bs";
 import { ThirdBox } from "./ThirdBox";
 import { FirstBox } from "./FirstBox";
+import Spinner from "react-bootstrap/Spinner";
 
 export const MyPage = () => {
   return (
@@ -27,7 +28,9 @@ export const MyPage = () => {
           </span>
           회원 정보
         </h2>
-        <FirstBox />
+        <Suspense fallback={<Spinner />}>
+          <GetFirst resource={fetchData("http://127.0.0.1:8000/myPageOne")} />
+        </Suspense>
         <h2>
           <span>
             <BsGraphUp
@@ -38,7 +41,9 @@ export const MyPage = () => {
           </span>
           내 역량
         </h2>
-        <SecondBox />
+        <Suspense fallback={<Spinner />}>
+          <GetSecond resource={fetchData("http://127.0.0.1:8000/myPageTwo")} />
+        </Suspense>
         <h2>
           <span>
             <IoClipboardOutline
@@ -49,9 +54,26 @@ export const MyPage = () => {
           </span>
           내 게시글
         </h2>
-        <ThirdBox />
+        <Suspense fallback={<Spinner />}>
+          <GetThird resource={fetchData("http://127.0.0.1:8000/myPageThree")} />
+        </Suspense>
       </div>
       <Footer />
     </>
   );
+};
+
+const GetFirst = ({ resource }) => {
+  const res = resource.read();
+  return <>{<FirstBox props={res} key={res.id} />}</>;
+};
+
+const GetSecond = ({ resource }) => {
+  const res = resource.read();
+  return <>{<SecondBox props={res} key={res.id} />}</>;
+};
+
+const GetThird = ({ resource }) => {
+  const res = resource.read();
+  return <>{<ThirdBox props={res} key={res.id} />}</>;
 };

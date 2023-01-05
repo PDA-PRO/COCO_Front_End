@@ -12,7 +12,8 @@
   padding-left: 2vw;
 }
 
-.myPage .mp-infoBox {
+/*---------------------------------FirstBox-------------------------------*/
+.mp-infoBox {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -20,13 +21,13 @@
   border-radius: 30px;
   padding: 20px 5vw;
   justify-content: space-between;
-  margin: 20px 0 40px 0;
+  margin: 20px 0 60px 0;
 }
 
 .picBox {
   display: flex;
-  flex-flow: row nowrap;
-  gap: 30px;
+  flex-flow: column nowrap;
+  gap: 10px;
   align-items: center;
 }
 
@@ -41,7 +42,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   margin-top: 15px;
 }
 
@@ -65,30 +66,67 @@
 .txtInputBox {
   display: flex;
   flex-flow: column nowrap;
-  gap: 10px;
+}
+
+.txtInputBox h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  border-bottom: 1px solid lightgray;
 }
 
 .txtInputBox .mb-3 {
-  width: 400px !important;
+  width: 330px !important;
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1rem;
 }
 
-.txtInputBox .ip1 {
+#pwBtn {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.levelField {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 45px;
+}
+
+.levelField .ip1 {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
   margin-bottom: 20px;
 }
 
 .ip1 p {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+  color: black !important;
+}
+
+.levelField h3 {
+  font-family: "Pretendard-Regular";
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 2.5rem;
+  margin: 0 !important;
+}
+
+.levelField p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  color: gray;
 }
 
 /*-------------------------SECBOX-------------------------------*/
@@ -99,7 +137,7 @@
   border: 2px solid lightgray;
   border-radius: 30px;
   padding: 30px 5vw;
-  margin: 20px 0 40px 0;
+  margin: 20px 0 60px 0;
   gap: 30px;
 }
 
@@ -108,14 +146,14 @@
   flex-flow: row nowrap;
   justify-content: left;
   align-items: center;
-  gap: 100px;
+  gap: 150px;
 }
 
 .secBox-row h3 {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .mp-secBox .secBox-col {
@@ -144,11 +182,27 @@
   margin-top: 5px;
 }
 
+.secBox-col .taskList-split2 {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
 .taskList-split p {
   font-family: "Pretendard-Regular";
   font-weight: 500;
   font-size: 1.1rem;
   color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.taskList-split2 p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: red;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -169,4 +223,80 @@ tspan {
   font-family: "Pretendard-Regular" !important;
   font-weight: 500;
   font-size: 1rem;
+}
+
+/*-------------------thirdbox---------------------------*/
+
+.mp-ThirdBox {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  padding: 30px 5vw;
+  margin: 20px 0 20px 0;
+  gap: 30px;
+}
+
+.mp-ThirdBox .myGuel {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 5fr 0.5fr;
+  padding: 8px;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  align-items: center;
+}
+
+.myGuel h4 {
+  grid-column: 1/2;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGuel h3 {
+  grid-column: 2/3;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin: 0 !important;
+  text-align: center;
+  cursor: pointer;
+}
+
+.myGuel h5 {
+  grid-column: 3/4;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGuel .GuelBox {
+  grid-column: 4/5;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.GuelBox .bBox {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.bBox p {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGuel #delGuel {
+  cursor: pointer;
 }

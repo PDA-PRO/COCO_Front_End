@@ -108,7 +108,7 @@ export const SecondBox = () => {
       </div>
 
       <div className="secBox-col">
-        <h3>맞은 문제 리스트</h3>
+        <h3> - 맞은 문제 리스트</h3>
         <div className="taskList-split">
           <p onClick={() => movePage(1)}>No.1</p>
           <p onClick={() => movePage(2)}>No.2</p>
@@ -117,7 +117,16 @@ export const SecondBox = () => {
       </div>
 
       <div className="secBox-col">
-        <h3>월별 푼 문제 수</h3>
+        <h3> - 틀린 문제 리스트</h3>
+        <div className="taskList-split2">
+          <p onClick={() => movePage(1)}>No.1</p>
+          <p onClick={() => movePage(2)}>No.2</p>
+          <p onClick={() => movePage(3)}>No.3</p>
+        </div>
+      </div>
+
+      <div className="secBox-col">
+        <h3> - 월별 푼 문제 수</h3>
 
         <BarChart
           width={1000}
@@ -144,7 +153,7 @@ export const SecondBox = () => {
 
       <div className="secBox-col">
         <h3>
-          내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
+          - 내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
         </h3>
 
         <LineChart

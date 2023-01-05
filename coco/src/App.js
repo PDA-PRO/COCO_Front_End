@@ -19,6 +19,7 @@ import { WriteGeul } from "./components/Board/WriteGeul/WriteGuel";
 import { StatusList } from "./components/StatusList/StatusList";
 
 function App() {
+  /* 토큰이 유효하지 않으면 토큰 초기화*/
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
   if (!checkToken(userInfo.access_token)) {
@@ -26,6 +27,7 @@ function App() {
       type: "loginSlice/logout",
     });
   }
+  /* --------------------------------------- */
   return (
     <Router>
       <div className="App">

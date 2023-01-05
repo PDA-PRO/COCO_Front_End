@@ -53,24 +53,39 @@ export const Comments = (props) => {
       setLikeNum(likeNum - 1);
     }
     axios
-      .post("http://127.0.0.1:8000/comment_likes/", {
-        comment_id: props.props.id,
-        user_id: userInfo.id,
-        board_id: props.props.board_id,
-        likes: numLike,
-        type: like,
-      })
+      .post(
+        "http://127.0.0.1:8000/comment_likes/",
+        {
+          comment_id: props.props.id,
+          user_id: userInfo.id,
+          board_id: props.props.board_id,
+          likes: numLike,
+          type: like,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then(() => {
         // window.location.replace("/board");
+      })
+      .catch(() => {
+        alert("인증실패");
       });
   };
 
   const onDeleteHandler = () => {
     axios
-      .post("http://127.0.0.1:8000/delete_comment/", {
-        comment_id: props.props.id,
-        user_id: userInfo.id,
-      })
+      .post(
+        "http://127.0.0.1:8000/delete_comment/",
+        {
+          comment_id: props.props.id,
+          user_id: userInfo.id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then((res) => {
         console.log(res.data);
         if (res.data.code === 1) {
@@ -81,6 +96,9 @@ export const Comments = (props) => {
         var path = window.location.pathname;
         path = path.split("/");
         window.location.href = `/board/${path.at(-1)}`;
+      })
+      .catch(() => {
+        alert("인증실패");
       });
   };
 

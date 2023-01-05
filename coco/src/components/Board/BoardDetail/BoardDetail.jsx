@@ -97,25 +97,44 @@ const GetBoardDetail = ({ resource }) => {
     } else {
       setLikeNum(likeNum - 1);
     }
-    axios.post("http://127.0.0.1:8000/board_likes/", {
-      user_id: userInfo.id,
-      board_id: detail.id,
-      likes: numLike,
-      type: like,
-    });
+    axios
+      .post(
+        "http://127.0.0.1:8000/board_likes/",
+        {
+          user_id: userInfo.id,
+          board_id: detail.id,
+          likes: numLike,
+          type: like,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
+      .catch(() => {
+        alert("인증실패");
+      });
   };
 
   const onDeleteHandler = () => {
     axios
-      .post("http://127.0.0.1:8000/delete_content/", {
-        board_id: detail.id,
-        user_id: userInfo.id,
-      })
+      .post(
+        "http://127.0.0.1:8000/delete_content/",
+        {
+          board_id: detail.id,
+          user_id: userInfo.id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then((res) => {
         if (res.data.code === 1) {
           alert("게시글이 삭제되었습니다");
           window.location.href = "/board";
         }
+      })
+      .catch(() => {
+        alert("인증실패");
       });
   };
 

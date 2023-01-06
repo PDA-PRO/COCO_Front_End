@@ -9,12 +9,14 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { IoMailOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
 
-export const FirstBox = () => {
+export const FirstBox = (props) => {
   const [isPic, setIsPic] = useState(false);
   const [fileImage, setFileImage] = useState("");
   const saveFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
+
+  console.log("props : ", props.email);
 
   // 파일 삭제
   const deleteFileImage = () => {
@@ -26,6 +28,7 @@ export const FirstBox = () => {
   useEffect(() => {
     console.log(isPic);
   }, [isPic]);
+
   return (
     <div className="mp-infoBox">
       <div className="picBox">
@@ -78,7 +81,7 @@ export const FirstBox = () => {
           이메일 변경
         </h3>
         <InputGroup className="mb-3">
-          <Form.Control placeholder="user-Email" />
+          <Form.Control placeholder={`${props.email}`} />
           <Button variant="outline-success" id="button-addon2">
             변경
           </Button>

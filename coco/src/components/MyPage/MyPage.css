@@ -278,20 +278,21 @@ tspan {
   grid-column: 4/5;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 40px;
   align-items: center;
 }
 
 .GuelBox .bBox {
   display: flex;
   flex-flow: row nowrap;
-  gap: 15px;
+  gap: 10px;
   align-items: center;
 }
 
 .bBox p {
   font-family: "Pretendard-Regular" !important;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.1rem;
   margin: 0 !important;
   text-align: center;

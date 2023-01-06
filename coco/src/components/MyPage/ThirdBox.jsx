@@ -68,7 +68,7 @@ export const ThirdBox = (props) => {
     } else if (e === 3) {
       return [
         "자유",
-        "rgb(227, 249, 255)",
+        "skyblue",
         <BsFillLightbulbFill
           size={22}
           color="rgb(111, 101, 255)"

@@ -29,7 +29,6 @@ export const MyPage = () => {
           </span>
           회원 정보
         </h2>
-        <FirstBox />
         <Suspense fallback={<Spinner />}>
           <GetFirst
             resource={fetchData(

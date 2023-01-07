@@ -2,21 +2,24 @@ import React from "react";
 import "./MyPage.css";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { IoMdSchool } from "react-icons/io";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { IoMailOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
-
+import { FaRunning } from "react-icons/fa";
+import axios from "axios";
 export const FirstBox = (props) => {
+  const refEmail = useRef(null);
+  const refNowPW = useRef(null);
+  const refNewPW = useRef(null);
+  const refconfirmNewPW = useRef(null);
   const [isPic, setIsPic] = useState(false);
   const [fileImage, setFileImage] = useState("");
   const saveFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
-
-  console.log("props : ", props.email);
 
   // 파일 삭제
   const deleteFileImage = () => {
@@ -28,6 +31,55 @@ export const FirstBox = (props) => {
   useEffect(() => {
     console.log(isPic);
   }, [isPic]);
+
+  const changeEmail = () => {
+    let email = refEmail.current.value;
+    if (email === null || email == "") {
+      alert("온전한 이메일을 입력해주세요.");
+    } else {
+      axios
+        .post("http://127.0.0.1:8000/changeEmail/", {
+          email: email,
+        })
+        .then(function (response) {
+          if (response.data.code === 1) {
+            alert("이메일이 변경되었습니다.");
+          } else {
+            alert("ERROR - SERVER COMMUNICATION FAILED");
+          }
+        });
+    }
+  };
+
+  const changePW = () => {
+    const nowPW = props.props.pw;
+    let inputNow = refNowPW.current.value;
+    let inputNew = refNewPW.current.value;
+    let confirmNew = refconfirmNewPW.current.value;
+    if (inputNew === null || inputNow === null || confirmNew === null) {
+      alert("완전히 입력해주세요");
+    } else {
+      if (inputNow != nowPW) {
+        alert("현재 비밀번호가 일치하지 않습니다.");
+      }
+      if (inputNew != confirmNew) {
+        alert("변경하려는 비밀번호 확인이 틀렸습니다.");
+      }
+      if (inputNow === nowPW && inputNew === confirmNew) {
+        axios
+          .post("http://127.0.0.1:8000/changePW/", {
+            pw: inputNew,
+          })
+          .then(function (response) {
+            if (response.data.code === 1) {
+              alert("비밀번호가 변경되었습니다.");
+            } else {
+              alert("ERROR - SERVER COMMUNICATION FAILED");
+            }
+          });
+      }
+    }
+  };
 
   return (
     <div className="mp-infoBox">
@@ -61,8 +113,12 @@ export const FirstBox = (props) => {
 
       <div className="levelField">
         <div className="ip1">
-          <IoMdSchool size={33} />
-          <p>학생</p>
+          {props.props.role ? (
+            <IoMdSchool size={33} />
+          ) : (
+            <FaRunning size={33} />
+          )}
+          <p>{props.props.role ? "선생님" : "학생"}</p>
         </div>
 
         <h3>Level 3</h3>
@@ -81,8 +137,12 @@ export const FirstBox = (props) => {
           이메일 변경
         </h3>
         <InputGroup className="mb-3">
-          <Form.Control placeholder={`${props.email}`} />
-          <Button variant="outline-success" id="button-addon2">
+          <Form.Control placeholder={`${props.props.email}`} ref={refEmail} />
+          <Button
+            variant="outline-success"
+            id="button-addon2"
+            onClick={() => changeEmail()}
+          >
             변경
           </Button>
         </InputGroup>
@@ -99,18 +159,30 @@ export const FirstBox = (props) => {
         </h3>
 
         <InputGroup className="mb-3">
-          <Form.Control placeholder="현재 비밀번호" type="password" />
+          <Form.Control
+            placeholder="현재 비밀번호"
+            type="password"
+            ref={refNowPW}
+          />
         </InputGroup>
 
         <InputGroup className="mb-3">
-          <Form.Control placeholder="새 비밀번호 입력" type="password" />
+          <Form.Control
+            placeholder="새 비밀번호 입력"
+            type="password"
+            ref={refNewPW}
+          />
         </InputGroup>
 
         <InputGroup className="mb-3">
-          <Form.Control placeholder="새 비밀번호 확인" type="password" />
+          <Form.Control
+            placeholder="새 비밀번호 확인"
+            type="password"
+            ref={refconfirmNewPW}
+          />
         </InputGroup>
 
-        <Button variant="outline-success" id="pwBtn">
+        <Button variant="outline-success" id="pwBtn" onClick={() => changePW()}>
           change
         </Button>
       </div>

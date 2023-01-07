@@ -10,6 +10,8 @@ import { IoMailOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRunning } from "react-icons/fa";
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 export const FirstBox = (props) => {
   const refEmail = useRef(null);
   const refNowPW = useRef(null);
@@ -20,6 +22,7 @@ export const FirstBox = (props) => {
   const saveFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
+  const userInfo = useSelector((state) => state.loginState);
 
   // 파일 삭제
   const deleteFileImage = () => {
@@ -39,6 +42,7 @@ export const FirstBox = (props) => {
     } else {
       axios
         .post("http://127.0.0.1:8000/changeEmail/", {
+          user_id: userInfo.id,
           email: email,
         })
         .then(function (response) {
@@ -68,7 +72,8 @@ export const FirstBox = (props) => {
       if (inputNow === nowPW && inputNew === confirmNew) {
         axios
           .post("http://127.0.0.1:8000/changePW/", {
-            pw: inputNew,
+            user_id: userInfo.id,
+            pw: inputNew
           })
           .then(function (response) {
             if (response.data.code === 1) {

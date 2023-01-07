@@ -76,7 +76,7 @@ export const Guel = (props) => {
       className="Geul"
       style={{ backgroundColor: bgColor }}
       onClick={() => {
-        moveDetail(props.props.board_id);
+        moveDetail(props.props.id);
       }}
     >
       <div className="un">

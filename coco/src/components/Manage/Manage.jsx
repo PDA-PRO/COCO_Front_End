@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useRef } from "react";
 import "./Manage.css";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
@@ -19,6 +19,9 @@ import fetchData from "../../api/fetchTask";
 
 export const Manage = () => {
   // --------------------------- 페이지 전환 --------------------------------
+  const firstRef = useRef(null);
+  const secondRef = useRef(null);
+  const thirdRef = useRef(null);
   const navigate = useNavigate();
   const moveHome = () => {
     navigate("/");
@@ -215,11 +218,16 @@ export const Manage = () => {
   return (
     <div className="manage">
       <div className="m-head">
-        <h2 id="m-title">Manager Page</h2>
+        <h2 id="m-title">관리자 : 조민수</h2>
         <h2 id="m-Logo" onClick={() => moveHome()}>
           COCO
         </h2>
       </div>
+      <Menu refProps={{ firstRef, secondRef, thirdRef }} />
+
+      <h2 className="mTi" ref={firstRef}>
+        TASK UPLOAD
+      </h2>
       <div className="m-upload">
         <InputGroup className="m-title">
           <InputGroup.Text id="inputGroup-sizing-default">
@@ -443,12 +451,65 @@ export const Manage = () => {
           SUBMIT
         </Button>
       </div>
-      <Suspense fallback={<Spinner />}>
-        <TaskList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
-      </Suspense>
+
+      <h2 className="mTi" ref={secondRef}>
+        TASK LIST
+      </h2>
+      <div>
+        <Suspense fallback={<Spinner />}>
+          <TaskList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
+        </Suspense>
+      </div>
+
+      <h2 className="mTi" ref={thirdRef}>
+        POST LIST
+      </h2>
+      <div>
+        <Suspense fallback={<Spinner />}>
+          <BoardList resource={fetchData(`http://127.0.0.1:8000/boardlist`)} />
+        </Suspense>
+      </div>
     </div>
   );
 };
+
+//---------------------------------- 메뉴 ----------------------------------------------
+
+const Menu = (props) => {
+  console.log(props.refProps.firstRef.current);
+  const moveTo = (e) => {
+    switch (e) {
+      case 1:
+        props.refProps.firstRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        break;
+      case 2:
+        props.refProps.secondRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        break;
+      case 3:
+        props.refProps.thirdRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        break;
+    }
+  };
+
+  return (
+    <div className="manageMenu">
+      <h3 onClick={() => moveTo(1)}>- TASK UPLOAD</h3>
+      <h3 onClick={() => moveTo(2)}>- TASK LIST</h3>
+      <h3 onClick={() => moveTo(3)}>- POST LIST</h3>
+    </div>
+  );
+};
+
+//----------------------------------문제 리스트----------------------------------------------
 
 const TaskList = ({ resource }) => {
   const problemList = resource.read();
@@ -469,10 +530,11 @@ const TaskList = ({ resource }) => {
 };
 
 const ListBox = ({ info, settasks }) => {
+  console.log(info);
   const loadlist = (e) => {
     console.log(info[0]);
     axios
-      .get("http://127.0.0.1:8000/deletetask/" + info[0])
+      .get("http://127.0.0.1:8000/deletetask/" + info.id)
       .then(function (response) {
         axios.get("http://127.0.0.1:8000/tasklist").then(function (response) {
           console.log(response.data);
@@ -483,8 +545,51 @@ const ListBox = ({ info, settasks }) => {
   };
   return (
     <div className="tasksimplelist">
-      <div>{info[0]}</div>
-      <div>{info[1]}</div>
+      <div>{info.id}</div>
+      <div>{info.title}</div>
+      <div>{info.count == null ? 0 : info.count}</div>
+      <Button onClick={loadlist}>삭제</Button>
+    </div>
+  );
+};
+
+//----------------------------------게시글 리스트----------------------------------------------
+
+const BoardList = ({ resource }) => {
+  const problemList = resource.read();
+  const [tasks, settasks] = useState(problemList);
+
+  return (
+    <div className="m-upload">
+      <div className="tasksimple">
+        <div>문제id</div>
+        <div>문제제목</div>
+        <div>제출개수</div>
+      </div>
+      {tasks.map((e) => {
+        return <ListPost info={e} settasks={settasks}></ListPost>;
+      })}
+    </div>
+  );
+};
+
+const ListPost = ({ info, settasks }) => {
+  const loadlist = (e) => {
+    console.log(info[0]);
+    axios
+      .get("http://127.0.0.1:8000/deleteBoard/" + info.id)
+      .then(function (response) {
+        axios.get("http://127.0.0.1:8000/boardlist").then(function (response) {
+          console.log(response.data);
+          settasks(response.data);
+        });
+        // 성공 핸들링
+      });
+  };
+  return (
+    <div className="tasksimplelist">
+      <div>{info.id}</div>
+      <div>{info.title}</div>
       <div>{info[3] == null ? 0 : info[3]}</div>
       <Button onClick={loadlist}>삭제</Button>
     </div>

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 export const Guel = (props) => {
   const navigate = useNavigate();
   const moveDetail = (e) => {
+    console.log(e);
     navigate(`/board/${e}`);
   };
   const [category, setCategory] = useState("");

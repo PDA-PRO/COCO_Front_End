@@ -10,7 +10,7 @@ export const Comments = (props) => {
   const [isMe, setIsMe] = useState(false);
   const userInfo = useAppSelector((state) => state.loginState);
   const [like, setLike] = useState(false);
-  const [likeNum, setLikeNum] = useState(props.props[3]);
+  const [likeNum, setLikeNum] = useState(props.props.likes);
   var numLike = props.props.likes;
 
   useEffect(() => {
@@ -88,6 +88,7 @@ export const Comments = (props) => {
         <div className="un">
           <h2 className="cUserID">{props.props.user_id}</h2>
           <p>{timeForToday(props.props.write_time)}</p>
+          <p>{timeForToday(props.props.likes)}</p>
         </div>
         <div
           className="un2"

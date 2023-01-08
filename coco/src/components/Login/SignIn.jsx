@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import Modal from "react-bootstrap/Modal";
 import { FiMail } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import qs from "qs";
+import jwtdecode from "../../app/jwtdecode";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -32,32 +34,32 @@ export const SignIn = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("submit");
     if (id === "" || pw === "") {
       return alert("아이디 또는 비밀번호를 입력해주세요");
     } else {
       axios
-        .post("http://127.0.0.1:8000/login", {
-          id: id,
-          pw: pw,
-        })
+        .post(
+          "http://127.0.0.1:8000/login",
+          qs.stringify({
+            grant_type: "",
+            username: id,
+            password: pw,
+            scope: "",
+            client_id: "",
+            client_secret: "",
+          })
+        )
         .then(function (response) {
-          if (response.data.code === 1) {
+          if (response.status == 200) {
             alert(`${id}님 안녕하세요`);
+            let jwt_role = jwtdecode(response.data.access_token).role;
+            let jwt_id = jwtdecode(response.data.access_token).sub;
             dispatch({
               type: "loginSlice/login",
-              id: id,
-              pw: pw,
-              ismanage: false,
-            });
-            navigateToHome();
-          } else if (response.data.code === 2) {
-            alert(`${id}관리자님 안녕하세요`);
-            dispatch({
-              type: "loginSlice/login",
-              id: id,
-              pw: pw,
-              ismanage: true,
+              access_token: response.data.access_token,
+              token_type: response.data.token_type,
+              id: jwt_id,
+              role: jwt_role,
             });
             navigateToHome();
           } else {

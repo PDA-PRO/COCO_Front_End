@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./Home.css";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { HiUserCircle } from "react-icons/hi";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
-import Modal from "react-bootstrap/Modal";
+import Overlay from "react-bootstrap/Overlay";
+import Popover from "react-bootstrap/Popover";
+import { MyPage } from "../MyPage/MyPage";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -13,11 +15,17 @@ export const Header = () => {
   const userInfo = useAppSelector((state) => state.loginState);
 
   const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
 
-  const handleClose = () => setShow(false);
+  const handleClick = (event) => {
+    setShow(!show);
+    setTarget(event.target);
+  };
+
   const handleShow = () => setShow(true);
 
-  const movdPage = (n) => {
+  const movdPage = (n, id) => {
     switch (n) {
       case 1:
         navigate("/");
@@ -33,6 +41,9 @@ export const Header = () => {
         break;
       case 5:
         navigate("/login");
+        break;
+      case 6:
+        navigate(`/mypage/${id}`);
         break;
     }
   };
@@ -62,7 +73,7 @@ export const Header = () => {
         {userInfo.id === "" ? (
           <h3 onClick={() => movdPage(5)}>LOGIN</h3>
         ) : (
-          <>
+          <div ref={ref} onClick={handleClick}>
             <div
               onClick={handleShow}
               style={{ cursor: "pointer" }}
@@ -72,7 +83,7 @@ export const Header = () => {
               <h3>{userInfo.id}</h3>
             </div>
 
-            <Modal show={show} onHide={handleClose}>
+            {/* <Modal show={show} onHide={handleClose}>
               <Modal.Body>로그아웃 하시겠습니까?</Modal.Body>
               <Modal.Footer className="logoutModal">
                 <AiOutlineCloseCircle onClick={handleClose} size={30} />
@@ -84,8 +95,42 @@ export const Header = () => {
                   size={30}
                 />
               </Modal.Footer>
-            </Modal>
-          </>
+            </Modal> */}
+
+            <Overlay
+              show={show}
+              target={target}
+              placement="bottom"
+              container={ref}
+              containerPadding={20}
+            >
+              <Popover id="popover-contained">
+                <Popover.Header as="h3">Profile</Popover.Header>
+                <Popover.Body>
+                  <div className="bodyOverlay">
+                    <img src="/image/user.png" alt="" width="100px" />
+                    <h3>{userInfo.id}</h3>
+                    <div className="footerOverlay">
+                      <h4
+                        onClick={() => {
+                          movdPage(6, userInfo.id);
+                        }}
+                      >
+                        My Page
+                      </h4>
+                      <h4
+                        onClick={() => {
+                          logoutHandler();
+                        }}
+                      >
+                        LogOut
+                      </h4>
+                    </div>
+                  </div>
+                </Popover.Body>
+              </Popover>
+            </Overlay>
+          </div>
         )}
       </div>
     </div>

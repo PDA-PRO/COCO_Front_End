@@ -66,22 +66,20 @@ export const Comments = (props) => {
   };
 
   const onDeleteHandler = () => {
-    axios
-      .post("http://127.0.0.1:8000/delete_comment/", {
-        comment_id: props.props.id,
-        user_id: userInfo.id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.code === 1) {
-          alert("해당 댓글이 삭제되었습니다");
-        } else {
-          alert("삭제에 실패하였습니다");
-        }
-        var path = window.location.pathname;
-        path = path.split("/");
-        window.location.href = `/board/${path.at(-1)}`;
-      });
+    axios.post("http://127.0.0.1:8000/delete_comment/", {
+      comment_id: props.props.id,
+      user_id: userInfo.id
+    }).then((res) => {
+      console.log(res.data);
+      if(res.data.code === 1){
+        alert("해당 댓글이 삭제되었습니다");
+      }else{
+        alert("삭제에 실패하였습니다");
+      }
+      var path = window.location.pathname;
+      path = path.split("/");
+      window.location.href = `/board/${path.at(-1)}`;
+    })
   };
 
   return (
@@ -89,6 +87,7 @@ export const Comments = (props) => {
       <div className="commentHead">
         <div className="un">
           <h2 className="cUserID">{props.props.user_id}</h2>
+          <p>{timeForToday(props.props.write_time)}</p>
           <p>{timeForToday(props.props.likes)}</p>
         </div>
         <div

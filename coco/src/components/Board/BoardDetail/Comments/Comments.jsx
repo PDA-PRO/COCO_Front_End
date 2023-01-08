@@ -4,12 +4,14 @@ import { BsFillHeartFill, BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../../../app/store";
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Comments = (props) => {
   //props: id, context, write_time, likes, user_id, board_id
   const [isMe, setIsMe] = useState(false);
   const userInfo = useAppSelector((state) => state.loginState);
   const [like, setLike] = useState(false);
+  const navigate = useNavigate();
   const [likeNum, setLikeNum] = useState(props.props.likes);
   var numLike = props.props.likes;
 
@@ -95,7 +97,8 @@ export const Comments = (props) => {
         }
         var path = window.location.pathname;
         path = path.split("/");
-        window.location.href = `/board/${path.at(-1)}`;
+        navigate(`/board/${path.at(-1)}`);
+        //window.location.href = `/board/${path.at(-1)}`;
       })
       .catch(() => {
         alert("인증실패");

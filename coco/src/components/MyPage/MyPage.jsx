@@ -12,9 +12,12 @@ import { BsGraphUp } from "react-icons/bs";
 import { ThirdBox } from "./ThirdBox";
 import { FirstBox } from "./FirstBox";
 import Spinner from "react-bootstrap/Spinner";
+import { useAppSelector } from "../../app/store";
 
 export const MyPage = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const path = window.location.pathname.split("/");
+
   return (
     <>
       <Header />
@@ -32,7 +35,10 @@ export const MyPage = () => {
         <Suspense fallback={<Spinner />}>
           <GetFirst
             resource={fetchData(
-              `http://127.0.0.1:8000/myPageOne/${path.at(-1)}/`
+              `http://127.0.0.1:8000/myPageOne/${path.at(-1)}/`,
+              {
+                headers: { Authorization: "Bearer " + userInfo.access_token },
+              }
             )}
           />
         </Suspense>
@@ -63,7 +69,10 @@ export const MyPage = () => {
         <Suspense fallback={<Spinner />}>
           <GetThird
             resource={fetchData(
-              `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`
+              `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`,
+              {
+                headers: { Authorization: "Bearer " + userInfo.access_token },
+              }
             )}
           />
         </Suspense>

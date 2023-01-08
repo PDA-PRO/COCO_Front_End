@@ -11,8 +11,10 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRunning } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/store";
 
 export const FirstBox = (props) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const refEmail = useRef(null);
   const refNowPW = useRef(null);
   const refNewPW = useRef(null);
@@ -22,7 +24,6 @@ export const FirstBox = (props) => {
   const saveFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
-  const userInfo = useSelector((state) => state.loginState);
 
   // 파일 삭제
   const deleteFileImage = () => {
@@ -41,42 +42,54 @@ export const FirstBox = (props) => {
       alert("온전한 이메일을 입력해주세요.");
     } else {
       axios
-        .post("http://127.0.0.1:8000/changeEmail/", {
-          user_id: userInfo.id,
-          email: email,
-        })
+        .post(
+          "http://127.0.0.1:8000/changeEmail/",
+          {
+            user_id: props.props.id,
+            new_info: email,
+          },
+          {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          }
+        )
         .then(function (response) {
-          if (response.data.code === 1) {
+          if (response.data === 1) {
             alert("이메일이 변경되었습니다.");
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
+          }
+        })
+        .catch(function (res) {
+          if (res.data.status === 401) {
+            alert("401 ERROR");
           }
         });
     }
   };
 
   const changePW = () => {
-    const nowPW = props.props.pw;
     let inputNow = refNowPW.current.value;
     let inputNew = refNewPW.current.value;
     let confirmNew = refconfirmNewPW.current.value;
     if (inputNew === null || inputNow === null || confirmNew === null) {
       alert("완전히 입력해주세요");
     } else {
-      if (inputNow != nowPW) {
-        alert("현재 비밀번호가 일치하지 않습니다.");
-      }
       if (inputNew != confirmNew) {
         alert("변경하려는 비밀번호 확인이 틀렸습니다.");
-      }
-      if (inputNow === nowPW && inputNew === confirmNew) {
+      } else {
         axios
-          .post("http://127.0.0.1:8000/changePW/", {
-            user_id: userInfo.id,
-            pw: inputNew
-          })
+          .post(
+            "http://127.0.0.1:8000/changePW/",
+            {
+              user_id: props.props.id,
+              new_info: inputNew,
+            },
+            {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+            }
+          )
           .then(function (response) {
-            if (response.data.code === 1) {
+            if (response.data === 1) {
               alert("비밀번호가 변경되었습니다.");
             } else {
               alert("ERROR - SERVER COMMUNICATION FAILED");
@@ -118,12 +131,12 @@ export const FirstBox = (props) => {
 
       <div className="levelField">
         <div className="ip1">
-          {props.props.role ? (
+          {props.props.role === 1 ? (
             <IoMdSchool size={33} />
           ) : (
             <FaRunning size={33} />
           )}
-          <p>{props.props.role ? "선생님" : "학생"}</p>
+          <p>{props.props.role === 1 ? "선생님" : "학생"}</p>
         </div>
 
         <h3>Level 3</h3>

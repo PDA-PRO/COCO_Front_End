@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export const ProblemBox = (info) => {
-  console.log(info.info);
+  const navigate = useNavigate();
   const goDetail = (e) => {
-    window.location.href = `/problems/${e}`;
+    navigate(`/problems/${e}`);
   };
 
   return (

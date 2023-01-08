@@ -139,6 +139,36 @@
   align-content: center;
 }
 
+.bodyOverlay {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.bodyOverlay h3 {
+  margin-top: 0.7rem !important;
+}
+
+.footerOverlay {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+  border-top: 1px solid lightgray;
+  gap: 40px;
+  padding-top: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.footerOverlay h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 !important;
+}
+
 /*--------------------------------------------- BODY -------------------------------------------------------*/
 .home {
   display: flex;

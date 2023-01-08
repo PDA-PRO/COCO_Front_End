@@ -4,12 +4,13 @@ import { useAppSelector } from "../../app/store";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../components/Login/Login";
 import { useState } from "react";
+import { useAppDispatch } from "../../app/store";
 
 export const AuthRouter = ({ role, children }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [state, setstate] = useState("pending");
-  console.log(children);
 
   if (checkToken(userInfo.access_token)) {
     //토큰이 유효하다면
@@ -25,16 +26,19 @@ export const AuthRouter = ({ role, children }) => {
             setstate("pass");
             console.log("된건가");
           } else {
+            alert("권한부족");
+            navigate("/");
             setstate("error");
           }
         }
       })
       .catch((err) => {
         setstate("error");
-        alert("권한부족");
+        dispatch({
+          type: "loginSlice/logout",
+        });
         console.log("안된건가");
       });
-    console.log("왜안돼");
   } else {
     return <Login />;
   }

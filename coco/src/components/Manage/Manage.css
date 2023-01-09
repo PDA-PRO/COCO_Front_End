@@ -2,34 +2,45 @@
   display: flex;
   flex-flow: column;
   margin-top: 3rem;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 17vw;
+  padding-right: 17vw;
+  padding-bottom: 10rem;
+}
+
+.manage .mTi {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-top: 5rem;
+  text-align: center;
+  text-decoration: underline;
 }
 
 .m-head {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  padding-left: 2vw;
-  padding-right: 3vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 
 .m-head h2 {
   font-family: "Pretendard-Regular";
-  font-weight: 800;
+  font-weight: 600;
   font-size: 2rem;
 }
 
 #m-Logo {
+  color: #00ff00;
   cursor: pointer;
 }
 
 .m-upload {
   display: flex;
   flex-flow: column nowrap;
-  margin: 3rem;
+  margin: 1.2rem;
   border: 2px solid darkgray;
-  border-radius: 25px;
+  border-radius: 30px;
   padding: 3rem;
   font-family: "Pretendard-Regular";
 }
@@ -93,22 +104,48 @@
 .m-testCase {
   margin-top: 30px;
 }
-.tasksimple{
+.tasksimple {
   border-bottom: 1px solid gray;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-    padding: 0.5rem 3vw;
-    width: 100%;
-    font-size: 1.5em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 0.5rem 3vw;
+  width: 100%;
+  font-size: 1.5em;
 }
-.tasksimplelist{
+.tasksimplelist {
   border-bottom: 1px solid gray;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-    padding: 0.5rem 3vw;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 0.5rem 3vw;
+  width: 100%;
+}
+
+/*-----------------------------------Manage Menu-----------------------------------------*/
+.manageMenu {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  gap: 10px;
+  position: fixed;
+  left: 4vw;
+  top: 180px;
+  border: 2px solid rgb(94, 209, 255);
+  padding: 20px;
+  border-radius: 30px;
+}
+
+.manageMenu h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.manageMenu h3:hover {
+  text-decoration: underline;
+  color: skyblue;
 }

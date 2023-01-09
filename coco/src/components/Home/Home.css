@@ -129,14 +129,44 @@
   color: #00ff00;
 }
 
-.login{
+.login {
   display: flex;
   flex-direction: row;
 }
 
-.login > h3{
+.login > h3 {
   display: grid;
   align-content: center;
+}
+
+.bodyOverlay {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.bodyOverlay h3 {
+  margin-top: 0.7rem !important;
+}
+
+.footerOverlay {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+  border-top: 1px solid lightgray;
+  gap: 40px;
+  padding-top: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.footerOverlay h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 !important;
 }
 
 /*--------------------------------------------- BODY -------------------------------------------------------*/
@@ -151,10 +181,10 @@
   flex-flow: column wrap;
   padding-left: 18vw;
   padding-right: 18vw;
-  padding-top: 13rem;
+  padding-top: 10rem;
   background-image: url(../../../public/image/aa.png);
   background-repeat: no-repeat;
-  background-position: 75% 100px;
+  background-position: 75% 65px;
   background-size: 360px;
 }
 
@@ -171,7 +201,7 @@
 .home .home-body .txt-box #t1 {
   grid-row: 1/2;
   grid-column: 1/3;
-  font-size: 2em;
+  font-size: 2.2em;
   font-weight: 800;
 }
 
@@ -185,9 +215,213 @@
 .home .home-body .txt-box #t2-1 {
   grid-row: 2/3;
   grid-column: 2/4;
-  font-size: 1.3em;
+  font-size: 1.5em;
   font-weight: 800;
   color: #00ff00;
+}
+
+.home .Block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 13rem;
+  gap: 5vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.Block .boxTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.boxTitle h2 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.Block .box1 {
+  grid-column: 1/2;
+  cursor: pointer;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+
+.Block .box2 {
+  cursor: pointer;
+  grid-column: 2/3;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+
+.Block .blockBox {
+  width: 100%;
+  height: 200px;
+  border-radius: 30px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.blockBox .blockContent {
+  width: 100%;
+}
+
+.blockBox .blockTop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blockBox .blockTop2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.blockTop h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockTop h4 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockTop2 h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBox .blockSec {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.blockBox .blockSec2 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.blockSec #blockCat {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockSec .block_un {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.blockSec .block_un2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.block_un .unOne {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.block_un p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.block_un2 p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBox .blockBody {
+  display: flex;
+  margin-top: 15px;
+  border-top: 2px solid lightgray;
+  padding-top: 15px;
+}
+
+.blockSec p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockSec2 p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBox .blockThird {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+  margin-top: 25px;
+  justify-content: space-around;
+}
+
+.blockBox .blockThird p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBody p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockTop2 .redBox {
+  border: 2px solid red;
+  border-radius: 10px;
+  color: red;
+  width: fit-content;
+  padding: 2px 15px 0px 15px;
+}
+
+.home-body .ad-box {
+  margin-top: 12rem;
+  margin-bottom: 10rem;
+  width: 100%;
 }
 
 .home .notice {
@@ -198,7 +432,7 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
   color: white;
-  margin-bottom: 15rem;
+  margin-bottom: 12rem;
 }
 
 .notice .title-notice {
@@ -227,12 +461,6 @@
 .body-notice li {
   padding-bottom: 0.6em;
   font-family: "Pretendard-Regular";
-}
-
-.home-body .ad-box {
-  margin-top: 23rem;
-  margin-bottom: 15rem;
-  width: 100%;
 }
 
 /*--------------------------------------------- FOOTER -------------------------------------------------------*/

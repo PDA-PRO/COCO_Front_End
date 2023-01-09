@@ -4,17 +4,19 @@ import { BsFillHeartFill, BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../../../app/store";
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Comments = (props) => {
   //props: id, context, write_time, likes, user_id, board_id
   const [isMe, setIsMe] = useState(false);
   const userInfo = useAppSelector((state) => state.loginState);
   const [like, setLike] = useState(false);
-  const [likeNum, setLikeNum] = useState(props.props[3]);
-  var numLike = props.props[3];
+  const navigate = useNavigate();
+  const [likeNum, setLikeNum] = useState(props.props.likes);
+  var numLike = props.props.likes;
 
   useEffect(() => {
-    if (props.props[4] === userInfo.id || userInfo.ismanage === true) {
+    if (props.props.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
   }, [isMe]);
@@ -53,41 +55,63 @@ export const Comments = (props) => {
       setLikeNum(likeNum - 1);
     }
     axios
-      .post("http://127.0.0.1:8000/comment_likes/", {
-        comment_id: props.props[0],
-        user_id: userInfo.id,
-        board_id: props.props[5],
-        likes: numLike,
-        type: like,
-      })
+      .post(
+        "http://127.0.0.1:8000/comment_likes/",
+        {
+          comment_id: props.props.id,
+          user_id: userInfo.id,
+          board_id: props.props.board_id,
+          likes: numLike,
+          type: like,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then(() => {
         // window.location.replace("/board");
+      })
+      .catch(() => {
+        alert("인증실패");
       });
   };
 
   const onDeleteHandler = () => {
-    axios.post("http://127.0.0.1:8000/delete_comment/", {
-      comment_id: props.props[0],
-      user_id: userInfo.id
-    }).then((res) => {
-      console.log(res.data);
-      if(res.data.code === 1){
-        alert("해당 댓글이 삭제되었습니다");
-      }else{
-        alert("삭제에 실패하였습니다");
-      }
-      var path = window.location.pathname;
-      path = path.split("/");
-      window.location.href = `/board/${path.at(-1)}`;
-    })
+    axios
+      .post(
+        "http://127.0.0.1:8000/delete_comment/",
+        {
+          comment_id: props.props.id,
+          user_id: userInfo.id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.code === 1) {
+          alert("해당 댓글이 삭제되었습니다");
+        } else {
+          alert("삭제에 실패하였습니다");
+        }
+        var path = window.location.pathname;
+        path = path.split("/");
+        navigate(`/board/${path.at(-1)}`);
+        //window.location.href = `/board/${path.at(-1)}`;
+      })
+      .catch(() => {
+        alert("인증실패");
+      });
   };
 
   return (
     <div className="commentContext">
       <div className="commentHead">
         <div className="un">
-          <h2 className="cUserID">{props.props[4]}</h2>
-          <p>{timeForToday(props.props[2])}</p>
+          <h2 className="cUserID">{props.props.user_id}</h2>
+          <p>{timeForToday(props.props.write_time)}</p>
+          <p>{timeForToday(props.props.likes)}</p>
         </div>
         <div
           className="un2"
@@ -99,7 +123,7 @@ export const Comments = (props) => {
         </div>
       </div>
       <div className="commentBody">
-        <p id="commentCon">{props.props[1]}</p>
+        <p id="commentCon">{props.props.context}</p>
         {isMe ? (
           <BsTrash
             size={25}

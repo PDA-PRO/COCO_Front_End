@@ -9,10 +9,12 @@ import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
 import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
+import { useAppSelector } from "../../app/store";
 
 export const Result = (code) => {
   const { id } = useParams();
   const locate = useLocation();
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const num = parseInt(id);
 
@@ -21,7 +23,9 @@ export const Result = (code) => {
       <Header />
       <Suspense fallback={<Spinner />}>
         <ResultBox
-          resource={fetchData(`http://127.0.0.1:8000/result/${num}`)}
+          resource={fetchData(`http://127.0.0.1:8000/result/${num}`, {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          })}
           info={locate.state.info}
         />
       </Suspense>
@@ -105,7 +109,7 @@ const ResultBox = ({ resource, info }) => {
             <h2>제출 코드</h2>
           </div>
           <div className="Res-code">
-            <p id="R-Code">{problemList[2]}</p>
+            <p id="R-Code">{problemList["code"]}</p>
           </div>
         </div>
 
@@ -114,10 +118,10 @@ const ResultBox = ({ resource, info }) => {
             {/* <IoLogoPython size={30} color="skyblue" /> */}
             <img src="/image/logo.png" alt="" height="40px" />
             <h2>채점 결과 :</h2>
-            {whatResult(problemList[12])}
+            {whatResult(problemList["status"])}
           </div>
           <div className="Res-code">
-            <p id="R-Code">{problemList[9]}</p>
+            <p id="R-Code">{problemList["message"]}</p>
           </div>
         </div>
       </div>

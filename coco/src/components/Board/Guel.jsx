@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 export const Guel = (props) => {
   const navigate = useNavigate();
   const moveDetail = (e) => {
+    console.log(e);
     navigate(`/board/${e}`);
   };
   const [category, setCategory] = useState("");
@@ -76,7 +77,7 @@ export const Guel = (props) => {
       className="Geul"
       style={{ backgroundColor: bgColor }}
       onClick={() => {
-        moveDetail(props.props.board_id);
+        moveDetail(props.props.id);
       }}
     >
       <div className="un">

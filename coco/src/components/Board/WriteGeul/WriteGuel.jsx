@@ -5,13 +5,12 @@ import { Footer } from "../../Home/Footer";
 import { GoPencil } from "react-icons/go";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import { useState } from "react";
 import { Free } from "./Free";
 import { Help } from "./Help";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
 
 export const WriteGeul = () => {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ export const WriteGeul = () => {
   const [title, setTitle] = useState("");
   const [cate, setCate] = useState(1);
   const [context, setContext] = useState("");
-  const userInfo = useSelector((state) => state.loginState);
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -43,12 +42,18 @@ export const WriteGeul = () => {
       return alert("완전히 입력해주세요.");
     } else {
       axios
-        .post("http://127.0.0.1:8000/fastWrite/", {
-          user_id: userInfo.id,
-          title: title,
-          //category: cate,
-          context: context,
-        })
+        .post(
+          "http://127.0.0.1:8000/fastWrite/",
+          {
+            user_id: userInfo.id,
+            title: title,
+            //category: cate,
+            context: context,
+          },
+          {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          }
+        )
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`게시글 업로드 성공`);
@@ -56,6 +61,9 @@ export const WriteGeul = () => {
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }
+        })
+        .catch(() => {
+          alert("인증실패");
         });
     }
   };

@@ -6,12 +6,12 @@ import {
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/store";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
-  const userInfo = useSelector((state) => state.loginState);
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -28,11 +28,17 @@ export const FastWrite = () => {
       return alert("완전히 입력해주세요.");
     } else {
       axios
-        .post("http://127.0.0.1:8000/fastWrite/", {
-          user_id: userInfo.id,
-          title: title,
-          context: context,
-        })
+        .post(
+          "http://127.0.0.1:8000/fastWrite/",
+          {
+            user_id: userInfo.id,
+            title: title,
+            context: context,
+          },
+          {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          }
+        )
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`${title} 업로드 성공`);
@@ -40,6 +46,9 @@ export const FastWrite = () => {
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }
+        })
+        .catch(() => {
+          alert("인증실패");
         });
     }
   };

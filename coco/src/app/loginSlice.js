@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 
 const initialState = {
+  access_token: "",
+  token_type: "",
   id: "",
-  pw: "",
-  ismanage: false,
+  role: null,
 };
 
 export const loginSlice = createSlice({
@@ -12,19 +13,22 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      state.access_token = action.access_token;
+      state.token_type = action.ptoken_typew;
       state.id = action.id;
-      state.pw = action.pw;
-      state.ismanage = action.ismanage;
+      state.role = action.role;
     },
     logout: (state) => {
+      state.access_token = "";
+      state.token_type = "";
       state.id = "";
-      state.pw = "";
-      state.ismanage = false;
+      state.role = null;
     },
     initlogin: (state) => {
+      state.access_token = initialState.access_token;
+      state.token_type = initialState.ptoken_typew;
       state.id = initialState.id;
-      state.pw = initialState.pw;
-      state.ismanage = initialState.ismanage;
+      state.role = initialState.role;
     },
   },
   extraReducers: (builder) => {

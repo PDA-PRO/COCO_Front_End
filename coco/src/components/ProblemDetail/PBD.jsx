@@ -62,15 +62,24 @@ const GetDetail = ({ resource }) => {
   const submitCode = () => {
     Promise.resolve().then(
       axios
-        .post("http://127.0.0.1:8000/submission", {
-          taskid: detail.id,
-          userid: userInfo.id,
-          sourcecode: code,
-          callbackurl: "string",
-        })
+        .post(
+          "http://127.0.0.1:8000/submission",
+          {
+            taskid: detail.id,
+            userid: userInfo.id,
+            sourcecode: code,
+            callbackurl: "string",
+          },
+          {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          }
+        )
         .then(function (response) {
           alert(`${userInfo.id}님 ${detail.id} 제출완료`);
           goToResult(userInfo.id, { state: { userid: userInfo.id } });
+        })
+        .catch(() => {
+          alert("인증실패");
         })
     );
   };

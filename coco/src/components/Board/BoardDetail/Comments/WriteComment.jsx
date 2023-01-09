@@ -4,11 +4,12 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import axios from "axios";
 import { useAppSelector } from "../../../../app/store";
+import { useNavigate } from "react-router-dom";
 
 export const WriteComment = ({ commentShoot }) => {
   const userInfo = useAppSelector((state) => state.loginState);
-  const [context, setContext] = useState("");  
-
+  const [context, setContext] = useState("");
+  const navigate = useNavigate();
   const onContextHandler = (e) => {
     setContext(e.currentTarget.value);
   };
@@ -26,18 +27,27 @@ export const WriteComment = ({ commentShoot }) => {
       var path = window.location.pathname;
       path = path.split("/");
       axios
-        .post("http://127.0.0.1:8000/comment", {
-          user_id: userInfo.id,
-          context: context,
-          board_id: path.at(-1)
-        })
+        .post(
+          "http://127.0.0.1:8000/comment",
+          {
+            user_id: userInfo.id,
+            context: context,
+            board_id: path.at(-1),
+          },
+          {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          }
+        )
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`댓글 작성 완료`);
-            window.location.href = `/board/${path.at(-1)}`;
+            navigate(`/board/${path.at(-1)}`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }
+        })
+        .catch(() => {
+          alert("인증실패");
         });
     }
   };

@@ -1,0 +1,303 @@
+.myPage {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 5rem 18vw 5rem 18vw;
+}
+
+.myPage h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin: 0 !important;
+  padding-left: 2vw;
+}
+
+/*---------------------------------FirstBox-------------------------------*/
+.mp-infoBox {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  padding: 20px 5vw;
+  justify-content: space-between;
+  margin: 20px 0 60px 0;
+}
+
+.picBox {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.picBox img {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+}
+
+.picSelect {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.picSelect label {
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid skyblue;
+  border-radius: 20px;
+  padding: 5px;
+  width: 160px;
+  text-align: center;
+}
+
+.picSelect label:hover {
+  background-color: skyblue;
+  color: white;
+}
+
+.txtInputBox {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.txtInputBox h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.txtInputBox .mb-3 {
+  width: 330px !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+#pwBtn {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.levelField {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 45px;
+}
+
+.levelField .ip1 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.ip1 p {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+  color: black !important;
+}
+
+.levelField h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 2.5rem;
+  margin: 0 !important;
+}
+
+.levelField p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  color: gray;
+}
+
+/*-------------------------SECBOX-------------------------------*/
+
+.mp-secBox {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  padding: 30px 5vw;
+  margin: 20px 0 60px 0;
+  gap: 30px;
+}
+
+.mp-secBox .secBox-row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+  align-items: center;
+  gap: 150px;
+}
+
+.secBox-row h3 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.mp-secBox .secBox-col {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.secBox-col h3 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgray;
+}
+
+.secBox-col h3 span {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.secBox-col .taskList-split {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.secBox-col .taskList-split2 {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.taskList-split p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.taskList-split2 p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.recharts-default-legend {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+tspan {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.recharts-default-tooltip {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/*-------------------thirdbox---------------------------*/
+
+.mp-ThirdBox {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  padding: 30px 5vw;
+  margin: 20px 0 20px 0;
+  gap: 30px;
+}
+
+.mp-ThirdBox .myGuel {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 5fr 0.5fr;
+  padding: 8px;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  align-items: center;
+}
+
+.myGuel h4 {
+  grid-column: 1/2;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGuel h3 {
+  grid-column: 2/3;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin: 0 !important;
+  text-align: center;
+  cursor: pointer;
+}
+
+.myGuel h5 {
+  grid-column: 3/4;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGuel .GuelBox {
+  grid-column: 4/5;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+}
+
+.GuelBox .bBox {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.bBox p {
+  font-family: "Pretendard-Regular" !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGuel #delGuel {
+  cursor: pointer;
+}

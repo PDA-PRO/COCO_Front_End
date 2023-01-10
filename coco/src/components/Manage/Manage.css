@@ -151,8 +151,8 @@
   display: flex;
   flex-flow: column;
   margin-top: 3rem;
-  padding-left: 17vw;
-  padding-right: 17vw;
+  margin-left: 17vw;
+  margin-right: 17vw;
   padding-bottom: 10rem;
 }
 
@@ -169,8 +169,6 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  padding-left: 1vw;
-  padding-right: 1vw;
 }
 
 .m-head h2 {
@@ -187,7 +185,8 @@
 .m-upload {
   display: flex;
   flex-flow: column nowrap;
-  margin: 1.2rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
   border: 2px solid darkgray;
   border-radius: 30px;
   padding: 3rem;
@@ -278,11 +277,10 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 30px;
   position: fixed;
-  left: 4vw;
-  top: 180px;
-  border: 2px solid rgb(94, 209, 255);
+  left: 2vw;
+  top: 35px;
   padding: 20px;
   border-radius: 30px;
 }
@@ -292,9 +290,23 @@
   font-weight: 600;
   font-size: 1.2rem;
   cursor: pointer;
+  overflow: hidden;
+}
+
+.manageMenu h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .manageMenu h3:hover {
   text-decoration: underline;
   color: skyblue;
+}
+
+.manageMenu #menuDiv {
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
 }

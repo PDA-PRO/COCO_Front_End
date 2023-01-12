@@ -1,30 +1,12 @@
 import "../Manage.css";
 import React, { useState } from "react";
-
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-
-import styled from "styled-components";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
-
-const Container = styled.div`
-  width: 100%;
-`;
-
-
-// const Viewer = styled.div`
-//   height: 400px;
-//   padding: 20px;
-//   margin-top: 20px;
-//   border: 2px solid gray;
-// `;
-
 
 export const Notice = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -68,10 +50,6 @@ export const Notice = () => {
     <>
       <h2 className="mTi">NOTICE</h2>
       <div className="m-upload">
-        {/* <InputGroup style={{ height: "550px" }}>
-          <InputGroup.Text>수정</InputGroup.Text>
-          <Form.Control as="textarea" placeholder="1." />
-        </InputGroup> */}
         <Editor
           placeholder="게시글을 작성해주세요"
           editorState={editorState}

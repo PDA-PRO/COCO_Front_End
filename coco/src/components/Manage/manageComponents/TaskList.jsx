@@ -22,7 +22,7 @@ export const TaskList = () => {
       <h2 className="mTi">TASK LIST</h2>
       <div>
         <Suspense fallback={<Spinner />}>
-          <TasksList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
+          <TasksList resource={fetchData(`http://127.0.0.1:8000/manage/tasklist`)} />
         </Suspense>
       </div>
     </>

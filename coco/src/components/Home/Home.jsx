@@ -7,6 +7,8 @@ import { SlPin } from "react-icons/sl";
 import { Block } from "./Block";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftjsToHtml from "draftjs-to-html";
 
 export const Home = () => {
   return (
@@ -36,7 +38,10 @@ export const Home = () => {
           </div>
 
           <div className="notice">
-            <div className="title-notice">
+            <Suspense fallback={<Spinner />}>
+              <GetNotice resource={fetchData("http://127.0.0.1:8000/manage/notice")} />
+            </Suspense>
+            {/* <div className="title-notice">
               <SlPin size={30} color="#00ff00" />
               <h2>Notice!</h2>
             </div>
@@ -44,7 +49,7 @@ export const Home = () => {
               <li>ver 0.1.0 - Beta Open!</li>
               <li>November 11, midterm presentation</li>
               <li>New Question! : No.01 더하기 문제</li>
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer />
@@ -58,3 +63,8 @@ const GetHot = ({ resource }) => {
   console.log(HOT);
   return <>{<Block info={HOT} key={HOT.id} />}</>;
 };
+
+const GetNotice = ({ resource}) => {
+  const notice = resource.read()
+  return <div className="body-notice" dangerouslySetInnerHTML={{ __html: notice }}></div>
+}

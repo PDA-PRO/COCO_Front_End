@@ -99,6 +99,24 @@ button.active {
   justify-content: center;
 }
 
+/* 자동로그인 버튼 */
+.loginAuto > input {
+  width: 80%;
+  font-family: "GmarketSansMedium";
+  margin: 0px !important;
+}
+
+.loginAuto > input:hover {
+  border: 1px solid #5fe45f;
+  background-color: #5fe45f;
+}
+
+.loginAuto {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 /* 아이디 및 비밀번호 찾기 */
 .loginOptions {
   font-size: small;

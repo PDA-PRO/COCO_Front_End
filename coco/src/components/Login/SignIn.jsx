@@ -10,6 +10,7 @@ import { FiMail } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 import jwtdecode from "../../app/jwtdecode";
+import Form from "react-bootstrap/Form";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const SignIn = () => {
   const [pw, setPw] = useState("");
   const [modalShow, setModalShow] = React.useState(false);
   const [find, setFind] = useState(0);
+  const [autologin, setautologin] = useState(false);
 
   const onIDHandler = (e) => {
     setId(e.currentTarget.value);
@@ -39,7 +41,7 @@ export const SignIn = () => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/login",
+          "http://127.0.0.1:8000/login?autologin=" + autologin,
           qs.stringify({
             grant_type: "",
             username: id,
@@ -93,6 +95,17 @@ export const SignIn = () => {
           >
             Sign In
           </Button>
+        </div>
+        <div className="loginBox loginAuto">
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="자동 로그인"
+            onClick={() => {
+              setautologin(!autologin);
+              console.log(autologin);
+            }}
+          />
         </div>
         <div className="loginBox loginOptions">
           <span

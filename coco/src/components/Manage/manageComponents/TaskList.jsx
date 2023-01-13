@@ -22,7 +22,7 @@ export const TaskList = () => {
       <h2 className="mTi">TASK LIST</h2>
       <div>
         <Suspense fallback={<Spinner />}>
-          <TasksList resource={fetchData(`http://127.0.0.1:8000/manage/tasklist`)} />
+          <TasksList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
         </Suspense>
       </div>
     </>
@@ -33,17 +33,23 @@ const TasksList = ({ resource }) => {
   const problemList = resource.read();
   const [tasks, settasks] = useState(problemList);
 
-  const maxPage = Math.ceil(problemList.length/10);
+  const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
-    if(event.target.innerHTML === '<path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path>'){
-      setPage(page-1)
-    }else if(event.target.innerHTML === '<path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"></path>'){
-      setPage(page+1)
-    }else{
+    if (
+      event.target.innerHTML ===
+      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
+    ) {
+      setPage(page - 1);
+    } else if (
+      event.target.innerHTML ===
+      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
+    ) {
+      setPage(page + 1);
+    } else {
       setPage(parseInt(event.target.outerText));
     }
-  }
+  };
 
   return (
     <div className="m-upload">

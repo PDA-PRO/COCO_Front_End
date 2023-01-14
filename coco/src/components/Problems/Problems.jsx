@@ -11,15 +11,31 @@ export const Problems = () => {
     <div>
       <Header />
       <div className="problemsContainer">
-        <div className="problemsBox problemsTitle">
-          <div className="problemsNum">문제 번호</div>
-          <div className="problemsName">문제 제목</div>
-          <div className="problemsRate">난이도</div>
-          <div className="problemsAns">정답률</div>
+        <div className="proBody">
+          <div className="BodyLeft">
+            <div className="leftTop">
+              <h4>No</h4>
+              <h4>Title</h4>
+              <h4>Difficulty</h4>
+              <h4>Rate</h4>
+              <h4>Language</h4>
+            </div>
+            <Suspense fallback={<Spinner />}>
+              <GetProblems
+                resource={fetchData("http://127.0.0.1:8000/tasklist")}
+              />
+            </Suspense>
+            <div className="leftBottom">
+              <h4>페이지 네이션</h4>
+            </div>
+          </div>
+
+          <div className="BodyRight">
+            <div className="rightBox1">
+              <h4>정렬 기준</h4>
+            </div>
+          </div>
         </div>
-        <Suspense fallback={<Spinner />}>
-          <GetProblems resource={fetchData("http://127.0.0.1:8000/problems")} />
-        </Suspense>
       </div>
       <Footer />
     </div>

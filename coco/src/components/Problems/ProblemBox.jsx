@@ -1,8 +1,15 @@
 import React from "react";
 import "./Problems.css";
-import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { TbBattery1, TbBattery2, TbBattery3, TbBattery4 } from "react-icons/tb";
+import {
+  TiBatteryCharge,
+  TiBatteryLow,
+  TiBatteryMid,
+  TiBatteryHigh,
+  TiBatteryFull,
+} from "react-icons/ti";
 
 export const ProblemBox = (info) => {
   const navigate = useNavigate();
@@ -10,13 +17,57 @@ export const ProblemBox = (info) => {
     navigate(`/problems/${e}`);
   };
 
+  console.log(info.info);
+
+  const setLevel = (e) => {
+    switch (e) {
+      case 1:
+        return <TiBatteryLow size={35} color="rgb(98, 148, 255)" />;
+      case 2:
+        return <TiBatteryMid size={35} color="#9DD84B" />;
+      case 3:
+        return <TiBatteryHigh size={35} color="#ff7e00" />;
+      case 4:
+        return <TiBatteryFull size={35} color="red" />;
+      case 5:
+        return <TiBatteryCharge size={35} color="#7d1b7e" />;
+    }
+  };
+
+  const lan = (e1, e2) => {
+    if (e1 === 1 && e2 === 1) {
+      return (
+        <div>
+          <img src="./image/lan_c.png" height="30px" alt="" />
+          <img
+            src="./image/python.png"
+            height="30px"
+            style={{ paddingRight: "10px" }}
+            alt=""
+          />
+        </div>
+      );
+    } else if (e1 === 1 && e2 === 0) {
+      return (
+        <div>
+          <img src="./image/lan_c.png" height="30px" alt="" />
+        </div>
+      );
+    } else if (e1 === 0 && e2 === 1) {
+      return (
+        <div>
+          <img src="./image/python.png" height="30px" alt="" />
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="problemsBox" onClick={() => goDetail(info.info.id)}>
-      <div className="problemsNum">No.{info.info.id}</div>
-      <div className="problemsName">{info.info.title}</div>
-      <div className="problemsRate">{Rating(`${info.info.diff}`)}</div>
-      <div
-        className="problemsAns"
+      <h4>No.{info.info.id}</h4>
+      <h4>{info.info.title}</h4>
+      <h4>{setLevel(info.info.diff)}</h4>
+      <h4
         style={{
           color:
             info.info.rate == 0
@@ -27,54 +78,9 @@ export const ProblemBox = (info) => {
         }}
       >
         {info.info.rate}%
-      </div>
+      </h4>
+
+      <h4>{lan(info.info.lan_c, info.info.lan_py)}</h4>
     </div>
   );
 };
-
-const ARRAY = [0, 1, 2, 3, 4];
-
-function Rating(n) {
-  const colored = [false, false, false, false, false];
-  for (let i = 0; i < n; i++) {
-    colored[i] = true;
-  }
-
-  return (
-    <Wrap>
-      <Stars>
-        {ARRAY.map((el, idx) => {
-          return (
-            <FaStar
-              key={idx}
-              size="23"
-              className={colored[el] && "yellowStar"}
-            />
-          );
-        })}
-      </Stars>
-    </Wrap>
-  );
-}
-
-export default Rating;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  // padding-top: 15px;
-`;
-
-const Stars = styled.div`
-  display: flex;
-  // padding-top: 5px;
-
-  & svg {
-    color: gray;
-    margin: 0 5px;
-  }
-
-  .yellowStar {
-    color: #fcc419;
-  }
-`;

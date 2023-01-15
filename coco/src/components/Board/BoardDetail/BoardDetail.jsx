@@ -211,7 +211,7 @@ const GetBoardDetail = ({ resource }) => {
 
         <div className="BDContent">
           <div className="BDTxt">
-            <p>{detail.context}</p>
+            <div dangerouslySetInnerHTML={{ __html: detail.context }}/>
           </div>
 
           {detail.category === 2 ? <CodeHere /> : <></>}
@@ -242,7 +242,13 @@ const GetBoardDetail = ({ resource }) => {
             )}
 
             {detail.comments_datail.map((e) => {
-              return <Comments props={e} key={e.id} is_liked = {detail.is_comment_liked} />;
+              return (
+                <Comments
+                  props={e}
+                  key={e.id}
+                  is_liked={detail.is_comment_liked}
+                />
+              );
             })}
           </div>
         </div>

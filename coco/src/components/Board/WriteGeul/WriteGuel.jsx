@@ -8,20 +8,10 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { Free } from "./Free";
 import { Help } from "./Help";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
 
 export const WriteGeul = () => {
-  const navigate = useNavigate();
-
-  const movePage = () => {
-    navigate("/board");
-  };
   const [title, setTitle] = useState("");
   const [cate, setCate] = useState(1);
-  const [context, setContext] = useState("");
-  const userInfo = useAppSelector((state) => state.loginState);
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -29,43 +19,6 @@ export const WriteGeul = () => {
 
   const onCategoryHandler = (e) => {
     setCate(e.currentTarget.value);
-  };
-
-  const onContextHandler = (e) => {
-    setContext(e.currentTarget.value);
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log("shoot");
-    if (title == "" || context == "") {
-      return alert("완전히 입력해주세요.");
-    } else {
-      axios
-        .post(
-          "http://127.0.0.1:8000/fastWrite/",
-          {
-            user_id: userInfo.id,
-            title: title,
-            //category: cate,
-            context: context,
-          },
-          {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          }
-        )
-        .then(function (response) {
-          if (response.data.code === 1) {
-            alert(`게시글 업로드 성공`);
-            movePage();
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
-        })
-        .catch(() => {
-          alert("인증실패");
-        });
-    }
   };
 
   return (
@@ -100,9 +53,9 @@ export const WriteGeul = () => {
 
         <div className="wG_two">
           {cate == 2 ? (
-            <Help />
+            <Help title={title}/>
           ) : (
-            <Free onContextHandler={onContextHandler} onSubmit={onSubmit} />
+            <Free title={title}/>
           )}
         </div>
       </div>

@@ -1,5 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import "./WriteGuel.css";
+import Button from "react-bootstrap/Button";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftjsToHtml from "draftjs-to-html";
 
 export const Help = () => {
-  return <div>Help</div>;
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [htmlString, setHtmlString] = useState("");
+
+  const updateTextDescription = async (state) => {
+    await setEditorState(state);
+    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
+    setHtmlString(html);
+  };
+
+  const uploadCallback = () => {
+    console.log("이미지 업로드");
+  };
+  return <div className="freeWrite">
+    <Editor
+        placeholder={"내용을 작성해주세요."}
+        editorState={editorState}
+        onEditorStateChange={updateTextDescription}
+        toolbar={{
+          options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'remove', 'history'],
+          inline: { inDropdown: true },
+          list: { inDropdown: true },
+          textAlign: { inDropdown: true },
+          link: { inDropdown: true },
+          history: { inDropdown: true },
+          image: { uploadCallback: uploadCallback },
+          fontFamily: {
+            options: ['GmarketSansMedium', "Pretendard-Regular", 'Impact', 'Open Sans', 'Roboto', 'Tahoma', 'Times New Roman', 'Verdana'],
+          }
+        }}
+        localization={{ locale: "ko" }}
+        editorStyle={{
+          height: "480px",
+          width: "100%",
+          border: "3px solid lightgray",
+          padding: "20px",
+          fontFamily: 'Pretendard-Regular'
+        }}
+      />
+      <Button variant="outline-info" id="submitFree">
+        Submit
+      </Button>
+  </div>;
 };

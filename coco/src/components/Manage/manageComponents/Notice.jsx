@@ -71,18 +71,28 @@ const GetNotice = ({ resource }) => {
   return (
     <>
       <Editor
-        placeholder={initPlaceholder}
+        placeholder={"내용을 작성해주세요."}
         editorState={editorState}
         onEditorStateChange={updateTextDescription}
         toolbar={{
+          options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'remove', 'history'],
+          inline: { inDropdown: true },
+          list: { inDropdown: true },
+          textAlign: { inDropdown: true },
+          link: { inDropdown: true },
+          history: { inDropdown: true },
           image: { uploadCallback: uploadCallback },
+          fontFamily: {
+            options: ['GmarketSansMedium', "Pretendard-Regular", 'Impact', 'Open Sans', 'Roboto', 'Tahoma', 'Times New Roman', 'Verdana'],
+          }
         }}
         localization={{ locale: "ko" }}
         editorStyle={{
-          height: "300px",
+          height: "480px",
           width: "100%",
           border: "3px solid lightgray",
           padding: "20px",
+          fontFamily: 'Pretendard-Regular'
         }}
       />
       <div className="notice_result">

@@ -67,6 +67,10 @@
   /* margin-bottom: 1rem; */
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #ffffff;
 }
 
 .navbar h2 {
@@ -75,6 +79,7 @@
   font-size: 1.6em;
   font-weight: 650;
   padding-top: 0.3rem;
+  letter-spacing: 4px;
 }
 
 .navbar h3 {

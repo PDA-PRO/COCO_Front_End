@@ -5,14 +5,35 @@
   font-weight: 600;
   font-size: 1.1em;
   padding: 0 18vw;
-  margin: 5rem 0 8rem 0;
+  margin: 1rem 0 4rem 0;
   min-height: 800px;
+}
+
+.problemsContainer .proTop {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid lightgray;
+  align-items: center;
+  gap: 20px;
+}
+
+.proTop h4 {
+  font-family: "GmarketSansMedium";
+  font-weight: 600;
+  font-size: 1.5em;
+  color: rgb(63, 63, 63);
+  letter-spacing: 5px;
+  margin: 0 !important;
 }
 
 .problemsContainer .proBody {
   display: grid;
   grid-template-columns: 7.5fr 2.5fr;
   gap: 50px;
+  position: relative;
 }
 
 .proBody .BodyLeft {
@@ -26,7 +47,7 @@
   display: grid;
   grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr;
   align-items: center;
-  border: 1px solid rgb(98, 148, 255);
+  border: 2px solid rgb(98, 148, 255);
   border-radius: 15px 15px 0 0;
   padding: 10px 15px;
 }
@@ -45,9 +66,9 @@
 
 .leftBottom {
   align-items: center;
-  border-right: 1px solid rgb(98, 148, 255);
-  border-bottom: 1px solid rgb(98, 148, 255);
-  border-left: 1px solid rgb(98, 148, 255);
+  border-right: 2px solid rgb(98, 148, 255);
+  border-bottom: 2px solid rgb(98, 148, 255);
+  border-left: 2px solid rgb(98, 148, 255);
   border-radius: 0 0 15px 15px;
   padding: 10px 15px;
 }
@@ -99,10 +120,17 @@
 
 .BodyRight .rightBox1 {
   width: 100%;
-  height: 500px;
   border: 2px solid rgb(36, 82, 184);
   border-radius: 15px;
   background-color: rgb(247, 247, 247);
+  position: sticky !important;
+  top: 90px;
+  align-self: flex-start;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .rightBox1 h4 {
@@ -112,4 +140,114 @@
   margin: 5px 0;
   text-align: center;
   color: rgb(95, 95, 95);
+  margin-bottom: 15px;
+}
+
+.rightBox1 nav {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rightBox1 nav label {
+  width: 100%;
+}
+
+.rightBox1 h3 {
+  color: rgb(12, 12, 12);
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.rightBox1 .slide {
+  clear: both;
+  width: 100%;
+  height: 0px;
+  overflow: hidden;
+  text-align: center;
+  transition: height 0.4s ease;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide .chose {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 150px;
+  justify-content: space-between;
+}
+
+.slide .chose2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 180px;
+  justify-content: space-between;
+  margin: 3px 0;
+}
+
+.slide .chose3 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 170px;
+  justify-content: space-between;
+  margin: 3px 0;
+}
+
+.slide h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-top: 3px;
+}
+
+.slide p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 0.8em;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+#touch {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch:checked + .slide {
+  height: 230px;
+}
+
+#touch2 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch2:checked + .slide {
+  height: 140px;
+}
+
+#touch3 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch3:checked + .slide {
+  height: 130px;
+}
+
+.form-check-input {
+  margin-top: 6px;
 }

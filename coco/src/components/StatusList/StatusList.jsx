@@ -57,7 +57,7 @@ const Getsubmits = ({ resource }) => {
     
   return (
     <>
-      {problemList.slice(10*(page-1), 10*(page-1)+10).map((e) => {
+      {problemList.slice(20*(page-1), 20*(page-1)+20).map((e) => {
         return <StatusListBox info={e} key={e.sub_id} />;
       })}
       <div className="pageController">

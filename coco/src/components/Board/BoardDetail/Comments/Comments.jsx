@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Comments = (props) => {
   //props: id, context, write_time, likes, user_id, board_id
+  console.log(props);
   const [isMe, setIsMe] = useState(false);
   const userInfo = useAppSelector((state) => state.loginState);
   const [like, setLike] = useState(false);
@@ -18,6 +19,9 @@ export const Comments = (props) => {
   useEffect(() => {
     if (props.props.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
+    }
+    if (props.is_liked[0] && props.props.id === props.is_liked[1]){
+      setLike(true)
     }
   }, [isMe]);
 
@@ -47,12 +51,13 @@ export const Comments = (props) => {
   }
 
   const onLikesHandler = () => {
-    setLike(!like);
     if (!like) {
       setLikeNum(likeNum + 1);
       numLike += 1;
+      setLike(true)
     } else {
       setLikeNum(likeNum - 1);
+      setLike(false)
     }
     axios
       .post(

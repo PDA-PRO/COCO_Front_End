@@ -24,15 +24,16 @@ import { useNavigate } from "react-router-dom";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
-
   path = path.split("/");
+  const userInfo = useAppSelector((state) => state.loginState);
+  
 
   return (
     <>
       <Header />
       <Suspense fallback={<Spinner />}>
         <GetBoardDetail
-          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}
+          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/${userInfo.id}`)}
           key={path.at(-1)}
         />
       </Suspense>
@@ -52,9 +53,13 @@ const GetBoardDetail = ({ resource }) => {
   var numLike = detail.likes;
   const [isMe, setIsMe] = useState(false);
 
+
   useEffect(() => {
     if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
+    }
+    if (detail.is_board_liked){
+      setLike(true);
     }
   }, [isMe]);
 
@@ -92,12 +97,13 @@ const GetBoardDetail = ({ resource }) => {
   }
 
   const onLikesHandler = () => {
-    setLike(!like);
     if (!like) {
       setLikeNum(likeNum + 1);
       numLike += 1;
+      setLike(true)
     } else {
       setLikeNum(likeNum - 1);
+      setLike(false)
     }
     axios
       .post(
@@ -205,7 +211,7 @@ const GetBoardDetail = ({ resource }) => {
 
         <div className="BDContent">
           <div className="BDTxt">
-            <p>{detail.context}</p>
+            <div dangerouslySetInnerHTML={{ __html: detail.context }}/>
           </div>
 
           {detail.category === 2 ? <CodeHere /> : <></>}
@@ -236,7 +242,13 @@ const GetBoardDetail = ({ resource }) => {
             )}
 
             {detail.comments_datail.map((e) => {
-              return <Comments props={e} key={e.id} />;
+              return (
+                <Comments
+                  props={e}
+                  key={e.id}
+                  is_liked={detail.is_comment_liked}
+                />
+              );
             })}
           </div>
         </div>
@@ -244,15 +256,3 @@ const GetBoardDetail = ({ resource }) => {
     </>
   );
 };
-
-// const GetList = ({ resource }) => {
-//   const commentList = resource.read();
-
-//   return (
-//     <>
-//       {commentList.map((e) => {
-//         return <Comments props={e} key={e.id} />;
-//       })}
-//     </>
-//   );
-// };

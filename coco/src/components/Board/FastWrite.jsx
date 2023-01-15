@@ -29,11 +29,12 @@ export const FastWrite = () => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/fastWrite/",
+          "http://127.0.0.1:8000/write_board/",
           {
             user_id: userInfo.id,
             title: title,
             context: context,
+            category: 3
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

@@ -17,8 +17,6 @@ export const ProblemBox = (info) => {
     navigate(`/problems/${e}`);
   };
 
-  console.log(info.info);
-
   const setLevel = (e) => {
     switch (e) {
       case 1:

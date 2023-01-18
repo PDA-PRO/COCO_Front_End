@@ -15,55 +15,66 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export const SecondBox = () => {
+export const SecondBox = (props) => {
   const navigate = useNavigate();
 
   const movePage = (id) => {
     navigate(`/problems/${id}`);
   };
 
-  const BarData = [
-    {
-      name: "Jan.",
-      "총 제출 수": 10,
-      "맞은 문제": 6,
-    },
-    {
-      name: "Feb.",
-      "총 제출 수": 3,
-      "맞은 문제": 3,
-    },
-    {
-      name: "Mar.",
-      "총 제출 수": 1,
-      "맞은 문제": 0,
-    },
-    {
-      name: "Apr.",
-      "총 제출 수": 12,
-      "맞은 문제": 6,
-    },
-    {
-      name: "May",
-      "총 제출 수": 15,
-      "맞은 문제": 6,
-    },
-    {
-      name: "Jun",
-      "총 제출 수": 7,
-      "맞은 문제": 6,
-    },
-    {
-      name: "Jul.",
-      "총 제출 수": 4,
-      "맞은 문제": 2,
-    },
-    {
-      name: "Aug.",
-      "총 제출 수": 9,
-      "맞은 문제": 8,
-    },
-  ];
+  const monthlyBarData = () => {
+    var submitData = [];
+    var solvedData = [];
+    var growthData = [];
+    let lastMonth = props.props.month_submit[1][0];
+
+    for (let i = 0; i < props.props.month_submit.length; i++) {
+      //월별 제출수
+      let submit_mon = props.props.month_submit[i][0];
+      let month = getMonth(submit_mon, lastMonth);
+      submitData.push([month, props.props.month_submit[i][1]]);
+      lastMonth = props.props.month_submit[i][0];
+
+      //월별 정답 수
+      let flag = true;
+      for (let j = 0; j < props.props.month_solved.length; j++) {
+        let solved_mon = props.props.month_solved[j][0];
+        if (submit_mon === solved_mon) {
+          //월별 제출수의 월과 월별 정답수의 월이 일치하면
+          solvedData.push([solved_mon, props.props.month_solved[j][1]]);
+          growthData.push(props.props.growth[j][1]); //누적 성장률
+          flag = false;
+        }
+      }
+      if (flag) {
+        //월별 제출수의 월과 일치하지 않음
+        solvedData.push([submit_mon, 0]); //맞춘 문제는 0
+        if (i + 1 >= growthData.length) {
+          growthData.push(0);
+        } else {
+          growthData.push(growthData[i + 1]); //내림차순 정렬되어있으므로 인덱스+1 원소값을 저장
+        }
+      }
+    }
+
+    var barResult = [];
+    var lineResult = [];
+    for (let i = submitData.length - 1; i >= 0; i--) {
+      barResult.push({
+        name: submitData[i][0],
+        "총 제출 수": submitData[i][1],
+        "맞은 문제": solvedData[i][1],
+      });
+      lineResult.push({
+        name: submitData[i][0],
+        실력: growthData[i],
+      });
+    }
+
+    return [barResult, lineResult];
+  };
+
+  const graphData = monthlyBarData();
 
   const LineData = [
     {
@@ -103,25 +114,25 @@ export const SecondBox = () => {
   return (
     <div className="mp-secBox">
       <div className="secBox-row">
-        <h3>푼 문제 수 : 245</h3>
-        <h3>정답률 : 34%</h3>
+        <h3>푼 문제 수 : {props.props.solved_list.length}</h3>
+        <h3>정답률 : {props.props.rate}%</h3>
       </div>
 
       <div className="secBox-col">
         <h3> - 맞은 문제 리스트</h3>
         <div className="taskList-split">
-          <p onClick={() => movePage(1)}>No.1</p>
-          <p onClick={() => movePage(2)}>No.2</p>
-          <p onClick={() => movePage(3)}>No.3</p>
+          {props.props.solved_list.map((e) => {
+            return <p onClick={() => movePage(e)}>No.{e}</p>;
+          })}
         </div>
       </div>
 
       <div className="secBox-col">
         <h3> - 틀린 문제 리스트</h3>
         <div className="taskList-split2">
-          <p onClick={() => movePage(1)}>No.1</p>
-          <p onClick={() => movePage(2)}>No.2</p>
-          <p onClick={() => movePage(3)}>No.3</p>
+          {props.props.unsolved_list.map((e) => {
+            return <p onClick={() => movePage(e)}>No.{e}</p>;
+          })}
         </div>
       </div>
 
@@ -131,7 +142,7 @@ export const SecondBox = () => {
         <BarChart
           width={1000}
           height={400}
-          data={BarData}
+          data={graphData[0]}
           margin={{
             top: 30,
             right: 20,
@@ -159,7 +170,7 @@ export const SecondBox = () => {
         <LineChart
           width={1000}
           height={400}
-          data={LineData}
+          data={graphData[1]}
           margin={{
             top: 30,
             right: 20,
@@ -182,4 +193,28 @@ export const SecondBox = () => {
       </div>
     </div>
   );
+};
+
+const getMonth = (date, last) => {
+  const thisMonth = parseInt(date[2] + date[3]);
+  const lastMonth = parseInt(last[2] + last[3]);
+  const month = [
+    "Jan.",
+    "Feb.",
+    "Mar.",
+    "Apr.",
+    "May.",
+    "Jun.",
+    "Jul.",
+    "Aug.",
+    "Sep.",
+    "Oct.",
+    "Nov.",
+    "Dec.",
+  ];
+  if (thisMonth === 0) {
+    return month.at(lastMonth - 2);
+  } else {
+    return month[thisMonth - 1];
+  }
 };

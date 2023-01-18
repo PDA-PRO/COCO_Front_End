@@ -52,10 +52,16 @@ export const MyPage = () => {
           </span>
           내 역량
         </h2>
-        <SecondBox />
-        {/* <Suspense fallback={<Spinner />}>
-          <GetSecond resource={fetchData("http://127.0.0.1:8000/myPageTwo")} />
-        </Suspense> */}
+        <Suspense fallback={<Spinner />}>
+          <GetSecond
+            resource={fetchData(
+              `http://127.0.0.1:8000/myPageTwo/${path.at(-1)}/`,
+              {
+                headers: { Authorization: "Bearer " + userInfo.access_token },
+              }
+            )}
+          />
+        </Suspense>
         <h2>
           <span>
             <IoClipboardOutline

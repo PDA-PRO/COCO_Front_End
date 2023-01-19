@@ -8,18 +8,37 @@
 
 .statusListContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-flow: column nowrap;
   font-family: "Pretendard-Regular";
   font-weight: 500;
   font-size: 1.1em;
   padding: 0 18vw;
-  margin: 3rem 0 5rem 0;
+  margin: 1rem 0 5rem 0;
   min-height: 700px;
 }
 
+.statusListContainer .statusListTop {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 3rem;
+  padding-top: 1.2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid lightgray;
+  align-items: center;
+  gap: 20px;
+}
+
+.statusListTop h4 {
+  font-family: "GmarketSansMedium";
+  font-weight: 600;
+  font-size: 1.5em;
+  color: rgb(63, 63, 63);
+  letter-spacing: 5px;
+  margin: 0 !important;
+}
+
 .statusListBox {
-  border-bottom: 1px solid gray;
+  border-bottom: 2px solid rgb(203, 219, 255);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
@@ -28,8 +47,10 @@
   width: 100%;
 }
 
-.statusListBox:nth-child(1) {
-  border: 1px solid gray;
+#SLBtop {
+  border: 2px solid rgb(98, 148, 255);
+  border-radius: 15px;
+  margin-bottom: 10px;
 }
 
 .statusListBox:nth-child(1) > div {
@@ -66,6 +87,6 @@
   cursor: pointer;
 }
 
-.pageController{
+.pageController {
   margin-top: 5rem;
 }

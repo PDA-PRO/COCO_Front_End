@@ -6,7 +6,7 @@
 .boardContent {
   padding-left: 18vw;
   padding-right: 18vw;
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-bottom: 5rem;
   min-height: 800px;
   display: flex;
@@ -16,6 +16,8 @@
 .boardContent .boardHead {
   display: flex;
   flex-flow: row;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid lightgray;
@@ -31,9 +33,12 @@
 
 .boardContent .boardHead .boardTitle h2 {
   font-family: "GmarketSansMedium";
+  font-weight: 600;
+  font-size: 1.7em;
+  color: rgb(63, 63, 63);
+  letter-spacing: 5px;
   margin: 0 !important;
-  font-weight: 700;
-  padding-top: 10px;
+  padding-left: 0.5rem;
 }
 
 .board .boardOn {

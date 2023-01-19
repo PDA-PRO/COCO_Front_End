@@ -24,7 +24,7 @@ export const Board = () => {
         <div className="boardHead">
           <div className="boardTitle">
             <IoChatbubblesOutline size={50} color="navy" />
-            <h2>COCO community</h2>
+            <h2>COCO COMMUNITY</h2>
           </div>
           <div
             className="boardOn"

@@ -73,6 +73,12 @@
   padding: 10px 15px;
 }
 
+.MuiPagination-root {
+  display: flex !important;
+  align-self: center;
+  justify-content: center;
+}
+
 .leftBottom h4 {
   font-family: "Pretendard-Regular";
   font-weight: 600;
@@ -115,22 +121,56 @@
   grid-column: 2/3;
   display: flex;
   flex-flow: column nowrap;
-  gap: 30px;
+  gap: 20px;
+  align-self: flex-start;
+  position: sticky !important;
+  top: 90px;
+}
+
+.BodyRight .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(239, 250, 255);
+  padding: 10px;
+}
+
+.searchBar #goSearch {
+  cursor: pointer;
+}
+
+.searchBar input {
+  background-color: rgb(239, 250, 255);
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  color: rgb(98, 148, 255);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid rgb(98, 148, 255);
+  padding: 2px 5px;
+  width: 80%;
+}
+.searchBar input:focus {
+  outline: none;
 }
 
 .BodyRight .rightBox1 {
   width: 100%;
-  border: 2px solid rgb(36, 82, 184);
   border-radius: 15px;
-  background-color: rgb(247, 247, 247);
-  position: sticky !important;
-  top: 90px;
-  align-self: flex-start;
+  background-color: rgb(239, 250, 255);
   padding-bottom: 1rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  padding-top: 5px;
+  gap: 10px;
 }
 
 .rightBox1 h4 {
@@ -180,6 +220,7 @@
   flex-flow: row nowrap;
   align-items: center;
   width: 150px;
+  padding: 0 5px;
   justify-content: space-between;
 }
 
@@ -188,6 +229,7 @@
   flex-flow: row nowrap;
   align-items: center;
   width: 180px;
+  padding: 0 5px;
   justify-content: space-between;
   margin: 3px 0;
 }
@@ -198,7 +240,42 @@
   align-items: center;
   width: 170px;
   justify-content: space-between;
+  padding: 0 5px;
   margin: 3px 0;
+}
+
+.chose4 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 10px;
+  position: relative;
+  margin-top: 15px;
+  align-items: center;
+}
+
+.chose4 .subOne {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.subOne:nth-child(1):hover {
+  color: rgb(98, 148, 255);
+}
+
+.subOne:nth-child(2):hover {
+  color: red;
+}
+
+.subOne h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.8em;
+  margin: 0 !important;
 }
 
 .slide h5 {

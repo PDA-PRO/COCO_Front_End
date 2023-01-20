@@ -1,14 +1,30 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./StatusList.css";
+import {
+  TiBatteryCharge,
+  TiBatteryLow,
+  TiBatteryMid,
+  TiBatteryHigh,
+  TiBatteryFull,
+} from "react-icons/ti";
+import {
+  BiX,
+  BiCircle,
+  BiPause,
+  BiDotsHorizontalRounded,
+} from "react-icons/bi";
 
 export const StatusListBox = (info) => {
   const navigate = useNavigate();
+
+  console.log("status", info);
 
   const goDetail = (e) => {
     console.log(e);
     navigate(`/result/${e}`, { state: { info: info.info } });
   };
+
   var status = "대기";
   switch (info.info.status) {
     case 1:
@@ -25,25 +41,90 @@ export const StatusListBox = (info) => {
       break;
   }
 
+  const setScore = (e) => {
+    switch (e) {
+      case 1:
+        return (
+          <div className="status">
+            <BiPause size={23} color="green" />
+            <h5 style={{ color: "green" }}>대기</h5>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="status">
+            <BiDotsHorizontalRounded size={20} color="rgb(104, 104, 104)" />
+            <h5 style={{ color: "rgb(104, 104, 104)" }}>채점중</h5>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="status">
+            <BiCircle size={22} color="rgb(98, 148, 255)" />
+            <h5 style={{ color: "rgb(98, 148, 255)" }}>정답</h5>
+          </div>
+        );
+      case 4:
+        return (
+          <div className="status">
+            <BiX size={25} color="red" style={{ marginBottom: "1px" }} />
+            <h5 style={{ color: "red" }}>오답</h5>
+          </div>
+        );
+    }
+  };
+
+  const setLevel = (e) => {
+    switch (e) {
+      case 1:
+        return (
+          <TiBatteryLow
+            size={30}
+            color="rgb(98, 148, 255)"
+            style={{ marginBottom: "1px" }}
+          />
+        );
+      case 2:
+        return <TiBatteryMid size={30} color="#9DD84B" />;
+      case 3:
+        return <TiBatteryHigh size={30} color="#ff7e00" />;
+      case 4:
+        return <TiBatteryFull size={30} color="red" />;
+      case 5:
+        return <TiBatteryCharge size={30} color="#7d1b7e" />;
+    }
+  };
+
+  const remakeString = (e) => {
+    let ymd = e.substring(0, 10);
+    let time = e.substring(11);
+    let year = ymd.split("-")[0].substring(2);
+    let month = ymd.split("-")[1];
+    let day = ymd.split("-")[2];
+    let result = year + "년 " + month + "월 " + day + "일 " + time;
+    return result;
+  };
+
   return (
-    <div className="statusListBox">
-      <div>{info.info.sub_id}</div>
-      <div>{info.info.user_id}</div>
-      <div>{info.info.task_id}</div>
-      <div>{info.info.title}</div>
-      <div
-        className={"status s" + info.info.status}
-        onClick={
-          info.info.status > 2
-            ? () => {
-                goDetail(info.info.sub_id);
-              }
-            : () => {}
-        }
-      >
-        {status}
-      </div>
-      <div>{info.info.time}</div>
+    <div
+      className="statusListBox"
+      onClick={
+        info.info.status > 2
+          ? () => {
+              goDetail(info.info.sub_id);
+            }
+          : () => {}
+      }
+    >
+      <h5>{info.info.sub_id}</h5>
+      <h5>{info.info.user_id}</h5>
+      <h5>
+        No. {info.info.task_id}
+        <span>{setLevel(info.info.diff)}</span>
+      </h5>
+      <h5>{info.info.title}</h5>
+      <h5>{setScore(info.info.status)}</h5>
+      <h5>{remakeString(info.info.time)}</h5>
     </div>
   );
 };

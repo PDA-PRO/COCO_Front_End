@@ -20,12 +20,12 @@ export const StatusList = () => {
           <h4>COCO SCORE BOARD</h4>
         </div>
         <div className="statusListBox" id="SLBtop">
-          <div>Submit No.</div>
-          <div>User ID</div>
-          <div>문제 ID</div>
-          <div>문제</div>
-          <div>결과</div>
-          <div>제출시간</div>
+          <h4>Submit No.</h4>
+          <h4>User ID</h4>
+          <h4>No.</h4>
+          <h4>Title</h4>
+          <h4>Result</h4>
+          <h4>Submit Time</h4>
         </div>
         <Suspense fallback={<Spinner />}>
           <Getsubmits

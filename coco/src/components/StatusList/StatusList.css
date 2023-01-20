@@ -64,7 +64,7 @@
   justify-content: space-evenly;
   gap: 10px;
   align-items: center;
-  width: 100%;
+  width: 300px;
   background-color: transparent;
 }
 
@@ -83,7 +83,7 @@
   border-right: none;
   border-bottom: 2px solid rgb(97, 127, 192);
   padding: 2px 5px;
-  width: 80%;
+  width: 90%;
 }
 .sortBox .searchBar input:focus {
   outline: none;

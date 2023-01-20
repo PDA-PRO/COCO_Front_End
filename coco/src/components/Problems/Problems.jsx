@@ -47,10 +47,10 @@ export const Problems = () => {
           <div className="BodyLeft">
             <div className="leftTop">
               <h4>No</h4>
-              <h4>Title</h4>
-              <h4>Difficulty</h4>
-              <h4>Rate</h4>
-              <h4>Language</h4>
+              <h4>문제 제목</h4>
+              <h4>난이도</h4>
+              <h4>정답률</h4>
+              <h4>언어</h4>
             </div>
             <Suspense fallback={<Spinner />}>
               <GetProblems

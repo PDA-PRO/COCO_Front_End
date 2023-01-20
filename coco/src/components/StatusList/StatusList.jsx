@@ -7,10 +7,38 @@ import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
 import { useLocation } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
+import Form from "react-bootstrap/Form";
+import { useEffect } from "react";
+import { GoSearch } from "react-icons/go";
 
 export const StatusList = () => {
   const location = useLocation();
-  console.log(location.state);
+  var [onlyMy, setOnlyMy] = useState(false);
+  var [onlyC, setOnlyC] = useState(false);
+  var [onlyPy, setOnlyPy] = useState(false);
+  var [onlyAns, setOnlyAns] = useState(false);
+
+  const onlyMyHandler = () => {
+    onlyMy = !onlyMy;
+    setOnlyMy(onlyMy);
+  };
+  const onlyCHandler = () => {
+    onlyC = !onlyC;
+    setOnlyC(onlyC);
+  };
+  const onlyPyHandler = () => {
+    onlyPy = !onlyPy;
+    setOnlyPy(onlyPy);
+  };
+  const onlyAnswerHandler = () => {
+    onlyAns = !onlyAns;
+    setOnlyPy(onlyAns);
+  };
+
+  useEffect(() => {
+    console.log(onlyMy);
+  }, [onlyMy, onlyAns, onlyC, onlyPy]);
+
   return (
     <div>
       <Header />
@@ -19,13 +47,46 @@ export const StatusList = () => {
           <img src="./image/score.png" height="80px" alt="" />
           <h4>COCO SCORE BOARD</h4>
         </div>
+        <div className="statusSort">
+          <div className="sortBox">
+            <p>내 문제만 보기</p>
+            <Form.Check type="checkbox" onChange={() => onlyMyHandler()} />
+          </div>
+
+          <div className="sortBox">
+            <p>
+              <span style={{ color: "#8b00ff" }}>C언어</span> 제출만 보기
+            </p>
+            <Form.Check
+              type="checkbox"
+              onChange={() => onlyCHandler()}
+              style={{ marginRight: "20px" }}
+            />
+            <p>
+              <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
+            </p>
+            <Form.Check type="checkbox" onChange={() => onlyPyHandler()} />
+          </div>
+
+          <div className="sortBox">
+            <p>
+              <span style={{ color: "rgb(98, 148, 255)" }}>정답</span>만 보기
+            </p>
+            <Form.Check type="checkbox" onChange={() => onlyAnswerHandler()} />
+          </div>
+
+          <div className="sortBox">
+            <SearchBar />
+          </div>
+        </div>
         <div className="statusListBox" id="SLBtop">
           <h4>Submit No.</h4>
           <h4>User ID</h4>
           <h4>No.</h4>
           <h4>Title</h4>
-          <h4>Result</h4>
-          <h4>Submit Time</h4>
+          <h4>언어</h4>
+          <h4>결과</h4>
+          <h4>제출 시간</h4>
         </div>
         <Suspense fallback={<Spinner />}>
           <Getsubmits
@@ -40,6 +101,25 @@ export const StatusList = () => {
         </Suspense>
       </div>
       <Footer />
+    </div>
+  );
+};
+
+const SearchBar = () => {
+  const startSearch = (e) => {
+    let value = document.getElementById("SV").value;
+    console.log(value);
+  };
+
+  return (
+    <div className="searchBar">
+      <input type="text" placeholder="문제 번호 or 제목" id="SV" />
+      <GoSearch
+        size={23}
+        color="rgb(97, 127, 192)"
+        id="goSearch"
+        onClick={() => startSearch()}
+      />
     </div>
   );
 };

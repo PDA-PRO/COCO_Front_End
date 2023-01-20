@@ -89,6 +89,10 @@
   font-weight: 600;
 }
 
+.navbar h3:hover {
+  color: #00c200;
+}
+
 .navbar .titleLogo {
   display: flex;
   flex-flow: row nowrap;
@@ -96,7 +100,7 @@
   cursor: pointer;
 }
 
-.navbar .titleLogo img {
+.navbar .titleLogo img:nth-child(1) {
   height: 45px;
   width: 45px;
   margin-right: 15px;

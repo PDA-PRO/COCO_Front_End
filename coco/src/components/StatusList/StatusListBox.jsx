@@ -18,8 +18,6 @@ import {
 export const StatusListBox = (info) => {
   const navigate = useNavigate();
 
-  console.log("status", info);
-
   const goDetail = (e) => {
     console.log(e);
     navigate(`/result/${e}`, { state: { info: info.info } });
@@ -95,6 +93,34 @@ export const StatusListBox = (info) => {
     }
   };
 
+  const lan = (e1, e2) => {
+    if (e1 === 1 && e2 === 1) {
+      return (
+        <div>
+          <img src="./image/lan_c.png" height="27px" alt="" />
+          <img
+            src="./image/python.png"
+            height="27px"
+            style={{ paddingRight: "10px" }}
+            alt=""
+          />
+        </div>
+      );
+    } else if (e1 === 1 && e2 === 0) {
+      return (
+        <div>
+          <img src="./image/lan_c.png" height="27px" alt="" />
+        </div>
+      );
+    } else if (e1 === 0 && e2 === 1) {
+      return (
+        <div>
+          <img src="./image/python.png" height="27px" alt="" />
+        </div>
+      );
+    }
+  };
+
   const remakeString = (e) => {
     let ymd = e.substring(0, 10);
     let time = e.substring(11);
@@ -123,6 +149,7 @@ export const StatusListBox = (info) => {
         <span>{setLevel(info.info.diff)}</span>
       </h5>
       <h5>{info.info.title}</h5>
+      <h5>{lan(info.info.lan_c, info.info.lan_py)}</h5>
       <h5>{setScore(info.info.status)}</h5>
       <h5>{remakeString(info.info.time)}</h5>
     </div>

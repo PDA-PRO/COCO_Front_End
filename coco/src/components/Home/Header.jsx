@@ -83,23 +83,9 @@ export const Header = () => {
               style={{ cursor: "pointer" }}
               className="login"
             >
-              <HiUserCircle size={40} color={"#00FF00"} />
+              <HiUserCircle size={45} color={"#00FF00"} />
               <h3>{userInfo.id}</h3>
             </div>
-
-            {/* <Modal show={show} onHide={handleClose}>
-              <Modal.Body>로그아웃 하시겠습니까?</Modal.Body>
-              <Modal.Footer className="logoutModal">
-                <AiOutlineCloseCircle onClick={handleClose} size={30} />
-                <AiOutlineCheckCircle
-                  onClick={() => {
-                    handleClose();
-                    logoutHandler();
-                  }}
-                  size={30}
-                />
-              </Modal.Footer>
-            </Modal> */}
 
             <Overlay
               show={show}

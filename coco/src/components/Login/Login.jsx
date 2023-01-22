@@ -14,10 +14,10 @@ export const Login = () => {
       <div className="loginWhole">
         <div className="loginContainer">
           <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-            <Tab eventKey="home" title="Sign In" className="loginTab">
+            <Tab eventKey="home" title="로그인" className="loginTab">
               <SignIn />
             </Tab>
-            <Tab eventKey="profile" title="Sign Up" className="loginTab">
+            <Tab eventKey="profile" title="회원가입" className="loginTab">
               <SignUp />
             </Tab>
           </Tabs>

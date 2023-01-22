@@ -140,7 +140,8 @@
 
 .login {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  gap: 10px;
 }
 
 .login > h3 {
@@ -224,9 +225,11 @@
 .home .home-body .txt-box #t2-1 {
   grid-row: 2/3;
   grid-column: 2/4;
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: 800;
   color: #00ff00;
+  font-family: "GmarketSansMedium";
+  letter-spacing: 5px;
 }
 
 .home .Block {
@@ -429,58 +432,60 @@
 
 .home-body .ad-box {
   margin-top: 12rem;
-  margin-bottom: 10rem;
+  margin-bottom: 6rem;
   width: 100%;
 }
 
 .home .notice {
   display: flex;
   flex-flow: column;
-  background-color: #9e9e9e;
-  border-radius: 30px;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  color: white;
-  margin-bottom: 12rem;
+  background-color: #e7e7e7;
+  border-radius: 20px;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  color: rgb(29, 29, 29);
+  margin-bottom: 8rem;
 }
 
-.notice .title-notice {
+.notice .noticeHere .title-notice {
   display: flex;
   flex-flow: row nowrap;
-  font-family: "GmarketSansMedium";
   align-items: center;
-  padding-left: 2rem;
+  padding-left: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(194, 194, 194);
+  margin: 0 30px 1rem 30px;
 }
 
 .title-notice h2 {
   margin: 0 !important;
+  font-family: "Pretendard-Regular";
   font-size: 2em;
-  padding-top: 1rem;
+  font-weight: 600;
   padding-left: 1rem;
-  font-family: "LeferiPoint-BlackA";
 }
 
 .notice .body-notice {
   list-style-type: disc;
-  font-size: 1.4em;
   padding-left: 4rem;
   margin-top: 1rem;
   max-height: 400px;
 }
-.body-notice li {
-  padding-bottom: 0.6em;
+.body-notice {
   font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
 }
 
 /*--------------------------------------------- FOOTER -------------------------------------------------------*/
 .footer {
   display: flex;
   flex-flow: column wrap;
-  background-color: #696464;
-  padding-top: 4rem;
+  background-color: #949292;
+  padding-top: 3rem;
   padding-left: 18vw;
-  padding-bottom: 3rem;
-  color: #fff;
+  padding-bottom: 2rem;
+  color: rgb(218, 218, 218);
 }
 
 .footer2 {

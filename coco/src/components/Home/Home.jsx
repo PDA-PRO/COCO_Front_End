@@ -20,7 +20,11 @@ export const Home = () => {
             <h2 id="t1">코딩, 초보자라면?</h2>
             <h2 id="t2">
               Coding Coach,
-              <span id="t2-1"> COCO</span>
+              <span id="t2-1">
+                {" "}
+                C<span style={{ color: "black" }}>O</span>C
+                <span style={{ color: "black" }}>O</span>
+              </span>
             </h2>
           </div>
           <Suspense fallback={<Spinner />}>
@@ -39,17 +43,10 @@ export const Home = () => {
 
           <div className="notice">
             <Suspense fallback={<Spinner />}>
-              <GetNotice resource={fetchData("http://127.0.0.1:8000/manage/notice")} />
+              <GetNotice
+                resource={fetchData("http://127.0.0.1:8000/manage/notice")}
+              />
             </Suspense>
-            {/* <div className="title-notice">
-              <SlPin size={30} color="#00ff00" />
-              <h2>Notice!</h2>
-            </div>
-            <div className="body-notice">
-              <li>ver 0.1.0 - Beta Open!</li>
-              <li>November 11, midterm presentation</li>
-              <li>New Question! : No.01 더하기 문제</li>
-            </div> */}
           </div>
         </div>
         <Footer />
@@ -64,7 +61,18 @@ const GetHot = ({ resource }) => {
   return <>{<Block info={HOT} key={HOT.id} />}</>;
 };
 
-const GetNotice = ({ resource}) => {
-  const notice = resource.read()
-  return <div className="body-notice" dangerouslySetInnerHTML={{ __html: notice }}></div>
-}
+const GetNotice = ({ resource }) => {
+  const notice = resource.read();
+  return (
+    <div className="noticeHere">
+      <div className="title-notice">
+        <SlPin size={22} color="red" />
+        <h2>공지사항</h2>
+      </div>
+      <div
+        className="body-notice"
+        dangerouslySetInnerHTML={{ __html: notice }}
+      ></div>
+    </div>
+  );
+};

@@ -8,64 +8,162 @@
 
 .statusListContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: "Pretendard-Regular";
-  font-weight: 500;
-  font-size: 1.1em;
+  flex-flow: column nowrap;
+
   padding: 0 18vw;
-  margin: 3rem 0 5rem 0;
+  margin: 1rem 0 5rem 0;
   min-height: 700px;
 }
 
+.statusListContainer .statusListTop {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 2rem;
+  padding-top: 1.2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid lightgray;
+  align-items: center;
+  gap: 20px;
+}
+
+.statusListContainer .statusSort {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 25px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.statusSort .sortBox {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 10px;
+  height: 60px;
+}
+
+.sortBox p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.sortBox .form-check-input {
+  margin-top: 4px;
+}
+
+.sortBox .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 300px;
+  background-color: transparent;
+}
+
+.sortBox .searchBar #goSearch {
+  cursor: pointer;
+}
+
+.sortBox .searchBar input {
+  background-color: transparent;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  color: rgb(97, 127, 192);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid rgb(97, 127, 192);
+  padding: 2px 5px;
+  width: 90%;
+}
+.sortBox .searchBar input:focus {
+  outline: none;
+}
+
+.statusListTop h4 {
+  font-family: "GmarketSansMedium";
+  font-weight: 600;
+  font-size: 1.5em;
+  color: rgb(63, 63, 63);
+  letter-spacing: 5px;
+  margin: 0 !important;
+}
+
 .statusListBox {
-  border-bottom: 1px solid gray;
+  border-bottom: 2px solid rgb(203, 219, 255);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 0.8fr 1fr 0.6fr 0.5fr 1.3fr;
   align-items: center;
   justify-items: center;
-  padding: 0.5rem 3vw;
-  width: 100%;
+  padding: 8px 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
-.statusListBox:nth-child(1) {
-  border: 1px solid gray;
+.statusListBox:hover {
+  background-color: rgb(233, 244, 253);
 }
 
-.statusListBox:nth-child(1) > div {
-  border: none;
-  margin: 0px !important;
-  color: red;
+#SLBtop {
+  border: 2px solid rgb(98, 148, 255);
+  border-radius: 20px;
+  background-color: rgb(246, 251, 255);
+  padding: 12px 30px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  cursor: initial;
+}
+
+#SLBtop h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
   font-size: 1em;
-  padding: 0.6rem 0px 0.5rem 0px;
+  margin: 0 !important;
+  text-align: center;
+  color: rgb(112, 112, 112);
+}
+
+.statusListBox h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.statusListBox h5:nth-child(1) {
+  color: rgb(104, 104, 104);
+}
+
+.statusListBox h5:nth-child(3) {
+  color: red;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.statusListBox h5:nth-child(7) {
+  font-size: 0.9em;
 }
 
 .statusListBox .status {
-  border: 1px solid gray;
-  border-radius: 5px;
-  padding-top: 0.3rem;
-  height: 2rem;
-  width: 4rem;
+  width: 70px;
   display: flex;
-  justify-content: center;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
   align-items: center;
 }
-.statusListBox .s1 {
-  background-color: gray;
-}
-.statusListBox .s2 {
-  background-color: yellow;
-}
-.statusListBox .s3 {
-  background-color: blue;
-  color: white;
-  cursor: pointer;
-}
-.statusListBox .s4 {
-  background-color: red;
-  cursor: pointer;
-}
 
-.pageController{
-  margin-top: 5rem;
+.pageController {
+  margin-top: 3rem;
 }

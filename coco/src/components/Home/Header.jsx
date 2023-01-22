@@ -60,7 +60,11 @@ export const Header = () => {
       <div className="leftDiv">
         <div className="titleLogo" onClick={() => movdPage(1)}>
           <img src="/image/logo.png" alt="" />
-          <h2>COCO</h2>
+          {/* <img src="/image/cocoLogo.png" alt="" /> */}
+          <h2>
+            <span style={{ color: "#00ff00" }}>C</span>O
+            <span style={{ color: "#00ff00" }}>C</span>O
+          </h2>
         </div>
         <div className="menus">
           <h3 onClick={() => movdPage(2)}>문제</h3>

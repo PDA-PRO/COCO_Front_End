@@ -5,8 +5,8 @@ import "./Problems.css";
 import { ProblemBox } from "./ProblemBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
-
-import { IoIosArrowDown } from "react-icons/io";
+import { GoSearch } from "react-icons/go";
+import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 import {
@@ -16,22 +16,24 @@ import {
   TiBatteryHigh,
   TiBatteryFull,
 } from "react-icons/ti";
-
+import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
 import Button from "react-bootstrap/esm/Button";
-import { diffDayAndTime } from "fullcalendar";
+// import { diffDayAndTime } from "fullcalendar";
 import axios from "axios";
 
 export const Problems = () => {
   const [order, setOrder] = useState([]);
   const onSubmitHandler = (order) => {
     // console.log('parent submit', order);
-    axios.post("http://127.0.0.1:8000/order_task",{
-      order: order
-    }).then((res) => {
-      setOrder(res.data);
-    });
-  }
+    axios
+      .post("http://127.0.0.1:8000/order_task", {
+        order: order,
+      })
+      .then((res) => {
+        setOrder(res.data);
+      });
+  };
 
   return (
     <div>
@@ -45,10 +47,10 @@ export const Problems = () => {
           <div className="BodyLeft">
             <div className="leftTop">
               <h4>No</h4>
-              <h4>Title</h4>
-              <h4>Difficulty</h4>
-              <h4>Rate</h4>
-              <h4>Language</h4>
+              <h4>문제 제목</h4>
+              <h4>난이도</h4>
+              <h4>정답률</h4>
+              <h4>언어</h4>
             </div>
             <Suspense fallback={<Spinner />}>
               <GetProblems
@@ -58,7 +60,8 @@ export const Problems = () => {
             </Suspense>
           </div>
           <div className="BodyRight">
-            <BodyRight submit={onSubmitHandler}/>
+            <SearchBar />
+            <BodyRight submit={onSubmitHandler} />
           </div>
         </div>
       </div>
@@ -67,46 +70,64 @@ export const Problems = () => {
   );
 };
 
+const SearchBar = () => {
+  const startSearch = (e) => {
+    let value = document.getElementById("SV").value;
+    console.log(value);
+  };
+
+  return (
+    <div className="searchBar">
+      <input type="text" placeholder="search" id="SV" />
+      <GoSearch
+        size={23}
+        color="rgb(98, 148, 255)"
+        id="goSearch"
+        onClick={() => startSearch()}
+      />
+    </div>
+  );
+};
+
 const BodyRight = ({ submit }) => {
-  
   const [diff, setDiff] = useState([false, false, false, false, false]);
-  const [lang, setLang] = useState([false, false])
-  const [rate, setRate] = useState(0) //기본 0, 낮은순 1, 높은순 2
+  const [lang, setLang] = useState([false, false]);
+  const [rate, setRate] = useState(0); //기본 0, 낮은순 1, 높은순 2
 
   const onDiffHanlder = (e) => {
-    diff[e-1] = !diff[e-1]
+    diff[e - 1] = !diff[e - 1];
     setDiff([...diff]);
-  }
+  };
 
   const onDiffReset = () => {
     setDiff([false, false, false, false, false]);
-  }
+  };
 
   const onLangHandler = (e) => {
-    lang[e-1] = !lang[e-1];
-    setLang([...lang])
-  }
+    lang[e - 1] = !lang[e - 1];
+    setLang([...lang]);
+  };
 
   const onLangReset = () => {
     setLang([false, false]);
-  }
+  };
 
   const onRateHander = (e) => {
-    setRate(e)
+    setRate(e);
     // rate[e-1] = !rate[e-1]
     // setRate([...rate]);
-  }
+  };
 
   const onRateReset = () => {
     setRate(0);
-  }
+  };
 
   const onSubmitHandler = () => {
     let diffList = [];
     for (let i = 0; i < 5; i++) {
       if (diff[i] == true) {
         diffList.push(i + 1);
-      }else{
+      } else {
         diffList.push(0);
       }
     }
@@ -114,7 +135,7 @@ const BodyRight = ({ submit }) => {
     for (let i = 0; i < 2; i++) {
       if (lang[i] == true) {
         langList.push(1);
-      }else{
+      } else {
         langList.push(0);
       }
     }
@@ -131,178 +152,175 @@ const BodyRight = ({ submit }) => {
       rate: rate,
     });
     //정렬할 때 데이터만 추려서 보내기
-  }
+  };
 
   const onResetHandler = () => {
     setDiff([false, false, false, false, false]);
     setLang([false, false]);
     setRate([false, false]);
-  }
+  };
 
   return (
     <div className="rightBox1">
-    <h4>문제 보기</h4>
-    <nav>
-      <label for="touch">
-        <h3>
-          난이도
-          <span>
-            <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-          </span>
-        </h3>
-      </label>
-      <input type="checkbox" id="touch" />
+      <h4>문제 보기</h4>
+      <nav>
+        <label for="touch">
+          <h3>
+            난이도
+            <span>
+              <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
+            </span>
+          </h3>
+        </label>
+        <input type="checkbox" id="touch" />
 
-      <div className="slide">
-        <div className="chose">
-          <Form.Check
-            type="checkbox"
-            checked={diff[0]}
-            value="1"
-            onChange={(e) => onDiffHanlder(e.target.value)}
-          />
-          <h5>Lv. 1</h5>
-          <TiBatteryLow size={35} color="rgb(98, 148, 255)" />
-        </div>
-        <div className="chose">
-          <Form.Check
-            type="checkbox"
-            checked={diff[1]}
-            value="2"
-            onChange={(e) => onDiffHanlder(e.target.value)}
-          />
-          <h5>Lv. 2</h5>
-          <TiBatteryMid size={35} color="#9DD84B" />
-        </div>
-        <div className="chose">
-          <Form.Check
-            type="checkbox"
-            checked={diff[2]}
-            value="3"
-            onChange={(e) => onDiffHanlder(e.target.value)}
-          />
-          <h5>Lv. 3</h5>
-          <TiBatteryHigh size={35} color="#ff7e00" />
-        </div>
+        <div className="slide">
+          <div className="chose">
+            <Form.Check
+              type="checkbox"
+              checked={diff[0]}
+              value="1"
+              onChange={(e) => onDiffHanlder(e.target.value)}
+            />
+            <h5>Lv. 1</h5>
+            <TiBatteryLow size={35} color="rgb(98, 148, 255)" />
+          </div>
+          <div className="chose">
+            <Form.Check
+              type="checkbox"
+              checked={diff[1]}
+              value="2"
+              onChange={(e) => onDiffHanlder(e.target.value)}
+            />
+            <h5>Lv. 2</h5>
+            <TiBatteryMid size={35} color="#9DD84B" />
+          </div>
+          <div className="chose">
+            <Form.Check
+              type="checkbox"
+              checked={diff[2]}
+              value="3"
+              onChange={(e) => onDiffHanlder(e.target.value)}
+            />
+            <h5>Lv. 3</h5>
+            <TiBatteryHigh size={35} color="#ff7e00" />
+          </div>
 
-        <div className="chose">
-          <Form.Check
-            type="checkbox"
-            checked={diff[3]}
-            value="4"
-            onChange={(e) => onDiffHanlder(e.target.value)}
-          />
-          <h5>Lv. 4</h5>
-          <TiBatteryFull size={35} color="red" />
-        </div>
+          <div className="chose">
+            <Form.Check
+              type="checkbox"
+              checked={diff[3]}
+              value="4"
+              onChange={(e) => onDiffHanlder(e.target.value)}
+            />
+            <h5>Lv. 4</h5>
+            <TiBatteryFull size={35} color="red" />
+          </div>
 
-        <div className="chose">
-          <Form.Check
-            type="checkbox"
-            checked={diff[4]}
-            value="5"
-            onChange={(e) => onDiffHanlder(e.target.value)}
-          />
-          <h5>Lv. 5</h5>
-          <TiBatteryCharge size={35} color="#7d1b7e" />
-        </div>
+          <div className="chose">
+            <Form.Check
+              type="checkbox"
+              checked={diff[4]}
+              value="5"
+              onChange={(e) => onDiffHanlder(e.target.value)}
+            />
+            <h5>Lv. 5</h5>
+            <TiBatteryCharge size={35} color="#7d1b7e" />
+          </div>
 
-        <p onClick={onDiffReset}>초기화</p>
+          <p onClick={onDiffReset}>초기화</p>
+        </div>
+      </nav>
+
+      <nav>
+        <label for="touch2">
+          <h3>
+            언어
+            <span>
+              <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
+            </span>
+          </h3>
+        </label>
+        <input type="checkbox" id="touch2" />
+
+        <div className="slide">
+          <div className="chose2">
+            <Form.Check
+              type="checkbox"
+              checked={lang[0]}
+              value="1"
+              onChange={(e) => onLangHandler(e.target.value)}
+            />
+            <h5>Python3</h5>
+            <img src="./image/python.png" height="30px" alt="" />
+          </div>
+          <div className="chose2">
+            <Form.Check
+              type="checkbox"
+              checked={lang[1]}
+              value="2"
+              onChange={(e) => onLangHandler(e.target.value)}
+            />
+            <h5>C</h5>
+            <img src="./image/lan_c2.png" height="30px" alt="" />
+          </div>
+
+          <p onClick={onLangReset}>초기화</p>
+        </div>
+      </nav>
+
+      <nav>
+        <label for="touch3">
+          <h3>
+            정답률
+            <span>
+              <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
+            </span>
+          </h3>
+        </label>
+        <input type="checkbox" id="touch3" />
+
+        <div className="slide">
+          <div className="chose3">
+            <Form.Check
+              type="radio"
+              name="group1"
+              // checked={rate == 0 ? false : pass}
+              value="1"
+              onChange={(e) => onRateHander(e.target.value)}
+            />
+            <h5>낮은 순</h5>
+            <BsArrowUpRight size={22} color="skyblue" />
+          </div>
+          <div className="chose3">
+            <Form.Check
+              type="radio"
+              name="group1"
+              // checked={rate == 0 ? false : pass}
+              value="2"
+              onChange={(e) => onRateHander(e.target.value)}
+            />
+            <h5>높은 순</h5>
+            <BsArrowDownRight size={22} color="red" />
+          </div>
+
+          <p onClick={onRateReset}>초기화</p>
+        </div>
+      </nav>
+
+      <div className="chose4">
+        <div className="subOne" onClick={onSubmitHandler}>
+          <AiOutlineCheck color="rgb(98, 148, 255)" size={22} />
+          <h5>적용하기</h5>
+        </div>
+        <div className="subOne" onClick={onResetHandler}>
+          <AiOutlineReload color="red" size={22} />
+          <h5>전체 초기화</h5>
+        </div>
       </div>
-    </nav>
-
-    <nav>
-      <label for="touch2">
-        <h3>
-          언어
-          <span>
-            <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-          </span>
-        </h3>
-      </label>
-      <input type="checkbox" id="touch2" />
-
-      <div className="slide">
-        <div className="chose2">
-          <Form.Check
-            type="checkbox"
-            checked={lang[0]}
-            value="1"
-            onChange={(e) => onLangHandler(e.target.value)}
-          />
-          <h5>Python3</h5>
-          <img src="./image/python.png" height="30px" alt="" />
-        </div>
-        <div className="chose2">
-          <Form.Check
-            type="checkbox"
-            checked={lang[1]}
-            value="2"
-            onChange={(e) => onLangHandler(e.target.value)}
-          />
-          <h5>C</h5>
-          <img src="./image/lan_c2.png" height="30px" alt="" />
-        </div>
-
-        <p onClick={onLangReset}>초기화</p>
-      </div>
-    </nav>
-
-    <nav>
-      <label for="touch3">
-        <h3>
-          정답률
-          <span>
-            <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-          </span>
-        </h3>
-      </label>
-      <input type="checkbox" id="touch3" />
-
-      <div className="slide">
-        <div className="chose3">
-          <Form.Check
-            type="radio"
-            name="group1"
-            // checked={rate == 0 ? false : pass}
-            value="1"
-            onChange={(e) => onRateHander(e.target.value)}
-          />
-          <h5>낮은 순</h5>
-          <BsArrowUpRight size={22} color="skyblue" />
-        </div>
-        <div className="chose3">
-          <Form.Check
-            type="radio"
-            name="group1"
-            // checked={rate == 0 ? false : pass}
-            value="2"
-            onChange={(e) => onRateHander(e.target.value)}
-          />
-          <h5>높은 순</h5>
-          <BsArrowDownRight size={22} color="red" />
-        </div>
-
-        <p onClick={onRateReset}>초기화</p>
-      </div>
-    </nav>
-
-    <Button
-      variant="outline-secondary btn-sm"
-      onClick={onSubmitHandler}
-    >
-      적용하기
-    </Button>
-
-    <Button
-      variant="outline-secondary btn-sm"
-      onClick={onResetHandler}
-    >
-      전체 초기화
-    </Button>
-  </div>
+    </div>
   );
-}
+};
 
 // const resource = fetchData("http://127.0.0.1:8000/problems");
 

@@ -9,8 +9,13 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 
 export const Home = () => {
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((state) => state.loginState);
+  console.log("홈", userInfo);
+
   return (
     <div className="home">
       <Header />
@@ -27,6 +32,19 @@ export const Home = () => {
               </span>
             </h2>
           </div>
+          {userInfo.id === "" ? (
+            <></>
+          ) : (
+            <div className="homeGraph">
+              <div className="levelGraph">
+                <h3>{userInfo.id}님 현재 레벨</h3>
+                <h2>Level 4</h2>
+                <p>전체 50등</p>
+              </div>
+              <div className="growGraph"></div>
+            </div>
+          )}
+
           <Suspense fallback={<Spinner />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
           </Suspense>
@@ -49,8 +67,8 @@ export const Home = () => {
             </Suspense>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };
@@ -76,3 +94,17 @@ const GetNotice = ({ resource }) => {
     </div>
   );
 };
+
+//how to center a div?
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  }}
+>
+  <h1> I am centered </h1>
+</div>;
+
+//Source: https://stackoverflow.com/questions/42125775

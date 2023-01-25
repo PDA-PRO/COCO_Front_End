@@ -141,7 +141,7 @@
 .login {
   display: flex;
   flex-flow: row nowrap;
-  gap: 10px;
+  gap: 15px;
 }
 
 .login > h3 {
@@ -186,15 +186,22 @@
   justify-content: center;
 }
 
+.home .homebody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .home .home-body {
   display: flex;
   flex-flow: column wrap;
-  padding-left: 18vw;
-  padding-right: 18vw;
+  /* padding-left: 18vw;
+  padding-right: 18vw; */
+
   padding-top: 10rem;
   background-image: url(../../../public/image/aa.png);
   background-repeat: no-repeat;
-  background-position: 75% 65px;
+  background-position: 95% 65px;
   background-size: 360px;
 }
 
@@ -205,7 +212,6 @@
   font-family: "Pretendard-Regular";
   width: 45vw;
   row-gap: 40px;
-  margin-left: 1vw;
 }
 
 .home .home-body .txt-box #t1 {
@@ -232,13 +238,73 @@
   letter-spacing: 5px;
 }
 
+.home .homeGraph {
+  display: grid;
+  grid-template-columns: 25% minmax(50%, 70%);
+  justify-content: center;
+  width: 100%;
+  height: 300px;
+  padding: 10px 0;
+  margin-top: 10rem;
+  gap: 30px;
+  /* align-items: center; */
+}
+
+.homeGraph .levelGraph {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  align-items: center;
+}
+
+.homeGraph .levelGraph:hover {
+  cursor: pointer;
+  border: 1px solid #e7e7e7;
+}
+
+.levelGraph h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 500;
+  margin: 0 !important;
+  position: relative;
+  top: 10%;
+  color: rgb(85, 85, 85);
+  /* text-align: center; */
+}
+
+.levelGraph h2 {
+  font-family: "Pretendard-Regular";
+  font-size: 3em;
+  font-weight: 600;
+  margin: 0 !important;
+  position: relative;
+  top: 33%;
+}
+
+.levelGraph p {
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0 !important;
+  position: relative;
+  top: 50%;
+  color: gray;
+}
+.homeGraph .growGraph {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid red;
+}
+
 .home .Block {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 13rem;
-  gap: 5vw;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  /* margin-top: 8rem; */
+  gap: 6vw;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .Block .boxTitle {
@@ -275,7 +341,7 @@
 .Block .blockBox {
   width: 100%;
   height: 200px;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
@@ -431,8 +497,8 @@
 }
 
 .home-body .ad-box {
-  margin-top: 12rem;
-  margin-bottom: 6rem;
+  margin-top: 7rem;
+  margin-bottom: 7rem;
   width: 100%;
 }
 

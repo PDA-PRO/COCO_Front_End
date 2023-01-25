@@ -83,7 +83,7 @@ export const Header = () => {
               style={{ cursor: "pointer" }}
               className="login"
             >
-              <HiUserCircle size={45} color={"#00FF00"} />
+              <img src="/image/user.png" alt="" height="50px" />
               <h3>{userInfo.id}</h3>
             </div>
 

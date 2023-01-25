@@ -1,14 +1,6 @@
-@font-face {
-  font-family: "GmarketSansMedium";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* 로그인 화면 전체 */
 .loginWhole {
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(236, 236, 236);
   display: grid;
   grid-template-columns: 1fr 2fr;
   padding: 10vw 0 10vw 19vw;
@@ -18,7 +10,9 @@
 /* 탭 메뉴 상단 글씨 */
 .nav-link {
   color: black !important;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
 button.active {
@@ -49,12 +43,12 @@ button.active {
   border-bottom: 1px solid rgb(224, 224, 224);
   border-left: 1px solid rgb(224, 224, 224);
   border-right: 1px solid rgb(224, 224, 224);
-  padding: 0 30px;
+  padding: 40px 30px 20px 30px;
 }
 
 /* 로그인 박스 내부 한 칸(아이디, 비밀번호,...) */
 .loginBox {
-  margin: 20px 10px;
+  margin: 0px 10px;
   /* padding: 10px; */
   display: flex;
   flex-direction: column;
@@ -63,29 +57,35 @@ button.active {
 }
 
 .loginBox :nth-child(1) {
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .loginBox > input {
   width: 100%;
   border: none;
-  padding: 10px 5px;
-  background-color: rgb(227, 227, 227);
+  padding: 10px 10px;
+  background-color: rgb(236, 236, 236);
   border-radius: 5px;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  color: rgb(146, 146, 146);
 }
 
 .loginBox > input:focus {
   background-color: #9ff99f;
   outline: none;
-  color: gray;
+  color: rgb(87, 87, 87);
+  /* color: gray; */
 }
 
 /* 로그인 완료 버튼 */
 .loginConfirm > Button {
-  width: 80%;
-  font-family: "GmarketSansMedium";
-  margin: 0px !important;
+  width: 100%;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 10px;
 }
 
 .loginConfirm > Button:hover {
@@ -97,12 +97,26 @@ button.active {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 10px 0 40px 0;
 }
 
 /* 자동로그인 버튼 */
+.loginAuto {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginAuto p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 0 10px !important;
+}
 .loginAuto > input {
   width: 80%;
-  font-family: "GmarketSansMedium";
   margin: 0px !important;
 }
 
@@ -111,26 +125,26 @@ button.active {
   background-color: #5fe45f;
 }
 
-.loginAuto {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 /* 아이디 및 비밀번호 찾기 */
 .loginOptions {
   font-size: small;
   text-decoration: underline;
-  color: #5fe45f;
+  color: gray;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0 5%;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 0.9em;
 }
 
 .loginOptions > span {
   cursor: pointer;
+}
+
+.loginOptions > span:hover {
+  color: #00ff00;
 }
 
 /* 아이디 중복 확인 */
@@ -144,10 +158,12 @@ button.active {
   width: 100%;
   border: none;
   padding: 10px 5px;
-  background-color: rgb(227, 227, 227);
+  background-color: rgb(236, 236, 236);
   border-radius: 5px;
   margin-bottom: 0 !important;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
 }
 
 .checkID > input:focus {
@@ -182,7 +198,9 @@ button.active {
   margin: 0 !important;
   display: flex;
   flex-direction: row;
-  font-family: "GmarketSansMedium";
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
 }
 
 .signUpRadio {
@@ -201,6 +219,7 @@ button.active {
   margin: 0 !important;
 }
 .stdAge {
-  font-family: "GmarketSansMedium";
-  margin-right: 10px;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
 }

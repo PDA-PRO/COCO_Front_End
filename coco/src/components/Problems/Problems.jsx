@@ -35,6 +35,16 @@ export const Problems = () => {
       });
   };
 
+  const onSearchHandler = (info) => {
+    axios
+    .post("http://127.0.0.1:8000/find_task/", {
+      info: info,
+    })
+    .then((res) => {
+      setOrder(res.data);
+    });
+  }
+
   return (
     <div>
       <Header />
@@ -60,7 +70,7 @@ export const Problems = () => {
             </Suspense>
           </div>
           <div className="BodyRight">
-            <SearchBar />
+            <SearchBar search={onSearchHandler}/>
             <BodyRight submit={onSubmitHandler} />
           </div>
         </div>
@@ -70,10 +80,11 @@ export const Problems = () => {
   );
 };
 
-const SearchBar = () => {
-  const startSearch = (e) => {
-    let value = document.getElementById("SV").value;
-    console.log(value);
+const SearchBar = ({search}) => {
+  const onSearchHandler = (e) => {
+    var info = document.getElementById("SV").value;
+    search(info)
+    console.log(info);
   };
 
   return (
@@ -83,7 +94,7 @@ const SearchBar = () => {
         size={23}
         color="rgb(98, 148, 255)"
         id="goSearch"
-        onClick={() => startSearch()}
+        onClick={() => onSearchHandler()}
       />
     </div>
   );
@@ -325,7 +336,6 @@ const BodyRight = ({ submit }) => {
 // const resource = fetchData("http://127.0.0.1:8000/problems");
 
 const GetProblems = ({ resource, order }) => {
-  console.log(order);
   const problemList = order.length == 0 ? resource.read() : order;
   const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);

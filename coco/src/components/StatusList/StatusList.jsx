@@ -10,34 +10,66 @@ import Pagination from "@mui/material/Pagination";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import { GoSearch } from "react-icons/go";
+import axios from "axios";
+import { useAppSelector } from "../../app/store";
 
 export const StatusList = () => {
-  const location = useLocation();
-  var [onlyMy, setOnlyMy] = useState(false);
-  var [onlyC, setOnlyC] = useState(false);
-  var [onlyPy, setOnlyPy] = useState(false);
-  var [onlyAns, setOnlyAns] = useState(false);
+  const userInfo = useAppSelector((state) => state.loginState);
+  const [option, setOption] = useState([false, -1, false]);
+  const [taskStatus, setTaskStatus] = useState([])
 
   const onlyMyHandler = () => {
-    onlyMy = !onlyMy;
-    setOnlyMy(onlyMy);
+    option[0] = !option[0];
+    setOption([...option]);
   };
-  const onlyCHandler = () => {
-    onlyC = !onlyC;
-    setOnlyC(onlyC);
-  };
-  const onlyPyHandler = () => {
-    onlyPy = !onlyPy;
-    setOnlyPy(onlyPy);
-  };
-  const onlyAnswerHandler = () => {
-    onlyAns = !onlyAns;
-    setOnlyPy(onlyAns);
+  const onlyLangHandler = (value) => {
+    //c가 1, py가 0
+    if (option[1] === value) {
+      option[1] = -1;
+    } else {
+      option[1] = value;
+    }
+    setOption([...option]);
   };
 
-  useEffect(() => {
-    console.log(onlyMy);
-  }, [onlyMy, onlyAns, onlyC, onlyPy]);
+  const onlyAnswerHandler = () => {
+    option[2] = !option[2];
+    setOption([...option]);
+  };
+
+  useEffect(() => {}, [option]);
+
+  const onSearchHandler = (value) => {
+    axios
+    .post("http://127.0.0.1:8000/task_status/", {
+      user_id: userInfo.id,
+      option: option,
+      task_info: value
+    })
+    .then((res) => {
+      console.log(res.data);
+      setTaskStatus(res.data);
+    });
+  };
+
+  const taskOption = () => {
+    if (
+      option[0] === false &&
+      option[1] === false &&
+      option[2] === false
+    ) {
+      console.log("init");
+      return fetchData(`http://127.0.0.1:8000/status`);
+    } else {
+      if (option[0] === true) {
+        return fetchData(`http://127.0.0.1:8000/status?user_id=${userInfo.id}
+        &lang=${option[1]}&result=${option[2]}`);
+      } else {
+        return fetchData(`http://127.0.0.1:8000/status?user_id
+        &lang=${option[1]}&result=${option[2]}`);
+      }
+    }
+  };
 
   return (
     <div>
@@ -59,13 +91,18 @@ export const StatusList = () => {
             </p>
             <Form.Check
               type="checkbox"
-              onChange={() => onlyCHandler()}
+              onChange={() => onlyLangHandler(1)}
               style={{ marginRight: "20px" }}
+              checked={option[1] === 1 ? true : false}
             />
             <p>
               <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
             </p>
-            <Form.Check type="checkbox" onChange={() => onlyPyHandler()} />
+            <Form.Check
+              type="checkbox"
+              checked={option[1] === 0 ? true : false}
+              onChange={() => onlyLangHandler(0)}
+            />
           </div>
 
           <div className="sortBox">
@@ -76,7 +113,7 @@ export const StatusList = () => {
           </div>
 
           <div className="sortBox">
-            <SearchBar />
+            <SearchBar search={onSearchHandler} />
           </div>
         </div>
         <div className="statusListBox" id="SLBtop">
@@ -89,15 +126,8 @@ export const StatusList = () => {
           <h4>제출 시간</h4>
         </div>
         <Suspense fallback={<Spinner />}>
-          <Getsubmits
-            resource={
-              location.state == null
-                ? fetchData(`http://127.0.0.1:8000/status`)
-                : fetchData(
-                    `http://127.0.0.1:8000/status?user_id=${location.state.user_id}`
-                  )
-            }
-          />
+          <Getsubmits resource={taskOption()}
+          taskStatus = {taskStatus} />
         </Suspense>
       </div>
       <Footer />
@@ -105,10 +135,10 @@ export const StatusList = () => {
   );
 };
 
-const SearchBar = () => {
-  const startSearch = (e) => {
-    let value = document.getElementById("SV").value;
-    console.log(value);
+const SearchBar = ({ search }) => {
+  const onSearchHandler = (e) => {
+    const value = document.getElementById("SV").value;
+    search(value);
   };
 
   return (
@@ -118,15 +148,16 @@ const SearchBar = () => {
         size={23}
         color="rgb(97, 127, 192)"
         id="goSearch"
-        onClick={() => startSearch()}
+        onClick={() => onSearchHandler()}
       />
     </div>
   );
 };
 
-const Getsubmits = ({ resource }) => {
-  const problemList = resource.read();
-  const maxPage = Math.ceil(problemList.length / 10);
+const Getsubmits = ({ resource, taskStatus }) => {
+  console.log(taskStatus)
+  const problemList = taskStatus.length === 0 ? resource.read() : taskStatus;
+  const maxPage = Math.ceil(problemList.length / 15);
   const [page, setPage] = useState(1);
 
   const handlePage = (event) => {
@@ -147,7 +178,7 @@ const Getsubmits = ({ resource }) => {
 
   return (
     <>
-      {problemList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {problemList.slice(15 * (page - 1), 15 * (page - 1) + 15).map((e) => {
         return <StatusListBox info={e} key={e.sub_id} />;
       })}
       <div className="pageController">

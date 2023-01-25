@@ -60,7 +60,6 @@ export const Home = () => {
 
 const GetHot = ({ resource }) => {
   const HOT = resource.read();
-  console.log(HOT);
   return <>{<Block info={HOT} key={HOT.id} />}</>;
 };
 

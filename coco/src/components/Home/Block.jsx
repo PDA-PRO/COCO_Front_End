@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Block = (props) => {
   const navigate = useNavigate();
-  console.log(props.info);
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
   };

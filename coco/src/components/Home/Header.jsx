@@ -83,7 +83,7 @@ export const Header = () => {
               style={{ cursor: "pointer" }}
               className="login"
             >
-              <img src="/image/user.png" alt="" height="50px" />
+              <img src="/image/user.png" alt="" height="45px" />
               <h3>{userInfo.id}</h3>
             </div>
 

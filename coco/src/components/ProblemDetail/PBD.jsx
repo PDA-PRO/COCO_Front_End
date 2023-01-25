@@ -1,10 +1,6 @@
 import React, { Suspense } from "react";
 import "./PBD.css";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { FaStar } from "react-icons/fa";
-import styled from "styled-components";
 import { IoLogoPython } from "react-icons/io5";
 import {
   BsClipboardCheck,
@@ -13,14 +9,18 @@ import {
   BsQuestionLg,
   BsExclamationLg,
 } from "react-icons/bs";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
-import { Header } from "../Home/Header";
-import { Footer } from "../Home/Footer";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Result } from "../Result/Result";
 import fetchData from "../../api/fetchTask";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
+import { Allotment } from "allotment";
+import "allotment/dist/style.css";
+import CodeMirror from "@uiw/react-codemirror";
+import { cpp } from "@codemirror/lang-cpp";
+import { python } from "@codemirror/lang-python";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -28,13 +28,11 @@ export const PBD = () => {
   // const resource = fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}`);
   return (
     <>
-      <Header />
       <Suspense fallback={<>문제가 존재하지 않습니다</>}>
         <GetDetail
           resource={fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}/`)}
         />
       </Suspense>
-      <Footer />
     </>
   );
 };
@@ -44,11 +42,7 @@ const GetDetail = ({ resource }) => {
   const navigate = useNavigate();
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
-
-  //코드 입력
-  const onCodeHandler = (e) => {
-    setCode(e.currentTarget.value);
-  };
+  const [codeLang, setcodeLang] = useState(1);
 
   //submit이후 결과창 이동
   const goToResult = (e) => {
@@ -69,6 +63,7 @@ const GetDetail = ({ resource }) => {
             userid: userInfo.id,
             sourcecode: code,
             callbackurl: "string",
+            lang: codeLang,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -89,9 +84,18 @@ const GetDetail = ({ resource }) => {
       <div className="PBD-title">
         <div className="problemsName-pbd">
           <div>No.{detail.id}</div>
-          <div>{detail.title}</div>
+          <div className="problemInfo-pbd">
+            {detail.title}
+            <div className="PBD-secTitle">
+              <div className="PBD-timeLimit">
+                시간제한 : {detail.timeLimit}s
+              </div>
+              <div className="PBD-memLimit">
+                메모리 제한 : {detail.memLimit}MB
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="problemsRate-pbd">{Rating(detail.diff)}</div>
         <div
           className="problemsAns-pbd"
           style={{
@@ -104,135 +108,107 @@ const GetDetail = ({ resource }) => {
           }}
         >
           <span style={{ color: "gray" }} id="jung">
-            정답률 :{" "}
+            {"정답률 :    "}
           </span>
           {detail.rate}%
         </div>
       </div>
 
-      <div className="PBD-secTitle">
-        <div className="PBD-timeLimit">시간제한 : {detail.timeLimit}sec</div>
-        <div className="PBD-memLimit">메모리 제한 : {detail.memLimit}mbyte</div>
-      </div>
-
       <div className="PBD-body">
-        <div className="PBD-problem">
-          <div className="PBD-pbTxt">
+        <Allotment defaultSizes={[1, 1]} minSize={400} snap={true}>
+          <div className="PBD-problem PBD-scroll">
+            <div className="PBD-pbTxt">
+              <div className="PBD-pbTitle">
+                <BsClipboardCheck size={25} />
+                <h2>문제 설명</h2>
+              </div>
+
+              <p id="PBD-txt">{detail.mainDesc}</p>
+            </div>
+
+            <div className="PBD-exBox">
+              <div>
+                <div className="PBD-pbTitle">
+                  <BsArrowDownRight size={25} color="red" />
+                  <h2>Input</h2>
+                </div>
+
+                <p className="PBD-txt2">{detail.inDesc}</p>
+
+                <div className="PBD-pbTitle">
+                  <BsQuestionLg size={25} color="red" />
+                  <h2>입력 예시</h2>
+                </div>
+
+                <p className="PBD-txt2">{detail.inputEx1}</p>
+              </div>
+
+              <div>
+                <div className="PBD-pbTitle">
+                  <BsArrowUpLeft size={25} color="#00ff00" />
+                  <h2>Output</h2>
+                </div>
+
+                <p className="PBD-txt2">{detail.outDesc}</p>
+
+                <div className="PBD-pbTitle">
+                  <BsExclamationLg size={25} color="#00ff00" />
+                  <h2>출력 예시</h2>
+                </div>
+
+                <p className="PBD-txt2">{detail.outputEx1}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="PBD-input">
             <div className="PBD-pbTitle">
-              <BsClipboardCheck size={30} />
-              <h2>문제 설명</h2>
+              <IoLogoPython size={25} color="skyblue" />
+              <h2>코드 입력 : Python3</h2>
+              <FloatingLabel controlId="floatingSelect">
+                <Form.Select
+                  aria-label="F"
+                  onChange={(e) => {
+                    setcodeLang(e.currentTarget.value);
+                    console.log(e.currentTarget.value);
+                  }}
+                >
+                  <option value={1}>Python</option>
+                  <option value={2}>C</option>
+                </Form.Select>
+              </FloatingLabel>
             </div>
-
-            <p id="PBD-txt">{detail.mainDesc}</p>
-          </div>
-
-          <div className="PBD-exBox">
-            <div className="PBD-exInput">
-              <div className="PBD-pbTitle">
-                <BsArrowDownRight size={30} color="red" />
-                <h2 className="ttun">Input</h2>
-              </div>
-
-              <p className="PBD-txt2">{detail.inDesc}</p>
-
-              <div className="PBD-pbTitle">
-                <BsQuestionLg size={30} color="red" />
-                <h2 className="ttun">입력 예시</h2>
-              </div>
-
-              <p className="PBD-txt2">{detail.inputEx1}</p>
-            </div>
-
-            <div className="PBD-exOutput">
-              <div className="PBD-pbTitle">
-                <BsArrowUpLeft size={30} color="#00ff00" />
-                <h2 className="ttun">Output</h2>
-              </div>
-
-              <p className="PBD-txt2">{detail.outDesc}</p>
-
-              <div className="PBD-pbTitle">
-                <BsExclamationLg size={30} color="#00ff00" />
-                <h2 className="ttun">출력 예시</h2>
-              </div>
-
-              <p className="PBD-txt2">{detail.outputEx1}</p>
+            <div className="PBD-scroll">
+              <CodeMirror
+                value="print('hello')"
+                extensions={[python()]}
+                onChange={(value) => {
+                  setCode(value);
+                  console.log(value);
+                }}
+              />
             </div>
           </div>
-        </div>
-
-        <div className="PBD-input">
-          <div className="PBD-pbTitle">
-            <IoLogoPython size={30} color="skyblue" />
-            <h2 className="ttun">코드 입력 : Python3</h2>
-          </div>
-
-          <InputGroup>
-            <InputGroup.Text className="ttun2">CODE</InputGroup.Text>
-            <Form.Control
-              as="textarea"
-              id="PBD-codeArea"
-              aria-label="With textarea"
-              style={{ minHeight: "700px" }}
-              onChange={onCodeHandler}
-            />
-          </InputGroup>
-
-          <Button
-            variant="outline-secondary"
-            id="submit_btn"
-            onClick={submitCode}
-          >
-            SUBMIT
-          </Button>
-        </div>
+        </Allotment>
+      </div>
+      <div className="PBD-menu">
+        <Button
+          variant="outline-secondary"
+          id="submit_btn"
+          onClick={() => {
+            navigate(`/problems`);
+          }}
+        >
+          문제목록
+        </Button>
+        <Button
+          variant="outline-secondary"
+          id="submit_btn"
+          onClick={submitCode}
+        >
+          SUBMIT
+        </Button>
       </div>
     </div>
   );
 };
-
-const ARRAY = [0, 1, 2, 3, 4];
-
-function Rating(n) {
-  const colored = [false, false, false, false, false];
-  for (let i = 0; i < n; i++) {
-    colored[i] = true;
-  }
-
-  return (
-    <Wrap>
-      <Stars>
-        {ARRAY.map((el, idx) => {
-          return (
-            <FaStar
-              key={idx}
-              size="30"
-              className={colored[el] && "yellowStar"}
-            />
-          );
-        })}
-      </Stars>
-    </Wrap>
-  );
-}
-
-export default Rating;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Stars = styled.div`
-  display: flex;
-  padding-top: 5px;
-
-  & svg {
-    color: gray;
-    margin: 0 6px;
-  }
-
-  .yellowStar {
-    color: #fcc419;
-  }
-`;

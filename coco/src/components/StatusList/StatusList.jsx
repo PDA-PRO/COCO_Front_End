@@ -37,7 +37,9 @@ export const StatusList = () => {
     setOption([...option]);
   };
 
-  useEffect(() => {}, [option]);
+  useEffect(() => {
+    console.log(option)
+  }, [option]);
 
   const onSearchHandler = (value) => {
     axios
@@ -55,11 +57,11 @@ export const StatusList = () => {
   const taskOption = () => {
     if (
       option[0] === false &&
-      option[1] === false &&
+      option[1] === -1 &&
       option[2] === false
     ) {
       console.log("init");
-      return fetchData(`http://127.0.0.1:8000/status`);
+      return fetchData(`http://127.0.0.1:8000/status?lang=${option[1]}&result=${option[2]}`);
     } else {
       if (option[0] === true) {
         return fetchData(`http://127.0.0.1:8000/status?user_id=${userInfo.id}
@@ -155,7 +157,6 @@ const SearchBar = ({ search }) => {
 };
 
 const Getsubmits = ({ resource, taskStatus }) => {
-  console.log(taskStatus)
   const problemList = taskStatus.length === 0 ? resource.read() : taskStatus;
   const maxPage = Math.ceil(problemList.length / 15);
   const [page, setPage] = useState(1);

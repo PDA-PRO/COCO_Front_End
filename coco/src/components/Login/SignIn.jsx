@@ -74,39 +74,40 @@ export const SignIn = () => {
   return (
     <>
       <div className="loginForm">
-        <div className="loginBox">
+        <div className="loginBox" style={{ marginBottom: "30px" }}>
           <FaRegUserCircle size="24" />
-          <input placeholder={"아이디를 입력하세요"} onChange={onIDHandler} />
+          <input placeholder={"ID"} onChange={onIDHandler} />
         </div>
-        <form className="loginBox">
+        <form className="loginBox" style={{ marginBottom: "10px" }}>
           <CgPassword size="24" />
           <input
-            placeholder={"비밀번호를 입력하세요"}
+            placeholder={"PASSWORD"}
             type={"password"}
             autoComplete={"false"}
             onChange={onPWHandler}
           />
         </form>
+        <div className="loginBox loginAuto">
+          <Form.Check
+            type="checkBox"
+            id="custom-switch"
+            // label="자동 로그인"
+            onClick={() => {
+              setautologin(!autologin);
+            }}
+          />
+          <p>자동 로그인</p>
+        </div>
         <div className="loginBox loginConfirm">
           <Button
             className="signUpConfirmBtn"
             variant="outline-secondary"
             onClick={onSubmitHandler}
           >
-            Sign In
+            로그인
           </Button>
         </div>
-        <div className="loginBox loginAuto">
-          <Form.Check
-            type="switch"
-            id="custom-switch"
-            label="자동 로그인"
-            onClick={() => {
-              setautologin(!autologin);
-              console.log(autologin);
-            }}
-          />
-        </div>
+
         <div className="loginBox loginOptions">
           <span
             style={{ marginRight: "10px", cursor: "pointer" }}

@@ -13,9 +13,13 @@ import {
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 
 export const Block = (props) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((state) => state.loginState);
+
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
   };
@@ -72,7 +76,10 @@ export const Block = (props) => {
   }, [props.info]);
 
   return (
-    <div className="Block">
+    <div
+      className="Block"
+      style={{ marginTop: userInfo.id === "" ? "10rem" : "5rem" }}
+    >
       <div className="box1">
         <div className="boxTitle">
           <FaHotjar size={28} color="red" />

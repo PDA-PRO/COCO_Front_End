@@ -66,7 +66,7 @@ export const SignUp = () => {
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
-  }
+  };
 
   const onPWHandler = (e) => {
     setPw(e.currentTarget.value);
@@ -123,27 +123,27 @@ export const SignUp = () => {
 
   return (
     <form className="loginForm">
-      <div className="loginBox">
+      <div className="loginBox" style={{ marginBottom: "20px" }}>
         <FaRegUser size="25" />
         <input placeholder={"이름을 입력하세요"} onChange={onNameHandler} />
       </div>
-      <div className="loginBox">
+      <div className="loginBox" style={{ marginBottom: "20px" }}>
         <FaRegUserCircle size="25" />
         <div className="checkID">
           <input placeholder={"아이디를 입력하세요"} onChange={onIDHandler} />
-          <span onClick={checkIDs} title={"중복 확인"}>
+          <span onClick={checkIDs} title={"ID 중복 확인"}>
             <IoMdCheckmarkCircleOutline
               size={"25"}
-              color={checkId === true ? "#00ff00" : "black"}
+              color={checkId === true ? "#00ff00" : "gray"}
             />
           </span>
         </div>
       </div>
-      <div className="loginBox">
+      <div className="loginBox" style={{ marginBottom: "20px" }}>
         <FiMail size="25" />
-        <input placeholder={"이메일을 입력하세요"}  onChange={onEmailHandler}/>
+        <input placeholder={"이메일을 입력하세요"} onChange={onEmailHandler} />
       </div>
-      <div className="loginBox">
+      <div className="loginBox" style={{ marginBottom: "20px" }}>
         <RiLockPasswordLine size="25" />
         <input
           placeholder={"영문자, 숫자, 특수문자 포함 최소 8~20자"}
@@ -152,7 +152,7 @@ export const SignUp = () => {
           onChange={onPWHandler}
         />
       </div>
-      <div className="loginBox">
+      <div className="loginBox" style={{ marginBottom: "20px" }}>
         <RiLockPasswordLine size="25" />
         <input
           placeholder={"비밀번호를 확인해주세요"}
@@ -168,13 +168,16 @@ export const SignUp = () => {
           placement={"left"}
           overlay={
             <Popover id={`popover-positioned-left`}>
-                <InputGroup>
-                  <InputGroup.Text>{<MdInsertEmoticon size="25"/>}</InputGroup.Text>
-                  <Form.Control className="stdAge"
-                    placeholder={"나이를 입력하세요"}
-                    onChange={onAgeHandler}
-                  />
-                </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>
+                  {<MdInsertEmoticon size="25" />}
+                </InputGroup.Text>
+                <Form.Control
+                  className="stdAge"
+                  placeholder={"나이를 입력하세요"}
+                  onChange={onAgeHandler}
+                />
+              </InputGroup>
             </Popover>
           }
         >
@@ -199,7 +202,11 @@ export const SignUp = () => {
         </div>
       </div>
       <div className="loginBox loginConfirm">
-        <Button variant="outline-secondary" onClick={onSubmitHandler}>
+        <Button
+          variant="outline-secondary"
+          onClick={onSubmitHandler}
+          style={{ marginBottom: "0px", marginTop: "20px" }}
+        >
           가입하기
         </Button>
       </div>

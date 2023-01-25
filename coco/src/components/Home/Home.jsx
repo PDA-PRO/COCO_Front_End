@@ -9,8 +9,13 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 
 export const Home = () => {
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((state) => state.loginState);
+  console.log("홈", userInfo);
+
   return (
     <div className="home">
       <Header />
@@ -20,9 +25,26 @@ export const Home = () => {
             <h2 id="t1">코딩, 초보자라면?</h2>
             <h2 id="t2">
               Coding Coach,
-              <span id="t2-1"> COCO</span>
+              <span id="t2-1">
+                {" "}
+                C<span style={{ color: "black" }}>O</span>C
+                <span style={{ color: "black" }}>O</span>
+              </span>
             </h2>
           </div>
+          {userInfo.id === "" ? (
+            <></>
+          ) : (
+            <div className="homeGraph">
+              <div className="levelGraph">
+                <h3>{userInfo.id}님 현재 레벨</h3>
+                <h2>Level 4</h2>
+                <p>전체 50등</p>
+              </div>
+              <div className="growGraph"></div>
+            </div>
+          )}
+
           <Suspense fallback={<Spinner />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
           </Suspense>
@@ -39,21 +61,14 @@ export const Home = () => {
 
           <div className="notice">
             <Suspense fallback={<Spinner />}>
-              <GetNotice resource={fetchData("http://127.0.0.1:8000/manage/notice")} />
+              <GetNotice
+                resource={fetchData("http://127.0.0.1:8000/manage/notice")}
+              />
             </Suspense>
-            {/* <div className="title-notice">
-              <SlPin size={30} color="#00ff00" />
-              <h2>Notice!</h2>
-            </div>
-            <div className="body-notice">
-              <li>ver 0.1.0 - Beta Open!</li>
-              <li>November 11, midterm presentation</li>
-              <li>New Question! : No.01 더하기 문제</li>
-            </div> */}
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };
@@ -63,7 +78,32 @@ const GetHot = ({ resource }) => {
   return <>{<Block info={HOT} key={HOT.id} />}</>;
 };
 
-const GetNotice = ({ resource}) => {
-  const notice = resource.read()
-  return <div className="body-notice" dangerouslySetInnerHTML={{ __html: notice }}></div>
-}
+const GetNotice = ({ resource }) => {
+  const notice = resource.read();
+  return (
+    <div className="noticeHere">
+      <div className="title-notice">
+        <SlPin size={22} color="red" />
+        <h2>공지사항</h2>
+      </div>
+      <div
+        className="body-notice"
+        dangerouslySetInnerHTML={{ __html: notice }}
+      ></div>
+    </div>
+  );
+};
+
+//how to center a div?
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  }}
+>
+  <h1> I am centered </h1>
+</div>;
+
+//Source: https://stackoverflow.com/questions/42125775

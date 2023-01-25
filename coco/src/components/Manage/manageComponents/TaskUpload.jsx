@@ -36,7 +36,7 @@ export const TaskUpload = () => {
   const [outputEx1, setOutputEx1] = useState(""); // 출력 예시 State !필수
   const [outputEx2, setOutputEx2] = useState("");
 
-  const [py, setPy] = useState(true); // 설정 언어 State !필수
+  const [py, setPy] = useState(false); // 설정 언어 State !필수
   const [cLan, setCLan] = useState(false); // 설정 언어 State !필수
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
 
@@ -379,7 +379,6 @@ export const TaskUpload = () => {
                   <Form.Check
                     inline
                     label="Python3"
-                    defaultChecked
                     type={type}
                     id="m-lan-py"
                     style={{ marginRight: "80px" }}

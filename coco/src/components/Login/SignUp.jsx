@@ -11,7 +11,7 @@ import { useState } from "react";
 import axios from "axios";
 import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
-import { RiLockPasswordLine } from "react-icons/ri";
+import { RiLockPasswordLine, RiQuestionLine } from "react-icons/ri";
 import { BiPencil } from "react-icons/bi";
 import { MdOutlineSchool, MdInsertEmoticon } from "react-icons/md";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -34,6 +34,8 @@ export const SignUp = () => {
   const [age, setAge] = useState(0);
 
   const [checkId, setCheckId] = useState(false);
+
+  const [showAge, setShowAge] = useState(false);
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -111,10 +113,12 @@ export const SignUp = () => {
   const radioHandler1 = (e) => {
     setStudent(!student);
     setTeacher(false);
+    setShowAge(true);
   };
   const radioHandler2 = (e) => {
     setTeacher(!teacher);
     setStudent(false);
+    setShowAge(false);
   };
 
   const onAgeHandler = (e) => {
@@ -162,35 +166,16 @@ export const SignUp = () => {
         />
       </div>
       <div className="loginBox signUpTypes" style={{ marginBottom: "0px" }}>
-        <OverlayTrigger
-          trigger="click"
-          key={"left"}
-          placement={"left"}
-          overlay={
-            <Popover id={`popover-positioned-left`}>
-              <InputGroup>
-                <InputGroup.Text>
-                  {<MdInsertEmoticon size="25" />}
-                </InputGroup.Text>
-                <Form.Control
-                  className="stdAge"
-                  placeholder={"나이를 입력하세요"}
-                  onChange={onAgeHandler}
-                />
-              </InputGroup>
-            </Popover>
-          }
-        >
-          <div className="signUpType">
-            <div className="signUpRadio">
-              <div>
-                <BiPencil size={"25"} />
-              </div>
-              <span>학생</span>
+        <div className="signUpType">
+          <div className="signUpRadio">
+            <div>
+              <BiPencil size={"25"} />
             </div>
-            <input type={"radio"} onChange={radioHandler1} checked={student} />
+            <span>학생</span>
           </div>
-        </OverlayTrigger>
+          <input type={"radio"} onChange={radioHandler1} checked={student} />
+        </div>
+
         <div className="signUpType">
           <div className="signUpRadio">
             <div>
@@ -200,6 +185,16 @@ export const SignUp = () => {
           </div>
           <input type={"radio"} onChange={radioHandler2} checked={teacher} />
         </div>
+      </div>
+
+      <div className="loginBox" style={{ display: showAge ? "flex" : "none" }}>
+        <RiQuestionLine size="25" />
+        <input
+          placeholder={"나이"}
+          type={"number"}
+          autoComplete={"false"}
+          onChange={onAgeHandler}
+        />
       </div>
       <div className="loginBox loginConfirm">
         <Button

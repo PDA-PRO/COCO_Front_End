@@ -4,6 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../../api/fetchTask";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
@@ -35,6 +36,7 @@ const TasksList = ({ resource }) => {
 
   const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);
+
   const handlePage = (event) => {
     if (
       event.target.innerHTML ===
@@ -108,9 +110,11 @@ const ListBox = ({ info, settasks }) => {
       );
     }
   };
-  console.log("what", info);
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/problems/${e}`);
+  };
   const loadlist = (e) => {
-    console.log(info.id);
     axios
       .get("http://127.0.0.1:8000/deletetask/" + info.id)
       .then(function (response) {
@@ -124,7 +128,13 @@ const ListBox = ({ info, settasks }) => {
   return (
     <div className="taskList">
       <h4>No.{info.id}</h4>
-      <h4>{info.title}</h4>
+      <h4
+        onClick={() => {
+          goDetail(info.id);
+        }}
+      >
+        {info.title}
+      </h4>
       <h4>{info.diff}</h4>
       <h4>{info.rate}%</h4>
       <h4>{info.count == null ? 0 : info.count}</h4>

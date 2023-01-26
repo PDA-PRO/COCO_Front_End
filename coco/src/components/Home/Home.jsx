@@ -14,13 +14,16 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 export const Home = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
-  console.log("홈", userInfo);
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/mypage/${e}`);
+  };
 
   return (
-    <div className="home">
+    <div>
       <Header />
-      <div className="homebody">
-        <div className="home-body">
+      <div className="home">
+        <div className="home-body" style={{ width: "1200px" }}>
           <div className="txt-box">
             <h2 id="t1">코딩, 초보자라면?</h2>
             <h2 id="t2">
@@ -36,7 +39,7 @@ export const Home = () => {
             <></>
           ) : (
             <div className="homeGraph">
-              <div className="levelGraph">
+              <div className="levelGraph" onClick={() => goDetail(userInfo.id)}>
                 <h3>{userInfo.id}님 현재 레벨</h3>
                 <h2>Level 4</h2>
                 <p>전체 50등</p>
@@ -54,7 +57,7 @@ export const Home = () => {
               src="/image/ad.png"
               alt=""
               loading="lazy"
-              style={{ borderRadius: "30px" }}
+              style={{ borderRadius: "20px" }}
               width="100%"
             />
           </div>

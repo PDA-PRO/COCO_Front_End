@@ -28,16 +28,16 @@ export const Guel = (props) => {
       if (e === 1) {
         setCategory("Notice");
         setBgColor("rgb(231, 255, 211)");
-        setCateIcon(<BsMegaphoneFill size={30} color="#00ff00" />);
+        setCateIcon(<BsMegaphoneFill size={25} color="#00ff00" />);
       } else if (e === 2) {
         setCategory("Help");
         setBgColor("rgb(255, 248, 211)");
-        setCateIcon(<BsQuestionLg size={30} color="rgb(255, 200, 101)" />);
+        setCateIcon(<BsQuestionLg size={25} color="rgb(255, 200, 101)" />);
       } else if (e === 3) {
         setCategory("자유");
-        setBgColor("rgb(227, 249, 255)");
+        setBgColor("rgb(237, 251, 255)");
         setCateIcon(
-          <BsFillLightbulbFill size={30} color="rgb(111, 101, 255)" />
+          <BsFillLightbulbFill size={25} color="rgb(111, 101, 255)" />
         );
       }
     };
@@ -105,7 +105,7 @@ export const Guel = (props) => {
           <p>{props.props.comments}</p>
         </div>
         <div className="un2">
-          <BsHeartFill />
+          <BsHeartFill color="red" />
           <p>{props.props.likes}</p>
         </div>
       </div>

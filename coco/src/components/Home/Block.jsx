@@ -41,7 +41,7 @@ export const Block = (props) => {
         setBgColor("rgb(255, 248, 211)");
       } else if (e === 3) {
         setCategory("자유");
-        setBgColor("rgb(227, 249, 255)");
+        setBgColor("rgb(237, 251, 255)");
       }
     };
 

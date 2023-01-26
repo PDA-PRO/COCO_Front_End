@@ -57,71 +57,73 @@ export const Header = () => {
 
   return (
     <div className="navbar">
-      <div className="leftDiv">
-        <div className="titleLogo" onClick={() => movdPage(1)}>
-          <img src="/image/logo.png" alt="" />
-          {/* <img src="/image/cocoLogo.png" alt="" /> */}
-          <h2>
-            <span style={{ color: "#00ff00" }}>C</span>O
-            <span style={{ color: "#00ff00" }}>C</span>O
-          </h2>
-        </div>
-        <div className="menus">
-          <h3 onClick={() => movdPage(2)}>문제</h3>
-          <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
-          <h3 onClick={() => movdPage(4)}>채점상황</h3>
-        </div>
-      </div>
-
-      <div>
-        {userInfo.id === "" ? (
-          <h3 onClick={() => movdPage(5)}>LOGIN</h3>
-        ) : (
-          <div ref={ref} onClick={handleClick}>
-            <div
-              onClick={handleShow}
-              style={{ cursor: "pointer" }}
-              className="login"
-            >
-              <img src="/image/user.png" alt="" height="45px" />
-              <h3>{userInfo.id}</h3>
-            </div>
-
-            <Overlay
-              show={show}
-              target={target}
-              placement="bottom"
-              container={ref}
-              containerPadding={20}
-            >
-              <Popover id="popover-contained">
-                <Popover.Header as="h3">Profile</Popover.Header>
-                <Popover.Body>
-                  <div className="bodyOverlay">
-                    <img src="/image/user.png" alt="" width="100px" />
-                    <h3>{userInfo.id}</h3>
-                    <div className="footerOverlay">
-                      <h4
-                        onClick={() => {
-                          movdPage(6, userInfo.id);
-                        }}
-                      >
-                        My Page
-                      </h4>
-                      <h4
-                        onClick={() => {
-                          logoutHandler();
-                        }}
-                      >
-                        LogOut
-                      </h4>
-                    </div>
-                  </div>
-                </Popover.Body>
-              </Popover>
-            </Overlay>
+      <div className="navBody" style={{ width: "1200px" }}>
+        <div className="leftDiv">
+          <div className="titleLogo" onClick={() => movdPage(1)}>
+            <img src="/image/logo.png" alt="" />
+            {/* <img src="/image/cocoLogo.png" alt="" /> */}
+            <h2>
+              <span style={{ color: "#00ff00" }}>C</span>O
+              <span style={{ color: "#00ff00" }}>C</span>O
+            </h2>
           </div>
-        )}
+          <div className="menus">
+            <h3 onClick={() => movdPage(2)}>문제</h3>
+            <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
+            <h3 onClick={() => movdPage(4)}>채점상황</h3>
+          </div>
+        </div>
+
+        <div>
+          {userInfo.id === "" ? (
+            <h3 onClick={() => movdPage(5)}>LOGIN</h3>
+          ) : (
+            <div ref={ref} onClick={handleClick}>
+              <div
+                onClick={handleShow}
+                style={{ cursor: "pointer" }}
+                className="login"
+              >
+                <img src="/image/user.png" alt="" height="45px" />
+                <h3>{userInfo.id}</h3>
+              </div>
+
+              <Overlay
+                show={show}
+                target={target}
+                placement="bottom"
+                container={ref}
+                containerPadding={20}
+              >
+                <Popover id="popover-contained">
+                  <Popover.Header as="h3">Profile</Popover.Header>
+                  <Popover.Body>
+                    <div className="bodyOverlay">
+                      <img src="/image/user.png" alt="" width="100px" />
+                      <h3>{userInfo.id}</h3>
+                      <div className="footerOverlay">
+                        <h4
+                          onClick={() => {
+                            movdPage(6, userInfo.id);
+                          }}
+                        >
+                          My Page
+                        </h4>
+                        <h4
+                          onClick={() => {
+                            logoutHandler();
+                          }}
+                        >
+                          LogOut
+                        </h4>
+                      </div>
+                    </div>
+                  </Popover.Body>
+                </Popover>
+              </Overlay>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -10,6 +10,9 @@ import fetchData from "../../api/fetchTask";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { HomeGraph } from "./HomeGraph";
+import { DiffGraph } from "./DiffGraph";
+import { useMediaQuery } from "react-responsive";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +21,11 @@ export const Home = () => {
   const goDetail = (e) => {
     navigate(`/mypage/${e}`);
   };
+
+  const Large = useMediaQuery({ minWidth: 1200 });
+  const Laptop = useMediaQuery({ maxWidth: 1199.99999, minWidth: 992 });
+  const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
+  const Phone = useMediaQuery({ maxWidth: 767.99999 });
 
   return (
     <div>
@@ -44,7 +52,10 @@ export const Home = () => {
                 <h2>Level 4</h2>
                 <p>전체 50등</p>
               </div>
-              <div className="growGraph"></div>
+              <div className="growGraph">
+                <HomeGraph />
+                <DiffGraph />
+              </div>
             </div>
           )}
 

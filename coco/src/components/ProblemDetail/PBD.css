@@ -102,6 +102,11 @@
   padding: 1.5rem 1rem;
 }
 
+.PBD-img{
+  width: 95%;
+  height: auto;
+  margin: 1.5rem 1rem;
+}
 .PBD-body h2 {
   white-space: pre-wrap;
   font-weight: 600;

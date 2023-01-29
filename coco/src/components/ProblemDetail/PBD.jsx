@@ -123,6 +123,14 @@ const GetDetail = ({ resource }) => {
                 <h2>문제 설명</h2>
               </div>
               <p className="PBD-txt">{detail.mainDesc}</p>
+              {detail.img.map((img_name) => {
+                const srcUrl =
+                  "http://localhost:8000/image/download/3/" +
+                  detail.img +
+                  "?id=" +
+                  detail.id;
+                return <img className="PBD-img" src={srcUrl} />;
+              })}
             </div>
             <div className="PBD-pbTxt">
               <div className="PBD-pbTitle">

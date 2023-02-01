@@ -27,11 +27,13 @@ export const Home = () => {
   const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
   const Phone = useMediaQuery({ maxWidth: 767.99999 });
 
+  console.log("wlrma", Large);
+
   return (
     <div>
       <Header />
       <div className="home">
-        <div className="home-body" style={{ width: "1200px" }}>
+        <div className="home-body">
           <div className="txt-box">
             <h2 id="t1">코딩, 초보자라면?</h2>
             <h2 id="t2">
@@ -46,16 +48,15 @@ export const Home = () => {
           {userInfo.id === "" ? (
             <></>
           ) : (
-            <div className="homeGraph">
+            <div className={Large ? "homeGraph" : "else"}>
               <div className="levelGraph" onClick={() => goDetail(userInfo.id)}>
                 <h3>{userInfo.id}님 현재 레벨</h3>
                 <h2>Level 4</h2>
                 <p>전체 50등</p>
               </div>
-              <div className="growGraph">
-                <HomeGraph />
-                <DiffGraph />
-              </div>
+
+              <HomeGraph />
+              <DiffGraph />
             </div>
           )}
 

@@ -70,11 +70,12 @@ export const HomeGraph = () => {
   ];
 
   return (
-    <div className="lineG" style={{ width: "100%", height: "100%" }}>
+    <div className="lineG" style={{ width: "100%" }}>
+      <p>내 성장 그래프</p>
       <ResponsiveContainer width="90%" height="100%">
         <LineChart
           data={data}
-          margin={{ top: 40, right: 0, left: 0, bottom: 10 }}
+          margin={{ top: 3, right: 0, left: 0, bottom: 5 }}
         >
           <XAxis dataKey="name" />
           <YAxis />

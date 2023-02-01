@@ -13,6 +13,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
+  const Large = useMediaQuery({ minWidth: 1200 });
 
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);

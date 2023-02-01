@@ -9,6 +9,7 @@ import {
   BsMegaphoneFill,
   BsQuestionLg,
   BsTrash,
+  BsPencilSquare,
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -78,6 +79,10 @@ export const ThirdBox = (props) => {
     }
   };
 
+  const modify = (e) => {
+    navigate(`/board_modify/${e}`);
+  }
+
   return (
     <div className="mp-ThirdBox">
       {props.props.map((e) => {
@@ -107,6 +112,7 @@ export const ThirdBox = (props) => {
                 <p>{e.likes}</p>
               </div>
             </div>
+            <BsPencilSquare style={{'cursor': 'pointer'}} size={20} onClick = {() => modify(e.id)}/>
             <BsTrash id="delGuel" size={20} color="red" />
           </div>
         );

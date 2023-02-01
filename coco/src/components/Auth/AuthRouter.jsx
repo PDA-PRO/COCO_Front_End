@@ -20,11 +20,8 @@ export const AuthRouter = ({ role, children }) => {
       })
       .then(function (response) {
         if (response.status == 200) {
-          console.log(response.data.role);
-          console.log(role);
           if (response.data.role >= role) {
             setstate("pass");
-            console.log("된건가");
           } else {
             alert("권한부족");
             navigate("/");
@@ -37,7 +34,6 @@ export const AuthRouter = ({ role, children }) => {
         dispatch({
           type: "loginSlice/logout",
         });
-        console.log("안된건가");
       });
   } else {
     return <Login />;

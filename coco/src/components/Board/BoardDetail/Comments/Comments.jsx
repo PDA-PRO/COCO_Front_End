@@ -16,13 +16,22 @@ export const Comments = (props) => {
   const [likeNum, setLikeNum] = useState(props.props.likes);
   var numLike = props.props.likes;
 
+  const likedComment = () => {
+    for(let i=0;i<props.is_liked.length;i++){
+      if(props.is_liked[i][0] === userInfo.id && props.is_liked[i][1] === props.props.id){
+        return true;
+      }
+    }
+    return false;
+  }
+
   useEffect(() => {
     if (props.props.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
-    if (props.is_liked[0] && props.props.id === props.is_liked[1]){
-      setLike(true)
-    }
+    // if (props.is_liked[0] && props.props.id === props.is_liked[1]){
+    //   setLike(true)
+    // }
   }, [isMe]);
 
   function timeForToday(value) {
@@ -121,7 +130,7 @@ export const Comments = (props) => {
         <div
           className="un2"
           onClick={onLikesHandler}
-          style={{ color: like === true ? "red" : "gray" }}
+          style={{ color: likedComment() === true ? "red" : "gray" }}
         >
           <BsFillHeartFill size={23} />
           <p>{likeNum}</p>

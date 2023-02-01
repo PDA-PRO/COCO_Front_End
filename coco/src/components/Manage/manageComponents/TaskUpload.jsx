@@ -14,6 +14,10 @@ import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftjsToHtml from "draftjs-to-html";
 
 export const TaskUpload = () => {
   const navigate = useNavigate();
@@ -21,7 +25,6 @@ export const TaskUpload = () => {
     navigate("/");
   };
   const [title, setTitle] = useState(""); // 제목 State !필수
-  const [desc, setDesc] = useState(""); // 디스크립션 State !필수
   const [desPic, setDesPic] = useState(null); // 디스크립션 사진 State
 
   const [diff, setDiff] = useState(""); // 난이도 State !필수
@@ -40,12 +43,22 @@ export const TaskUpload = () => {
   const [cLan, setCLan] = useState(false); // 설정 언어 State !필수
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
 
-  const onTitleHandler = (e) => {
-    setTitle(e.currentTarget.value);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [htmlString, setHtmlString] = useState("");
+
+  const updateTextDescription = async (state) => {
+    await setEditorState(state);
+    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
+    setHtmlString(html);
   };
 
-  const onDescHandler = (e) => {
-    setDesc(e.currentTarget.value);
+  const uploadCallback = () => {
+    console.log("이미지 업로드");
+  };
+
+
+  const onTitleHandler = (e) => {
+    setTitle(e.currentTarget.value);
   };
 
   const onDiffHandler = (e) => {
@@ -116,7 +129,7 @@ export const TaskUpload = () => {
     console.log("shoot");
     if (
       title == "" ||
-      desc == "" ||
+      htmlString == "" ||
       diff == "" ||
       time == "" ||
       mem == "" ||
@@ -140,7 +153,7 @@ export const TaskUpload = () => {
               headers: { "Content-Type": `multipart/form-data; ` },
               params: {
                 title: title,
-                description: desc,
+                description: htmlString,
                 diff: diff,
                 timeLimit: time,
                 memLimit: mem,
@@ -164,8 +177,6 @@ export const TaskUpload = () => {
             }
           });
       } else {
-        console.log(testCase);
-        console.log(desPic);
         axios
           .post(
             "http://127.0.0.1:8000/manage",
@@ -177,7 +188,7 @@ export const TaskUpload = () => {
               headers: { "Content-Type": `multipart/form-data; ` },
               params: {
                 title: title,
-                description: desc,
+                description: htmlString,
                 diff: diff,
                 timeLimit: time,
                 memLimit: mem,
@@ -218,41 +229,53 @@ export const TaskUpload = () => {
         </InputGroup>
         <div className="m-upload-context">
           <div className="m-desc">
-            {/* 문제 디스크립션 */}
-            <InputGroup className="m-des">
-              <InputGroup.Text>Des.</InputGroup.Text>
-              <Form.Control
-                as="textarea"
-                style={{ minHeight: "550px" }}
-                placeholder="문제에 대한 Description 입력"
-                onChange={onDescHandler}
-              />
-            </InputGroup>
-            {/* 문제 디스크립션 */}
-
-            {/* 문제에 대한 사진 추가 */}
-            <Form.Group controlId="formFileMultiple" className="m-des-img">
-              <Form.Label>
-                <BsImages size={20} style={{ marginRight: "15px" }} />
-                문제 설명에 추가할 사진 선택
-              </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={(e) => {
-                  setDesPic(e.target.files[0]);
-                }}
-              />
-            </Form.Group>
-            {result && (
-              <img
-                ref={imageRef}
-                src={result}
-                style={({ maxWidth: "100%" }, { minWidth: "100%" })}
-              />
-            )}
-
-            {/* 문제에 대한 사진 추가 */}
+            <Editor
+              placeholder={"내용을 작성해주세요."}
+              editorState={editorState}
+              onEditorStateChange={updateTextDescription}
+              toolbar={{
+                options: [
+                  "inline",
+                  "blockType",
+                  "fontSize",
+                  "fontFamily",
+                  "list",
+                  "textAlign",
+                  "colorPicker",
+                  "link",
+                  "emoji",
+                  "image",
+                  "remove",
+                  "history",
+                ],
+                inline: { inDropdown: true },
+                list: { inDropdown: true },
+                textAlign: { inDropdown: true },
+                link: { inDropdown: true },
+                history: { inDropdown: true },
+                image: { uploadCallback: uploadCallback },
+                fontFamily: {
+                  options: [
+                    "GmarketSansMedium",
+                    "Pretendard-Regular",
+                    "Impact",
+                    "Open Sans",
+                    "Roboto",
+                    "Tahoma",
+                    "Times New Roman",
+                    "Verdana",
+                  ],
+                },
+              }}
+              localization={{ locale: "ko" }}
+              editorStyle={{
+                minHeight: "550px",
+                width: "100%",
+                border: "3px solid lightgray",
+                padding: "20px",
+                fontFamily: "Pretendard-Regular",
+              }}
+            />
 
             {/* 문제에 대한 난이도 선정 */}
             <div className="m-diff">

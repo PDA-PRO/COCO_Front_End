@@ -27,8 +27,6 @@ export const Home = () => {
   const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
   const Phone = useMediaQuery({ maxWidth: 767.99999 });
 
-  console.log("wlrma", Large);
-
   return (
     <div>
       <Header />

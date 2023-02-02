@@ -59,7 +59,7 @@
 .navbar {
   display: flex;
   flex-flow: column;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #ececec;
   /* margin-bottom: 1rem; */
@@ -75,6 +75,62 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  width: clamp(850px, 80%, 1200px);
+}
+
+.navbar .elseNavBody {
+  display: flex;
+  flex-flow: column nowrap;
+  /* align-items: center; */
+  width: clamp(400px, 90%, 950px);
+}
+
+.elseNavBody .always {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.elseNavBody .hidingMenu {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 30px 20px 10px 10px;
+}
+.hidingMenu .rightSideMenu {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 13px;
+  align-items: flex-start;
+}
+
+.hidingMenu .rightSideMenu h3 {
+  color: rgb(80, 80, 80);
+}
+
+.hidingMenu .login {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(218, 218, 218);
+  padding: 10px 20px;
+  border-radius: 15px;
+}
+
+.hidingMenu .login:hover {
+  background-color: rgb(234, 249, 255);
+  border-color: skyblue;
+  color: rgb(6, 132, 182);
+}
+
+.hidingMenu .login h3:hover {
+  color: rgb(6, 132, 182);
 }
 
 .navbar h2 {

@@ -10,16 +10,27 @@ import fetchData from "../../api/fetchTask";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { HomeGraph } from "./HomeGraph";
+import { DiffGraph } from "./DiffGraph";
+import { useMediaQuery } from "react-responsive";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
-  console.log("홈", userInfo);
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/mypage/${e}`);
+  };
+
+  const Large = useMediaQuery({ minWidth: 1200 });
+  const Laptop = useMediaQuery({ maxWidth: 1199.99999, minWidth: 992 });
+  const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
+  const Phone = useMediaQuery({ maxWidth: 767.99999 });
 
   return (
-    <div className="home">
+    <div>
       <Header />
-      <div className="homebody">
+      <div className="home">
         <div className="home-body">
           <div className="txt-box">
             <h2 id="t1">코딩, 초보자라면?</h2>
@@ -35,13 +46,15 @@ export const Home = () => {
           {userInfo.id === "" ? (
             <></>
           ) : (
-            <div className="homeGraph">
-              <div className="levelGraph">
+            <div className={Large ? "homeGraph" : "else"}>
+              <div className="levelGraph" onClick={() => goDetail(userInfo.id)}>
                 <h3>{userInfo.id}님 현재 레벨</h3>
                 <h2>Level 4</h2>
                 <p>전체 50등</p>
               </div>
-              <div className="growGraph"></div>
+
+              <HomeGraph />
+              <DiffGraph />
             </div>
           )}
 
@@ -54,7 +67,7 @@ export const Home = () => {
               src="/image/ad.png"
               alt=""
               loading="lazy"
-              style={{ borderRadius: "30px" }}
+              style={{ borderRadius: "20px" }}
               width="100%"
             />
           </div>

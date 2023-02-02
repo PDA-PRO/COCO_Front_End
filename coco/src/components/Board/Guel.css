@@ -1,8 +1,8 @@
 .Geul {
   display: flex;
   flex-flow: column nowrap;
-  width: 260px;
-  height: 260px;
+  width: 250px;
+  height: 250px;
   border-radius: 20px;
   padding: 20px;
   justify-content: space-between;
@@ -19,14 +19,14 @@
 .Geul p {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
-  font-size: 1em;
+  font-weight: 600;
+  font-size: 0.9em;
 }
 
 .Geul h2 {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.4em;
 }
 
@@ -34,7 +34,7 @@
   margin: 0 !important;
   font-family: "Pretendard-Regular";
   font-weight: 600;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .Geul .guelTitle {

@@ -16,7 +16,11 @@ import { useAppSelector } from "../../app/store";
 export const StatusList = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [option, setOption] = useState([false, -1, false]);
-  const [taskStatus, setTaskStatus] = useState([])
+  const [taskStatus, setTaskStatus] = useState([]);
+
+  const reload = (e) => {
+    window.location.reload();
+  };
 
   const onlyMyHandler = () => {
     option[0] = !option[0];
@@ -38,30 +42,28 @@ export const StatusList = () => {
   };
 
   useEffect(() => {
-    console.log(option)
+    console.log(option);
   }, [option]);
 
   const onSearchHandler = (value) => {
     axios
-    .post("http://127.0.0.1:8000/task_status/", {
-      user_id: userInfo.id,
-      option: option,
-      task_info: value
-    })
-    .then((res) => {
-      console.log(res.data);
-      setTaskStatus(res.data);
-    });
+      .post("http://127.0.0.1:8000/task_status/", {
+        user_id: userInfo.id,
+        option: option,
+        task_info: value,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setTaskStatus(res.data);
+      });
   };
 
   const taskOption = () => {
-    if (
-      option[0] === false &&
-      option[1] === -1 &&
-      option[2] === false
-    ) {
+    if (option[0] === false && option[1] === -1 && option[2] === false) {
       console.log("init");
-      return fetchData(`http://127.0.0.1:8000/status?lang=${option[1]}&result=${option[2]}`);
+      return fetchData(
+        `http://127.0.0.1:8000/status?lang=${option[1]}&result=${option[2]}`
+      );
     } else {
       if (option[0] === true) {
         return fetchData(`http://127.0.0.1:8000/status?user_id=${userInfo.id}
@@ -77,60 +79,64 @@ export const StatusList = () => {
     <div>
       <Header />
       <div className="statusListContainer">
-        <div className="statusListTop">
-          <img src="./image/score.png" height="80px" alt="" />
-          <h4>COCO SCORE BOARD</h4>
-        </div>
-        <div className="statusSort">
-          <div className="sortBox">
-            <p>내 문제만 보기</p>
-            <Form.Check type="checkbox" onChange={() => onlyMyHandler()} />
+        <div style={{ width: "1200px" }}>
+          <div className="statusListTop" onClick={() => reload()}>
+            <img src="./image/score.png" height="80px" alt="" />
+            <h4>COCO SCORE BOARD</h4>
           </div>
+          <div className="statusSort">
+            <div className="sortBox">
+              <p>내 문제만 보기</p>
+              <Form.Check type="checkbox" onChange={() => onlyMyHandler()} />
+            </div>
 
-          <div className="sortBox">
-            <p>
-              <span style={{ color: "#8b00ff" }}>C언어</span> 제출만 보기
-            </p>
-            <Form.Check
-              type="checkbox"
-              onChange={() => onlyLangHandler(1)}
-              style={{ marginRight: "20px" }}
-              checked={option[1] === 1 ? true : false}
-            />
-            <p>
-              <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
-            </p>
-            <Form.Check
-              type="checkbox"
-              checked={option[1] === 0 ? true : false}
-              onChange={() => onlyLangHandler(0)}
-            />
-          </div>
+            <div className="sortBox">
+              <p>
+                <span style={{ color: "#8b00ff" }}>C언어</span> 제출만 보기
+              </p>
+              <Form.Check
+                type="checkbox"
+                onChange={() => onlyLangHandler(1)}
+                style={{ marginRight: "20px" }}
+                checked={option[1] === 1 ? true : false}
+              />
+              <p>
+                <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
+              </p>
+              <Form.Check
+                type="checkbox"
+                checked={option[1] === 0 ? true : false}
+                onChange={() => onlyLangHandler(0)}
+              />
+            </div>
 
-          <div className="sortBox">
-            <p>
-              <span style={{ color: "rgb(98, 148, 255)" }}>정답</span>만 보기
-            </p>
-            <Form.Check type="checkbox" onChange={() => onlyAnswerHandler()} />
-          </div>
+            <div className="sortBox">
+              <p>
+                <span style={{ color: "rgb(98, 148, 255)" }}>정답</span>만 보기
+              </p>
+              <Form.Check
+                type="checkbox"
+                onChange={() => onlyAnswerHandler()}
+              />
+            </div>
 
-          <div className="sortBox">
-            <SearchBar search={onSearchHandler} />
+            <div className="sortBox">
+              <SearchBar search={onSearchHandler} />
+            </div>
           </div>
+          <div className="statusListBox" id="SLBtop">
+            <h4>Submit No.</h4>
+            <h4>User ID</h4>
+            <h4>No.</h4>
+            <h4>Title</h4>
+            <h4>언어</h4>
+            <h4>결과</h4>
+            <h4>제출 시간</h4>
+          </div>
+          <Suspense fallback={<Spinner />}>
+            <Getsubmits resource={taskOption()} taskStatus={taskStatus} />
+          </Suspense>
         </div>
-        <div className="statusListBox" id="SLBtop">
-          <h4>Submit No.</h4>
-          <h4>User ID</h4>
-          <h4>No.</h4>
-          <h4>Title</h4>
-          <h4>언어</h4>
-          <h4>결과</h4>
-          <h4>제출 시간</h4>
-        </div>
-        <Suspense fallback={<Spinner />}>
-          <Getsubmits resource={taskOption()}
-          taskStatus = {taskStatus} />
-        </Suspense>
       </div>
       <Footer />
     </div>

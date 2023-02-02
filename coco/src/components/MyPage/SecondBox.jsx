@@ -76,41 +76,6 @@ export const SecondBox = (props) => {
 
   const graphData = monthlyBarData();
 
-  const LineData = [
-    {
-      name: "Jan.",
-      실력: 100,
-    },
-    {
-      name: "Feb.",
-      실력: 120,
-    },
-    {
-      name: "Mar.",
-      실력: 140,
-    },
-    {
-      name: "Apr.",
-      실력: 300,
-    },
-    {
-      name: "May",
-      실력: 320,
-    },
-    {
-      name: "Jun",
-      실력: 370,
-    },
-    {
-      name: "Jul",
-      실력: 390,
-    },
-    {
-      name: "Aug.",
-      실력: 510,
-    },
-  ];
-
   return (
     <div className="mp-secBox">
       <div className="secBox-row">

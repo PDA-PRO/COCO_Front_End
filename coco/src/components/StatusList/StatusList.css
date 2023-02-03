@@ -6,6 +6,10 @@
   min-height: 700px;
 }
 
+.statusListContainer .parentSLC {
+  width: clamp(750px, 90%, 1200px);
+}
+
 .statusListContainer .statusListTop {
   display: flex;
   flex-flow: row nowrap;
@@ -15,28 +19,30 @@
   border-bottom: 1px solid lightgray;
   align-items: center;
   gap: 20px;
-  cursor: pointer;
 }
 
 .statusListContainer .statusSort {
   display: flex;
   flex-flow: row nowrap;
-  gap: 25px;
+  gap: 15px;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 2rem;
 }
 
-.statusSort .sortBox {
+.sortBox {
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 25px;
+  padding: 15px 20px;
   background-color: rgb(241, 241, 241);
   border-radius: 10px;
-  height: 60px;
+}
+
+.sortBox:nth-child(4) {
+  flex-grow: 1;
 }
 
 .sortBox p {
@@ -56,7 +62,7 @@
   justify-content: space-evenly;
   gap: 10px;
   align-items: center;
-  width: 300px;
+  width: 100%;
   background-color: transparent;
 }
 
@@ -68,18 +74,20 @@
   background-color: transparent;
   font-family: "Pretendard-Regular";
   font-weight: 500;
-  font-size: 1em;
+  font-size: 0.92em;
   color: rgb(97, 127, 192);
   border-top: none;
   border-left: none;
   border-right: none;
   border-bottom: 2px solid rgb(97, 127, 192);
-  padding: 2px 5px;
+  padding: 0px 5px;
   width: 90%;
 }
 .sortBox .searchBar input:focus {
   outline: none;
 }
+
+/*------------------------------리스트------------------------------*/
 
 .statusListTop h4 {
   font-family: "GmarketSansMedium";
@@ -158,4 +166,27 @@
 
 .pageController {
   margin-top: 3rem;
+}
+
+/* ----------------------------반응형------------------------------*/
+
+.statusListContainer .elseStatus {
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  grid-template-columns: minmax(168px, 180px) minmax(390px, 440px) minmax(
+      150px,
+      170px
+    );
+
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 15px;
+  row-gap: 10px;
+  /* justify-content: flex-start;
+  align-items: center; */
+  margin-bottom: 1.2rem;
+}
+
+.elseStatus .sortBox:nth-child(4) {
+  grid-column: 1/4;
 }

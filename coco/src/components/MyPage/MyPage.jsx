@@ -22,66 +22,68 @@ export const MyPage = () => {
     <>
       <Header />
       <div className="myPage">
-        <h2>
-          <span>
-            <IoInformationCircleOutline
-              size={30}
-              color="green"
-              style={{ paddingBottom: "3px", marginRight: "8px" }}
+        <div style={{ width: "1200px" }}>
+          <h2>
+            <span>
+              <IoInformationCircleOutline
+                size={30}
+                color="green"
+                style={{ paddingBottom: "3px", marginRight: "8px" }}
+              />
+            </span>
+            회원 정보
+          </h2>
+          <Suspense fallback={<Spinner />}>
+            <GetFirst
+              resource={fetchData(
+                `http://127.0.0.1:8000/myPageOne/${path.at(-1)}/`,
+                {
+                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                }
+              )}
             />
-          </span>
-          회원 정보
-        </h2>
-        <Suspense fallback={<Spinner />}>
-          <GetFirst
-            resource={fetchData(
-              `http://127.0.0.1:8000/myPageOne/${path.at(-1)}/`,
-              {
-                headers: { Authorization: "Bearer " + userInfo.access_token },
-              }
-            )}
-          />
-        </Suspense>
-        <h2>
-          <span>
-            <BsGraphUp
-              size={27}
-              color="green"
-              style={{ paddingBottom: "3px", marginRight: "13px" }}
+          </Suspense>
+          <h2>
+            <span>
+              <BsGraphUp
+                size={27}
+                color="green"
+                style={{ paddingBottom: "3px", marginRight: "13px" }}
+              />
+            </span>
+            내 역량
+          </h2>
+          <Suspense fallback={<Spinner />}>
+            <GetSecond
+              resource={fetchData(
+                `http://127.0.0.1:8000/myPageTwo/${path.at(-1)}/`,
+                {
+                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                }
+              )}
             />
-          </span>
-          내 역량
-        </h2>
-        <Suspense fallback={<Spinner />}>
-          <GetSecond
-            resource={fetchData(
-              `http://127.0.0.1:8000/myPageTwo/${path.at(-1)}/`,
-              {
-                headers: { Authorization: "Bearer " + userInfo.access_token },
-              }
-            )}
-          />
-        </Suspense>
-        <h2>
-          <span>
-            <IoClipboardOutline
-              size={29}
-              color="green"
-              style={{ paddingBottom: "3px", marginRight: "13px" }}
+          </Suspense>
+          <h2>
+            <span>
+              <IoClipboardOutline
+                size={29}
+                color="green"
+                style={{ paddingBottom: "3px", marginRight: "13px" }}
+              />
+            </span>
+            내 게시글
+          </h2>
+          <Suspense fallback={<Spinner />}>
+            <GetThird
+              resource={fetchData(
+                `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`,
+                {
+                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                }
+              )}
             />
-          </span>
-          내 게시글
-        </h2>
-        <Suspense fallback={<Spinner />}>
-          <GetThird
-            resource={fetchData(
-              `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`,
-              {
-                headers: { Authorization: "Bearer " + userInfo.access_token },
-              }
-            )}
-          />
-        </Suspense>
+          </Suspense>
+        </div>
       </div>
       <Footer />
     </>

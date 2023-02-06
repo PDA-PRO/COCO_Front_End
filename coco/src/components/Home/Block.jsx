@@ -14,11 +14,13 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useMediaQuery } from "react-responsive";
 
 export const Block = (props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
+  const Large = useMediaQuery({ minWidth: 1350 });
 
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
@@ -41,7 +43,7 @@ export const Block = (props) => {
         setBgColor("rgb(255, 248, 211)");
       } else if (e === 3) {
         setCategory("자유");
-        setBgColor("rgb(227, 249, 255)");
+        setBgColor("rgb(237, 251, 255)");
       }
     };
 
@@ -77,7 +79,7 @@ export const Block = (props) => {
 
   return (
     <div
-      className="Block"
+      className={Large ? "Block" : "elseBlock"}
       style={{ marginTop: userInfo.id === "" ? "10rem" : "5rem" }}
     >
       <div className="box1">

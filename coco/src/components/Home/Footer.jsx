@@ -7,8 +7,8 @@ import "./Home.css";
 
 export const Footer = () => {
   const isntShort = useMediaQuery({ minWidth: 1450 });
-  const isShort = useMediaQuery({ maxWidth: 1449.99999, minWidth: 1300 });
-  const isPhone = useMediaQuery({ maxWidth: 1299.99999 });
+  const isShort = useMediaQuery({ maxWidth: 1449.99999, minWidth: 1200 });
+  const isPhone = useMediaQuery({ maxWidth: 1199.99999 });
 
   const move = (e) => {
     switch (e) {

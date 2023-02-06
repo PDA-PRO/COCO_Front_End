@@ -1,7 +1,8 @@
 .myPage {
   display: flex;
   flex-flow: column nowrap;
-  padding: 5rem 18vw 5rem 18vw;
+  padding: 5rem 0;
+  align-items: center;
 }
 
 .myPage h2 {
@@ -18,7 +19,7 @@
   flex-flow: row wrap;
   align-items: center;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 20px 5vw;
   justify-content: space-between;
   margin: 20px 0 60px 0;
@@ -135,7 +136,7 @@
   display: flex;
   flex-flow: column nowrap;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 30px 5vw;
   margin: 20px 0 60px 0;
   gap: 30px;
@@ -231,35 +232,36 @@ tspan {
   display: flex;
   flex-flow: column nowrap;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 30px 5vw;
   margin: 20px 0 20px 0;
-  gap: 30px;
+  gap: 13px;
 }
 
 .mp-ThirdBox .myGuel {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 5fr 0.5fr;
+  grid-template-columns: 1fr 2fr 0.8fr 4fr 0.5fr;
   padding: 8px;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 12px;
   align-items: center;
 }
 
 .myGuel h4 {
   grid-column: 1/2;
   font-family: "Pretendard-Regular" !important;
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
+  color: gray;
 }
 
 .myGuel h3 {
   grid-column: 2/3;
   font-family: "Pretendard-Regular" !important;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin: 0 !important;
   text-align: center;
   cursor: pointer;
@@ -268,8 +270,8 @@ tspan {
 .myGuel h5 {
   grid-column: 3/4;
   font-family: "Pretendard-Regular" !important;
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
 }
@@ -279,7 +281,7 @@ tspan {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  gap: 40px;
+  gap: 35px;
   align-items: center;
 }
 

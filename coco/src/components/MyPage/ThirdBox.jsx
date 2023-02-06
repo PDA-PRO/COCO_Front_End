@@ -51,7 +51,7 @@ export const ThirdBox = (props) => {
         "Notice",
         "rgb(231, 255, 211)",
         <BsMegaphoneFill
-          size={22}
+          size={20}
           color="#00ff00"
           style={{ marginRight: "10px" }}
         />,
@@ -61,7 +61,7 @@ export const ThirdBox = (props) => {
         "Help",
         "rgb(255, 248, 211)",
         <BsQuestionLg
-          size={22}
+          size={20}
           color="rgb(255, 200, 101)"
           style={{ marginRight: "10px" }}
         />,
@@ -71,7 +71,7 @@ export const ThirdBox = (props) => {
         "자유",
         "skyblue",
         <BsFillLightbulbFill
-          size={22}
+          size={20}
           color="rgb(111, 101, 255)"
           style={{ marginRight: "10px" }}
         />,
@@ -90,7 +90,7 @@ export const ThirdBox = (props) => {
         return (
           <div className="myGuel" style={{ borderColor: category[1] }}>
             <h4>
-              <span>{category[2]}</span>[ {category[0]} ]
+              <span>{category[2]}</span>' {category[0]} '
             </h4>
             <h3 onClick={() => moveDetail(e.id)}>{e.title}</h3>
             <h5>{timeForToday(e.time)}</h5>

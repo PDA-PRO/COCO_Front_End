@@ -20,7 +20,7 @@ export const Block = (props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
-  const Large = useMediaQuery({ minWidth: 1350 });
+  const Large = useMediaQuery({ minWidth: 1000 });
 
   const moveBoard = (e) => {
     navigate(`/board/${e}`);

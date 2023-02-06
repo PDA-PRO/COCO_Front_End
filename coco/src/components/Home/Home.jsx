@@ -106,17 +106,3 @@ const GetNotice = ({ resource }) => {
     </div>
   );
 };
-
-//how to center a div?
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  }}
->
-  <h1> I am centered </h1>
-</div>;
-
-//Source: https://stackoverflow.com/questions/42125775

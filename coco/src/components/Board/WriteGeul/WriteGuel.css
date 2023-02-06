@@ -83,3 +83,13 @@
   font-weight: 580;
   padding: 13px;
 }
+
+.helpWrite{
+  display: flex;
+  flex-direction: row;
+  margin: 0 -12vw;
+}
+
+.helpWrite > div{
+  margin: 0 10px;
+}

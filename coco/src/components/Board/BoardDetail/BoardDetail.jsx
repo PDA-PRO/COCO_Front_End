@@ -21,19 +21,18 @@ import axios from "axios";
 import { useEffect } from "react";
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import CodeMirror from "@uiw/react-codemirror";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
   path = path.split("/");
-  const userInfo = useAppSelector((state) => state.loginState);
-  
 
   return (
     <>
       <Header />
       <Suspense fallback={<Spinner />}>
         <GetBoardDetail
-          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/${userInfo.id}`)}
+          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}`)}
           key={path.at(-1)}
         />
       </Suspense>
@@ -54,13 +53,21 @@ const GetBoardDetail = ({ resource }) => {
   const [isMe, setIsMe] = useState(false);
 
 
+  const likedBoard = () => {
+    for(let i=0;i<detail.is_board_liked.length;i++){
+      if(detail.is_board_liked[i] === userInfo.id){
+        setLike(true);
+        break;
+      }
+    }
+    return false;
+  }
+
   useEffect(() => {
     if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
-    if (detail.is_board_liked){
-      setLike(true);
-    }
+    likedBoard();
   }, [isMe]);
 
   const commentShoot = (e) => {
@@ -103,6 +110,7 @@ const GetBoardDetail = ({ resource }) => {
       setLike(true)
     } else {
       setLikeNum(likeNum - 1);
+      numLike -= 1;
       setLike(false)
     }
     axios
@@ -147,6 +155,7 @@ const GetBoardDetail = ({ resource }) => {
   };
 
   const CodeHere = () => {
+    const code = detail.code;
     return (
       <div className="BDCode">
         <div className="BD_codeTop">
@@ -156,9 +165,7 @@ const GetBoardDetail = ({ resource }) => {
         </div>
 
         <div className="BD_showCode">
-          <p>
-            n = int(input()) <br /> print(n+m)
-          </p>
+          <CodeMirror width="100%" value={code} readOnly={true} />
         </div>
         <p></p>
       </div>

@@ -24,7 +24,7 @@ export const Board = () => {
     <div className="board">
       <Header />
       <div className="boardContent">
-        <div style={{ width: "1200px" }}>
+        <div className="bcBody">
           <div className="boardHead">
             <div className="boardTitle" onClick={() => reload()}>
               <IoChatbubblesOutline size={50} color="navy" />

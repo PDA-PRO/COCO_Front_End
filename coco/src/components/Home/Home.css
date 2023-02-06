@@ -75,7 +75,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  width: clamp(850px, 90%, 1200px);
+  width: clamp(450px, 90%, 1200px);
 }
 
 .navbar .elseNavBody {

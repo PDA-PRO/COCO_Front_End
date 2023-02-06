@@ -25,40 +25,39 @@ export const WriteGeul = () => {
     <>
       <Header />
       <div className="writeGuel">
-        <div className="wG_Head">
-          <GoPencil size={30} />
-          <h2>글쓰기</h2>
-        </div>
-        <div className="wG_one">
-          <Form.Control
-            as="textarea"
-            id="wG_Title"
-            style={{ height: "58px" }}
-            placeholder="제목을 입력해주세요"
-            onChange={onTitleHandler}
-          />
+        <div className="WGBody">
+          <div className="wG_Head">
+            <GoPencil size={30} />
+            <h2>글쓰기</h2>
+          </div>
+          <div className="wG_one">
+            <Form.Control
+              as="textarea"
+              id="wG_Title"
+              style={{ height: "58px" }}
+              placeholder="제목을 입력해주세요"
+              onChange={onTitleHandler}
+            />
 
-          <FloatingLabel
-            id="selectCate"
-            controlId="floatingSelect"
-            label="게시글 카테고리 선택"
-          >
-            <Form.Select aria-label="F" onChange={onCategoryHandler}>
-              <option>Category</option>
-              <option value="2">HELP</option>
-              <option value="3">자유</option>
-            </Form.Select>
-          </FloatingLabel>
-        </div>
+            <FloatingLabel
+              id="selectCate"
+              controlId="floatingSelect"
+              label="게시글 카테고리 선택"
+            >
+              <Form.Select aria-label="F" onChange={onCategoryHandler}>
+                <option>Category</option>
+                <option value="2">HELP</option>
+                <option value="3">자유</option>
+              </Form.Select>
+            </FloatingLabel>
+          </div>
 
-        <div className="wG_two">
-          {cate == 2 ? (
-            <Help title={title}/>
-          ) : (
-            <Free title={title}/>
-          )}
+          <div className="wG_two">
+            {cate == 2 ? <Help title={title} /> : <Free title={title} />}
+          </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

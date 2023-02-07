@@ -26,6 +26,7 @@ export const Home = () => {
   const Laptop = useMediaQuery({ maxWidth: 1199.99999, minWidth: 992 });
   const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
   const Phone = useMediaQuery({ maxWidth: 767.99999 });
+  const path = window.location.pathname.split("/");
 
   return (
     <div>
@@ -53,8 +54,17 @@ export const Home = () => {
                 <p>전체 50등</p>
               </div>
 
-              <HomeGraph />
-              <DiffGraph />
+              <Suspense fallback={<Spinner />}>
+                <MyGraph resource={fetchData(
+                    `http://127.0.0.1:8000/my_status/${userInfo.id}/`,
+                    {
+                      headers: {
+                        Authorization: "Bearer " + userInfo.access_token,
+                      },
+                    }
+                  )} />
+              </Suspense>
+
             </div>
           )}
 
@@ -106,6 +116,16 @@ const GetNotice = ({ resource }) => {
     </div>
   );
 };
+
+const MyGraph = ({resource}) => {
+  const detail = resource.read()
+  return (
+    <>
+      <HomeGraph growth={detail.growth}/>
+      <DiffGraph diff={detail.diff}/>
+    </>
+  );
+}
 
 //how to center a div?
 <div

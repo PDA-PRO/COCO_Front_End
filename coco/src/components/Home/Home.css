@@ -687,9 +687,7 @@
 .home-body .ad-box {
   margin-top: 8rem;
   margin-bottom: 8rem;
-  width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  width: 97%;
 }
 
 .home .notice {
@@ -738,49 +736,23 @@
 .footer {
   display: flex;
   flex-flow: column wrap;
-  background-color: #949292;
+
   padding-top: 3rem;
-  padding-left: 18vw;
+  align-items: center;
   padding-bottom: 2rem;
-  color: rgb(218, 218, 218);
+  color: rgb(165, 165, 165);
 }
 
-.footer2 {
+.footerBody {
+  width: clamp(750px, 90%, 1150px);
   display: flex;
   flex-flow: column wrap;
-  background-color: #949292;
-  padding-top: 5rem;
-  padding-left: 3vw;
-  padding-bottom: 3rem;
-  color: rgb(218, 218, 218);
-}
-
-.footer3 {
-  display: flex;
-  flex-flow: column wrap;
-  background-color: #949292;
-  padding-top: 2rem;
-  padding-left: 10vw;
-  padding-bottom: 1rem;
-  color: rgb(218, 218, 218);
+  gap: 15px;
 }
 
 .footer h2 {
   font-family: "GmarketSansMedium";
   font-size: 1.5rem;
-  color: rgb(80, 70, 70);
-}
-
-.footer2 h2 {
-  font-family: "GmarketSansMedium";
-  font-size: 1.5rem;
-  color: rgb(80, 70, 70);
-}
-
-.footer3 h2 {
-  font-family: "GmarketSansMedium";
-  font-size: 1.3rem;
-  color: rgb(80, 70, 70);
 }
 
 .pageIcons {
@@ -790,14 +762,9 @@
   display: flex;
   flex-flow: row nowrap;
   margin-bottom: 1rem;
-  width: 240px;
+  width: 150px;
   align-items: baseline;
   justify-content: space-between;
-  cursor: pointer;
-}
-
-.pageIcons .icons {
-  margin: 0 3rem 0 0;
   cursor: pointer;
 }
 
@@ -805,7 +772,6 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  width: 55%;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
@@ -818,51 +784,31 @@
   display: flex;
   flex-flow: row wrap;
   font-family: "Pretendard-Regular";
-  font-size: 1.1rem;
-}
-
-.txt2 {
-  display: flex;
-  flex-flow: column wrap;
-  font-family: "Pretendard-Regular";
-  font-size: 0.8rem;
+  font-size: 1em;
 }
 
 .txtz2 {
   display: flex;
   flex-flow: row wrap;
   font-family: "Pretendard-Regular";
-  font-size: 1rem;
+  font-size: 0.9em;
 }
 
 .txtz2 p {
   margin-right: 5rem;
-  font-family: "Pretendard-Regular";
   cursor: pointer;
 }
 
-.txts2 p {
-  font-family: "Pretendard-Regular";
-  font-weight: 500;
+@media screen and (max-width: 870px) {
+  .txtz2 p {
+    margin-right: 3rem;
+  }
 }
+
 .txts .TT {
   font-family: "GmarketSansMedium";
   font-size: 1.2rem;
   margin-right: 1rem;
-}
-
-.txts2 .TT {
-  font-family: "GmarketSansMedium";
-  font-size: 1rem;
-  margin-right: 1rem;
-}
-
-.txts2 .div1 {
-  margin-bottom: 2rem !important;
-}
-
-.txts2 .div2 {
-  margin-bottom: 2rem !important;
 }
 
 .div1 {

@@ -10,7 +10,7 @@ import { SignUp } from "./SignUp";
 export const Login = () => {
   return (
     <div>
-      <Header />
+      <Header props={1} />
       <div className="loginWhole">
         <div className="loginContainer">
           <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
@@ -24,7 +24,7 @@ export const Login = () => {
         </div>
         <div className="loginImg"></div>
       </div>
-      <Footer />
+      <Footer props={1} />
     </div>
   );
 };

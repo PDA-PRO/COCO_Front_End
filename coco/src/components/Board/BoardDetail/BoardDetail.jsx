@@ -11,7 +11,7 @@ import {
 } from "react-icons/bs";
 import { SlPencil } from "react-icons/sl";
 import { VscCommentDiscussion } from "react-icons/vsc";
-import Spinner from "react-bootstrap/Spinner";
+
 import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
@@ -21,6 +21,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../../Loader/Loader";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
@@ -30,7 +31,7 @@ export const BoardDetail = () => {
   return (
     <>
       <Header />
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Loader />}>
         <GetBoardDetail
           resource={fetchData(
             `http://127.0.0.1:8000/board/${path.at(-1)}/${userInfo.id}`

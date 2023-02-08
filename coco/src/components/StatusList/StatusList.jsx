@@ -12,11 +12,13 @@ import { useEffect } from "react";
 import { GoSearch } from "react-icons/go";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
+import { useMediaQuery } from "react-responsive";
 
 export const StatusList = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [option, setOption] = useState([false, -1, false]);
   const [taskStatus, setTaskStatus] = useState([]);
+  const Large = useMediaQuery({ minWidth: 1135 });
 
   const reload = (e) => {
     window.location.reload();
@@ -79,12 +81,20 @@ export const StatusList = () => {
     <div>
       <Header />
       <div className="statusListContainer">
-        <div style={{ width: "1200px" }}>
-          <div className="statusListTop" onClick={() => reload()}>
-            <img src="./image/score.png" height="80px" alt="" />
-            <h4>COCO SCORE BOARD</h4>
+        <div className="parentSLC">
+          <div className="statusListTop">
+            <img
+              src="./image/score.png"
+              height="80px"
+              alt=""
+              onClick={() => reload()}
+              style={{ cursor: "pointer" }}
+            />
+            <h4 onClick={() => reload()} style={{ cursor: "pointer" }}>
+              COCO SCORE BOARD
+            </h4>
           </div>
-          <div className="statusSort">
+          <div className={Large ? "statusSort" : "elseStatus"}>
             <div className="sortBox">
               <p>내 문제만 보기</p>
               <Form.Check type="checkbox" onChange={() => onlyMyHandler()} />

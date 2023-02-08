@@ -2,6 +2,7 @@ import "./MyPage.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import {
+  ResponsiveContainer,
   LineChart,
   Line,
   BarChart,
@@ -12,7 +13,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
 } from "recharts";
 
 export const SecondBox = (props) => {
@@ -101,60 +101,62 @@ export const SecondBox = (props) => {
         </div>
       </div>
 
-      <div className="secBox-col">
+      <div className="secBox-col" style={{ width: "100%" }}>
         <h3> - 월별 푼 문제 수</h3>
-
-        <BarChart
-          width={1000}
-          height={400}
-          data={graphData[0]}
-          margin={{
-            top: 30,
-            right: 20,
-            left: 20,
-            bottom: 5,
-          }}
-          barGap={8}
-          barCategoryGap={20}
-        >
-          <CartesianGrid strokeDasharray="1 1" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="총 제출 수" fill="#8884d8" />
-          <Bar dataKey="맞은 문제" fill="#82ca9d" />
-        </BarChart>
+        <ResponsiveContainer width="100%">
+          <BarChart
+            width={1000}
+            height={400}
+            data={graphData[0]}
+            margin={{
+              top: 30,
+              right: 20,
+              left: 0,
+              bottom: 5,
+            }}
+            barGap={8}
+            barCategoryGap={20}
+          >
+            <CartesianGrid strokeDasharray="1 1" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="총 제출 수" fill="#8884d8" />
+            <Bar dataKey="맞은 문제" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
-      <div className="secBox-col">
+      <div className="secBox-col" style={{ width: "100%" }}>
         <h3>
           - 내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
         </h3>
-
-        <LineChart
-          width={1000}
-          height={400}
-          data={graphData[1]}
-          margin={{
-            top: 30,
-            right: 20,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="실력"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
+        <ResponsiveContainer width="100%">
+          <LineChart
+            width={1000}
+            height={400}
+            data={graphData[1]}
+            margin={{
+              top: 30,
+              right: 20,
+              left: 0,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="실력"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

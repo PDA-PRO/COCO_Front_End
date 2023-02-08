@@ -25,18 +25,19 @@ export const WriteGeul = () => {
     <>
       <Header />
       <div className="writeGuel">
-        <div className="wG_Head">
-          <GoPencil size={30} />
-          <h2>글쓰기</h2>
-        </div>
-        <div className="wG_one">
-          <Form.Control
-            as="textarea"
-            id="wG_Title"
-            style={{ height: "58px" }}
-            placeholder="제목을 입력해주세요"
-            onChange={onTitleHandler}
-          />
+        <div className="WGBody">
+          <div className="wG_Head">
+            <GoPencil size={30} />
+            <h2>글쓰기</h2>
+          </div>
+          <div className="wG_one">
+            <Form.Control
+              as="textarea"
+              id="wG_Title"
+              style={{ height: "58px" }}
+              placeholder="제목을 입력해주세요"
+              onChange={onTitleHandler}
+            />
 
           <FloatingLabel
             id="selectCate"
@@ -59,8 +60,10 @@ export const WriteGeul = () => {
           ) : (
             <Help title={title} />
           )}
+
         </div>
       </div>
+
       <Footer />
     </>
   );

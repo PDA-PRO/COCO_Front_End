@@ -13,6 +13,10 @@
   padding-left: 2vw;
 }
 
+.myPageBody {
+  width: clamp(750px, 90%, 1200px);
+}
+
 /*---------------------------------FirstBox-------------------------------*/
 .mp-infoBox {
   display: flex;
@@ -130,6 +134,44 @@
   color: gray;
 }
 
+/* ------------------------------------------ 1st box 반응형 ------------------------------------- */
+
+@media screen and (max-width: 992px) {
+  .picBox img {
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+  }
+
+  .picSelect label {
+    cursor: pointer;
+    font-family: "Pretendard-Regular";
+    font-weight: 600;
+    font-size: 0.9em;
+    border: 2px solid skyblue;
+    border-radius: 20px;
+    padding: 3px;
+    width: 130px;
+    text-align: center;
+  }
+
+  .levelField h3 {
+    font-size: 2rem;
+  }
+
+  .levelField p {
+    font-weight: 500;
+    font-size: 0.9em;
+  }
+
+  .txtInputBox .mb-3 {
+    width: 250px !important;
+    font-family: "Pretendard-Regular";
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}
+
 /*-------------------------SECBOX-------------------------------*/
 
 .mp-secBox {
@@ -155,6 +197,11 @@
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1.5rem;
+}
+@media screen and (max-width: 992px) {
+  .secBox-row h3 {
+    font-size: 1.2rem;
+  }
 }
 
 .mp-secBox .secBox-col {

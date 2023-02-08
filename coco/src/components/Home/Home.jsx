@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import { HomeGraph } from "./HomeGraph";
 import { DiffGraph } from "./DiffGraph";
 import { useMediaQuery } from "react-responsive";
+import { Loader } from "../Loader/Loader";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -68,7 +69,7 @@ export const Home = () => {
             </div>
           )}
 
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loader />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
           </Suspense>
 
@@ -83,7 +84,7 @@ export const Home = () => {
           </div>
 
           <div className="notice">
-            <Suspense fallback={<Spinner />}>
+            <Suspense fallback={<Loader />}>
               <GetNotice
                 resource={fetchData("http://127.0.0.1:8000/manage/notice")}
               />
@@ -117,6 +118,7 @@ const GetNotice = ({ resource }) => {
   );
 };
 
+
 const MyGraph = ({resource}) => {
   const detail = resource.read()
   return (
@@ -127,16 +129,4 @@ const MyGraph = ({resource}) => {
   );
 }
 
-//how to center a div?
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  }}
->
-  <h1> I am centered </h1>
-</div>;
 
-//Source: https://stackoverflow.com/questions/42125775

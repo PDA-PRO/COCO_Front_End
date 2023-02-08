@@ -1,8 +1,11 @@
 .writeGuel {
   display: flex;
   flex-flow: column nowrap;
-  padding-left: 18vw;
-  padding-right: 18vw;
+  align-items: center;
+}
+
+.writeGuel .WGBody {
+  width: clamp(650px, 90%, 1150px);
 }
 
 .writeGuel .wG_Head {

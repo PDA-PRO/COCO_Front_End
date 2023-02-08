@@ -8,7 +8,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
 
-export const Header = () => {
+export const Header = (props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
@@ -61,7 +61,18 @@ export const Header = () => {
   };
 
   return (
-    <div className="navbar">
+    <div
+      className="navbar"
+      style={
+        props.props == 1
+          ? {
+              backgroundColor: "rgb(199, 199, 199)",
+              color: "black",
+              border: "none",
+            }
+          : { backgroundColor: "#fff" }
+      }
+    >
       {Large && (
         <div className="navBody">
           <div className="leftDiv">

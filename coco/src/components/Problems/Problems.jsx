@@ -9,6 +9,7 @@ import { GoSearch } from "react-icons/go";
 import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
+import { useMediaQuery } from "react-responsive";
 
 import {
   TiBatteryCharge,
@@ -24,6 +25,7 @@ import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 
 export const Problems = () => {
+  const Large = useMediaQuery({ minWidth: 1100 });
   const reload = (e) => {
     window.location.reload();
   };
@@ -52,7 +54,7 @@ export const Problems = () => {
     <div>
       <Header />
       <div className="problemsContainer">
-        <div style={{ width: "1200px" }}>
+        <div className={Large ? "parentPC" : "elseParentPC"}>
           <div className="proTop" onClick={() => reload()}>
             <img src="./image/co.png" height="80px" alt="" />
             <h4>COCO JUDGE</h4>

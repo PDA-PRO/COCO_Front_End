@@ -15,7 +15,7 @@
 
 /* 탭 메뉴 상단 글씨 */
 .nav-link {
-  color: black !important;
+  color: rgb(0, 0, 0) !important;
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1.1em;

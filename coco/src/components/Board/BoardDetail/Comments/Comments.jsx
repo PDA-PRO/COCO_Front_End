@@ -16,13 +16,21 @@ export const Comments = (props) => {
   const [likeNum, setLikeNum] = useState(props.props.likes);
   var numLike = props.props.likes;
 
+  const likedComment = () => {
+    for(let i=0;i<props.is_liked.length;i++){
+      if(props.is_liked[i][0] === userInfo.id && props.is_liked[i][1] === props.props.id){
+        setLike(true);
+        break;
+      }
+    }
+    return;
+  }
+
   useEffect(() => {
     if (props.props.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
-    if (props.is_liked[0] && props.props.id === props.is_liked[1]){
-      setLike(true)
-    }
+    likedComment();
   }, [isMe]);
 
   function timeForToday(value) {
@@ -54,10 +62,11 @@ export const Comments = (props) => {
     if (!like) {
       setLikeNum(likeNum + 1);
       numLike += 1;
-      setLike(true)
+      setLike(true);
     } else {
       setLikeNum(likeNum - 1);
-      setLike(false)
+      numLike -= 1;
+      setLike(false);
     }
     axios
       .post(

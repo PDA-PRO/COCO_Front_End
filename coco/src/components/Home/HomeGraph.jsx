@@ -14,67 +14,31 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export const HomeGraph = () => {
-  let now = new Date();
-  let todayMonth = now.getMonth();
+export const HomeGraph = ({ growth }) => {
+  const getGrowth = () => {
+    //맨 마지막 월 찾고 거기서 부터 계속 -1해가면서 저장
+    let lastMonth = growth[0][0];
+    lastMonth = lastMonth[2] + lastMonth[3];
+    var lineResult = [];
 
-  const returnMonth = (e) => {
-    const month = [
-      "Jan.",
-      "Feb.",
-      "Mar.",
-      "Apr.",
-      "May.",
-      "Jun.",
-      "Jul.",
-      "Aug.",
-      "Sept.",
-      "Oct.",
-      "Nov.",
-      "Dec.",
-    ];
-
-    if (e >= 0 && e <= 11) {
-      return month[e];
-    } else {
-      let val = e + 12;
-      return month[val];
+    for(let i=0;i<growth.length;i++){
+      lineResult.push({
+        name: month.at(lastMonth-1-i),
+        "COCO point": growth[i][1],
+      })
     }
-  };
 
-  const data = [
-    {
-      name: returnMonth(todayMonth - 5),
-      "COCO point": 150,
-    },
-    {
-      name: returnMonth(todayMonth - 4),
-      "COCO point": 180,
-    },
-    {
-      name: returnMonth(todayMonth - 3),
-      "COCO point": 210,
-    },
-    {
-      name: returnMonth(todayMonth - 2),
-      "COCO point": 224,
-    },
-    {
-      name: returnMonth(todayMonth - 1),
-      "COCO point": 250,
-    },
-    {
-      name: returnMonth(todayMonth),
-      "COCO point": 330,
-    },
-  ];
+    lineResult.reverse();
+    
+    return lineResult;
+  };
 
   return (
     <div className="lineG" style={{ width: "100%" }}>
       <p>내 성장 그래프</p>
       <ResponsiveContainer width="90%" height="100%">
         <LineChart
-          data={data}
+          data={getGrowth()}
           margin={{ top: 3, right: 0, left: 0, bottom: 5 }}
         >
           <XAxis dataKey="name" />
@@ -93,3 +57,18 @@ export const HomeGraph = () => {
     </div>
   );
 };
+
+const month = [
+  "Jan.",
+  "Feb.",
+  "Mar.",
+  "Apr.",
+  "May.",
+  "Jun.",
+  "Jul.",
+  "Aug.",
+  "Sep.",
+  "Oct.",
+  "Nov.",
+  "Dec.",
+];

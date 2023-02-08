@@ -350,3 +350,35 @@ tspan {
 .myGuel #delGuel {
   cursor: pointer;
 }
+
+
+/*-------------------modify_board---------------------------*/
+.modify_board{
+  display: flex;
+  flex-flow: column nowrap;
+  padding-left: 18vw;
+  padding-right: 18vw;
+}
+
+.modify_head{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  margin-top: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid lightgray;
+  font-family: "Pretendard-Regular";
+}
+
+.modify_title{
+  margin: 2vw 0 2vw 0;
+  width: 100%;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.2em;
+  border-radius: 15px;
+}
+
+.modify_board_btn{
+  margin: 2vw 5vw 4vw 5vw;
+}

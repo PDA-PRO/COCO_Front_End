@@ -20,7 +20,8 @@ import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
+import draftToHtml from "draftjs-to-html";
+import { convertFromRaw } from "draft-js";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -43,7 +44,6 @@ const GetDetail = ({ resource }) => {
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(1);
-
   //submit이후 결과창 이동
   const goToResult = (e) => {
     console.log(e);
@@ -122,15 +122,12 @@ const GetDetail = ({ resource }) => {
                 <BsClipboardCheck size={25} />
                 <h2>문제 설명</h2>
               </div>
-              <p className="PBD-txt">{detail.mainDesc}</p>
-              {detail.img.map((img_name) => {
-                const srcUrl =
-                  "http://localhost:8000/image/download/3/" +
-                  detail.img +
-                  "?id=" +
-                  detail.id;
-                return <img className="PBD-img" src={srcUrl} />;
-              })}
+              <div
+                className="PBD-txt"
+                dangerouslySetInnerHTML={{
+                  __html: draftToHtml(JSON.parse(detail.mainDesc)),
+                }}
+              />
             </div>
             <div className="PBD-pbTxt">
               <div className="PBD-pbTitle">

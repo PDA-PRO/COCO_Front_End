@@ -79,8 +79,6 @@ const Menu = (props) => {
     });
   });
 
-  console.log(vis);
-
   const returnVis = (e) => {
     if (e === true) return "visible";
     else {

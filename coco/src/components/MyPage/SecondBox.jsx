@@ -16,6 +16,7 @@ import {
 } from "recharts";
 
 export const SecondBox = (props) => {
+  console.log(props.props);
   const navigate = useNavigate();
 
   const movePage = (id) => {
@@ -26,14 +27,20 @@ export const SecondBox = (props) => {
     var submitData = [];
     var solvedData = [];
     var growthData = [];
-    let lastMonth = props.props.month_submit[1][0];
+    let lastMonth = props.props.month_submit[0][0];
+    if(lastMonth === "0000"){
+      let tmp = new Date();
+      lastMonth = tmp.getMonth()+1;
+    }else{
+      lastMonth = lastMonth[2] + lastMonth[3];
+    }
+
 
     for (let i = 0; i < props.props.month_submit.length; i++) {
       //월별 제출수
       let submit_mon = props.props.month_submit[i][0];
       let month = getMonth(submit_mon, lastMonth);
       submitData.push([month, props.props.month_submit[i][1]]);
-      lastMonth = props.props.month_submit[i][0];
 
       //월별 정답 수
       let flag = true;
@@ -59,17 +66,20 @@ export const SecondBox = (props) => {
 
     var barResult = [];
     var lineResult = [];
-    for (let i = submitData.length - 1; i >= 0; i--) {
+    for (let i = 0; i <  submitData.length; i++) {
       barResult.push({
-        name: submitData[i][0],
+        name: month.at(lastMonth-1-i),
         "총 제출 수": submitData[i][1],
         "맞은 문제": solvedData[i][1],
       });
       lineResult.push({
-        name: submitData[i][0],
+        name: month.at(lastMonth-1-i),
         실력: growthData[i],
       });
     }
+
+    barResult.reverse();
+    lineResult.reverse();
 
     return [barResult, lineResult];
   };
@@ -161,6 +171,21 @@ export const SecondBox = (props) => {
     </div>
   );
 };
+
+const month = [
+  "Jan.",
+  "Feb.",
+  "Mar.",
+  "Apr.",
+  "May.",
+  "Jun.",
+  "Jul.",
+  "Aug.",
+  "Sep.",
+  "Oct.",
+  "Nov.",
+  "Dec.",
+];
 
 const getMonth = (date, last) => {
   const thisMonth = parseInt(date[2] + date[3]);

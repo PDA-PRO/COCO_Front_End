@@ -7,11 +7,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
+import { useMediaQuery } from "react-responsive";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const userInfo = useAppSelector((state) => state.loginState);
+  const Large = useMediaQuery({ minWidth: 1250 });
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -34,7 +36,7 @@ export const FastWrite = () => {
             user_id: userInfo.id,
             title: title,
             context: context,
-            category: 3
+            category: 3,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -65,7 +67,9 @@ export const FastWrite = () => {
         as="textarea"
         id="txtTitle"
         style={{ height: "40px" }}
-        placeholder="제목을 입력해주세요 (15자 이내)"
+        placeholder={
+          Large ? "제목을 입력해주세요 (15자 이내)" : "제목을 입력해주세요"
+        }
         onChange={onTitleHandler}
       />
 
@@ -83,7 +87,11 @@ export const FastWrite = () => {
       </Button>
       <div className="FWFooter">
         <BsFillExclamationTriangleFill size={15} color="gray" />
-        <p>빠른 글쓰기는 '자유' 로 고정됩니다.</p>
+        <p>
+          {Large
+            ? "빠른 글쓰기는 '자유' 로 고정됩니다."
+            : "고정 카테고리 : '자유'"}
+        </p>
         <BsFillExclamationTriangleFill size={15} color="gray" />
       </div>
     </div>

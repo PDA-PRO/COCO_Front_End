@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import {
   TiBatteryCharge,
   TiBatteryLow,
@@ -7,7 +8,20 @@ import {
   TiBatteryFull,
 } from "react-icons/ti";
 
-export const DiffGraph = () => {
+export const DiffGraph = ({ diff }) => {
+  const [data, setData] = useState([0, 0, 0, 0, 0]);
+  useEffect(() => {
+    let sum = diff["1"] + diff["2"] + diff["3"] + diff["4"] + diff["5"];
+    if (sum !== 0) {
+      setData([
+        Math.round((diff["1"] / sum) * 100, 0),
+        Math.round((diff["2"] / sum) * 100, 0),
+        Math.round((diff["3"] / sum) * 100, 0),
+        Math.round((diff["4"] / sum) * 100, 0),
+        Math.round((diff["5"] / sum) * 100, 0),
+      ]);
+    }
+  }, []);
   return (
     <div className="diffGraph">
       <h3>난이도 별 학습률</h3>
@@ -19,9 +33,9 @@ export const DiffGraph = () => {
             style={{ marginBottom: "3px" }}
           />
           <div className="barOrigin">
-            <div className="barContent" style={{ width: "10%" }}></div>
+            <div className="barContent" style={{ width: `${data[4]}%` }}></div>
           </div>
-          <p>10%</p>
+          <p>{data[4]}%</p>
         </div>
         <div className="det">
           <TiBatteryFull
@@ -30,9 +44,9 @@ export const DiffGraph = () => {
             style={{ marginBottom: "3px" }}
           />
           <div className="barOrigin">
-            <div className="barContent" style={{ width: "20%" }}></div>
+            <div className="barContent" style={{ width: `${data[3]}%` }}></div>
           </div>
-          <p>20%</p>
+          <p>{data[3]}%</p>
         </div>
         <div className="det">
           <TiBatteryHigh
@@ -41,9 +55,9 @@ export const DiffGraph = () => {
             style={{ marginBottom: "3px" }}
           />
           <div className="barOrigin">
-            <div className="barContent" style={{ width: "10%" }}></div>
+            <div className="barContent" style={{ width: `${data[2]}%` }}></div>
           </div>
-          <p>10%</p>
+          <p>{data[2]}%</p>
         </div>
         <div className="det">
           <TiBatteryMid
@@ -52,9 +66,9 @@ export const DiffGraph = () => {
             style={{ marginBottom: "3px" }}
           />
           <div className="barOrigin">
-            <div className="barContent" style={{ width: "25%" }}></div>
+            <div className="barContent" style={{ width: `${data[1]}%` }}></div>
           </div>
-          <p>25%</p>
+          <p>{data[1]}%</p>
         </div>
         <div className="det">
           <TiBatteryLow
@@ -63,9 +77,9 @@ export const DiffGraph = () => {
             style={{ marginBottom: "3px" }}
           />
           <div className="barOrigin">
-            <div className="barContent" style={{ width: "35%" }}></div>
+            <div className="barContent" style={{ width: `${data[0]}%` }}></div>
           </div>
-          <p>35%</p>
+          <p>{data[0]}%</p>
         </div>
       </div>
     </div>

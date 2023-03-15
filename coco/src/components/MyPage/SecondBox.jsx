@@ -2,6 +2,7 @@ import "./MyPage.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import {
+  ResponsiveContainer,
   LineChart,
   Line,
   BarChart,
@@ -12,10 +13,10 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
 } from "recharts";
 
 export const SecondBox = (props) => {
+  console.log(props.props);
   const navigate = useNavigate();
 
   const movePage = (id) => {
@@ -26,14 +27,20 @@ export const SecondBox = (props) => {
     var submitData = [];
     var solvedData = [];
     var growthData = [];
-    let lastMonth = props.props.month_submit[1][0];
+    let lastMonth = props.props.month_submit[0][0];
+    if(lastMonth === "0000"){
+      let tmp = new Date();
+      lastMonth = tmp.getMonth()+1;
+    }else{
+      lastMonth = lastMonth[2] + lastMonth[3];
+    }
+
 
     for (let i = 0; i < props.props.month_submit.length; i++) {
       //월별 제출수
       let submit_mon = props.props.month_submit[i][0];
       let month = getMonth(submit_mon, lastMonth);
       submitData.push([month, props.props.month_submit[i][1]]);
-      lastMonth = props.props.month_submit[i][0];
 
       //월별 정답 수
       let flag = true;
@@ -59,17 +66,20 @@ export const SecondBox = (props) => {
 
     var barResult = [];
     var lineResult = [];
-    for (let i = submitData.length - 1; i >= 0; i--) {
+    for (let i = 0; i <  submitData.length; i++) {
       barResult.push({
-        name: submitData[i][0],
+        name: month.at(lastMonth-1-i),
         "총 제출 수": submitData[i][1],
         "맞은 문제": solvedData[i][1],
       });
       lineResult.push({
-        name: submitData[i][0],
+        name: month.at(lastMonth-1-i),
         실력: growthData[i],
       });
     }
+
+    barResult.reverse();
+    lineResult.reverse();
 
     return [barResult, lineResult];
   };
@@ -101,64 +111,81 @@ export const SecondBox = (props) => {
         </div>
       </div>
 
-      <div className="secBox-col">
+      <div className="secBox-col" style={{ width: "100%" }}>
         <h3> - 월별 푼 문제 수</h3>
-
-        <BarChart
-          width={1000}
-          height={400}
-          data={graphData[0]}
-          margin={{
-            top: 30,
-            right: 20,
-            left: 20,
-            bottom: 5,
-          }}
-          barGap={8}
-          barCategoryGap={20}
-        >
-          <CartesianGrid strokeDasharray="1 1" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="총 제출 수" fill="#8884d8" />
-          <Bar dataKey="맞은 문제" fill="#82ca9d" />
-        </BarChart>
+        <ResponsiveContainer width="100%">
+          <BarChart
+            width={1000}
+            height={400}
+            data={graphData[0]}
+            margin={{
+              top: 30,
+              right: 20,
+              left: 0,
+              bottom: 5,
+            }}
+            barGap={8}
+            barCategoryGap={20}
+          >
+            <CartesianGrid strokeDasharray="1 1" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="총 제출 수" fill="#8884d8" />
+            <Bar dataKey="맞은 문제" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
-      <div className="secBox-col">
+      <div className="secBox-col" style={{ width: "100%" }}>
         <h3>
           - 내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
         </h3>
-
-        <LineChart
-          width={1000}
-          height={400}
-          data={graphData[1]}
-          margin={{
-            top: 30,
-            right: 20,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="실력"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
+        <ResponsiveContainer width="100%">
+          <LineChart
+            width={1000}
+            height={400}
+            data={graphData[1]}
+            margin={{
+              top: 30,
+              right: 20,
+              left: 0,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="실력"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
 };
+
+const month = [
+  "Jan.",
+  "Feb.",
+  "Mar.",
+  "Apr.",
+  "May.",
+  "Jun.",
+  "Jul.",
+  "Aug.",
+  "Sep.",
+  "Oct.",
+  "Nov.",
+  "Dec.",
+];
 
 const getMonth = (date, last) => {
   const thisMonth = parseInt(date[2] + date[3]);

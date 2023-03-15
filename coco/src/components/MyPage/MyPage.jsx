@@ -22,7 +22,7 @@ export const MyPage = () => {
     <>
       <Header />
       <div className="myPage">
-        <div style={{ width: "1200px" }}>
+        <div className="myPageBody">
           <h2>
             <span>
               <IoInformationCircleOutline

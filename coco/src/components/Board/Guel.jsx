@@ -80,33 +80,35 @@ export const Guel = (props) => {
         moveDetail(props.props.id);
       }}
     >
-      <div className="un">
-        <p>{category}</p>
-        {cateIcon}
-      </div>
-
-      <div className="guelTitle">
-        <h2>{props.props.title}</h2>
-      </div>
-
-      <div className="un">
-        <h4>{props.props.user_id}</h4>
-        <h4>{date}</h4>
-      </div>
-
-      <div className="un">
-        <div className="un2">
-          <BsFillEyeFill color="rgb(112, 112, 112)" />
-          <p>{props.props.views}</p>
-          <BsChatSquareTextFill
-            color="rgb(112, 112, 112)"
-            style={{ marginLeft: "10px" }}
-          />
-          <p>{props.props.comments}</p>
+      <div className="GeulInner">
+        <div className="un">
+          <p>{category}</p>
+          {cateIcon}
         </div>
-        <div className="un2">
-          <BsHeartFill color="red" />
-          <p>{props.props.likes}</p>
+
+        <div className="guelTitle">
+          <h2>{props.props.title}</h2>
+        </div>
+
+        <div className="un">
+          <h4>{props.props.user_id}</h4>
+          <h4>{date}</h4>
+        </div>
+
+        <div className="un">
+          <div className="un2">
+            <BsFillEyeFill color="rgb(112, 112, 112)" />
+            <p>{props.props.views}</p>
+            <BsChatSquareTextFill
+              color="rgb(112, 112, 112)"
+              style={{ marginLeft: "10px" }}
+            />
+            <p>{props.props.comments}</p>
+          </div>
+          <div className="un2">
+            <BsHeartFill color="red" />
+            <p>{props.props.likes}</p>
+          </div>
         </div>
       </div>
     </div>

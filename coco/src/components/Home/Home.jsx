@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import { HomeGraph } from "./HomeGraph";
 import { DiffGraph } from "./DiffGraph";
 import { useMediaQuery } from "react-responsive";
+import { Loader } from "../Loader/Loader";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export const Home = () => {
   const Laptop = useMediaQuery({ maxWidth: 1199.99999, minWidth: 992 });
   const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
   const Phone = useMediaQuery({ maxWidth: 767.99999 });
+  const path = window.location.pathname.split("/");
 
   return (
     <div>
@@ -53,12 +55,21 @@ export const Home = () => {
                 <p>전체 50등</p>
               </div>
 
-              <HomeGraph />
-              <DiffGraph />
+              <Suspense fallback={<Spinner />}>
+                <MyGraph resource={fetchData(
+                    `http://127.0.0.1:8000/my_status/${userInfo.id}/`,
+                    {
+                      headers: {
+                        Authorization: "Bearer " + userInfo.access_token,
+                      },
+                    }
+                  )} />
+              </Suspense>
+
             </div>
           )}
 
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loader />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
           </Suspense>
 
@@ -73,7 +84,7 @@ export const Home = () => {
           </div>
 
           <div className="notice">
-            <Suspense fallback={<Spinner />}>
+            <Suspense fallback={<Loader />}>
               <GetNotice
                 resource={fetchData("http://127.0.0.1:8000/manage/notice")}
               />
@@ -107,16 +118,15 @@ const GetNotice = ({ resource }) => {
   );
 };
 
-//how to center a div?
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  }}
->
-  <h1> I am centered </h1>
-</div>;
 
-//Source: https://stackoverflow.com/questions/42125775
+const MyGraph = ({resource}) => {
+  const detail = resource.read()
+  return (
+    <>
+      <HomeGraph growth={detail.growth}/>
+      <DiffGraph diff={detail.diff}/>
+    </>
+  );
+}
+
+

@@ -287,7 +287,7 @@ tspan {
 
 .mp-ThirdBox .myGuel {
   display: grid;
-  grid-template-columns: 1fr 2fr 0.8fr 4fr 0.5fr;
+  grid-template-columns: 1fr 2fr 0.8fr 4fr 0.5fr 0.5fr;
   padding: 8px;
   border: 2px solid lightgray;
   border-radius: 12px;
@@ -351,16 +351,15 @@ tspan {
   cursor: pointer;
 }
 
-
 /*-------------------modify_board---------------------------*/
-.modify_board{
+.modify_board {
   display: flex;
   flex-flow: column nowrap;
   padding-left: 18vw;
   padding-right: 18vw;
 }
 
-.modify_head{
+.modify_head {
   display: flex;
   flex-flow: row nowrap;
   gap: 10px;
@@ -370,7 +369,7 @@ tspan {
   font-family: "Pretendard-Regular";
 }
 
-.modify_title{
+.modify_title {
   margin: 2vw 0 2vw 0;
   width: 100%;
   font-family: "Pretendard-Regular";
@@ -379,6 +378,6 @@ tspan {
   border-radius: 15px;
 }
 
-.modify_board_btn{
+.modify_board_btn {
   margin: 2vw 5vw 4vw 5vw;
 }

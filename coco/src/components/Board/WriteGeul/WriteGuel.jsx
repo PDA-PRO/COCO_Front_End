@@ -51,16 +51,15 @@ export const WriteGeul = () => {
               </Form.Select>
             </FloatingLabel>
           </div>
-
-          <div className="wG_two">
-            {cate == 2 ? (
-              <Help title={title} />
-            ) : cate == 3 ? (
-              <Free title={title} />
-            ) : (
-              <Help title={title} />
-            )}
-          </div>
+        </div>
+        <div className="wG_two">
+          {cate === 2 ? (
+            <Help title={title} />
+          ) : cate === 3 ? (
+            <Free title={title} />
+          ) : (
+            <Help title={title} />
+          )}
         </div>
       </div>
 

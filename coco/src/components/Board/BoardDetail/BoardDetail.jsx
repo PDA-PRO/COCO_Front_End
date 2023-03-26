@@ -27,8 +27,6 @@ import CodeMirror from "@uiw/react-codemirror";
 export const BoardDetail = () => {
   var path = window.location.pathname;
   path = path.split("/");
-  const userInfo = useAppSelector((state) => state.loginState);
-
 
   return (
     <>
@@ -36,7 +34,7 @@ export const BoardDetail = () => {
       <Suspense fallback={<Loader />}>
         <GetBoardDetail
           resource={fetchData(
-            `http://127.0.0.1:8000/board/${path.at(-1)}/${userInfo.id}`
+            `http://127.0.0.1:8000/board/${path.at(-1)}/`
           )}
 
           key={path.at(-1)}
@@ -66,16 +64,11 @@ const GetBoardDetail = ({ resource }) => {
         break;
       }
     }
-    return false;
   }
 
   useEffect(() => {
     if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
-    }
-
-    if (detail.is_board_liked) {
-      setLike(true);
     }
 
     likedBoard();

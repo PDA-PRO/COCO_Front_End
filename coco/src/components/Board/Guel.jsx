@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 export const Guel = (props) => {
   const navigate = useNavigate();
   const moveDetail = (e) => {
-    console.log(e);
     navigate(`/board/${e}`);
   };
   const [category, setCategory] = useState("");
@@ -106,7 +105,7 @@ export const Guel = (props) => {
             <p>{props.props.comments}</p>
           </div>
           <div className="un2">
-            <BsHeartFill color="red" />
+            <BsHeartFill color="gray" />
             <p>{props.props.likes}</p>
           </div>
         </div>

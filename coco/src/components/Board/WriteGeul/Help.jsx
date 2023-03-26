@@ -114,11 +114,11 @@ export const Help = ({title}) => {
             }}
           />
         </div>
-        <div style={{'border': '2px solid  #FFFECD'}}>
+        <div style={{'border': '2px solid lightgray'}}>
           <CodeMirror
             width="30vw"
             value="print('hello')"
-            extensions={[python()]}
+            extensions={[python(),cpp()]}
             onChange={(value) => {
               setCode(value);
             }}

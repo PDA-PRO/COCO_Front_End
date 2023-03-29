@@ -16,7 +16,6 @@ import {
 } from "recharts";
 
 export const SecondBox = (props) => {
-  console.log(props.props);
   const navigate = useNavigate();
 
   const movePage = (id) => {
@@ -85,6 +84,7 @@ export const SecondBox = (props) => {
   };
 
   const graphData = monthlyBarData();
+  
 
   return (
     <div className="mp-secBox">

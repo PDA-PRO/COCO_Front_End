@@ -79,11 +79,37 @@ const GetDetail = ({ resource }) => {
     );
   };
 
+  const setMyTask = (task_id) => {
+    console.log(task_id);
+    axios
+      .post(
+        "http://127.0.0.1:8000/mytask",
+        {
+          user_id: userInfo.id,
+          task_id: task_id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
+      .then((res) => {
+        if(res.data === false){
+          alert("이미 추가된 문제입니다")
+        }else{
+          alert("내 문제집에 추가하였습니다");
+        }
+
+      })
+      .catch(() => {
+        alert("내 문제집에 추가하지 못했습니다");
+      });
+  };
+
   return (
     <div className="PBD">
       <div className="PBD-title">
         <div className="problemsName-pbd">
-          <div>No.{detail.id}</div>
+          <div onClick={() => setMyTask(detail.id)}>No.{detail.id}</div>
           <div className="problemInfo-pbd">
             {detail.title}
             <div className="PBD-secTitle">

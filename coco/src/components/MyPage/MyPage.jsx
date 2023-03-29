@@ -11,6 +11,7 @@ import {
 import { BsGraphUp } from "react-icons/bs";
 import { ThirdBox } from "./ThirdBox";
 import { FirstBox } from "./FirstBox";
+import { MyTasks } from "./MyTasks";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
 
@@ -83,6 +84,26 @@ export const MyPage = () => {
               )}
             />
           </Suspense>
+          <h2>
+            <span>
+              <IoClipboardOutline
+                size={29}
+                color="green"
+                style={{ paddingBottom: "3px", marginRight: "13px" }}
+              />
+            </span>
+            내 문제집
+          </h2>
+          <Suspense fallback={<Spinner />}>
+            <GetMyTasks
+              resource={fetchData(
+                `http://127.0.0.1:8000/mytasks/${path.at(-1)}/`,
+                {
+                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                }
+              )}
+            />
+          </Suspense>
         </div>
       </div>
       <Footer />
@@ -104,3 +125,8 @@ const GetThird = ({ resource }) => {
   const res = resource.read();
   return <>{<ThirdBox props={res} key={res.id} />}</>;
 };
+
+const GetMyTasks = ({resource}) => {
+  const res = resource.read()
+  return <>{<MyTasks props={res} key={res.id} />}</>
+}

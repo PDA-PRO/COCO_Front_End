@@ -422,7 +422,7 @@
 }
 
 .det .barOrigin {
-  width: 170px;
+  width: 165px;
   height: 15px;
   border-radius: 5px;
   background-color: #dddddd;
@@ -441,6 +441,8 @@
   font-weight: 600;
   margin: 0 !important;
   color: gray;
+  width: 30px;
+  text-align: center;
 }
 
 .home .Block {

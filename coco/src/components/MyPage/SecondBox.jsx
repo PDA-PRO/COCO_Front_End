@@ -27,13 +27,12 @@ export const SecondBox = (props) => {
     var solvedData = [];
     var growthData = [];
     let lastMonth = props.props.month_submit[0][0];
-    if(lastMonth === "0000"){
+    if (lastMonth === "0000") {
       let tmp = new Date();
-      lastMonth = tmp.getMonth()+1;
-    }else{
+      lastMonth = tmp.getMonth() + 1;
+    } else {
       lastMonth = lastMonth[2] + lastMonth[3];
     }
-
 
     for (let i = 0; i < props.props.month_submit.length; i++) {
       //월별 제출수
@@ -65,14 +64,14 @@ export const SecondBox = (props) => {
 
     var barResult = [];
     var lineResult = [];
-    for (let i = 0; i <  submitData.length; i++) {
+    for (let i = 0; i < submitData.length; i++) {
       barResult.push({
-        name: month.at(lastMonth-1-i),
+        name: month.at(lastMonth - 1 - i),
         "총 제출 수": submitData[i][1],
         "맞은 문제": solvedData[i][1],
       });
       lineResult.push({
-        name: month.at(lastMonth-1-i),
+        name: month.at(lastMonth - 1 - i),
         실력: growthData[i],
       });
     }
@@ -84,7 +83,6 @@ export const SecondBox = (props) => {
   };
 
   const graphData = monthlyBarData();
-  
 
   return (
     <div className="mp-secBox">
@@ -111,7 +109,7 @@ export const SecondBox = (props) => {
         </div>
       </div>
 
-      <div className="secBox-col" style={{ width: "100%" }}>
+      <div className="secBox-col" style={{ width: "100%", height: "400px" }}>
         <h3> - 월별 푼 문제 수</h3>
         <ResponsiveContainer width="100%">
           <BarChart
@@ -138,7 +136,7 @@ export const SecondBox = (props) => {
         </ResponsiveContainer>
       </div>
 
-      <div className="secBox-col" style={{ width: "100%" }}>
+      <div className="secBox-col" style={{ width: "100%", height: "400px" }}>
         <h3>
           - 내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
         </h3>

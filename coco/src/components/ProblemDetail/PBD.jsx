@@ -21,6 +21,7 @@ import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import { IoMdPaperPlane } from "react-icons/io";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -93,12 +94,11 @@ const GetDetail = ({ resource }) => {
         }
       )
       .then((res) => {
-        if(res.data === false){
-          alert("이미 추가된 문제입니다")
-        }else{
+        if (res.data === false) {
+          alert("이미 추가된 문제입니다");
+        } else {
           alert("내 문제집에 추가하였습니다");
         }
-
       })
       .catch(() => {
         alert("내 문제집에 추가하지 못했습니다");
@@ -109,7 +109,7 @@ const GetDetail = ({ resource }) => {
     <div className="PBD">
       <div className="PBD-title">
         <div className="problemsName-pbd">
-          <div onClick={() => setMyTask(detail.id)}>No.{detail.id}</div>
+          <div>No.{detail.id}</div>
           <div className="problemInfo-pbd">
             {detail.title}
             <div className="PBD-secTitle">
@@ -122,21 +122,28 @@ const GetDetail = ({ resource }) => {
             </div>
           </div>
         </div>
-        <div
-          className="problemsAns-pbd"
-          style={{
-            color:
-              detail.rate == 0
-                ? "gray"
-                : detail.rate >= 40
-                ? "skyblue"
-                : "rgb(218, 55, 55)",
-          }}
-        >
-          <span style={{ color: "gray" }} id="jung">
-            {"정답률 :    "}
-          </span>
-          {detail.rate}%
+        <div className="pbd-topRight">
+          <div
+            className="problemsAns-pbd"
+            style={{
+              color:
+                detail.rate == 0
+                  ? "gray"
+                  : detail.rate >= 40
+                  ? "skyblue"
+                  : "rgb(218, 55, 55)",
+            }}
+          >
+            <span style={{ color: "gray" }} id="jung">
+              {"정답률 :"}
+            </span>
+            {detail.rate}%
+          </div>
+
+          <div id="pbd-pick" onClick={() => setMyTask(detail.id)}>
+            <IoMdPaperPlane size={25} />
+            <p>Homework</p>
+          </div>
         </div>
       </div>
 
@@ -188,7 +195,7 @@ const GetDetail = ({ resource }) => {
           </div>
 
           <div className="PBD-input">
-            <div className="PBD-pbTitle">
+            <div className="PBD-pbTitle" id="rightCode">
               <IoLogoPython size={25} color="skyblue" />
               <h2>코드 입력 : Python3</h2>
               <FloatingLabel controlId="floatingSelect">

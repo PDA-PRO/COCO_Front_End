@@ -47,6 +47,9 @@ export const Header = (props) => {
       case 6:
         navigate(`/mypage/${id}`);
         break;
+      case 7:
+        navigate(`/students/${id}`);
+        break;
     }
   };
 
@@ -88,6 +91,7 @@ export const Header = (props) => {
               <h3 onClick={() => movdPage(2)}>문제</h3>
               <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
               <h3 onClick={() => movdPage(4)}>채점상황</h3>
+              <h3 onClick={() => movdPage(7, userInfo.id)}>학생 관리</h3>
             </div>
           </div>
 

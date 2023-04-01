@@ -6,7 +6,15 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
-import { ProblemBox } from "../Problems/ProblemBox";
+import {
+  TiBatteryCharge,
+  TiBatteryLow,
+  TiBatteryMid,
+  TiBatteryHigh,
+  TiBatteryFull,
+} from "react-icons/ti";
+import { GoCheck, GoX } from "react-icons/go";
+import { BsTrash } from "react-icons/bs";
 
 export const MyTasks = (props) => {
   const [list, setList] = useState([]);
@@ -75,9 +83,16 @@ const GetProblems = ({ resource, list }) => {
   return (
     <>
       {problemList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-        return <ProblemBox info={e} key={e.id} />;
+        return <MyTasksBox info={e} key={e.id} />;
       })}
-      <div className="leftBottom">
+      <div
+        className="leftBottom"
+        style={{
+          borderRight: "2px solid rgb(198, 209, 235)",
+          borderLeft: "2px solid rgb(198, 209, 235)",
+          borderBottom: "2px solid rgb(198, 209, 235)",
+        }}
+      >
         <Pagination
           count={maxPage}
           variant="outlined"
@@ -87,5 +102,103 @@ const GetProblems = ({ resource, list }) => {
         />
       </div>
     </>
+  );
+};
+
+export const MyTasksBox = (info) => {
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/problems/${e}`);
+  };
+
+  const deleteTask = (e) => {
+    alert("내 문제집에서 삭제");
+  };
+
+  const setLevel = (e) => {
+    switch (e) {
+      case 1:
+        return <TiBatteryLow size={35} color="rgb(98, 148, 255)" />;
+      case 2:
+        return <TiBatteryMid size={35} color="#9DD84B" />;
+      case 3:
+        return <TiBatteryHigh size={35} color="#ff7e00" />;
+      case 4:
+        return <TiBatteryFull size={35} color="red" />;
+      case 5:
+        return <TiBatteryCharge size={35} color="#7d1b7e" />;
+    }
+  };
+
+  const lan = (e1, e2) => {
+    if (e1 === 1 && e2 === 1) {
+      return (
+        <div>
+          <img src="/image/lan_c.png" height="30px" alt="아니 시발" />
+          <img
+            src="/image/python.png"
+            height="30px"
+            style={{ paddingRight: "10px" }}
+            alt="왜 시발"
+          />
+        </div>
+      );
+    } else if (e1 === 1 && e2 === 0) {
+      return (
+        <div>
+          <img src="/image/lan_c.png" height="30px" alt="" />
+        </div>
+      );
+    } else if (e1 === 0 && e2 === 1) {
+      return (
+        <div>
+          <img src="/image/python.png" height="30px" alt="" />
+        </div>
+      );
+    }
+  };
+
+  const solve = (e) => {
+    if (e === 1) {
+      <p style={{ margin: "0", textAlign: "center" }}>
+        <GoCheck size={27} color="green" />
+      </p>;
+    } else {
+      <p style={{ margin: "0", textAlign: "center" }}>
+        <GoX size={27} color="red" />
+      </p>;
+    }
+  };
+
+  return (
+    <div className="MyTasksBox">
+      <h4 onClick={() => goDetail(info.info.id)}>No.{info.info.id}</h4>
+      <h4 onClick={() => goDetail(info.info.id)}>{info.info.title}</h4>
+      <h4>{setLevel(info.info.diff)}</h4>
+      <h4
+        style={{
+          color:
+            info.info.rate == 0
+              ? "gray"
+              : info.info.rate >= 40
+              ? "skyblue"
+              : "rgb(218, 55, 55)",
+        }}
+      >
+        {info.info.rate}%
+      </h4>
+
+      <h4>{lan(info.info.lan_c, info.info.lan_py)}</h4>
+      <p style={{ margin: "0", textAlign: "center" }}>
+        <GoCheck size={27} color="green" />
+      </p>
+      <p style={{ margin: "0", textAlign: "center" }}>
+        <BsTrash
+          onClick={() => deleteTask(info.info.id)}
+          size={19}
+          color="red"
+        />
+      </p>
+    </div>
   );
 };

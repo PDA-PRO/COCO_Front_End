@@ -5,7 +5,7 @@ import "./StatusList.css";
 import { StatusListBox } from "./StatusListBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
@@ -19,9 +19,10 @@ export const StatusList = () => {
   const [option, setOption] = useState([false, -1, false]);
   const [taskStatus, setTaskStatus] = useState([]);
   const Large = useMediaQuery({ minWidth: 1135 });
+  const navigate = useNavigate();
 
   const reload = (e) => {
-    window.location.reload();
+    navigate(0);
   };
 
   const onlyMyHandler = () => {

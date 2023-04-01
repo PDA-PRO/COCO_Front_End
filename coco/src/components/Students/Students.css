@@ -1,0 +1,30 @@
+.manageStudents {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 1rem 0 5rem 0;
+}
+
+.ms-Body {
+  width: clamp(750px, 90%, 1200px);
+}
+
+.ms-Body .msTop {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 2rem;
+  padding-top: 1.2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid lightgray;
+  align-items: center;
+  gap: 20px;
+}
+
+.msTop h4 {
+  font-family: "GmarketSansMedium";
+  font-weight: 600;
+  font-size: 1.5em;
+  color: rgb(63, 63, 63);
+  letter-spacing: 5px;
+  margin: 0 !important;
+}

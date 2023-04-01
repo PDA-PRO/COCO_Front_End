@@ -53,17 +53,17 @@ export const ThirdBox = (props) => {
         <BsMegaphoneFill
           size={20}
           color="#00ff00"
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px", paddingBottom: "2px" }}
         />,
       ];
     } else if (e === 2) {
       return [
         "Help",
-        "rgb(255, 248, 211)",
+        "rgb(255, 240, 101)",
         <BsQuestionLg
           size={20}
           color="rgb(255, 200, 101)"
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px", paddingBottom: "2px" }}
         />,
       ];
     } else if (e === 3) {
@@ -73,7 +73,7 @@ export const ThirdBox = (props) => {
         <BsFillLightbulbFill
           size={20}
           color="rgb(111, 101, 255)"
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px", paddingBottom: "2px" }}
         />,
       ];
     }
@@ -81,7 +81,7 @@ export const ThirdBox = (props) => {
 
   const modify = (e) => {
     navigate(`/board_modify/${e}`);
-  }
+  };
 
   return (
     <div className="mp-ThirdBox">
@@ -90,7 +90,8 @@ export const ThirdBox = (props) => {
         return (
           <div className="myGuel" style={{ borderColor: category[1] }}>
             <h4>
-              <span>{category[2]}</span>' {category[0]} '
+              <span>{category[2]}</span>
+              {category[0]}
             </h4>
             <h3 onClick={() => moveDetail(e.id)}>{e.title}</h3>
             <h5>{timeForToday(e.time)}</h5>
@@ -112,7 +113,11 @@ export const ThirdBox = (props) => {
                 <p>{e.likes}</p>
               </div>
             </div>
-            <BsPencilSquare style={{'cursor': 'pointer'}} size={20} onClick = {() => modify(e.id)}/>
+            <BsPencilSquare
+              style={{ cursor: "pointer" }}
+              size={20}
+              onClick={() => modify(e.id)}
+            />
             <BsTrash id="delGuel" size={20} color="red" />
           </div>
         );

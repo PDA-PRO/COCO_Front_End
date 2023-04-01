@@ -308,7 +308,7 @@ tspan {
   grid-column: 2/3;
   font-family: "Pretendard-Regular" !important;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
   cursor: pointer;
@@ -342,7 +342,7 @@ tspan {
 .bBox p {
   font-family: "Pretendard-Regular" !important;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
 }
@@ -380,4 +380,66 @@ tspan {
 
 .modify_board_btn {
   margin: 2vw 5vw 4vw 5vw;
+}
+
+/*-------------------Last box---------------------------*/
+
+.mp-FourthBox {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid lightgray;
+  border-radius: 20px;
+  padding: 30px 5vw;
+  margin: 20px 0 20px 0;
+  gap: 13px;
+}
+
+.mp-FourthBox .BodyLeft .leftTop {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.3fr;
+  align-items: center;
+  border: 2px solid rgb(198, 209, 235);
+  border-radius: 15px 15px 0 0;
+  padding: 10px 15px;
+}
+
+.mp-FourthBox .leftTop h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+  color: rgb(128, 128, 128);
+}
+.mp-FourthBox .leftTop h4:nth-child(1) {
+  color: red;
+}
+
+.MyTasksBox {
+  border-bottom: 2px solid rgb(198, 209, 235);
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.3fr;
+  align-items: center;
+  padding: 11px 15px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+}
+
+.MyTasksBox:hover {
+  background-color: rgb(239, 248, 255);
+}
+
+.MyTasksBox h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.MyTasksBox h4:nth-child(1) {
+  width: 70px;
+
+  color: red;
+  font-weight: 600 !important;
 }

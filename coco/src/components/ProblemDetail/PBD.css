@@ -4,14 +4,14 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  --sash-size:20px;
-  --sash-hover-size:20px;
-  --focus-border:rgb(123, 123, 123);
+  --sash-size: 20px;
+  --sash-hover-size: 20px;
+  --focus-border: rgb(123, 123, 123);
 }
 .PBD-title {
   display: flex;
   flex-flow: row;
-  padding: 0.6rem 1.5rem;
+  padding: 0.6rem 2.5rem 0.6rem 1.5rem;
   justify-content: space-between;
   align-items: end;
   border-bottom: gray solid 1px;
@@ -33,14 +33,14 @@
   align-self: center;
   margin-right: 1.5rem;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
+  font-weight: 600;
   font-size: 1rem;
 }
 
 .problemsName-pbd > div:nth-child(2) {
   font-size: 1.1rem;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
+  font-weight: 600;
   align-self: center;
   padding-top: 0.4rem;
 }
@@ -55,20 +55,50 @@
   color: #686868;
 }
 
+.pbd-topRight {
+  align-self: center;
+  display: flex;
+  flex-flow: row nowrap;
+  width: 15vw;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .problemsAns-pbd {
   color: skyblue;
   text-align: center;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
+  font-weight: 600;
   font-size: 1.2em;
   display: flex;
-  align-self: center;
 }
 
 #jung {
   font-family: "Pretendard-Regular";
   font-weight: 650;
   font-size: 1em;
+}
+
+#pbd-pick {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  gap: 6px;
+  cursor: pointer;
+  border-bottom: 2px solid rgb(172, 172, 172);
+  padding: 5px 10px 6px 7px;
+}
+
+#pbd-pick:hover {
+  border-bottom: 2px solid #5fe45f;
+  color: #5fe45f;
+}
+
+#pbd-pick p {
+  margin: 0 !important;
 }
 
 .PBD-body {
@@ -81,7 +111,7 @@
 .PBD-body .PBD-problem {
   display: flex;
   flex-flow: column;
-  padding: 0.6rem 1.5rem;
+  padding: 1rem 1.5rem;
 }
 
 .PBD-problem .PBD-pbTxt {
@@ -97,12 +127,32 @@
   font-weight: 600;
 }
 
+#rightCode {
+  align-items: center;
+  padding-bottom: 0.6rem;
+}
+
+#rightCode h2 {
+  margin: 0 !important;
+}
+
+.PBD-pbTitle .form-floating {
+  width: 150px;
+  padding: 0 !important;
+  margin-left: 30px;
+}
+
+.PBD-pbTitle .form-floating select {
+  padding: 0 10px !important;
+  height: 40px !important;
+}
+
 .PBD-problem .PBD-pbTxt #PBD-txt {
   white-space: pre-wrap;
   font-weight: 600;
   font-size: 0.9em;
   padding-left: 1rem;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 .PBD-body h2 {
@@ -149,35 +199,37 @@
   background-color: #5fe45f;
 }
 
-.PBD-menu{
+.PBD-menu {
   border-top: gray 1px solid;
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0.6rem 1.5rem;
+  font-family: "Pretendard-Regular";
+  font-weight: 400;
 }
 
-.sash-hover{
+.sash-hover {
   background-color: rgb(123, 123, 123);
 }
 
-.sash{
+.sash {
   background-color: rgb(211, 211, 211);
   margin-left: 5px;
 }
 
 .PBD-scroll {
   height: 100%;
-  overflow-y: auto;  
+  overflow-y: auto;
 }
 
-.PBD-scroll::-webkit-scrollbar-thumb{
-  background-color:  rgb(123, 123, 123);
+.PBD-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(123, 123, 123);
   /* 스크롤바 둥글게 설정    */
-  border-radius: 10px;    
+  border-radius: 10px;
 }
 
-.PBD-scroll::-webkit-scrollbar{
+.PBD-scroll::-webkit-scrollbar {
   width: 10px;
 }

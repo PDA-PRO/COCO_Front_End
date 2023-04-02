@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./WriteGuel.css";
 import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
@@ -18,6 +18,7 @@ export const WriteGeul = () => {
   };
 
   const onCategoryHandler = (e) => {
+    console.log(e.currentTarget.value);
     setCate(e.currentTarget.value);
   };
 
@@ -51,15 +52,16 @@ export const WriteGeul = () => {
               </Form.Select>
             </FloatingLabel>
           </div>
-        </div>
-        <div className="wG_two">
-          {cate === 2 ? (
-            <Help title={title} />
-          ) : cate === 3 ? (
-            <Free title={title} />
-          ) : (
-            <Help title={title} />
-          )}
+
+          <div className="wG_two">
+            {cate === 2 ? (
+              <Help title={title} />
+            ) : cate === 3 ? (
+              <Free title={title} />
+            ) : (
+              <Help title={title} />
+            )}
+          </div>
         </div>
       </div>
 

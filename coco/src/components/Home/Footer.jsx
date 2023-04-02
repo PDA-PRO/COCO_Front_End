@@ -1,6 +1,5 @@
 import React from "react";
 import { IoLogoInstagram, IoLogoGithub } from "react-icons/io5";
-import { useMediaQuery } from "react-responsive";
 import { RiGooglePlayFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
@@ -88,7 +87,7 @@ export const Footer = (props) => {
         </div>
 
         <div className="txtz2">
-          <p>@ Copyright 2022 COCO All rights reserved</p>
+          <p>@ Copyright 2023 COCO All rights reserved</p>
           <p onClick={() => handleClick(1)}>개인정보 처리방침</p>
           <p onClick={() => handleClick(2)}>서비스 이용약관</p>
         </div>

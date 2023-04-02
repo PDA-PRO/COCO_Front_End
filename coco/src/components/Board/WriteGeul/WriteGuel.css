@@ -5,7 +5,7 @@
 }
 
 .writeGuel .WGBody {
-  width: clamp(650px, 90%, 1150px);
+  width: clamp(600px, 90%, 1180px);
 }
 
 .writeGuel .wG_Head {
@@ -27,8 +27,7 @@
 .writeGuel .wG_one {
   display: flex;
   flex-flow: row nowrap;
-  padding-left: 3vw;
-  padding-right: 3vw;
+
   justify-content: space-between;
   align-items: center;
   gap: 2vw;
@@ -37,7 +36,7 @@
 #selectCate {
   width: 250px;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
+  font-weight: 600;
   font-size: 1em;
   margin: 0 !important;
 }
@@ -45,7 +44,7 @@
 #selectCate #floatingSelect {
   margin: 3px 0 0 0;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
+  font-weight: 600;
 }
 
 #selectCate option {
@@ -55,26 +54,23 @@
 }
 
 #wG_Title {
-  width: 70%;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
+  font-weight: 600;
   padding-top: 14px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   border-radius: 15px;
 }
 
 .freeWrite {
-  padding-left: 3vw;
-  padding-right: 3vw;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 #submitFree {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   width: 100%;
   font-family: "Pretendard-Regular";
   font-weight: 650;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   border-radius: 12px;
 }
 
@@ -87,12 +83,12 @@
   padding: 13px;
 }
 
-.helpWrite{
+.helpWrite {
   display: flex;
   flex-direction: row;
-  margin: 0 -12vw;
+  /* margin: 0 -12vw; */
 }
 
-.helpWrite > div{
+.helpWrite > div {
   margin: 0 10px;
 }

@@ -11,12 +11,11 @@ import { python } from "@codemirror/lang-python";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 
-export const Help = ({title}) => {
+export const Help = ({ title }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [htmlString, setHtmlString] = useState("");
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
-
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
@@ -28,12 +27,12 @@ export const Help = ({title}) => {
     console.log("이미지 업로드");
   };
 
-  const onSubmitHandler = () =>{
+  const onSubmitHandler = () => {
     console.log(code);
     console.log(htmlString);
-    if(title === "" || htmlString === ""){
+    if (title === "" || htmlString === "") {
       return alert("완전히 입력해주세요");
-    }else{
+    } else {
       axios
         .post(
           "http://127.0.0.1:8000/write_board/",
@@ -42,7 +41,7 @@ export const Help = ({title}) => {
             title: title,
             context: htmlString,
             category: 2,
-            code: code
+            code: code,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -60,7 +59,7 @@ export const Help = ({title}) => {
           alert("인증실패");
         });
     }
-  }
+  };
 
   return (
     <div className="freeWrite">
@@ -108,26 +107,26 @@ export const Help = ({title}) => {
             editorStyle={{
               height: "480px",
               width: "100%",
-              border: "3px solid lightgray",
-              padding: "20px",
+              border: "2px solid lightgray",
+
+              padding: "15px",
               fontFamily: "Pretendard-Regular",
             }}
           />
         </div>
-        <div style={{'border': '2px solid lightgray'}}>
+        <div style={{ border: "2px solid lightgray" }}>
           <CodeMirror
             width="30vw"
             value="print('hello')"
-            extensions={[python(),cpp()]}
+            extensions={[python(), cpp()]}
             onChange={(value) => {
               setCode(value);
             }}
-
           />
         </div>
       </div>
 
-      <Button variant="outline-info" id="submitFree"  onClick={onSubmitHandler}>
+      <Button variant="outline-info" id="submitFree" onClick={onSubmitHandler}>
         Submit
       </Button>
     </div>

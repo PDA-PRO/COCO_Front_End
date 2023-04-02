@@ -17,14 +17,17 @@ export const Comments = (props) => {
   var numLike = props.props.likes;
 
   const likedComment = () => {
-    for(let i=0;i<props.is_liked.length;i++){
-      if(props.is_liked[i][0] === userInfo.id && props.is_liked[i][1] === props.props.id){
+    for (let i = 0; i < props.is_liked.length; i++) {
+      if (
+        props.is_liked[i][0] === userInfo.id &&
+        props.is_liked[i][1] === props.props.id
+      ) {
         setLike(true);
         break;
       }
     }
     return;
-  }
+  };
 
   useEffect(() => {
     if (props.props.user_id === userInfo.id || userInfo.ismanage === true) {
@@ -125,7 +128,6 @@ export const Comments = (props) => {
         <div className="un">
           <h2 className="cUserID">{props.props.user_id}</h2>
           <p>{timeForToday(props.props.write_time)}</p>
-          <p>{timeForToday(props.props.likes)}</p>
         </div>
         <div
           className="un2"
@@ -140,7 +142,7 @@ export const Comments = (props) => {
         <p id="commentCon">{props.props.context}</p>
         {isMe ? (
           <BsTrash
-            size={25}
+            size={20}
             color="red"
             style={{ cursor: "pointer" }}
             onClick={onDeleteHandler}

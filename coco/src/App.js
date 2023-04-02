@@ -103,7 +103,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/group/:id" element={<Group />} />
+          <Route path="/group" element={<Group />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
           <Route

@@ -85,7 +85,7 @@ import { StatusList } from "./components/StatusList/StatusList";
 import { MyPage } from "./components/MyPage/MyPage";
 import { Manage } from "./components/Manage/Manage";
 import { ModifyBoard } from "./components/MyPage/ModifyBoard";
-import { Students } from "./components/Students/Students";
+import { Group } from "./components/Group/Group";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
@@ -103,7 +103,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/students/:id" element={<Students />} />
+          <Route path="/group/:id" element={<Group />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
           <Route

@@ -28,3 +28,117 @@
   letter-spacing: 5px;
   margin: 0 !important;
 }
+
+.group-Body .group-bottom {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 50px, 1fr;
+  gap: 2vw;
+}
+
+/*--------------왼쪽 박스--------------------*/
+
+.group-bottom .group-left {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: stretch;
+}
+
+.group-search {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  grid-row: 1/2;
+  justify-self: center;
+}
+
+.group-search .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(245, 252, 255);
+  padding: 10px;
+  border: 2px solid rgb(98, 148, 255);
+}
+
+.searchBar #goSearch {
+  cursor: pointer;
+}
+
+.group-search .searchBar input {
+  background-color: rgb(245, 252, 255);
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  color: rgb(148, 157, 177);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  padding: 2px 5px;
+  width: 80%;
+}
+.searchBar input:focus {
+  outline: none;
+}
+
+/*----------------오른쪽 박스-----------------------*/
+.group-bottom .group-right {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: stretch;
+  border-radius: 15px;
+  border: 2px solid rgb(98, 148, 255);
+}
+
+.r-top {
+  grid-row: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.group-right .r-top h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+  text-align: center;
+  margin: 0 !important;
+  line-height: 48px;
+}
+
+.myGroups {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 1.5rem;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.myGroups .myGroupsTop {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  border-top: 2px solid skyblue;
+  border-bottom: 2px solid skyblue;
+  padding: 3px 0;
+}
+.myGroupsTop p {
+  margin: 0 !important;
+  text-align: center;
+}
+
+.myGroupsTop p:nth-child(1) {
+  color: red;
+}
+
+.group-right .leftBottom {
+  border: none;
+}

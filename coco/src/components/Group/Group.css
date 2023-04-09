@@ -6,7 +6,7 @@
 }
 
 .group-Body {
-  width: clamp(750px, 90%, 1200px);
+  width: clamp(650px, 90%, 1200px);
 }
 
 .group-Body .groupTop {
@@ -17,7 +17,15 @@
   padding-bottom: 2rem;
   border-bottom: 1px solid lightgray;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
+}
+
+.groupTop .groupLogo {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  align-items: center;
 }
 
 .groupTop h4 {
@@ -29,11 +37,32 @@
   margin: 0 !important;
 }
 
+.groupTop .makeGroup {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.groupTop h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+  margin: 0 !important;
+}
+
 .group-Body .group-bottom {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 50px, 1fr;
   gap: 2vw;
+}
+
+@media screen and (max-width: 1000px) {
+  .group-Body .group-bottom {
+    display: flex;
+    flex-flow: column nowrap;
+  }
 }
 
 /*--------------왼쪽 박스--------------------*/
@@ -87,6 +116,37 @@
   outline: none;
 }
 
+.group-left .allGroups {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 20px;
+
+  border-radius: 15px;
+  border: 2px solid rgb(179, 196, 211);
+  padding: 0 1.5rem;
+}
+
+.allGroups .l-top {
+  display: grid;
+  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  padding: 5px 0;
+  border-bottom: 2px solid lightgray;
+  margin-top: 5px;
+}
+
+.l-top p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  text-align: center;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.group-left .leftBottom {
+  border: none;
+}
+
 /*----------------오른쪽 박스-----------------------*/
 .group-bottom .group-right {
   display: flex;
@@ -95,6 +155,7 @@
   align-items: stretch;
   border-radius: 15px;
   border: 2px solid rgb(98, 148, 255);
+  height: min-content;
 }
 
 .r-top {
@@ -125,7 +186,7 @@
 
 .myGroups .myGroupsTop {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
   border-top: 2px solid skyblue;
   border-bottom: 2px solid skyblue;
   padding: 3px 0;
@@ -141,4 +202,70 @@
 
 .group-right .leftBottom {
   border: none;
+}
+
+/*-----------------------------AllGroupList----------------------------------*/
+.allGroupList {
+  display: flex;
+  flex-flow: column nowrap;
+  border-bottom: 1px solid skyblue;
+  padding: 5px 0;
+}
+
+.allGroupList .groupListTop {
+  display: grid;
+  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  padding-bottom: 3px;
+}
+
+.allGroupList .groupListBottom {
+  padding-top: 3px;
+  margin: 0 15px;
+  border-top: 1px dotted gray;
+  padding: 3px 10px 0 10px;
+}
+
+.groupListBottom p {
+  text-align: start !important;
+}
+
+.allGroupList:hover {
+  background-color: rgb(241, 241, 241);
+  cursor: pointer;
+}
+
+.allGroupList p {
+  margin: 0 !important;
+  text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.allGroupList .groupListTop p:nth-child(1) {
+  color: red;
+}
+
+/*-----------------------------myGroupList----------------------------------*/
+.myGroupList {
+  display: grid;
+  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  border-bottom: 1px solid lightgray;
+  padding: 3px 0;
+}
+
+.myGroupList:hover {
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.myGroupList p {
+  margin: 0 !important;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.myGroupList p:nth-child(1) {
+  color: red;
 }

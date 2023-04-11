@@ -20,8 +20,6 @@ import {
 } from "react-icons/ti";
 import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
-
-// import { diffDayAndTime } from "fullcalendar";
 import axios from "axios";
 
 export const Problems = () => {

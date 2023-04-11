@@ -22,7 +22,7 @@ export const Group = () => {
   };
 
   const movePage = () => {
-    navigate("/write");
+    navigate("/makegroup");
   };
 
   return (

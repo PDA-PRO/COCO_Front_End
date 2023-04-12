@@ -11,6 +11,8 @@ import fetchData from "../../api/fetchTask";
 import { Pagination } from "@mui/material";
 import { HiUserPlus, HiUserMinus, HiUserGroup } from "react-icons/hi2";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");
@@ -19,11 +21,11 @@ export const MakeGroup = () => {
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
-  }
+  };
 
   const onDescHandler = (e) => {
     setDesc(e.currentTarget.value);
-  }
+  };
 
   const onSearchHandler = (info) => {
     axios
@@ -40,15 +42,14 @@ export const MakeGroup = () => {
       .post("http://127.0.0.1:8000/group/makegroup/", {
         name: name,
         desc: desc,
-        members: members
+        members: members,
       })
       .then((res) => {
-        alert('그룹을 생성하였습니다');
+        alert("그룹을 생성하였습니다");
       });
-  }
+  };
 
-  useEffect(() => {
-  }, [name, desc]);
+  useEffect(() => {}, [name, desc]);
 
   return (
     <>
@@ -56,6 +57,7 @@ export const MakeGroup = () => {
       <div className="mGroup">
         <div className="mGroup-Body">
           <div className="mG-Header">
+            <HiUserGroup size={28} color="#553830" />
             <h2>그룹 만들기</h2>
           </div>
 
@@ -64,17 +66,26 @@ export const MakeGroup = () => {
               <div className="Gname">
                 <p>그룹 명</p>
                 <InputGroup className="mb-3">
-                  <Form.Control placeholder="Group-Name" onChange={onNameHandler}/>
+                  <Form.Control
+                    placeholder="Group-Name"
+                    onChange={onNameHandler}
+                  />
                 </InputGroup>
               </div>
 
               <div className="Gname">
                 <p>그룹 설명</p>
                 <InputGroup className="mb-3">
-                  <Form.Control placeholder="FE 개발자 그룹 #React #CSS" onChange={onDescHandler}/>
+                  <Form.Control
+                    placeholder="FE 개발자 그룹 #React #CSS"
+                    onChange={onDescHandler}
+                  />
                 </InputGroup>
               </div>
+            </div>
 
+            {/* 여기부터 오른쪽 */}
+            <div className="mG-right">
               <div className="mG-invite">
                 <SearchBar search={onSearchHandler} />
 
@@ -85,47 +96,14 @@ export const MakeGroup = () => {
                   <p>pt.</p>
                 </div>
 
-                {/* <Suspense fallback={<Spinner />}>
-                  <GetUsers
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/group/all_groups`
-                    )}
-                    op={1}
-                  />
-                </Suspense> */}
-
                 {/* 검색결과
                 여기서 멤버추가하고 만들기 버튼 누르면
                 MakeGroup에서 api 호출해서 생성 */}
-                <SearchResult users = {users} create={onCreateHanlder}/>
-
+                <SearchResult users={users} create={onCreateHanlder} />
               </div>
             </div>
-
-            {/* 여기부터 오른쪽 */}
-            {/* <div className="mG-right">
-              <div className="nowMembers">
-                <div className="mG-rTop">
-                  <HiUserGroup size={23} color="brown" />
-                  <h2>그룹 멤버</h2>
-                </div>
-
-                <Suspense fallback={<Spinner />}>
-                  <GetUsers
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/group/all_groups`
-                    )}
-                    op={2}
-                  />
-                </Suspense>
-              </div>
-            </div> */}
-
-
           </div>
-
         </div>
-
       </div>
       <Footer />
     </>
@@ -135,9 +113,12 @@ export const MakeGroup = () => {
 //유저 검색한 결과보여주는 컴포넌트
 const SearchResult = (props) => {
   const data = props.users;
-  const [members, setMembers] = useState([]);
+  const userInfo = useAppSelector((state) => state.loginState);
+  const [members, setMembers] = useState([userInfo]);
   const [page, setPage] = useState(1);
   const maxPage = Math.ceil(data.length / 10);
+
+  console.log(userInfo);
 
   const addMembers = (e) => {
     if (members.includes(e)) {
@@ -152,7 +133,6 @@ const SearchResult = (props) => {
     alert(`id : ${e}님을 그룹에서 제거하였습니다.`);
     setMembers(members.filter((member) => member.id !== e));
   };
-
 
   const handlePage = (event) => {
     if (
@@ -170,10 +150,10 @@ const SearchResult = (props) => {
     }
   };
 
-  const onCreateHanlder = () =>{
+  const onCreateHanlder = () => {
     let memberList = [];
-    for(let i=0;i<members.length;i++){
-      memberList.push(members[i].id)
+    for (let i = 0; i < members.length; i++) {
+      memberList.push(members[i].id);
     }
     props.create(memberList);
   };
@@ -197,16 +177,20 @@ const SearchResult = (props) => {
       </div>
 
       {/* 추가한 멤버 보여줌 */}
-      <hr />
-      {members.map((e) => {
-        return <NowMems info={e} key={e.id} deleteMembers={deleteMembers} />;
-      })}
+      <div className="mG-now">
+        <h4>추가된 그룹원</h4>
 
-      <button onClick={onCreateHanlder}>만들기</button>
+        {members.map((e) => {
+          return <NowMems info={e} key={e.id} deleteMembers={deleteMembers} />;
+        })}
+      </div>
+
+      <Button id="btn-mG" variant="outline-warning" onClick={onCreateHanlder}>
+        그룹 생성
+      </Button>
     </>
   );
-
-}
+};
 
 const SearchBar = ({ search }) => {
   const onSearchHandler = (e) => {
@@ -227,86 +211,6 @@ const SearchBar = ({ search }) => {
   );
 };
 
-const GetUsers = ({ resource, op }) => {
-  const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 10);
-  const [page, setPage] = useState(1);
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
-
-  var [members, setMembers] = useState([]);
-  const addMembers = (e) => {
-    console.log(e)
-    if (members.includes(e)) {
-      alert("이미 초대된 인원입니다.");
-    } else {
-      alert(`id : ${e.id}님을 그룹에 추가하였습니다.`);
-      setMembers([...members, e]);
-    }
-
-    // api 연결해서 추가될 때마다 api 호출해서 인원 넣는 식으로 ㄱㄱ
-  };
-
-  const deleteMembers = (e) => {
-    let arr = members;
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === e) {
-        arr.splice(i, 1);
-      }
-    }
-
-    alert(`id : ${e}님을 그룹에서 제거하였습니다.`);
-    setMembers(arr);
-
-    // api 연결해서 추가될 때마다 api 호출해서 인원 넣는 식으로 ㄱㄱ
-  };
-
-  useEffect(() => {}, [members]);
-
-  if (op === 1) {
-    return (
-      <>
-        {GroupList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-          return <UserBox info={e} key={e.id} addMembers={addMembers} />;
-        })}
-        <div className="leftBottom" style={{ marginTop: "20px" }}>
-          <Pagination
-            count={maxPage}
-            variant="outlined"
-            shape="rounded"
-            defaultPage={1}
-            onChange={(e) => handlePage(e)}
-          />
-        </div>
-        {members.map((e) => {
-          return <NowMems info={e} key={e.id} deleteMembers={deleteMembers} />;
-        })}
-      </>
-    );
-  } else {
-    return (
-      <>
-        {members.map((e) => {
-          return <NowMems info={e} key={e.id} deleteMembers={deleteMembers} />;
-        })}
-      </>
-    );
-  }
-};
-
 const UserBox = (info) => {
   return (
     <div className="userBox">
@@ -315,7 +219,7 @@ const UserBox = (info) => {
       <p>{info.info.name}</p>
       <p>{info.info.exp}</p>
       <p onClick={() => info.addMembers(info.info)}>
-        <HiUserPlus size={21} color="brown"/>
+        <HiUserPlus size={21} color="brown" />
       </p>
     </div>
   );

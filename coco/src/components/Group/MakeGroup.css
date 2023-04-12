@@ -12,6 +12,10 @@
 .mG-Header {
   padding: 10px 0px 10px 20px;
   border-bottom: 1px solid lightgray;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
 }
 
 .mG-Header h2 {
@@ -65,7 +69,6 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: start;
-  margin-top: 30px;
 }
 
 .mG-invite .searchBar {
@@ -110,7 +113,7 @@
 .mG-invite .userTop {
   display: grid;
 
-  margin: 0 20px;
+  margin: 3px 20px 0 20px;
   grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
   border: 1px solid burlywood;
   border-radius: 10px;
@@ -119,14 +122,18 @@
 
 .userTop p {
   text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
 }
 
 .mG-invite .userBox {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
   border-bottom: 1px solid burlywood;
-  margin: 0 20px;
-  padding: 4px 0;
+  margin: 0 22px;
+  padding: 5px 0;
 }
 
 .userBox p {
@@ -134,13 +141,12 @@
   font-family: "Pretendard-Regular";
   font-weight: 500;
   font-size: 1em;
+  margin: 0 !important;
 }
 .userBox:hover {
   background-color: rgb(255, 245, 231);
   cursor: pointer;
 }
-
-/*----------------오른쪽 박스-----------------------*/
 
 .mG-right {
   display: flex;
@@ -171,14 +177,30 @@
   padding: 15px 15px 20px 15px;
 }
 
-.nowMembers .mems {
+.mG-now {
+  border-top: 2px solid rgb(255, 227, 189);
+}
+
+.mG-now h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  text-align: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(226, 199, 180);
+  margin: 10px 22px 0 22px !important;
+}
+
+.mG-now .mems {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
   border-bottom: 1px solid burlywood;
-  padding: 4px 0;
+  padding: 5px 0;
+  margin: 0 22px;
 }
 
-.nowMembers .mems:hover {
+.mG-now .mems:hover {
   background-color: rgb(255, 245, 231);
   cursor: pointer;
 }
@@ -189,4 +211,47 @@
   font-weight: 500;
   font-size: 1em;
   margin: 0 !important;
+}
+
+#btn-mG {
+  margin-top: 50px !important;
+  width: 25%;
+  align-self: flex-end;
+  position: relative;
+  top: 25%;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  border-radius: 15px;
+}
+
+#btn-mG:hover {
+  color: aliceblue;
+  font-weight: 500;
+  background-color: rgb(255, 206, 115);
+}
+
+@media screen and (max-width: 900px) {
+  .mG-Body {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 30px 10px;
+  }
+
+  .mG-now {
+    border-top: 2px solid rgb(255, 227, 189);
+    padding-bottom: 30px;
+  }
+
+  #btn-mG {
+    margin-top: 50px !important;
+    width: 97%;
+    border-radius: 15px;
+    align-self: center;
+    position: relative;
+    margin-bottom: 15px;
+    font-family: "Pretendard-Regular";
+    font-weight: 600;
+    font-size: 1em;
+  }
 }

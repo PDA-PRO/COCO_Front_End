@@ -18,6 +18,7 @@ import { Loader } from "../Loader/Loader";
 export const Home = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
+  console.log(userInfo)
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/mypage/${e}`);

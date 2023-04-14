@@ -67,7 +67,7 @@ export const MakeGroup = () => {
                 <p>그룹 명</p>
                 <InputGroup className="mb-3">
                   <Form.Control
-                    placeholder="Group-Name"
+                    placeholder="ex) CBNU 소프트웨어학과"
                     onChange={onNameHandler}
                   />
                 </InputGroup>
@@ -77,10 +77,25 @@ export const MakeGroup = () => {
                 <p>그룹 설명</p>
                 <InputGroup className="mb-3">
                   <Form.Control
-                    placeholder="FE 개발자 그룹 #React #CSS"
+                    placeholder="ex) FE 개발자 그룹 #React #CSS"
                     onChange={onDescHandler}
                   />
                 </InputGroup>
+              </div>
+
+              <div className="mG-tips">
+                <p>- 그룹 생성 후, 그룹 게시판을 이용할 수 있습니다.</p>
+                <p>
+                  - 그룹 문제집을 통해 그룹원들과 풀 문제를 선정할 수 있습니다.
+                </p>
+                <p style={{ whiteSpace: "pre" }}>
+                  - 그룹점수는 구성원들의 점수 합산을 통해 배점되며,
+                  <br /> <u00A0 /> <u00A0 /> 이를 통해 그룹랭킹을 산정합니다.
+                </p>
+                <p>
+                  - 유해한 그룹이라 판단되는 경우, 강제로 그룹이 삭제될 수
+                  있습니다.
+                </p>
               </div>
             </div>
 
@@ -114,11 +129,10 @@ export const MakeGroup = () => {
 const SearchResult = (props) => {
   const data = props.users;
   const userInfo = useAppSelector((state) => state.loginState);
+
   const [members, setMembers] = useState([userInfo]);
   const [page, setPage] = useState(1);
   const maxPage = Math.ceil(data.length / 10);
-
-  console.log(userInfo);
 
   const addMembers = (e) => {
     if (members.includes(e)) {
@@ -130,8 +144,12 @@ const SearchResult = (props) => {
   };
 
   const deleteMembers = (e) => {
-    alert(`id : ${e}님을 그룹에서 제거하였습니다.`);
-    setMembers(members.filter((member) => member.id !== e));
+    if (e === userInfo.id) {
+      alert("그룹장은 그룹에서 제거할 수 없습니다.");
+    } else {
+      alert(`id : ${e}님을 그룹에서 제거하였습니다.`);
+      setMembers(members.filter((member) => member.id !== e));
+    }
   };
 
   const handlePage = (event) => {

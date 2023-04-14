@@ -8,7 +8,7 @@ const initialState = {
   name: "",
   role: null,
   exp: 0,
-  level: 1
+  level: 1,
 };
 
 export const loginSlice = createSlice({
@@ -48,6 +48,6 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { login, logout, initlogin } = loginSlice.actions;
+export var { login, logout, initlogin } = loginSlice.actions;
 
 export default loginSlice.reducer;

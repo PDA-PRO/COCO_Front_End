@@ -67,7 +67,7 @@ export const SignIn = () => {
               name: jwt_name,
               role: jwt_role,
               exp: jwt_exp,
-              level: jwt_level
+              level: jwt_level,
             });
             navigateToHome();
           } else {

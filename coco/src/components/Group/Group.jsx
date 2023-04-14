@@ -157,6 +157,8 @@ const GetGroups = ({ resource }) => {
     }
   };
 
+  console.log(GroupList);
+
   return (
     <>
       {GroupList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {

@@ -147,13 +147,17 @@
 }
 
 /*-------------로그인 섹션------------------*/
+
 .manage {
   display: flex;
   flex-flow: column;
   margin-top: 3rem;
-  margin-left: 17vw;
-  margin-right: 17vw;
+  align-items: center;
   padding-bottom: 10rem;
+}
+
+.manage .manageBody {
+  width: clamp(750px, 90%, 1200px);
 }
 
 .manage .mTi {
@@ -387,7 +391,7 @@
   cursor: pointer;
 }
 
-.notice_result{
+.notice_result {
   border: 3px solid lightgray;
   padding: 10px;
   margin-top: 30px;

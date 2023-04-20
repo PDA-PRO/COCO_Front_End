@@ -11,7 +11,7 @@ import {
 } from "react-icons/bs";
 import { SlPencil } from "react-icons/sl";
 import { VscCommentDiscussion } from "react-icons/vsc";
-import Spinner from "react-bootstrap/Spinner";
+
 import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
@@ -21,19 +21,19 @@ import axios from "axios";
 import { useEffect } from "react";
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../../Loader/Loader";
+import CodeMirror from "@uiw/react-codemirror";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
   path = path.split("/");
-  const userInfo = useAppSelector((state) => state.loginState);
-  
 
   return (
     <>
       <Header />
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Loader />}>
         <GetBoardDetail
-          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/${userInfo.id}`)}
+          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}
           key={path.at(-1)}
         />
       </Suspense>
@@ -53,14 +53,21 @@ const GetBoardDetail = ({ resource }) => {
   var numLike = detail.likes;
   const [isMe, setIsMe] = useState(false);
 
+  const likedBoard = () => {
+    for (let i = 0; i < detail.is_board_liked.length; i++) {
+      if (detail.is_board_liked[i] === userInfo.id) {
+        setLike(true);
+        break;
+      }
+    }
+  };
 
   useEffect(() => {
     if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
-    if (detail.is_board_liked){
-      setLike(true);
-    }
+
+    likedBoard();
   }, [isMe]);
 
   const commentShoot = (e) => {
@@ -100,10 +107,11 @@ const GetBoardDetail = ({ resource }) => {
     if (!like) {
       setLikeNum(likeNum + 1);
       numLike += 1;
-      setLike(true)
+      setLike(true);
     } else {
       setLikeNum(likeNum - 1);
-      setLike(false)
+      numLike -= 1;
+      setLike(false);
     }
     axios
       .post(
@@ -147,6 +155,7 @@ const GetBoardDetail = ({ resource }) => {
   };
 
   const CodeHere = () => {
+    const code = detail.code;
     return (
       <div className="BDCode">
         <div className="BD_codeTop">
@@ -156,9 +165,7 @@ const GetBoardDetail = ({ resource }) => {
         </div>
 
         <div className="BD_showCode">
-          <p>
-            n = int(input()) <br /> print(n+m)
-          </p>
+          <CodeMirror width="100%" value={code} readOnly={true} />
         </div>
         <p></p>
       </div>
@@ -168,88 +175,94 @@ const GetBoardDetail = ({ resource }) => {
   return (
     <>
       <div className="boardDetail">
-        <div className="BDtitle">
-          <h2>{detail.title}</h2>
-          <div className="BD_idAndTime">
-            <h3>작성자 : {detail.user_id}</h3>
-            <h3>{timeForToday(detail.time)}</h3>
-          </div>
-        </div>
-
-        <div className="BDsubTitle">
-          <div id="bun1">
-            <div className="BDun">
-              <BsFillEyeFill size={25} color="gray" />
-              <p>{detail.views}</p>
-            </div>
-
-            <div className="BDun">
-              <BsFillChatSquareDotsFill size={20} color="gray" />
-              <p>{detail.comments}</p>
-            </div>
-
-            {isMe ? (
-              <p id="del_Guel" onClick={onDeleteHandler}>
-                <BsTrash size={25} color="red" style={{ cursor: "pointer" }} />
-              </p>
-            ) : (
-              <p></p>
-            )}
-          </div>
-
-          <div id="bun2">
-            <div
-              className="BDun"
-              onClick={onLikesHandler}
-              style={{ color: like === true ? "red" : "gray" }}
-            >
-              <BsFillHeartFill size={23} />
-              <p>{likeNum}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="BDContent">
-          <div className="BDTxt">
-            <div dangerouslySetInnerHTML={{ __html: detail.context }}/>
-          </div>
-
-          {detail.category === 2 ? <CodeHere /> : <></>}
-        </div>
-        <div className="comments">
-          <div className="cHead">
-            <div className="cUn1">
-              <VscCommentDiscussion size={35} color="#6BE52E" />
-              <h2>댓글</h2>
-            </div>
-
-            <div
-              className="cWrite"
-              onClick={() => {
-                commentShoot(1);
-              }}
-            >
-              <SlPencil size={20} />
-              <p>댓글 작성</p>
+        <div className="BDBody">
+          <div className="BDtitle">
+            <h2>{detail.title}</h2>
+            <div className="BD_idAndTime">
+              <h3>작성자 : {detail.user_id}</h3>
+              <h3>{timeForToday(detail.time)}</h3>
             </div>
           </div>
 
-          <div className="cBody">
-            {write ? (
-              <WriteComment commentShoot={commentShoot} />
-            ) : (
-              <div id="closeState"></div>
-            )}
+          <div className="BDsubTitle">
+            <div id="bun1">
+              <div className="BDun">
+                <BsFillEyeFill size={23} color="gray" />
+                <p>{detail.views}</p>
+              </div>
 
-            {detail.comments_datail.map((e) => {
-              return (
-                <Comments
-                  props={e}
-                  key={e.id}
-                  is_liked={detail.is_comment_liked}
-                />
-              );
-            })}
+              <div className="BDun">
+                <BsFillChatSquareDotsFill size={20} color="gray" />
+                <p>{detail.comments}</p>
+              </div>
+
+              {isMe ? (
+                <p id="del_Guel" onClick={onDeleteHandler}>
+                  <BsTrash
+                    size={20}
+                    color="red"
+                    style={{ cursor: "pointer" }}
+                  />
+                </p>
+              ) : (
+                <p></p>
+              )}
+            </div>
+
+            <div id="bun2">
+              <div
+                className="BDun"
+                onClick={onLikesHandler}
+                style={{ color: like === true ? "red" : "gray" }}
+              >
+                <BsFillHeartFill size={23} />
+                <p>{likeNum}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="BDContent">
+            <div className="BDTxt">
+              <div dangerouslySetInnerHTML={{ __html: detail.context }} />
+            </div>
+
+            {detail.category === 2 ? <CodeHere /> : <></>}
+          </div>
+          <div className="comments">
+            <div className="cHead">
+              <div className="cUn1">
+                <VscCommentDiscussion size={35} color="#6BE52E" />
+                <h2>댓글</h2>
+              </div>
+
+              <div
+                className="cWrite"
+                onClick={() => {
+                  commentShoot(1);
+                }}
+              >
+                <SlPencil size={20} />
+                <p>댓글 작성</p>
+              </div>
+            </div>
+
+            <div className="cBody">
+              {write ? (
+                <WriteComment commentShoot={commentShoot} />
+              ) : (
+                <div id="closeState"></div>
+              )}
+
+              {detail.comments_datail.map((e) => {
+                return (
+                  <Comments
+                    props={e}
+                    key={e.id}
+                    is_liked={detail.is_comment_liked}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

@@ -10,16 +10,30 @@ import fetchData from "../../api/fetchTask";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { HomeGraph } from "./HomeGraph";
+import { DiffGraph } from "./DiffGraph";
+import { useMediaQuery } from "react-responsive";
+import { Loader } from "../Loader/Loader";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
-  console.log("홈", userInfo);
+  console.log(userInfo.name);
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/mypage/${e}`);
+  };
+
+  const Large = useMediaQuery({ minWidth: 1200 });
+  const Laptop = useMediaQuery({ maxWidth: 1199.99999, minWidth: 992 });
+  const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
+  const Phone = useMediaQuery({ maxWidth: 767.99999 });
+  const path = window.location.pathname.split("/");
 
   return (
-    <div className="home">
+    <div>
       <Header />
-      <div className="homebody">
+      <div className="home">
         <div className="home-body">
           <div className="txt-box">
             <h2 id="t1">코딩, 초보자라면?</h2>
@@ -35,17 +49,29 @@ export const Home = () => {
           {userInfo.id === "" ? (
             <></>
           ) : (
-            <div className="homeGraph">
-              <div className="levelGraph">
+            <div className={Large ? "homeGraph" : "else"}>
+              <div className="levelGraph" onClick={() => goDetail(userInfo.id)}>
                 <h3>{userInfo.id}님 현재 레벨</h3>
                 <h2>Level 4</h2>
                 <p>전체 50등</p>
               </div>
-              <div className="growGraph"></div>
+
+              <Suspense fallback={<Spinner />}>
+                <MyGraph
+                  resource={fetchData(
+                    `http://127.0.0.1:8000/my_status/${userInfo.id}/`,
+                    {
+                      headers: {
+                        Authorization: "Bearer " + userInfo.access_token,
+                      },
+                    }
+                  )}
+                />
+              </Suspense>
             </div>
           )}
 
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loader />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
           </Suspense>
 
@@ -54,13 +80,13 @@ export const Home = () => {
               src="/image/ad.png"
               alt=""
               loading="lazy"
-              style={{ borderRadius: "30px" }}
+              style={{ borderRadius: "20px" }}
               width="100%"
             />
           </div>
 
           <div className="notice">
-            <Suspense fallback={<Spinner />}>
+            <Suspense fallback={<Loader />}>
               <GetNotice
                 resource={fetchData("http://127.0.0.1:8000/manage/notice")}
               />
@@ -94,16 +120,12 @@ const GetNotice = ({ resource }) => {
   );
 };
 
-//how to center a div?
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  }}
->
-  <h1> I am centered </h1>
-</div>;
-
-//Source: https://stackoverflow.com/questions/42125775
+const MyGraph = ({ resource }) => {
+  const detail = resource.read();
+  return (
+    <>
+      <HomeGraph growth={detail.growth} />
+      <DiffGraph diff={detail.diff} />
+    </>
+  );
+};

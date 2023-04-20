@@ -5,7 +5,10 @@ const initialState = {
   access_token: "",
   token_type: "",
   id: "",
+  name: "",
   role: null,
+  exp: 0,
+  level: 1,
 };
 
 export const loginSlice = createSlice({
@@ -16,19 +19,28 @@ export const loginSlice = createSlice({
       state.access_token = action.access_token;
       state.token_type = action.ptoken_typew;
       state.id = action.id;
+      state.name = action.name;
       state.role = action.role;
+      state.exp = action.exp;
+      state.level = action.level;
     },
     logout: (state) => {
       state.access_token = "";
       state.token_type = "";
       state.id = "";
+      state.name = "";
       state.role = null;
+      state.exp = 0;
+      state.level = 1;
     },
     initlogin: (state) => {
       state.access_token = initialState.access_token;
       state.token_type = initialState.ptoken_typew;
       state.id = initialState.id;
+      state.name = initialState.name;
       state.role = initialState.role;
+      state.exp = initialState.exp;
+      state.level = initialState.level;
     },
   },
   extraReducers: (builder) => {
@@ -36,6 +48,6 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { login, logout, initlogin } = loginSlice.actions;
+export var { login, logout, initlogin } = loginSlice.actions;
 
 export default loginSlice.reducer;

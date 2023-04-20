@@ -22,6 +22,8 @@ import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
 import draftToHtml from "draftjs-to-html";
 import { convertFromRaw } from "draft-js";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import { IoMdPaperPlane } from "react-icons/io";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -79,6 +81,31 @@ const GetDetail = ({ resource }) => {
     );
   };
 
+  const setMyTask = (task_id) => {
+    console.log(task_id);
+    axios
+      .post(
+        "http://127.0.0.1:8000/mytask",
+        {
+          user_id: userInfo.id,
+          task_id: task_id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
+      .then((res) => {
+        if (res.data === false) {
+          alert("이미 추가된 문제입니다");
+        } else {
+          alert("내 문제집에 추가하였습니다");
+        }
+      })
+      .catch(() => {
+        alert("내 문제집에 추가하지 못했습니다");
+      });
+  };
+
   return (
     <div className="PBD">
       <div className="PBD-title">
@@ -96,21 +123,28 @@ const GetDetail = ({ resource }) => {
             </div>
           </div>
         </div>
-        <div
-          className="problemsAns-pbd"
-          style={{
-            color:
-              detail.rate == 0
-                ? "gray"
-                : detail.rate >= 40
-                ? "skyblue"
-                : "rgb(218, 55, 55)",
-          }}
-        >
-          <span style={{ color: "gray" }} id="jung">
-            {"정답률 :    "}
-          </span>
-          {detail.rate}%
+        <div className="pbd-topRight">
+          <div
+            className="problemsAns-pbd"
+            style={{
+              color:
+                detail.rate == 0
+                  ? "gray"
+                  : detail.rate >= 40
+                  ? "skyblue"
+                  : "rgb(218, 55, 55)",
+            }}
+          >
+            <span style={{ color: "gray" }} id="jung">
+              {"정답률 :"}
+            </span>
+            {detail.rate}%
+          </div>
+
+          <div id="pbd-pick" onClick={() => setMyTask(detail.id)}>
+            <IoMdPaperPlane size={25} />
+            <p>Homework</p>
+          </div>
         </div>
       </div>
 

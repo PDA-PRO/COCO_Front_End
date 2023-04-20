@@ -4,13 +4,16 @@
 }
 
 .boardContent {
-  padding-left: 18vw;
-  padding-right: 18vw;
+  align-items: center;
   margin-top: 1rem;
   margin-bottom: 5rem;
   min-height: 800px;
   display: flex;
   flex-flow: column nowrap;
+}
+
+.bcBody {
+  width: clamp(600px, 90%, 1200px);
 }
 
 .boardContent .boardHead {
@@ -22,6 +25,7 @@
   align-items: center;
   border-bottom: 1px solid lightgray;
   padding-bottom: 3rem;
+  cursor: pointer;
 }
 
 .boardContent .boardHead .boardTitle {
@@ -46,7 +50,7 @@
   flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 20px;
+
   cursor: pointer;
 }
 
@@ -59,35 +63,36 @@
 }
 
 .boardBody {
-  display: grid;
-  grid-template-columns: 3 1;
+  display: flex;
+  flex-flow: row nowrap;
   margin-top: 4rem;
+  justify-content: space-evenly;
   align-items: flex-start;
-  max-height: 1200px;
+  gap: 20px;
 }
 
 .Bone {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
-  grid-column: 1/4;
-}
-
-.Btwo {
-  grid-column: 4/5;
-  justify-self: center;
+  width: 100%;
+  row-gap: 20px;
 }
 
 .FastWrite {
   display: flex;
+  justify-self: center;
   flex-flow: column nowrap;
   height: 550px;
-  border-radius: 25px;
+  border-radius: 20px;
   background-color: #f5f5f5;
-  padding: 30px;
-  width: 300px;
+  padding: 20px;
+  width: 350px;
   overflow: auto;
   justify-content: stretch;
+  position: sticky !important;
+  z-index: 2;
+  top: 75px;
 }
 
 .FastWrite h2 {
@@ -145,4 +150,50 @@
   font-size: 1.1em;
   font-weight: 600;
   margin-top: 20px;
+}
+
+@media screen and (max-width: 1250px) {
+  .FastWrite {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 530px;
+    border-radius: 25px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    width: 300px;
+    overflow: auto;
+    justify-content: stretch;
+    position: sticky !important;
+    z-index: 2;
+    top: 75px;
+  }
+}
+
+@media screen and (max-width: 1130px) and (min-width: 850px) {
+  .Bone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    width: 100%;
+    row-gap: 20px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .boardBody {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 3rem;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .Bone {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1/4;
+    gap: 15px;
+  }
 }

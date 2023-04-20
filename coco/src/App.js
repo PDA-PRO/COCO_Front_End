@@ -84,6 +84,9 @@ import { WriteGeul } from "./components/Board/WriteGeul/WriteGuel";
 import { StatusList } from "./components/StatusList/StatusList";
 import { MyPage } from "./components/MyPage/MyPage";
 import { Manage } from "./components/Manage/Manage";
+import { ModifyBoard } from "./components/MyPage/ModifyBoard";
+import { Group } from "./components/Group/Group";
+import { MakeGroup } from "./components/Group/MakeGroup";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
@@ -101,6 +104,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/group" element={<Group />} />
+          <Route path="/makegroup" element={<MakeGroup />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
           <Route
@@ -113,6 +118,7 @@ function App() {
           />
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
+          <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />
           <Route path="/manage" element={<ManageLogin />} />
           <Route path="/manageSuccess" element={<Manage />} />

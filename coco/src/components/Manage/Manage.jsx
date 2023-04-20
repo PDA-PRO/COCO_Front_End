@@ -41,14 +41,17 @@ export const Manage = () => {
   };
   return (
     <div className="manage">
-      <div className="m-head">
-        <h2 id="m-title">MANAGE</h2>
-        <h2 id="m-Logo" onClick={() => moveHome()}>
-          COCO
-        </h2>
+      <div className="manageBody">
+        <div className="m-head">
+          <h2 id="m-title">MANAGE</h2>
+          <h2 id="m-Logo" onClick={() => moveHome()}>
+            COCO
+          </h2>
+        </div>
+        {show(menu)}
       </div>
+
       <Menu moveTo={(e) => moveTo(e)} />
-      {show(menu)}
     </div>
   );
 };
@@ -75,8 +78,6 @@ const Menu = (props) => {
       }
     });
   });
-
-  console.log(vis);
 
   const returnVis = (e) => {
     if (e === true) return "visible";

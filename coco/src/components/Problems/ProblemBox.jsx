@@ -2,7 +2,6 @@ import React from "react";
 import "./Problems.css";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { TbBattery1, TbBattery2, TbBattery3, TbBattery4 } from "react-icons/tb";
 import {
   TiBatteryCharge,
   TiBatteryLow,

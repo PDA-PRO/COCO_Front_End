@@ -14,11 +14,13 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useMediaQuery } from "react-responsive";
 
 export const Block = (props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
+  const Large = useMediaQuery({ minWidth: 1000 });
 
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
@@ -34,14 +36,14 @@ export const Block = (props) => {
   useEffect(() => {
     const chCate = (e) => {
       if (e === 1) {
-        setCategory("Notice");
+        setCategory("'공지'");
         setBgColor("rgb(231, 255, 211)");
       } else if (e === 2) {
-        setCategory("Help");
+        setCategory("'Help'");
         setBgColor("rgb(255, 248, 211)");
       } else if (e === 3) {
-        setCategory("자유");
-        setBgColor("rgb(227, 249, 255)");
+        setCategory("'자유'");
+        setBgColor("rgb(237, 251, 255)");
       }
     };
 
@@ -95,7 +97,7 @@ export const Block = (props) => {
         >
           <div className="blockContent">
             <div className="blockTop">
-              <h3>{props.info.user_id}</h3>
+              <h3>{props.info.title}</h3>
               <h4>{date}</h4>
             </div>
             <div className="blockSec">
@@ -121,13 +123,13 @@ export const Block = (props) => {
 
                 <div className="unOne">
                   <BsHeartFill color="red" size={22} />
-                  <p>{props.info.likes}</p>
+                  <p style={{ color: "red" }}>{props.info.likes}</p>
                 </div>
               </div>
             </div>
 
             <div className="blockBody">
-              <p>{props.info.title}</p>
+              <p>작성자 : {props.info.user_id}</p>
             </div>
           </div>
         </div>
@@ -156,7 +158,19 @@ export const Block = (props) => {
 
             <div className="blockSec2">
               {Rating(`${props.info.problem_diff}`)}
-              <p>정답률 : {props.info.problem_rate}%</p>
+              <p>
+                정답률 :{" "}
+                <span
+                  style={
+                    props.info.problem_rate > 50
+                      ? { color: "#7472ce" }
+                      : { color: "red" }
+                  }
+                >
+                  {props.info.problem_rate}
+                </span>
+                %
+              </p>
             </div>
 
             <div className="blockThird">

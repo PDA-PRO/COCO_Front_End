@@ -9,6 +9,8 @@ import { GoSearch } from "react-icons/go";
 import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
+import { useMediaQuery } from "react-responsive";
+
 import {
   TiBatteryCharge,
   TiBatteryLow,
@@ -18,14 +20,15 @@ import {
 } from "react-icons/ti";
 import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
-import Button from "react-bootstrap/esm/Button";
-// import { diffDayAndTime } from "fullcalendar";
 import axios from "axios";
 
 export const Problems = () => {
+  const Large = useMediaQuery({ minWidth: 1100 });
+  const reload = (e) => {
+    window.location.reload();
+  };
   const [order, setOrder] = useState([]);
   const onSubmitHandler = (order) => {
-    // console.log('parent submit', order);
     axios
       .post("http://127.0.0.1:8000/order_task", {
         order: order,
@@ -37,41 +40,43 @@ export const Problems = () => {
 
   const onSearchHandler = (info) => {
     axios
-    .post("http://127.0.0.1:8000/find_task/", {
-      info: info,
-    })
-    .then((res) => {
-      setOrder(res.data);
-    });
-  }
+      .post("http://127.0.0.1:8000/find_task/", {
+        info: info,
+      })
+      .then((res) => {
+        setOrder(res.data);
+      });
+  };
 
   return (
     <div>
       <Header />
       <div className="problemsContainer">
-        <div className="proTop">
-          <img src="./image/co.png" height="80px" alt="" />
-          <h4>COCO JUDGE</h4>
-        </div>
-        <div className="proBody">
-          <div className="BodyLeft">
-            <div className="leftTop">
-              <h4>No</h4>
-              <h4>문제 제목</h4>
-              <h4>난이도</h4>
-              <h4>정답률</h4>
-              <h4>언어</h4>
-            </div>
-            <Suspense fallback={<Spinner />}>
-              <GetProblems
-                resource={fetchData("http://127.0.0.1:8000/tasklist")}
-                order={order}
-              />
-            </Suspense>
+        <div className={Large ? "parentPC" : "elseParentPC"}>
+          <div className="proTop" onClick={() => reload()}>
+            <img src="./image/co.png" height="80px" alt="" />
+            <h4>COCO JUDGE</h4>
           </div>
-          <div className="BodyRight">
-            <SearchBar search={onSearchHandler}/>
-            <BodyRight submit={onSubmitHandler} />
+          <div className="proBody">
+            <div className="BodyLeft">
+              <div className="leftTop">
+                <h4>No</h4>
+                <h4>문제 제목</h4>
+                <h4>난이도</h4>
+                <h4>정답률</h4>
+                <h4>언어</h4>
+              </div>
+              <Suspense fallback={<Spinner />}>
+                <GetProblems
+                  resource={fetchData("http://127.0.0.1:8000/tasklist")}
+                  order={order}
+                />
+              </Suspense>
+            </div>
+            <div className="BodyRight">
+              <SearchBar search={onSearchHandler} />
+              <BodyRight submit={onSubmitHandler} />
+            </div>
           </div>
         </div>
       </div>
@@ -80,10 +85,10 @@ export const Problems = () => {
   );
 };
 
-const SearchBar = ({search}) => {
+const SearchBar = ({ search }) => {
   const onSearchHandler = (e) => {
     var info = document.getElementById("SV").value;
-    search(info)
+    search(info);
     console.log(info);
   };
 

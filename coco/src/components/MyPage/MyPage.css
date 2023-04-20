@@ -1,7 +1,8 @@
 .myPage {
   display: flex;
   flex-flow: column nowrap;
-  padding: 5rem 18vw 5rem 18vw;
+  padding: 5rem 0;
+  align-items: center;
 }
 
 .myPage h2 {
@@ -12,13 +13,17 @@
   padding-left: 2vw;
 }
 
+.myPageBody {
+  width: clamp(750px, 90%, 1200px);
+}
+
 /*---------------------------------FirstBox-------------------------------*/
 .mp-infoBox {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 20px 5vw;
   justify-content: space-between;
   margin: 20px 0 60px 0;
@@ -129,13 +134,51 @@
   color: gray;
 }
 
+/* ------------------------------------------ 1st box 반응형 ------------------------------------- */
+
+@media screen and (max-width: 992px) {
+  .picBox img {
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+  }
+
+  .picSelect label {
+    cursor: pointer;
+    font-family: "Pretendard-Regular";
+    font-weight: 600;
+    font-size: 0.9em;
+    border: 2px solid skyblue;
+    border-radius: 20px;
+    padding: 3px;
+    width: 130px;
+    text-align: center;
+  }
+
+  .levelField h3 {
+    font-size: 2rem;
+  }
+
+  .levelField p {
+    font-weight: 500;
+    font-size: 0.9em;
+  }
+
+  .txtInputBox .mb-3 {
+    width: 250px !important;
+    font-family: "Pretendard-Regular";
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}
+
 /*-------------------------SECBOX-------------------------------*/
 
 .mp-secBox {
   display: flex;
   flex-flow: column nowrap;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 30px 5vw;
   margin: 20px 0 60px 0;
   gap: 30px;
@@ -154,6 +197,11 @@
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1.5rem;
+}
+@media screen and (max-width: 992px) {
+  .secBox-row h3 {
+    font-size: 1.2rem;
+  }
 }
 
 .mp-secBox .secBox-col {
@@ -231,35 +279,36 @@ tspan {
   display: flex;
   flex-flow: column nowrap;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 30px 5vw;
-  margin: 20px 0 20px 0;
-  gap: 30px;
+  margin: 20px 0 60px 0;
+  gap: 13px;
 }
 
 .mp-ThirdBox .myGuel {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 5fr 0.5fr;
+  grid-template-columns: 1fr 2fr 0.8fr 4fr 0.5fr 0.5fr;
   padding: 8px;
   border: 2px solid lightgray;
-  border-radius: 30px;
+  border-radius: 12px;
   align-items: center;
 }
 
 .myGuel h4 {
   grid-column: 1/2;
   font-family: "Pretendard-Regular" !important;
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
+  color: gray;
 }
 
 .myGuel h3 {
   grid-column: 2/3;
   font-family: "Pretendard-Regular" !important;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
   cursor: pointer;
@@ -268,8 +317,8 @@ tspan {
 .myGuel h5 {
   grid-column: 3/4;
   font-family: "Pretendard-Regular" !important;
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
 }
@@ -279,7 +328,7 @@ tspan {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  gap: 40px;
+  gap: 35px;
   align-items: center;
 }
 
@@ -293,11 +342,104 @@ tspan {
 .bBox p {
   font-family: "Pretendard-Regular" !important;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1em;
   margin: 0 !important;
   text-align: center;
 }
 
 .myGuel #delGuel {
   cursor: pointer;
+}
+
+/*-------------------modify_board---------------------------*/
+.modify_board {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-left: 18vw;
+  padding-right: 18vw;
+}
+
+.modify_head {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  margin-top: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid lightgray;
+  font-family: "Pretendard-Regular";
+}
+
+.modify_title {
+  margin: 2vw 0 2vw 0;
+  width: 100%;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.2em;
+  border-radius: 15px;
+}
+
+.modify_board_btn {
+  margin: 2vw 5vw 4vw 5vw;
+}
+
+/*-------------------Last box---------------------------*/
+
+.mp-FourthBox {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid lightgray;
+  border-radius: 20px;
+  padding: 30px 5vw;
+  margin: 20px 0 20px 0;
+  gap: 13px;
+}
+
+.mp-FourthBox .BodyLeft .leftTop {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.3fr;
+  align-items: center;
+  border: 2px solid rgb(198, 209, 235);
+  border-radius: 15px 15px 0 0;
+  padding: 10px 15px;
+}
+
+.mp-FourthBox .leftTop h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+  color: rgb(128, 128, 128);
+}
+.mp-FourthBox .leftTop h4:nth-child(1) {
+  color: red;
+}
+
+.MyTasksBox {
+  border-bottom: 2px solid rgb(198, 209, 235);
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.3fr;
+  align-items: center;
+  padding: 11px 15px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+}
+
+.MyTasksBox:hover {
+  background-color: rgb(239, 248, 255);
+}
+
+.MyTasksBox h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.MyTasksBox h4:nth-child(1) {
+  width: 70px;
+
+  color: red;
+  font-weight: 600 !important;
 }

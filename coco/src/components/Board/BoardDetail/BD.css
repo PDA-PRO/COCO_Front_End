@@ -1,9 +1,12 @@
 .boardDetail {
   display: flex;
   flex-flow: column nowrap;
-  padding-left: 22vw;
-  padding-right: 22vw;
+  align-items: center;
   margin-top: 5rem;
+}
+
+.boardDetail .BDBody {
+  width: clamp(650px, 90%, 1180px);
 }
 
 .boardDetail .BDtitle {
@@ -19,7 +22,7 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  padding-bottom: 1.5rem;
+  padding-bottom: 15px;
   border-bottom: 1px solid lightgray;
   justify-content: space-between;
 }
@@ -56,19 +59,19 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  width: 18vw;
+  gap: 30px;
 }
 
 .boardDetail .BDtitle h2 {
   font-family: "GmarketSansMedium" !important;
   font-weight: 700;
-  font-size: 2.1em;
+  font-size: 1.7em;
 }
 
 .boardDetail .BDtitle .BD_idAndTime h3 {
   font-family: "Pretendard-Regular";
-  font-weight: 550;
-  font-size: 1.1em;
+  font-weight: 600;
+  font-size: 1em;
 }
 
 .boardDetail .BDContent {
@@ -80,10 +83,13 @@
 }
 
 .BDContent .BDTxt {
-  padding-left: 30px;
-  padding-right: 30px;
+  font-family: "Pretendard-Regular";
+  font-weight: 550;
+  font-size: 1.1em;
+  padding-left: 20px;
+  padding-right: 20px;
   min-height: 200px;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .BDCode {
@@ -133,10 +139,10 @@
 .comments .cHead {
   display: flex;
   flex-flow: row nowrap;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid lightgray;
 
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   justify-content: space-between;
 }
 
@@ -178,16 +184,16 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-bottom: 5rem;
 }
 
 .commentContext {
   /* border: 1px solid lightgray; */
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 15px 30px 15px 30px;
-  background-color: #f3f3f3;
+  background-color: #f3f3f39f;
   display: flex;
   flex-flow: column nowrap;
 }

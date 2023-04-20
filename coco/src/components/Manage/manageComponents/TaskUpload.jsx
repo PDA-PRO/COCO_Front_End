@@ -1,19 +1,21 @@
 import "../Manage.css";
-import React, { Suspense, useRef } from "react";
+import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import {
   BsArrowDownRight,
   BsArrowUpLeft,
-  BsImages,
   BsUiChecksGrid,
   BsFileEarmarkZip,
 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export const TaskUpload = () => {
   const navigate = useNavigate();
@@ -21,8 +23,6 @@ export const TaskUpload = () => {
     navigate("/");
   };
   const [title, setTitle] = useState(""); // 제목 State !필수
-  const [desc, setDesc] = useState(""); // 디스크립션 State !필수
-  const [desPic, setDesPic] = useState(null); // 디스크립션 사진 State
 
   const [diff, setDiff] = useState(""); // 난이도 State !필수
   const [time, setTime] = useState(""); // 시간제한 State !필수
@@ -40,12 +40,42 @@ export const TaskUpload = () => {
   const [cLan, setCLan] = useState(false); // 설정 언어 State !필수
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
 
-  const onTitleHandler = (e) => {
-    setTitle(e.currentTarget.value);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const updateTextDescription = async (state) => {
+    await setEditorState(state);
   };
 
-  const onDescHandler = (e) => {
-    setDesc(e.currentTarget.value);
+  const uploadCallback = (imagefile) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          "http://localhost:8000/image/upload-temp",
+          {
+            file: imagefile, // 파일
+          },
+          {
+            headers: { "Content-Type": `multipart/form-data; ` },
+            params: {
+              type: 3,
+            },
+          }
+        )
+        .then((res) => {
+          resolve(res);
+        })
+        .catch(reject);
+    })
+      .then((res) => {
+        return { data: { link: res.data } };
+      })
+      .catch(() => {
+        return { data: { link: "이미지 업로드 실패" } };
+      });
+  };
+
+  const onTitleHandler = (e) => {
+    setTitle(e.currentTarget.value);
   };
 
   const onDiffHandler = (e) => {
@@ -116,7 +146,6 @@ export const TaskUpload = () => {
     console.log("shoot");
     if (
       title == "" ||
-      desc == "" ||
       diff == "" ||
       time == "" ||
       mem == "" ||
@@ -127,80 +156,43 @@ export const TaskUpload = () => {
     ) {
       return alert("정보 입력 부족");
     } else {
-      if (testCase == null) {
-        console.log(testCase);
-        console.log(desPic);
-        axios
-          .post(
-            "http://127.0.0.1:8000/manage",
-            {
-              testCase: testCase, // 파일
-            },
-            {
-              headers: { "Content-Type": `multipart/form-data; ` },
-              params: {
-                title: title,
-                description: desc,
-                diff: diff,
-                timeLimit: time,
-                memLimit: mem,
-                inputDescription: inputDesc,
-                inputEx1: inputEx1,
-                inputEx2: inputEx2,
-                outputDescription: outputDesc,
-                outputEx1: outputEx1,
-                outputEx2: outputEx2,
-                python: py,
-                C_Lan: cLan,
-              },
-            }
-          )
-          .then(function (response) {
-            if (response.data.result === 1) {
-              alert(`${title} 업로드 성공`);
-              moveHome();
-            } else {
-              alert("ERROR - SERVER COMMUNICATION FAILED");
-            }
-          });
-      } else {
-        console.log(testCase);
-        console.log(desPic);
-        axios
-          .post(
-            "http://127.0.0.1:8000/manage",
-            {
-              desPic: desPic,
-              testCase: testCase, // 파일
-            },
-            {
-              headers: { "Content-Type": `multipart/form-data; ` },
-              params: {
-                title: title,
-                description: desc,
-                diff: diff,
-                timeLimit: time,
-                memLimit: mem,
-                inputDescription: inputDesc,
-                inputEx1: inputEx1,
-                inputEx2: inputEx2,
-                outputDescription: outputDesc,
-                outputEx1: outputEx1,
-                outputEx2: outputEx2,
-                python: py,
-                C_Lan: cLan,
-              },
-            }
-          )
-          .then(function (response) {
-            if (response.data.result === 1) {
-              alert(`${title} 업로드 성공`);
-              moveHome();
-            } else {
-              alert("ERROR - SERVER COMMUNICATION FAILED");
-            }
-          });
-      }
+      console.log(testCase);
+      const formData = new FormData();
+      //File 추가
+      formData.append("testCase", testCase);
+
+      //객체를 Json타입으로 파싱하여 Blob객테 생성, type에 json 타입 지정
+      formData.append(
+        "description",
+        JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+      );
+
+      axios
+        .post("http://127.0.0.1:8000/manage", formData, {
+          headers: { "Content-Type": `multipart/form-data; ` },
+          params: {
+            title: title,
+            diff: diff,
+            timeLimit: time,
+            memLimit: mem,
+            inputDescription: inputDesc,
+            inputEx1: inputEx1,
+            inputEx2: inputEx2,
+            outputDescription: outputDesc,
+            outputEx1: outputEx1,
+            outputEx2: outputEx2,
+            python: py,
+            C_Lan: cLan,
+          },
+        })
+        .then(function (response) {
+          if (response.data.result === 1) {
+            alert(`${title} 업로드 성공`);
+            moveHome();
+          } else {
+            alert("ERROR - SERVER COMMUNICATION FAILED");
+          }
+        });
     }
   };
   return (
@@ -218,41 +210,53 @@ export const TaskUpload = () => {
         </InputGroup>
         <div className="m-upload-context">
           <div className="m-desc">
-            {/* 문제 디스크립션 */}
-            <InputGroup className="m-des">
-              <InputGroup.Text>Des.</InputGroup.Text>
-              <Form.Control
-                as="textarea"
-                style={{ minHeight: "550px" }}
-                placeholder="문제에 대한 Description 입력"
-                onChange={onDescHandler}
-              />
-            </InputGroup>
-            {/* 문제 디스크립션 */}
-
-            {/* 문제에 대한 사진 추가 */}
-            <Form.Group controlId="formFileMultiple" className="m-des-img">
-              <Form.Label>
-                <BsImages size={20} style={{ marginRight: "15px" }} />
-                문제 설명에 추가할 사진 선택
-              </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={(e) => {
-                  setDesPic(e.target.files[0]);
-                }}
-              />
-            </Form.Group>
-            {result && (
-              <img
-                ref={imageRef}
-                src={result}
-                style={({ maxWidth: "100%" }, { minWidth: "100%" })}
-              />
-            )}
-
-            {/* 문제에 대한 사진 추가 */}
+            <Editor
+              placeholder={"내용을 작성해주세요."}
+              editorState={editorState}
+              onEditorStateChange={updateTextDescription}
+              toolbar={{
+                options: [
+                  "inline",
+                  "blockType",
+                  "fontSize",
+                  "fontFamily",
+                  "list",
+                  "textAlign",
+                  "colorPicker",
+                  "link",
+                  "emoji",
+                  "image",
+                  "remove",
+                  "history",
+                ],
+                inline: { inDropdown: true },
+                list: { inDropdown: true },
+                textAlign: { inDropdown: true },
+                link: { inDropdown: true },
+                history: { inDropdown: true },
+                image: { uploadCallback: uploadCallback, previewImage: true },
+                fontFamily: {
+                  options: [
+                    "GmarketSansMedium",
+                    "Pretendard-Regular",
+                    "Impact",
+                    "Open Sans",
+                    "Roboto",
+                    "Tahoma",
+                    "Times New Roman",
+                    "Verdana",
+                  ],
+                },
+              }}
+              localization={{ locale: "ko" }}
+              editorStyle={{
+                minHeight: "550px",
+                width: "100%",
+                border: "3px solid lightgray",
+                padding: "20px",
+                fontFamily: "Pretendard-Regular",
+              }}
+            />
 
             {/* 문제에 대한 난이도 선정 */}
             <div className="m-diff">

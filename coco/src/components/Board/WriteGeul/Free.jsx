@@ -9,7 +9,7 @@ import draftjsToHtml from "draftjs-to-html";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 
-export const Free = ({title}) => {
+export const Free = ({ title }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [htmlString, setHtmlString] = useState("");
   const userInfo = useAppSelector((state) => state.loginState);
@@ -27,9 +27,9 @@ export const Free = ({title}) => {
   const onSubmit = () => {
     console.log(title);
     console.log(htmlString);
-    if(title === "" || htmlString === ""){
+    if (title === "" || htmlString === "") {
       return alert("완전히 입력해주세요");
-    }else{
+    } else {
       axios
         .post(
           "http://127.0.0.1:8000/write_board/",
@@ -37,7 +37,7 @@ export const Free = ({title}) => {
             user_id: userInfo.id,
             title: title,
             context: htmlString,
-            category: 3
+            category: 3,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -55,7 +55,7 @@ export const Free = ({title}) => {
           alert("인증실패");
         });
     }
-  }
+  };
   return (
     <div className="freeWrite">
       <Editor
@@ -63,7 +63,20 @@ export const Free = ({title}) => {
         editorState={editorState}
         onEditorStateChange={updateTextDescription}
         toolbar={{
-          options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'remove', 'history'],
+          options: [
+            "inline",
+            "blockType",
+            "fontSize",
+            "fontFamily",
+            "list",
+            "textAlign",
+            "colorPicker",
+            "link",
+            "emoji",
+            "image",
+            "remove",
+            "history",
+          ],
           inline: { inDropdown: true },
           list: { inDropdown: true },
           textAlign: { inDropdown: true },
@@ -71,16 +84,26 @@ export const Free = ({title}) => {
           history: { inDropdown: true },
           image: { uploadCallback: uploadCallback },
           fontFamily: {
-            options: ['GmarketSansMedium', "Pretendard-Regular", 'Impact', 'Open Sans', 'Roboto', 'Tahoma', 'Times New Roman', 'Verdana'],
-          }
+            options: [
+              "GmarketSansMedium",
+              "Pretendard-Regular",
+              "Impact",
+              "Open Sans",
+              "Roboto",
+              "Tahoma",
+              "Times New Roman",
+              "Verdana",
+            ],
+          },
         }}
         localization={{ locale: "ko" }}
         editorStyle={{
           height: "480px",
           width: "100%",
-          border: "3px solid lightgray",
-          padding: "20px",
-          fontFamily: 'Pretendard-Regular'
+          border: "2px solid lightgray",
+
+          padding: "15px",
+          fontFamily: "Pretendard-Regular",
         }}
       />
       <Button variant="outline-info" id="submitFree" onClick={onSubmit}>

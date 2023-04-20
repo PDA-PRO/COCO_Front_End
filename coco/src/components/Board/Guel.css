@@ -1,13 +1,26 @@
 .Geul {
+  width: 90%;
+  height: 250px;
+  border-radius: 20px;
+  /* padding: 20px; */
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.Geul .GeulInner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
   display: flex;
   flex-flow: column nowrap;
-  width: 260px;
-  height: 260px;
-  border-radius: 20px;
-  padding: 20px;
   justify-content: space-between;
-  margin-bottom: 30px;
-  cursor: pointer;
+}
+
+.Geul::after {
+  content: "";
+  padding-bottom: 90% !important;
 }
 
 .Geul:hover {
@@ -19,14 +32,14 @@
 .Geul p {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
-  font-weight: 650;
-  font-size: 1em;
+  font-weight: 600;
+  font-size: 0.9em;
 }
 
 .Geul h2 {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.4em;
 }
 
@@ -34,7 +47,7 @@
   margin: 0 !important;
   font-family: "Pretendard-Regular";
   font-weight: 600;
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .Geul .guelTitle {
@@ -58,6 +71,25 @@
   flex-flow: row nowrap;
   align-items: center;
   gap: 5px;
+}
+
+@media screen and (max-width: 850px) {
+  .Geul {
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+    /* padding: 20px; */
+    display: block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .Geul .un {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 /* ----------------------------------------------

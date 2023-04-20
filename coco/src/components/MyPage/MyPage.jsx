@@ -14,6 +14,7 @@ import { FirstBox } from "./FirstBox";
 import { MyTasks } from "./MyTasks";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
+import { GiBlackBook, GiNotebook } from "react-icons/gi";
 
 export const MyPage = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -66,7 +67,7 @@ export const MyPage = () => {
           </Suspense>
           <h2>
             <span>
-              <IoClipboardOutline
+              <GiNotebook
                 size={29}
                 color="green"
                 style={{ paddingBottom: "3px", marginRight: "13px" }}
@@ -86,7 +87,7 @@ export const MyPage = () => {
           </Suspense>
           <h2>
             <span>
-              <IoClipboardOutline
+              <GiBlackBook
                 size={29}
                 color="green"
                 style={{ paddingBottom: "3px", marginRight: "13px" }}
@@ -126,7 +127,7 @@ const GetThird = ({ resource }) => {
   return <>{<ThirdBox props={res} key={res.id} />}</>;
 };
 
-const GetMyTasks = ({resource}) => {
-  const res = resource.read()
-  return <>{<MyTasks props={res} key={res.id} />}</>
-}
+const GetMyTasks = ({ resource }) => {
+  const res = resource.read();
+  return <>{<MyTasks props={res} key={res.id} />}</>;
+};

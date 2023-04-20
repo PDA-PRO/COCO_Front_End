@@ -1,0 +1,271 @@
+.mGroup {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 1rem 0 5rem 0;
+}
+
+.mGroup-Body {
+  width: clamp(650px, 90%, 1200px);
+}
+
+.mG-Header {
+  padding: 10px 0px 10px 20px;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.mG-Header h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.3em;
+  margin: 0 !important;
+}
+
+.mG-Body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3vw;
+  padding: 30px 10px;
+}
+
+.mG-inputs {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.mG-inputs p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+.Gname {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mG-inputs .mb-3 {
+  width: 80%;
+
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.mG-inputs .mG-tips {
+  border: 2px solid lightgray;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 25px;
+  background-color: rgb(247, 247, 247);
+  color: rgb(100, 100, 100);
+}
+.mG-tips p {
+  font-weight: 600;
+  font-size: 1em;
+  margin-bottom: 6px !important;
+}
+
+.mG-invite {
+  border: 2px solid burlywood;
+  border-radius: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+}
+
+.mG-invite .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(255, 250, 250);
+  padding: 10px;
+}
+
+.searchBar #goSearch {
+  cursor: pointer;
+}
+
+.mG-invite .searchBar input {
+  background-color: rgb(255, 250, 250);
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  color: rgb(66, 53, 44);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  padding: 2px 5px;
+  width: 80%;
+  border-bottom: 1px solid burlywood;
+}
+.mG-invite .searchBar input:focus {
+  outline: none;
+  border-bottom: 2px solid burlywood;
+}
+
+.mG-invite .leftBottom {
+  border: none;
+}
+
+.mG-invite .userTop {
+  display: grid;
+
+  margin: 3px 20px 0 20px;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  border: 1px solid burlywood;
+  border-radius: 10px;
+  padding: 3px 0;
+}
+
+.userTop p {
+  text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.mG-invite .userBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  border-bottom: 1px solid burlywood;
+  margin: 0 22px;
+  padding: 5px 0;
+}
+
+.userBox p {
+  text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+.userBox:hover {
+  background-color: rgb(255, 245, 231);
+  cursor: pointer;
+}
+
+.mG-right {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.mG-right .mG-rTop {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  border-bottom: 2px solid rgb(255, 202, 202);
+  padding-bottom: 5px;
+}
+
+.mG-right h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+  margin: 0 !important;
+}
+
+.mG-right .nowMembers {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  border-radius: 15px;
+  border: 2px solid rgb(255, 224, 183);
+  padding: 15px 15px 20px 15px;
+}
+
+.mG-now {
+  border-top: 2px solid rgb(255, 227, 189);
+}
+
+.mG-now h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  text-align: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(226, 199, 180);
+  margin: 10px 22px 0 22px !important;
+}
+
+.mG-now .mems {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  border-bottom: 1px solid burlywood;
+  padding: 5px 0;
+  margin: 0 22px;
+}
+
+.mG-now .mems:hover {
+  background-color: rgb(255, 245, 231);
+  cursor: pointer;
+}
+
+.mems p {
+  text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+#btn-mG {
+  margin-top: 50px !important;
+  width: 25%;
+  align-self: flex-end;
+  position: relative;
+  top: 25%;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  border-radius: 15px;
+}
+
+#btn-mG:hover {
+  color: aliceblue;
+  font-weight: 500;
+  background-color: rgb(255, 206, 115);
+}
+
+@media screen and (max-width: 900px) {
+  .mG-Body {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 30px 10px;
+  }
+
+  .mG-now {
+    border-top: 2px solid rgb(255, 227, 189);
+    padding-bottom: 30px;
+  }
+
+  #btn-mG {
+    margin-top: 50px !important;
+    width: 97%;
+    border-radius: 15px;
+    align-self: center;
+    position: relative;
+    margin-bottom: 15px;
+    font-family: "Pretendard-Regular";
+    font-weight: 600;
+    font-size: 1em;
+  }
+}

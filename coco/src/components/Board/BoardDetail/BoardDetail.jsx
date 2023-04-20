@@ -33,10 +33,7 @@ export const BoardDetail = () => {
       <Header />
       <Suspense fallback={<Loader />}>
         <GetBoardDetail
-          resource={fetchData(
-            `http://127.0.0.1:8000/board/${path.at(-1)}/`
-          )}
-
+          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}
           key={path.at(-1)}
         />
       </Suspense>
@@ -56,15 +53,14 @@ const GetBoardDetail = ({ resource }) => {
   var numLike = detail.likes;
   const [isMe, setIsMe] = useState(false);
 
-
   const likedBoard = () => {
-    for(let i=0;i<detail.is_board_liked.length;i++){
-      if(detail.is_board_liked[i] === userInfo.id){
+    for (let i = 0; i < detail.is_board_liked.length; i++) {
+      if (detail.is_board_liked[i] === userInfo.id) {
         setLike(true);
         break;
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
@@ -72,7 +68,6 @@ const GetBoardDetail = ({ resource }) => {
     }
 
     likedBoard();
-
   }, [isMe]);
 
   const commentShoot = (e) => {
@@ -116,8 +111,7 @@ const GetBoardDetail = ({ resource }) => {
     } else {
       setLikeNum(likeNum - 1);
       numLike -= 1;
-      setLike(false)
-
+      setLike(false);
     }
     axios
       .post(
@@ -193,7 +187,7 @@ const GetBoardDetail = ({ resource }) => {
           <div className="BDsubTitle">
             <div id="bun1">
               <div className="BDun">
-                <BsFillEyeFill size={25} color="gray" />
+                <BsFillEyeFill size={23} color="gray" />
                 <p>{detail.views}</p>
               </div>
 
@@ -205,7 +199,7 @@ const GetBoardDetail = ({ resource }) => {
               {isMe ? (
                 <p id="del_Guel" onClick={onDeleteHandler}>
                   <BsTrash
-                    size={25}
+                    size={20}
                     color="red"
                     style={{ cursor: "pointer" }}
                   />

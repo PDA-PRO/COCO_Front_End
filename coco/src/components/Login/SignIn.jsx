@@ -56,12 +56,18 @@ export const SignIn = () => {
             alert(`${id}님 안녕하세요`);
             let jwt_role = jwtdecode(response.data.access_token).role;
             let jwt_id = jwtdecode(response.data.access_token).sub;
+            let jwt_name = jwtdecode(response.data.access_token).name;
+            let jwt_exp = jwtdecode(response.data.access_token).user_exp;
+            let jwt_level = jwtdecode(response.data.access_token).level;
             dispatch({
               type: "loginSlice/login",
               access_token: response.data.access_token,
               token_type: response.data.token_type,
               id: jwt_id,
+              name: jwt_name,
               role: jwt_role,
+              exp: jwt_exp,
+              level: jwt_level,
             });
             navigateToHome();
           } else {

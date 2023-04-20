@@ -18,6 +18,7 @@ import { Loader } from "../Loader/Loader";
 export const Home = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
+  console.log(userInfo.name);
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/mypage/${e}`);
@@ -56,16 +57,17 @@ export const Home = () => {
               </div>
 
               <Suspense fallback={<Spinner />}>
-                <MyGraph resource={fetchData(
+                <MyGraph
+                  resource={fetchData(
                     `http://127.0.0.1:8000/my_status/${userInfo.id}/`,
                     {
                       headers: {
                         Authorization: "Bearer " + userInfo.access_token,
                       },
                     }
-                  )} />
+                  )}
+                />
               </Suspense>
-
             </div>
           )}
 
@@ -118,15 +120,12 @@ const GetNotice = ({ resource }) => {
   );
 };
 
-
-const MyGraph = ({resource}) => {
-  const detail = resource.read()
+const MyGraph = ({ resource }) => {
+  const detail = resource.read();
   return (
     <>
-      <HomeGraph growth={detail.growth}/>
-      <DiffGraph diff={detail.diff}/>
+      <HomeGraph growth={detail.growth} />
+      <DiffGraph diff={detail.diff} />
     </>
   );
-}
-
-
+};

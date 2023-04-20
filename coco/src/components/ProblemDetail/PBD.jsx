@@ -20,6 +20,8 @@ import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
+import draftToHtml from "draftjs-to-html";
+import { convertFromRaw } from "draft-js";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { IoMdPaperPlane } from "react-icons/io";
 
@@ -44,7 +46,6 @@ const GetDetail = ({ resource }) => {
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(1);
-
   //submit이후 결과창 이동
   const goToResult = (e) => {
     console.log(e);
@@ -155,73 +156,98 @@ const GetDetail = ({ resource }) => {
                 <BsClipboardCheck size={25} />
                 <h2>문제 설명</h2>
               </div>
-
-              <p id="PBD-txt">{detail.mainDesc}</p>
+              <div
+                className="PBD-txt"
+                dangerouslySetInnerHTML={{
+                  __html: draftToHtml(JSON.parse(detail.mainDesc)),
+                }}
+              />
+            </div>
+            <div className="PBD-pbTxt">
+              <div className="PBD-pbTitle">
+                <BsArrowDownRight size={25} color="red" />
+                <h2>Input</h2>
+              </div>
+              <p className="PBD-txt">{detail.inDesc}</p>
+            </div>
+            <div className="PBD-pbTxt">
+              <div className="PBD-pbTitle">
+                <BsArrowUpLeft size={25} color="#00ff00" />
+                <h2>Output</h2>
+              </div>
+              <p className="PBD-txt">{detail.outDesc}</p>
             </div>
 
             <div className="PBD-exBox">
               <div>
                 <div className="PBD-pbTitle">
-                  <BsArrowDownRight size={25} color="red" />
-                  <h2>Input</h2>
-                </div>
-
-                <p className="PBD-txt2">{detail.inDesc}</p>
-
-                <div className="PBD-pbTitle">
                   <BsQuestionLg size={25} color="red" />
                   <h2>입력 예시</h2>
                 </div>
-
-                <p className="PBD-txt2">{detail.inputEx1}</p>
+                <p className="PBD-txt">{detail.inputEx1}</p>
               </div>
 
               <div>
-                <div className="PBD-pbTitle">
-                  <BsArrowUpLeft size={25} color="#00ff00" />
-                  <h2>Output</h2>
-                </div>
-
-                <p className="PBD-txt2">{detail.outDesc}</p>
-
                 <div className="PBD-pbTitle">
                   <BsExclamationLg size={25} color="#00ff00" />
                   <h2>출력 예시</h2>
                 </div>
 
-                <p className="PBD-txt2">{detail.outputEx1}</p>
+                <p className="PBD-txt">{detail.outputEx1}</p>
               </div>
             </div>
-          </div>
+            {detail.inputEx2 != "" ? (
+              <div className="PBD-exBox">
+                <div>
+                  <div className="PBD-pbTitle">
+                    <BsQuestionLg size={25} color="red" />
+                    <h2>입력 예시</h2>
+                  </div>
+                  <p className="PBD-txt">{detail.inputEx1}</p>
+                </div>
 
-          <div className="PBD-input">
-            <div className="PBD-pbTitle" id="rightCode">
-              <IoLogoPython size={25} color="skyblue" />
-              <h2>코드 입력 : Python3</h2>
-              <FloatingLabel controlId="floatingSelect">
-                <Form.Select
-                  aria-label="F"
-                  onChange={(e) => {
-                    setcodeLang(e.currentTarget.value);
-                    console.log(e.currentTarget.value);
-                  }}
-                >
-                  <option value={1}>Python</option>
-                  <option value={2}>C</option>
-                </Form.Select>
-              </FloatingLabel>
-            </div>
-            <div className="PBD-scroll">
-              <CodeMirror
-                value="print('hello')"
-                extensions={[python()]}
-                onChange={(value) => {
-                  setCode(value);
-                  console.log(value);
-                }}
-              />
-            </div>
+                <div>
+                  <div className="PBD-pbTitle">
+                    <BsExclamationLg size={25} color="#00ff00" />
+                    <h2>출력 예시</h2>
+                  </div>
+
+                  <p className="PBD-txt">{detail.outputEx1}</p>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
+          <Allotment.Pane snap={false}>
+            <div className="PBD-input">
+              <div className="PBD-pbTitle">
+                <IoLogoPython size={25} color="skyblue" />
+                <h2>코드 입력 : </h2>
+                <div>
+                  <Form.Select
+                    size="sm"
+                    aria-label="F"
+                    onChange={(e) => {
+                      setcodeLang(e.currentTarget.value);
+                    }}
+                  >
+                    <option value={1}>Python3</option>
+                    <option value={2}>C</option>
+                  </Form.Select>
+                </div>
+              </div>
+              <div className="PBD-scroll">
+                <CodeMirror
+                  value="print('hello')"
+                  extensions={codeLang == 1 ? [python()] : [cpp()]}
+                  onChange={(value) => {
+                    setCode(value);
+                  }}
+                />
+              </div>
+            </div>
+          </Allotment.Pane>
         </Allotment>
       </div>
       <div className="PBD-menu">

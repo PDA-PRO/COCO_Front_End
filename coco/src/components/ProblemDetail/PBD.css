@@ -4,9 +4,9 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  --sash-size: 20px;
-  --sash-hover-size: 20px;
-  --focus-border: rgb(123, 123, 123);
+  --sash-size:20px;
+  --sash-hover-size:20px;
+  --focus-border:no-repeat center/contain url("/public/image/threeline.png") rgb(241, 241, 241);
 }
 .PBD-title {
   display: flex;
@@ -14,8 +14,9 @@
   padding: 0.6rem 2.5rem 0.6rem 1.5rem;
   justify-content: space-between;
   align-items: end;
-  border-bottom: gray solid 1px;
+  border-bottom: rgb(216, 216, 216) solid 1px;
   flex: 1 1 0;
+  background-color: rgb(241, 241, 241);
 }
 
 .problemsName-pbd {
@@ -111,11 +112,7 @@
 .PBD-body .PBD-problem {
   display: flex;
   flex-flow: column;
-  padding: 1rem 1.5rem;
-}
-
-.PBD-problem .PBD-pbTxt {
-  min-height: 300px;
+  padding: 1.5rem 1.5rem;
 }
 
 .PBD-pbTitle {
@@ -123,8 +120,17 @@
   flex-flow: row nowrap;
   border-bottom: 2px solid lightgray;
   gap: 10px;
-  align-items: flex-start;
   font-weight: 600;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+
+.PBD-problem .PBD-txt {
+  white-space: pre-wrap;
+  font-weight: 600;
+  font-size: 0.9em;
+  padding: 1.5rem 1rem;
 }
 
 #rightCode {
@@ -147,18 +153,16 @@
   height: 40px !important;
 }
 
-.PBD-problem .PBD-pbTxt #PBD-txt {
-  white-space: pre-wrap;
-  font-weight: 600;
-  font-size: 0.9em;
-  padding-left: 1rem;
-  padding-top: 1rem;
+.PBD-img{
+  width: 95%;
+  height: auto;
+  margin: 1.5rem 1rem;
 }
-
 .PBD-body h2 {
   white-space: pre-wrap;
   font-weight: 600;
   font-size: 1em;
+  margin: 0px 0px;
 }
 
 .PBD-body .PBD-problem .PBD-exBox {
@@ -181,7 +185,7 @@
   display: flex;
   flex-flow: column;
   height: 100%;
-  padding: 0.6rem 1.5rem;
+  padding: 1.5rem 1.5rem;
 }
 
 .PBD-body .PBD-input .PBD-pbTitle {
@@ -199,24 +203,25 @@
   background-color: #5fe45f;
 }
 
-.PBD-menu {
-  border-top: gray 1px solid;
+.PBD-menu{
+  border-top: rgb(216, 216, 216) solid 1px;
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0.6rem 1.5rem;
-  font-family: "Pretendard-Regular";
-  font-weight: 400;
+  background-color: rgb(241, 241, 241);
 }
 
-.sash-hover {
-  background-color: rgb(123, 123, 123);
-}
-
-.sash {
-  background-color: rgb(211, 211, 211);
+.sash-hover{
   margin-left: 5px;
+
+}
+
+.sash{
+  margin-left: 5px;
+
+  background: no-repeat center/contain url("/public/image/threeline2.png") rgb(241, 241, 241);
 }
 
 .PBD-scroll {
@@ -224,8 +229,8 @@
   overflow-y: auto;
 }
 
-.PBD-scroll::-webkit-scrollbar-thumb {
-  background-color: rgb(123, 123, 123);
+.PBD-scroll::-webkit-scrollbar-thumb{
+  background-color:  rgb(211, 211, 211);
   /* 스크롤바 둥글게 설정    */
   border-radius: 10px;
 }

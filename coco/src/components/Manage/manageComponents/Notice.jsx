@@ -2,17 +2,21 @@ import "../Manage.css";
 import React, { useState, Suspense } from "react";
 import Button from "react-bootstrap/Button";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw,
+  ContentState,
+} from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../../api/fetchTask";
 
 export const Notice = () => {
-
-
   return (
     <>
       <h2 className="mTi">NOTICE</h2>
@@ -29,10 +33,13 @@ export const Notice = () => {
 
 const GetNotice = ({ resource }) => {
   const notice = resource.read();
-  const initPlaceholder = <div dangerouslySetInnerHTML={{ __html: notice }}/>
-
+  const initPlaceholder = <div dangerouslySetInnerHTML={{ __html: notice }} />;
   const userInfo = useAppSelector((state) => state.loginState);
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(
+      ContentState.createFromBlockArray(htmlToDraft(notice).contentBlocks)
+    )
+  );
   const [htmlString, setHtmlString] = useState("");
 
   const updateTextDescription = async (state) => {
@@ -41,25 +48,40 @@ const GetNotice = ({ resource }) => {
     setHtmlString(html);
   };
 
-  const uploadCallback = () => {
-    console.log("이미지 업로드");
+  const uploadCallback = (imagefile) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          "http://localhost:8000/image/upload-temp",
+          {
+            file: imagefile, // 파일
+          },
+          {
+            headers: { "Content-Type": `multipart/form-data; ` },
+            params: {
+              type: 1,
+            },
+          }
+        )
+        .then((res) => {
+          resolve(res);
+        })
+        .catch(reject);
+    })
+      .then((res) => {
+        return { data: { link: res.data } };
+      })
+      .catch(() => {
+        return { data: { link: "이미지 업로드 실패" } };
+      });
   };
 
   const onSubmitHandler = () => {
-    console.log(htmlString);
     axios
-      .post(
-        "http://127.0.0.1:8000/manage/notice/",
-        {
-          data: htmlString,
-        },
-        {
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-          params: {
-            data: htmlString,
-          },
-        }
-      )
+      .post("http://127.0.0.1:8000/manage/notice/", {
+        entity: convertToRaw(editorState.getCurrentContent()).entityMap,
+        html: htmlString,
+      })
       .then(function (res) {
         console.log("response: ", res);
       })
@@ -75,16 +97,41 @@ const GetNotice = ({ resource }) => {
         editorState={editorState}
         onEditorStateChange={updateTextDescription}
         toolbar={{
-          options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'remove', 'history'],
+          options: [
+            "inline",
+            "blockType",
+            "fontSize",
+            "fontFamily",
+            "list",
+            "textAlign",
+            "colorPicker",
+            "link",
+            "emoji",
+            "image",
+            "remove",
+            "history",
+          ],
           inline: { inDropdown: true },
           list: { inDropdown: true },
           textAlign: { inDropdown: true },
           link: { inDropdown: true },
           history: { inDropdown: true },
-          image: { uploadCallback: uploadCallback },
+          image: {
+            uploadCallback: uploadCallback,
+            previewImage: true,
+          },
           fontFamily: {
-            options: ['GmarketSansMedium', "Pretendard-Regular", 'Impact', 'Open Sans', 'Roboto', 'Tahoma', 'Times New Roman', 'Verdana'],
-          }
+            options: [
+              "GmarketSansMedium",
+              "Pretendard-Regular",
+              "Impact",
+              "Open Sans",
+              "Roboto",
+              "Tahoma",
+              "Times New Roman",
+              "Verdana",
+            ],
+          },
         }}
         localization={{ locale: "ko" }}
         editorStyle={{
@@ -92,7 +139,7 @@ const GetNotice = ({ resource }) => {
           width: "100%",
           border: "3px solid lightgray",
           padding: "20px",
-          fontFamily: 'Pretendard-Regular'
+          fontFamily: "Pretendard-Regular",
         }}
       />
       <div className="notice_result">

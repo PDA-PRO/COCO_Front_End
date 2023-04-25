@@ -13,11 +13,13 @@ import {
   TiBatteryHigh,
   TiBatteryFull,
 } from "react-icons/ti";
-import { GoCheck, GoX } from "react-icons/go";
+import { GoCheck, GoX, GoDash } from "react-icons/go";
 import { BsTrash } from "react-icons/bs";
+import { useAppSelector } from "../../app/store";
+import axios from "axios";
 
-export const MyTasks = (props) => {
-  const [list, setList] = useState([]);
+export const MyTasks = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
 
   return (
     <div className="mp-FourthBox">
@@ -33,35 +35,20 @@ export const MyTasks = (props) => {
 
         <Suspense fallback={<Spinner />}>
           <GetProblems
-            resource={fetchData("http://127.0.0.1:8000/tasklist")}
-            list={props.props}
-          />
+            resource={fetchData(
+              `http://127.0.0.1:8000/mytasks/${userInfo.id}`,
+              {
+                headers: { Authorization: "Bearer " + userInfo.access_token },
+              }
+            )} user={userInfo}/>
         </Suspense>
       </div>
     </div>
   );
 };
 
-const GetProblems = ({ resource, list }) => {
-  const tmpList = resource.read();
-  const tmpIdList = [];
-  for (let i = 0; i < tmpList.length; i++) {
-    tmpIdList.push(tmpList[i].id);
-  }
-  var problemList = [];
-
-  for (let i = 0; i < list.length; i++) {
-    if (tmpIdList.includes(list[i].task_num)) {
-      let a = list[i].task_num;
-
-      for (let j = 0; j < tmpList.length; j++) {
-        if (tmpList[j].id === a) {
-          problemList.push(tmpList[j]);
-        }
-      }
-    }
-  }
-
+const GetProblems = ({ resource }) => {
+  const problemList = resource.read();
   const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
@@ -83,7 +70,7 @@ const GetProblems = ({ resource, list }) => {
   return (
     <>
       {problemList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-        return <MyTasksBox info={e} key={e.id} />;
+        return <MyTasksBox info={e} key={e.id}/>;
       })}
       <div
         className="leftBottom"
@@ -106,13 +93,35 @@ const GetProblems = ({ resource, list }) => {
 };
 
 export const MyTasksBox = (info) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
   };
 
   const deleteTask = (e) => {
-    alert("내 문제집에서 삭제");
+    axios
+      .post(
+        "http://127.0.0.1:8000/delete_mytask",
+        {
+          user_id: userInfo.id,
+          task_id: e,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
+      .then((res) => {
+        if (res.data === false) {
+          alert("내 문제집에서 삭제하지 못했습니다");
+        } else {
+          alert("내 문제집에서 삭제하였습니다");
+          navigate(0);
+        }
+      })
+      .catch(() => {
+        alert("내 문제집에서 삭제하지 못했습니다");
+      });
   };
 
   const setLevel = (e) => {
@@ -159,14 +168,25 @@ export const MyTasksBox = (info) => {
   };
 
   const solve = (e) => {
+    console.log(e);
     if (e === 1) {
-      <p style={{ margin: "0", textAlign: "center" }}>
-        <GoCheck size={27} color="green" />
-      </p>;
+      return (
+        <p style={{ margin: "0", textAlign: "center" }}>
+          <GoCheck size={27} color="green" />
+        </p>
+      );
+    } else if (e === -1) {
+      return (
+        <p style={{ margin: "0", textAlign: "center" }}>
+          <GoX size={27} color="red" />
+        </p>
+      );
     } else {
-      <p style={{ margin: "0", textAlign: "center" }}>
-        <GoX size={27} color="red" />
-      </p>;
+      return (
+        <p style={{ margin: "0", textAlign: "center" }}>
+          <GoDash size={27} color="gray" />
+        </p>
+      );
     }
   };
 
@@ -189,9 +209,9 @@ export const MyTasksBox = (info) => {
       </h4>
 
       <h4>{lan(info.info.lan_c, info.info.lan_py)}</h4>
-      <p style={{ margin: "0", textAlign: "center" }}>
-        <GoCheck size={27} color="green" />
-      </p>
+      <div style={{ margin: "0", textAlign: "center" }}>
+        {solve(info.info.solved)}
+      </div>
       <p style={{ margin: "0", textAlign: "center" }}>
         <BsTrash
           onClick={() => deleteTask(info.info.id)}

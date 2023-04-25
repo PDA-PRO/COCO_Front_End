@@ -13,6 +13,7 @@ import fetchData from "../../api/fetchTask";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { AllGroupBox } from "./AllGroupBox";
+import { TbCrown } from "react-icons/tb";
 
 export const Group = () => {
   const navigate = useNavigate();
@@ -63,9 +64,12 @@ export const Group = () => {
 
               <div className="allGroups">
                 <div className="l-top">
-                  <p>순위</p>
+                  <p style={{ color: "red" }}>순위</p>
                   <p>그룹 명</p>
                   <p>구성원 수</p>
+                  <p>
+                    <TbCrown size={25} color="orange" />
+                  </p>
                   <p>그룹 pt</p>
                 </div>
 
@@ -91,6 +95,9 @@ export const Group = () => {
                   <p>순위</p>
                   <p>그룹 명</p>
                   <p>구성원 수</p>
+                  <p>
+                    <TbCrown size={25} color="orange" />
+                  </p>
                   <p>그룹 pt</p>
                 </div>
 
@@ -139,7 +146,7 @@ const SearchBar = ({ search }) => {
 
 const GetGroups = ({ resource }) => {
   const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 10);
+  const maxPage = Math.ceil(GroupList.length / 6);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
     if (
@@ -156,8 +163,6 @@ const GetGroups = ({ resource }) => {
       setPage(parseInt(event.target.outerText));
     }
   };
-
-  console.log(GroupList);
 
   return (
     <>
@@ -179,7 +184,7 @@ const GetGroups = ({ resource }) => {
 
 const GetMyGroups = ({ resource }) => {
   const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 10);
+  const maxPage = Math.ceil(GroupList.length / 6);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
     if (

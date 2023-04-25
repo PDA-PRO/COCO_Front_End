@@ -2,16 +2,26 @@ import React from "react";
 import "./GroupInfo.css";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
+import { Suspense } from "react";
+import Spinner from "react-bootstrap/esm/Spinner";
+import fetchData from "../../api/fetchTask";
 
 export const GroupInfo = () => {
   const path = window.location.pathname.split("/");
+  const numPath = parseInt(path.at(-1));
+
+  console.log(numPath);
 
   return (
     <>
       <Header />
       <div className="groupInfo">
         <div className="gi">
-          <GiHeader />
+          <Suspense fallback={<Spinner />}>
+            <GiHeader
+              resource={fetchData(`http://127.0.0.1:8000/group/${numPath}/`)}
+            />
+          </Suspense>
         </div>
       </div>
       <Footer />
@@ -19,7 +29,10 @@ export const GroupInfo = () => {
   );
 };
 
-const GiHeader = () => {
+const GiHeader = ({ resource }) => {
+  const GroupInfo = resource.read();
+
+  console.log(GroupInfo);
   return (
     <div className="gi-head">
       <div>

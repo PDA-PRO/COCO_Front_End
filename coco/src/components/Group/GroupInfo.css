@@ -1,0 +1,48 @@
+.groupInfo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 1rem 0 5rem 0;
+}
+
+.gi {
+  width: clamp(650px, 90%, 1200px);
+}
+
+.gi-head {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  border-bottom: 2px solid rgb(229, 255, 203);
+
+  padding-left: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.gi-head > div:nth-child(1) {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 25px;
+  align-items: center;
+}
+
+.gi-head > div:nth-child(2) {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 25px;
+}
+
+.gi-head h2 {
+  font-weight: 600;
+  font-size: 1.5em;
+  margin: 0 !important;
+}
+
+.gi-head p {
+  font-size: 1.1em;
+  margin: 0 !important;
+  float: right;
+}

@@ -255,7 +255,7 @@
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
   border-bottom: 1px solid lightgray;
-  padding: 3px 0;
+  padding: 5px 0;
 }
 
 .myGroupList:hover {

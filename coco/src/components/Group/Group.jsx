@@ -166,7 +166,7 @@ const GetGroups = ({ resource }) => {
 
   return (
     <>
-      {GroupList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {GroupList.slice(5 * (page - 1), 5 * (page - 1) + 5).map((e) => {
         return <AllGroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>
@@ -184,7 +184,7 @@ const GetGroups = ({ resource }) => {
 
 const GetMyGroups = ({ resource }) => {
   const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 6);
+  const maxPage = Math.ceil(GroupList.length / 10);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
     if (
@@ -204,7 +204,7 @@ const GetMyGroups = ({ resource }) => {
 
   return (
     <>
-      {GroupList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {GroupList.slice(10 * (page - 1), 10 * (page - 1) + 10).map((e) => {
         return <GroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>

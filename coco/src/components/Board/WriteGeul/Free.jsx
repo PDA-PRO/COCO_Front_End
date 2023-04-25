@@ -38,6 +38,7 @@ export const Free = ({ title }) => {
             title: title,
             context: htmlString,
             category: 3,
+            group_id: 0
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

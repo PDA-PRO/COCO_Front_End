@@ -42,6 +42,7 @@ export const Help = ({ title }) => {
             context: htmlString,
             category: 2,
             code: code,
+            group_id: 0
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

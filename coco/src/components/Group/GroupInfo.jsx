@@ -7,10 +7,10 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 
 export const GroupInfo = () => {
-  const path = window.location.pathname.split("/");
-  const numPath = parseInt(path.at(-1));
+  var path = window.location.pathname;
+  path = path.split("/");
 
-  console.log(numPath);
+  console.log((path.at(-1)));
 
   return (
     <>
@@ -19,7 +19,7 @@ export const GroupInfo = () => {
         <div className="gi">
           <Suspense fallback={<Spinner />}>
             <GiHeader
-              resource={fetchData(`http://127.0.0.1:8000/group/${numPath}/`)}
+              resource={fetchData(`http://127.0.0.1:8000/group/${path.at(-1)}/`)}
             />
           </Suspense>
         </div>

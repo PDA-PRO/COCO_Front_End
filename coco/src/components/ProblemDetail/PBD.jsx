@@ -24,6 +24,10 @@ import draftToHtml from "draftjs-to-html";
 import { convertFromRaw } from "draft-js";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { IoMdPaperPlane } from "react-icons/io";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -89,6 +93,7 @@ const GetDetail = ({ resource }) => {
         {
           user_id: userInfo.id,
           task_id: task_id,
+          solved: 0
         },
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -105,6 +110,7 @@ const GetDetail = ({ resource }) => {
         alert("내 문제집에 추가하지 못했습니다");
       });
   };
+
 
   return (
     <div className="PBD">
@@ -139,6 +145,16 @@ const GetDetail = ({ resource }) => {
               {"정답률 :"}
             </span>
             {detail.rate}%
+          </div>
+
+          <div id="pbd-pick">
+            <Suspense fallback={<>등록된 내 그룹이 없습니다</>}>
+              <MyGroup
+                resource={fetchData(
+                  `http://127.0.0.1:8000/group/mygroup/${userInfo.id}`
+                )} task_id={detail.id}
+              />
+            </Suspense>
           </div>
 
           <div id="pbd-pick" onClick={() => setMyTask(detail.id)}>
@@ -271,3 +287,21 @@ const GetDetail = ({ resource }) => {
     </div>
   );
 };
+
+const MyGroup = ({resource, task_id}) => {
+  const data = resource.read();
+  const toGroupTask = (group_id, task_id) => {
+    console.log(group_id, task_id)
+  }
+  return (
+    <>
+    <DropdownButton id="dropdown-basic-button" title="그룹 문제집에 추가">
+      {
+        data.map((e) => {
+          return <Dropdown.Item onClick={() => toGroupTask(e.id, task_id)}>{e.name}</Dropdown.Item>;
+        })
+      }
+    </DropdownButton>
+    </>
+  );
+}

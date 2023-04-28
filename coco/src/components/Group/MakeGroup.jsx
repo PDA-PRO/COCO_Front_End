@@ -30,7 +30,7 @@ export const MakeGroup = () => {
   const onSearchHandler = (info) => {
     axios
       .post("http://127.0.0.1:8000/group/search_user/", {
-        info: info,
+        user_id: info
       })
       .then((res) => {
         setUsers(res.data);

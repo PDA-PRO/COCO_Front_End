@@ -7,8 +7,20 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import { Pagination } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {
+  BsFillEyeFill,
+  BsChatSquareTextFill,
+  BsHeart,
+  BsHeartFill,
+  BsFillLightbulbFill,
+  BsMegaphoneFill,
+  BsQuestionLg,
+} from "react-icons/bs";
+import { useEffect, useState } from "react";
 import { TbCrown } from "react-icons/tb";
+import { TfiPencil } from "react-icons/tfi";
+import { ImBooks } from "react-icons/im";
+import { IoChatbubblesOutline } from "react-icons/io5";
 
 export const GroupInfo = () => {
   var path = window.location.pathname;
@@ -120,4 +132,159 @@ const Member = ({ info, props }) => {
 
 const GroupBoard = ({ resource }) => {
   const info = resource.read();
+  const [page, setPage] = useState(1);
+  const navigate = useNavigate();
+  const moveWorkbook = () => {
+    setPage(2);
+  };
+  const moveBoard = () => {
+    setPage(1);
+  };
+  const moveWrite = () => {
+    navigate(`/group/board/write`);
+  };
+
+  return (
+    <div className="group-board">
+      <div className="gb-header">
+        {page === 1 ? (
+          <div id="he1" onClick={() => moveWorkbook()}>
+            <ImBooks size={25} color="green" />
+            <p>그룹 문제집열기</p>
+          </div>
+        ) : (
+          <div id="he1" onClick={() => moveBoard()}>
+            <IoChatbubblesOutline size={25} color="green" />
+            <p>그룹 게시판 열기</p>
+          </div>
+        )}
+
+        {page === 1 ? (
+          <div id="he1" onClick={() => moveWrite()}>
+            <TfiPencil size={25} />
+            <p>글쓰기</p>
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
+      <div className="gb-body">
+        {/* {page === 1 ? : } */}
+        <GroupPost />
+        <GroupPost />
+        <GroupPost />
+        <GroupPost />
+      </div>
+    </div>
+  );
+};
+
+const GroupPost = ({ props }) => {
+  const navigate = useNavigate();
+  const moveDetail = (e) => {
+    navigate(`/group/board/${e}`);
+  };
+  const [category, setCategory] = useState("");
+  const [bgColor, setBgColor] = useState("white");
+  const [cateIcon, setCateIcon] = useState();
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    const chCate = (e) => {
+      if (e === 1) {
+        setCategory("Notice");
+        setBgColor("rgb(231, 255, 211)");
+        setCateIcon(<BsMegaphoneFill size={25} color="#00ff00" />);
+      } else if (e === 2) {
+        setCategory("Help");
+        setBgColor("rgb(255, 248, 211)");
+        setCateIcon(<BsQuestionLg size={25} color="rgb(255, 200, 101)" />);
+      } else if (e === 3) {
+        setCategory("자유");
+        setBgColor("rgb(237, 251, 255)");
+        setCateIcon(
+          <BsFillLightbulbFill size={25} color="rgb(111, 101, 255)" />
+        );
+      }
+    };
+
+    function timeForToday(value) {
+      const today = new Date();
+      const timeValue = new Date(value);
+
+      const betweenTime = Math.floor(
+        (today.getTime() - timeValue.getTime()) / 1000 / 60
+      );
+      if (betweenTime < 1) return "방금전";
+      if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+      }
+
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+      }
+
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+      }
+
+      return `${Math.floor(betweenTimeDay / 365)}년전`;
+    }
+
+    chCate(1);
+    // var originTime = props.props.time;
+    // setDate(timeForToday(originTime));
+  }, []);
+
+  return (
+    <div
+      className="gPost"
+      // style={{ backgroundColor: bgColor }}
+      // onClick={() => {
+      //   moveDetail(props.props.id);
+      // }}
+    >
+      <div className="gPostInner">
+        <div className="un">
+          {/* <p>{category}</p>
+          {cateIcon} */}
+          <p>자유</p>
+          <BsFillLightbulbFill size={25} color="rgb(111, 101, 255)" />
+        </div>
+
+        <div className="gPostTitle">
+          {/* <h2>{props.props.title}</h2> */}
+          <h2>글 제목</h2>
+        </div>
+
+        <div className="un">
+          {/* <h4>{props.props.user_id}</h4>
+          <h4>{date}</h4> */}
+          <h4>작성자</h4>
+          <h4>?일전</h4>
+        </div>
+
+        <div className="un">
+          <div className="un2">
+            <BsFillEyeFill color="rgb(112, 112, 112)" />
+            {/* <p>{props.props.views}</p> */}
+            <p>100</p>
+            <BsChatSquareTextFill
+              color="rgb(112, 112, 112)"
+              style={{ marginLeft: "10px" }}
+            />
+            {/* <p>{props.props.comments}</p> */}
+            <p>123</p>
+          </div>
+          <div className="un2">
+            <BsHeartFill color="gray" />
+            {/* <p>{props.props.likes}</p> */}
+            <p>1</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };

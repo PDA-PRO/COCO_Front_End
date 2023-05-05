@@ -21,10 +21,32 @@ import { TbCrown } from "react-icons/tb";
 import { TfiPencil } from "react-icons/tfi";
 import { ImBooks } from "react-icons/im";
 import { IoChatbubblesOutline } from "react-icons/io5";
+import {
+  TiBatteryCharge,
+  TiBatteryLow,
+  TiBatteryMid,
+  TiBatteryHigh,
+  TiBatteryFull,
+} from "react-icons/ti";
 
 export const GroupInfo = () => {
   var path = window.location.pathname;
   path = path.split("/");
+
+  const [page, setPage] = useState(1);
+
+  const moveWorkbook = () => {
+    setPage(2);
+  };
+  const moveBoard = () => {
+    setPage(1);
+  };
+
+  const navigate = useNavigate();
+
+  const moveWrite = () => {
+    navigate(`/group/board/write`);
+  };
 
   return (
     <>
@@ -41,13 +63,47 @@ export const GroupInfo = () => {
 
           <div id="gi-B">
             <div className="gi-GB">
-              <Suspense fallback={<Spinner />}>
-                <GroupBoard
-                  resource={fetchData(
-                    `http://127.0.0.1:8000/group/board/${path.at(-1)}/`
-                  )}
-                />
-              </Suspense>
+              <div className="gb-header">
+                {page === 1 ? (
+                  <div id="he1" onClick={() => moveWorkbook()}>
+                    <ImBooks size={25} color="green" />
+                    <p>그룹 문제집열기</p>
+                  </div>
+                ) : (
+                  <div id="he1" onClick={() => moveBoard()}>
+                    <IoChatbubblesOutline size={25} color="green" />
+                    <p>그룹 게시판 열기</p>
+                  </div>
+                )}
+                {page === 1 ? (
+                  <div id="he1" onClick={() => moveWrite()}>
+                    <TfiPencil size={25} />
+                    <p>글쓰기</p>
+                  </div>
+                ) : (
+                  <p></p>
+                )}
+              </div>
+
+              {page == 1 ? (
+                <Suspense fallback={<Spinner />}>
+                  <GroupBoard
+                    resource={fetchData(
+                      `http://127.0.0.1:8000/group/board/${path.at(-1)}/`
+                    )}
+                  />
+                </Suspense>
+              ) : (
+                <Suspense fallback={<Spinner />}>
+                  <GroupTasks
+                    resource={fetchData(
+                      `http://127.0.0.1:8000/group/group_workbooks/${path.at(
+                        -1
+                      )}/`
+                    )}
+                  />
+                </Suspense>
+              )}
             </div>
             <div className="gi-ML">
               <Suspense fallback={<Spinner />}>
@@ -70,20 +126,20 @@ const GiHeader = ({ resource }) => {
   const info = resource.read();
   return (
     <div className="gi-head">
+      <img src="\image\group.png" />
       <div className="headOne">
         <div>
-          <img src="\image\group.png" height="73px" />
           <h2>{info.name}</h2>
         </div>
 
         <div>
           <p>전체 그룹 랭킹 : 3위</p>
           <p>현재 그룹원 수 : {info.members.length}명</p>
-          <p>그룹 장 : {info.leader}님</p>
         </div>
       </div>
       <div className="headTwo">
         <p>{info.desc}</p>
+        <p>그룹 장 : {info.leader}님</p>
       </div>
     </div>
   );
@@ -132,49 +188,12 @@ const Member = ({ info, props }) => {
 
 const GroupBoard = ({ resource }) => {
   const info = resource.read();
-  const [page, setPage] = useState(1);
-  const navigate = useNavigate();
-  const moveWorkbook = () => {
-    setPage(2);
-  };
-  const moveBoard = () => {
-    setPage(1);
-  };
-  const moveWrite = () => {
-    navigate(`/group/board/write`);
-  };
 
   return (
-    <div className="group-board">
-      <div className="gb-header">
-        {page === 1 ? (
-          <div id="he1" onClick={() => moveWorkbook()}>
-            <ImBooks size={25} color="green" />
-            <p>그룹 문제집열기</p>
-          </div>
-        ) : (
-          <div id="he1" onClick={() => moveBoard()}>
-            <IoChatbubblesOutline size={25} color="green" />
-            <p>그룹 게시판 열기</p>
-          </div>
-        )}
-
-        {page === 1 ? (
-          <div id="he1" onClick={() => moveWrite()}>
-            <TfiPencil size={25} />
-            <p>글쓰기</p>
-          </div>
-        ) : (
-          <p></p>
-        )}
-      </div>
-      <div className="gb-body">
-        {/* {page === 1 ? : } */}
-        <GroupPost />
-        <GroupPost />
-        <GroupPost />
-        <GroupPost />
-      </div>
+    <div className="gb-body">
+      {info.map((e) => {
+        return <GroupPost props={e} key={e.id} />;
+      })}
     </div>
   );
 };
@@ -182,7 +201,7 @@ const GroupBoard = ({ resource }) => {
 const GroupPost = ({ props }) => {
   const navigate = useNavigate();
   const moveDetail = (e) => {
-    navigate(`/group/board/${e}`);
+    navigate(`/board/${e}`);
   };
   const [category, setCategory] = useState("");
   const [bgColor, setBgColor] = useState("white");
@@ -233,58 +252,172 @@ const GroupPost = ({ props }) => {
       return `${Math.floor(betweenTimeDay / 365)}년전`;
     }
 
-    chCate(1);
-    // var originTime = props.props.time;
-    // setDate(timeForToday(originTime));
+    chCate(props.category);
+    var originTime = props.time;
+    setDate(timeForToday(originTime));
   }, []);
 
   return (
     <div
       className="gPost"
-      // style={{ backgroundColor: bgColor }}
-      // onClick={() => {
-      //   moveDetail(props.props.id);
-      // }}
+      style={{ backgroundColor: bgColor }}
+      onClick={() => {
+        moveDetail(props.id);
+      }}
     >
       <div className="gPostInner">
         <div className="un">
-          {/* <p>{category}</p>
-          {cateIcon} */}
-          <p>자유</p>
-          <BsFillLightbulbFill size={25} color="rgb(111, 101, 255)" />
+          <p>{category}</p>
+          {cateIcon}
         </div>
 
         <div className="gPostTitle">
-          {/* <h2>{props.props.title}</h2> */}
-          <h2>글 제목</h2>
+          <h2>{props.title}</h2>
         </div>
 
         <div className="un">
-          {/* <h4>{props.props.user_id}</h4>
-          <h4>{date}</h4> */}
-          <h4>작성자</h4>
-          <h4>?일전</h4>
+          <h4>{props.user_id}</h4>
+          <h4>{date}</h4>
         </div>
 
         <div className="un">
           <div className="un2">
             <BsFillEyeFill color="rgb(112, 112, 112)" />
-            {/* <p>{props.props.views}</p> */}
-            <p>100</p>
+            <p>{props.views}</p>
             <BsChatSquareTextFill
               color="rgb(112, 112, 112)"
               style={{ marginLeft: "10px" }}
             />
-            {/* <p>{props.props.comments}</p> */}
-            <p>123</p>
+            <p>{props.comments}</p>
           </div>
           <div className="un2">
             <BsHeartFill color="gray" />
-            {/* <p>{props.props.likes}</p> */}
-            <p>1</p>
+            <p>{props.likes}</p>
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const GroupTasks = ({ resource }) => {
+  const info = resource.read();
+
+  console.log(info);
+
+  const maxPage = Math.ceil(info.length / 10);
+  const [page, setPage] = useState(1);
+
+  const handlePage = (event) => {
+    if (
+      event.target.innerHTML ===
+      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
+    ) {
+      setPage(page - 1);
+    } else if (
+      event.target.innerHTML ===
+      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
+    ) {
+      setPage(page + 1);
+    } else {
+      setPage(parseInt(event.target.outerText));
+    }
+  };
+
+  return (
+    <div className="group-tasks">
+      <div className="task-top">
+        <p>No</p>
+        <p>문제 제목</p>
+        <p>난이도</p>
+        <p>정답률</p>
+        <p>언어</p>
+      </div>
+
+      {info.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+        return <GroupTask props={e} key={e.id} />;
+      })}
+
+      <div className="leftBottom">
+        <Pagination
+          count={maxPage}
+          variant="outlined"
+          shape="rounded"
+          defaultPage={1}
+          onChange={(e) => handlePage(e)}
+        />
+      </div>
+    </div>
+  );
+};
+
+const GroupTask = ({ props }) => {
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/problems/${e}`);
+  };
+
+  const setLevel = (e) => {
+    switch (e) {
+      case 1:
+        return <TiBatteryLow size={35} color="rgb(98, 148, 255)" />;
+      case 2:
+        return <TiBatteryMid size={35} color="#9DD84B" />;
+      case 3:
+        return <TiBatteryHigh size={35} color="#ff7e00" />;
+      case 4:
+        return <TiBatteryFull size={35} color="red" />;
+      case 5:
+        return <TiBatteryCharge size={35} color="#7d1b7e" />;
+    }
+  };
+
+  const lan = (e1, e2) => {
+    if (e1 === 1 && e2 === 1) {
+      return (
+        <div>
+          <img src="/image/lan_c.png" height="30px" alt="" />
+          <img
+            src="/image/python.png"
+            height="30px"
+            style={{ paddingRight: "10px" }}
+            alt=""
+          />
+        </div>
+      );
+    } else if (e1 === 1 && e2 === 0) {
+      return (
+        <div>
+          <img src="/image/lan_c.png" height="30px" alt="" />
+        </div>
+      );
+    } else if (e1 === 0 && e2 === 1) {
+      return (
+        <div>
+          <img src="/image/python.png" height="30px" alt="" />
+        </div>
+      );
+    }
+  };
+  return (
+    <div className="problemsBox" onClick={() => goDetail(props.id)}>
+      <h4>No.{props.id}</h4>
+      <h4>{props.title}</h4>
+      <h4>{setLevel(props.diff)}</h4>
+      <h4
+        style={{
+          color:
+            props.rate == 0
+              ? "gray"
+              : props.rate >= 40
+              ? "skyblue"
+              : "rgb(218, 55, 55)",
+        }}
+      >
+        {props.rate}%
+      </h4>
+
+      <h4>{lan(props.lan_c, props.lan_py)}</h4>
     </div>
   );
 };

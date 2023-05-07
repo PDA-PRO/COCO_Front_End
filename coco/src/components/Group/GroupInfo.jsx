@@ -44,8 +44,8 @@ export const GroupInfo = () => {
 
   const navigate = useNavigate();
 
-  const moveWrite = () => {
-    navigate(`/group/board/write`);
+  const moveWrite = (id) => {
+    navigate(`/group/board/write`, {state: id});
   };
 
   return (
@@ -76,7 +76,7 @@ export const GroupInfo = () => {
                   </div>
                 )}
                 {page === 1 ? (
-                  <div id="he1" onClick={() => moveWrite()}>
+                  <div id="he1" onClick={() => moveWrite(path.at(-1))}>
                     <TfiPencil size={25} />
                     <p>글쓰기</p>
                   </div>

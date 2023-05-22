@@ -37,6 +37,7 @@ export const FastWrite = () => {
             title: title,
             context: context,
             category: 3,
+            group_id: 0
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

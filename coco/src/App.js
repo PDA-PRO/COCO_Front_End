@@ -87,6 +87,8 @@ import { Manage } from "./components/Manage/Manage";
 import { ModifyBoard } from "./components/MyPage/ModifyBoard";
 import { Group } from "./components/Group/Group";
 import { MakeGroup } from "./components/Group/MakeGroup";
+import { GroupInfo } from "./components/Group/GroupInfo";
+import { GroupBoard } from "./components/Group/BoardWrite/GroupBoard";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
@@ -105,6 +107,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/group" element={<Group />} />
+          <Route path="/group/:id" element={<GroupInfo />} />
           <Route path="/makegroup" element={<MakeGroup />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
@@ -117,6 +120,7 @@ function App() {
             }
           />
           <Route path="/board" element={<Board />} />
+          <Route path="/group/board/write" element={<GroupBoard />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />

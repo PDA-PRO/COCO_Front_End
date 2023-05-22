@@ -11,7 +11,7 @@ import { python } from "@codemirror/lang-python";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 
-export const Help = ({ title }) => {
+export const WriteHelp = ({ title, group_id }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [htmlString, setHtmlString] = useState("");
   const [code, setCode] = useState(""); //작성한 코드
@@ -42,7 +42,7 @@ export const Help = ({ title }) => {
             context: htmlString,
             category: 2,
             code: code,
-            group_id: 0
+            group_id: group_id
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -51,7 +51,7 @@ export const Help = ({ title }) => {
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`${title} 업로드 성공`);
-            window.location.replace("/board");
+            window.location.replace(`/group/board/${group_id}`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

@@ -13,6 +13,7 @@ import fetchData from "../../api/fetchTask";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { AllGroupBox } from "./AllGroupBox";
+import { TbCrown } from "react-icons/tb";
 
 export const Group = () => {
   const navigate = useNavigate();
@@ -63,9 +64,12 @@ export const Group = () => {
 
               <div className="allGroups">
                 <div className="l-top">
-                  <p>순위</p>
+                  <p style={{ color: "red" }}>순위</p>
                   <p>그룹 명</p>
                   <p>구성원 수</p>
+                  <p>
+                    <TbCrown size={25} color="orange" />
+                  </p>
                   <p>그룹 pt</p>
                 </div>
 
@@ -91,6 +95,9 @@ export const Group = () => {
                   <p>순위</p>
                   <p>그룹 명</p>
                   <p>구성원 수</p>
+                  <p>
+                    <TbCrown size={25} color="orange" />
+                  </p>
                   <p>그룹 pt</p>
                 </div>
 
@@ -139,7 +146,7 @@ const SearchBar = ({ search }) => {
 
 const GetGroups = ({ resource }) => {
   const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 10);
+  const maxPage = Math.ceil(GroupList.length / 6);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
     if (
@@ -157,11 +164,9 @@ const GetGroups = ({ resource }) => {
     }
   };
 
-  console.log(GroupList);
-
   return (
     <>
-      {GroupList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {GroupList.slice(5 * (page - 1), 5 * (page - 1) + 5).map((e) => {
         return <AllGroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>
@@ -199,7 +204,7 @@ const GetMyGroups = ({ resource }) => {
 
   return (
     <>
-      {GroupList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {GroupList.slice(10 * (page - 1), 10 * (page - 1) + 10).map((e) => {
         return <GroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>

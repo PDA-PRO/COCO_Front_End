@@ -16,6 +16,7 @@ import { json, useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftjsToHtml from "draftjs-to-html";
 
 export const TaskUpload = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export const TaskUpload = () => {
     navigate("/");
   };
   const [title, setTitle] = useState(""); // 제목 State !필수
+  const [desc, setDesc] = useState("");
 
   const [diff, setDiff] = useState(""); // 난이도 State !필수
   const [time, setTime] = useState(""); // 시간제한 State !필수
@@ -44,6 +46,8 @@ export const TaskUpload = () => {
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
+    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
+    setDesc(html);
   };
 
   const uploadCallback = (imagefile) => {
@@ -142,10 +146,11 @@ export const TaskUpload = () => {
 
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
+    console.log(desc);
     e.preventDefault();
-    console.log("shoot");
     if (
       title == "" ||
+      desc == "" ||
       diff == "" ||
       time == "" ||
       mem == "" ||
@@ -172,6 +177,7 @@ export const TaskUpload = () => {
           headers: { "Content-Type": `multipart/form-data; ` },
           params: {
             title: title,
+            desc, desc,
             diff: diff,
             timeLimit: time,
             memLimit: mem,

@@ -71,9 +71,9 @@ export const Home = () => {
             </div>
           )}
 
-          <Suspense fallback={<Loader />}>
+          {/* <Suspense fallback={<Loader />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
-          </Suspense>
+          </Suspense> */}
 
           <div className="ad-box">
             <img

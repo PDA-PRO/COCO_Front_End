@@ -128,7 +128,7 @@
 
 .allGroups .l-top {
   display: grid;
-  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
   padding: 5px 0;
   border-bottom: 2px solid lightgray;
   margin-top: 5px;
@@ -187,7 +187,7 @@
 
 .myGroups .myGroupsTop {
   display: grid;
-  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
   border-top: 2px solid skyblue;
   border-bottom: 2px solid skyblue;
   padding: 3px 0;
@@ -209,7 +209,7 @@
 .allGroupList {
   display: flex;
   flex-flow: column nowrap;
-  border: 1px solid skyblue;
+  border: 2px solid skyblue;
   padding: 5px 0;
   border-radius: 10px;
   margin: 5px 0;
@@ -217,7 +217,7 @@
 
 .allGroupList .groupListTop {
   display: grid;
-  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
   padding-bottom: 3px;
 }
 
@@ -233,9 +233,9 @@
 }
 
 .allGroupList:hover {
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(246, 246, 246);
   cursor: pointer;
-  border: 1px solid rgb(41, 174, 226);
+  border: 2px solid rgb(41, 174, 226);
 }
 
 .allGroupList p {
@@ -253,9 +253,9 @@
 /*-----------------------------myGroupList----------------------------------*/
 .myGroupList {
   display: grid;
-  grid-template-columns: 0.5fr 1.6fr 0.7fr 1fr;
+  grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
   border-bottom: 1px solid lightgray;
-  padding: 3px 0;
+  padding: 5px 0;
 }
 
 .myGroupList:hover {

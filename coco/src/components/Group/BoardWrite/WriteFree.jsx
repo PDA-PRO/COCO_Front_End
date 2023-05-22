@@ -9,7 +9,7 @@ import draftjsToHtml from "draftjs-to-html";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 
-export const Free = ({ title }) => {
+export const WriteFree = ({ title, group_id }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [htmlString, setHtmlString] = useState("");
   const userInfo = useAppSelector((state) => state.loginState);
@@ -38,7 +38,7 @@ export const Free = ({ title }) => {
             title: title,
             context: htmlString,
             category: 3,
-            group_id: 0
+            group_id: group_id
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -47,7 +47,7 @@ export const Free = ({ title }) => {
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`${title} 업로드 성공`);
-            window.location.replace("/board");
+            window.location.replace(`/group/board/${group_id}`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

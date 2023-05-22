@@ -6,18 +6,18 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { GoSearch } from "react-icons/go";
 import { Suspense, useState } from "react";
-import Spinner from "react-bootstrap/esm/Spinner";
-import fetchData from "../../api/fetchTask";
 import { Pagination } from "@mui/material";
 import { HiUserPlus, HiUserMinus, HiUserGroup } from "react-icons/hi2";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -30,7 +30,7 @@ export const MakeGroup = () => {
   const onSearchHandler = (info) => {
     axios
       .post("http://127.0.0.1:8000/group/search_user/", {
-        info: info,
+        user_id: info
       })
       .then((res) => {
         setUsers(res.data);
@@ -38,14 +38,18 @@ export const MakeGroup = () => {
   };
 
   const onCreateHanlder = (members) => {
+    console.log(members[0]);
     axios
       .post("http://127.0.0.1:8000/group/makegroup/", {
         name: name,
         desc: desc,
+        leader: members[0],
         members: members,
       })
       .then((res) => {
+        console.log(res);
         alert("그룹을 생성하였습니다");
+        navigate(`/group/${res.data}`);
       });
   };
 

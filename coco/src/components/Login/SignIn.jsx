@@ -70,10 +70,9 @@ export const SignIn = () => {
               level: jwt_level,
             });
             navigateToHome();
-          } else {
-            alert("아이디 또는 비밀번호가 일치하지 않습니다");
           }
-        });
+        })
+        .catch(() => alert("아이디 또는 비밀번호가 일치하지 않습니다"));
     }
   };
 
@@ -84,7 +83,11 @@ export const SignIn = () => {
           <FaRegUserCircle size="24" />
           <input placeholder={"ID"} onChange={onIDHandler} />
         </div>
-        <form className="loginBox" style={{ marginBottom: "10px" }}>
+        <form
+          className="loginBox"
+          style={{ marginBottom: "10px" }}
+          onSubmit={onSubmitHandler}
+        >
           <CgPassword size="24" />
           <input
             placeholder={"PASSWORD"}

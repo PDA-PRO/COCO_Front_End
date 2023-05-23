@@ -24,7 +24,6 @@ export const TaskUpload = () => {
     navigate("/");
   };
   const [title, setTitle] = useState(""); // 제목 State !필수
-  const [desc, setDesc] = useState("");
 
   const [diff, setDiff] = useState(""); // 난이도 State !필수
   const [time, setTime] = useState(""); // 시간제한 State !필수
@@ -46,8 +45,6 @@ export const TaskUpload = () => {
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
-    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
-    setDesc(html);
   };
 
   const uploadCallback = (imagefile) => {
@@ -120,37 +117,14 @@ export const TaskUpload = () => {
   // --------------------------- POST 보낼 값 State 화 ----------------------
 
   // --------------------------- 파일 업로드에 관한 코드 ---------------------
-  const [image, setImage] = React.useState("");
-  const imageRef = React.useRef(null);
-
-  function useDisplayImage() {
-    const [result, setResult] = React.useState("");
-
-    function uploader(e) {
-      const imageFile = e.target.files[0];
-
-      const reader = new FileReader();
-      reader.addEventListener("load", (e) => {
-        setResult(e.target.result);
-      });
-
-      reader.readAsDataURL(imageFile);
-    }
-
-    return { result, uploader };
-  }
-
-  const { result, uploader } = useDisplayImage();
 
   // --------------------------- 파일 업로드에 관한 코드 ---------------------
 
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
-    console.log(desc);
     e.preventDefault();
     if (
       title == "" ||
-      desc == "" ||
       diff == "" ||
       time == "" ||
       mem == "" ||
@@ -177,7 +151,6 @@ export const TaskUpload = () => {
           headers: { "Content-Type": `multipart/form-data; ` },
           params: {
             title: title,
-            desc, desc,
             diff: diff,
             timeLimit: time,
             memLimit: mem,

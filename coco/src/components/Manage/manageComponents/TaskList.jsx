@@ -1,21 +1,12 @@
 import "../Manage.css";
-import React, { Suspense, useRef, useState } from "react";
+import React, { Suspense, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../../api/fetchTask";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {
-  BsFillEyeFill,
-  BsChatSquareTextFill,
-  BsHeart,
-  BsHeartFill,
-  BsFillLightbulbFill,
-  BsMegaphoneFill,
-  BsQuestionLg,
-  BsTrash,
-} from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import Pagination from "@mui/material/Pagination";
+import { useAppSelector } from "../../../app/store";
 
 export const TaskList = () => {
   return (
@@ -31,6 +22,7 @@ export const TaskList = () => {
 };
 
 const TasksList = ({ resource }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const problemList = resource.read();
   const [tasks, settasks] = useState(problemList);
 
@@ -67,7 +59,9 @@ const TasksList = ({ resource }) => {
         return <ListBox info={e} settasks={settasks}></ListBox>;
       })} */}
       {tasks.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-        return <ListBox info={e} settasks={settasks} />;
+        return (
+          <ListBox info={e} token={userInfo.access_token} settasks={settasks} />
+        );
       })}
       <div className="pageController">
         <Pagination
@@ -82,7 +76,7 @@ const TasksList = ({ resource }) => {
   );
 };
 
-const ListBox = ({ info, settasks }) => {
+const ListBox = ({ info, token, settasks }) => {
   const lan = (e1, e2) => {
     if (e1 === 1 && e2 === 1) {
       return (
@@ -116,9 +110,12 @@ const ListBox = ({ info, settasks }) => {
   };
   const loadlist = (e) => {
     axios
-      .get("http://127.0.0.1:8000/deletetask/" + info.id)
+      .get("http://127.0.0.1:8000/deletetask/" + info.id, {
+        headers: { Authorization: "Bearer " + token },
+      })
       .then(function (response) {
         axios.get("http://127.0.0.1:8000/tasklist").then(function (response) {
+          alert("task를 삭제하였습니다.");
           console.log(response.data);
           settasks(response.data);
         });

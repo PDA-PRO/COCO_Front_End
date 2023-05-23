@@ -28,6 +28,105 @@ import {
   TiBatteryHigh,
   TiBatteryFull,
 } from "react-icons/ti";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import axios from "axios";
+
+const InviteNewMember = (props) => {
+  const [search, setSearch] = useState("");
+  const [userList, setUserList] = useState([]);
+
+  const onSearchHandler = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const onSubmitHandler = (e) => {
+    console.log(search);
+    axios
+      .post("http://127.0.0.1:8000/group/search_user/", {
+        user_id: search,
+      })
+      .then((res) => {
+        setUserList([...res.data]);
+      })
+      .catch(() => {
+        alert("검색에 실패하였습니다");
+      });
+  };
+
+  const onInviteHanlder = (id) => {
+    console.log(id);
+    axios
+      .post("http://127.0.0.1:8000/group/invite_member/", {
+        group_id: props.group_id,
+        user_id: id,
+      })
+      .then((res) => {
+        console.log(res.data)
+        if(res.data === false){
+          alert("이미 초대된 아이디입니다");
+        }else if(res.data === true){
+          alert(`${id}님을 초대하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert("검색에 실패하였습니다");
+      });
+    
+  }
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          새 멤버 초대하기
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Control
+            type="text"
+            placeholder="아이디 또는 이름으로 검색하세요"
+            onChange={onSearchHandler}
+          />
+        </Form.Group>
+        {userList.length > 0 ? (
+          <>
+            <div id="searchResult">
+              <div>아이디</div>
+              <div>이름</div>
+              <div>Exp</div>
+              <div>레벨</div>
+              <div></div>
+            </div>
+            {userList.map((e) => {
+              return (
+                <div id="searchResult">
+                  <div>{e.id}</div>
+                  <div>{e.name}</div>
+                  <div>{e.exp}</div>
+                  <div>{e.level}</div>
+                  <button onClick={() => onInviteHanlder(e.id)}>추가하기</button>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <></>
+        )}
+        <Button variant="primary" type="submit" onClick={onSubmitHandler}>
+          검색하기
+        </Button>
+      </Modal.Body>
+    </Modal>
+  );
+};
 
 export const GroupInfo = () => {
   var path = window.location.pathname;
@@ -45,8 +144,10 @@ export const GroupInfo = () => {
   const navigate = useNavigate();
 
   const moveWrite = (id) => {
-    navigate(`/group/board/write`, {state: id});
+    navigate(`/group/board/write`, { state: id });
   };
+
+  const [modalShow, setModalShow] = useState(false);
 
   return (
     <>
@@ -83,6 +184,15 @@ export const GroupInfo = () => {
                 ) : (
                   <p></p>
                 )}
+                <Button variant="primary" onClick={() => setModalShow(true)}>
+                  새 멤버 추가하기
+                </Button>
+
+                <InviteNewMember
+                  show={modalShow}
+                  onHide={() => setModalShow(false)}
+                  group_id={path.at(-1)}
+                />
               </div>
 
               {page == 1 ? (

@@ -375,12 +375,100 @@
   color: red;
 }
 
+/*--------------멤버 추가----------------*/
 
-#searchResult{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-bottom: 1px solid black;
-  padding: 0 10px;
+.im-d {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 15px;
   margin-bottom: 10px;
+  cursor: pointer;
+  color: gray;
 }
 
+#invite_mem {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+#search_mem {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.im-d:hover {
+  color: rgb(128, 128, 206) !important;
+}
+
+#contained-modal-title-vcenter {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.3em;
+  margin: 0 !important;
+  color: rgb(96, 147, 241);
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-body .mb-3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.modal-body .mb-3 input {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  /* border: none;
+  border-bottom: 2px solid lightgray !important; */
+  border-radius: 10px;
+}
+
+#searchResultTop {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0 10px 10px 10px;
+
+  border-bottom: 1px solid gray !important;
+}
+
+.searchResult {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 7px 10px;
+  border-bottom: 1px solid skyblue;
+
+  color: gray;
+}
+
+#searchResultTop p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.searchResult p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.searchResult:hover {
+  color: rgb(89, 138, 212);
+  background-color: aliceblue;
+  cursor: pointer;
+}

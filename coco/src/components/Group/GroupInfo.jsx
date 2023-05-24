@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import { Pagination } from "@mui/material";
+import { GoSearch } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   BsFillEyeFill,
@@ -20,6 +21,8 @@ import { useEffect, useState } from "react";
 import { TbCrown } from "react-icons/tb";
 import { TfiPencil } from "react-icons/tfi";
 import { ImBooks } from "react-icons/im";
+import { FiUserPlus } from "react-icons/fi";
+import { RiUserAddLine } from "react-icons/ri";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import {
   TiBatteryCharge,
@@ -63,18 +66,17 @@ const InviteNewMember = (props) => {
         user_id: id,
       })
       .then((res) => {
-        console.log(res.data)
-        if(res.data === false){
+        console.log(res.data);
+        if (res.data === false) {
           alert("이미 초대된 아이디입니다");
-        }else if(res.data === true){
+        } else if (res.data === true) {
           alert(`${id}님을 초대하였습니다`);
         }
       })
       .catch(() => {
         alert("검색에 실패하였습니다");
       });
-    
-  }
+  };
 
   return (
     <Modal
@@ -85,34 +87,36 @@ const InviteNewMember = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          새 멤버 초대하기
+          Invite Member
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="text"
-            placeholder="아이디 또는 이름으로 검색하세요"
+            placeholder="ID or 이름으로 검색"
             onChange={onSearchHandler}
           />
         </Form.Group>
         {userList.length > 0 ? (
           <>
-            <div id="searchResult">
-              <div>아이디</div>
-              <div>이름</div>
-              <div>Exp</div>
-              <div>레벨</div>
-              <div></div>
+            <div id="searchResultTop">
+              <p>ID</p>
+              <p>Name</p>
+              <p>Exp</p>
+              <p>Lv</p>
             </div>
             {userList.map((e) => {
               return (
-                <div id="searchResult">
-                  <div>{e.id}</div>
-                  <div>{e.name}</div>
-                  <div>{e.exp}</div>
-                  <div>{e.level}</div>
-                  <button onClick={() => onInviteHanlder(e.id)}>추가하기</button>
+                <div class="searchResult">
+                  <p>{e.id}</p>
+                  <p>{e.name}</p>
+                  <p>{e.exp}</p>
+                  <p>Lv.{e.level}</p>
+                  <p onClick={() => onInviteHanlder(e.id)}>
+                    <RiUserAddLine size={20} style={{ marginRight: "5px" }} />
+                    초대
+                  </p>
                 </div>
               );
             })}
@@ -120,9 +124,14 @@ const InviteNewMember = (props) => {
         ) : (
           <></>
         )}
-        <Button variant="primary" type="submit" onClick={onSubmitHandler}>
-          검색하기
-        </Button>
+        <div
+          className="im-d"
+          style={{ marginTop: "15px" }}
+          onClick={onSubmitHandler}
+        >
+          <GoSearch size={20} />
+          <p id="search_mem">검색하기</p>
+        </div>
       </Modal.Body>
     </Modal>
   );
@@ -146,8 +155,6 @@ export const GroupInfo = () => {
   const moveWrite = (id) => {
     navigate(`/group/board/write`, { state: id });
   };
-
-  const [modalShow, setModalShow] = useState(false);
 
   return (
     <>
@@ -184,15 +191,6 @@ export const GroupInfo = () => {
                 ) : (
                   <p></p>
                 )}
-                <Button variant="primary" onClick={() => setModalShow(true)}>
-                  새 멤버 추가하기
-                </Button>
-
-                <InviteNewMember
-                  show={modalShow}
-                  onHide={() => setModalShow(false)}
-                  group_id={path.at(-1)}
-                />
               </div>
 
               {page == 1 ? (
@@ -256,6 +254,8 @@ const GiHeader = ({ resource }) => {
 };
 
 const MemberList = ({ resource }) => {
+  var path = window.location.pathname;
+  path = path.split("/");
   const info = resource.read();
   const members = info.members;
   members.sort(function (a, b) {
@@ -264,9 +264,12 @@ const MemberList = ({ resource }) => {
   const maxPage = Math.ceil(members.length / 10);
   const [page, setPage] = useState(1);
   const leader = info.leader;
+  const [modalShow, setModalShow] = useState(false);
+
   return (
     <div className="member-list">
       <h3>Group Members</h3>
+
       <div className="member-list-header">
         <p> </p>
         <p>ID</p>
@@ -275,6 +278,18 @@ const MemberList = ({ resource }) => {
       {members.slice(10 * (page - 1), 10 * (page - 1) + 10).map((e) => {
         return <Member info={e} key={e.id} props={leader} />;
       })}
+      <div className="im-d">
+        <FiUserPlus size={18} />
+        <p id="invite_mem" onClick={() => setModalShow(true)}>
+          멤버 초대
+        </p>
+      </div>
+
+      <InviteNewMember
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        group_id={path.at(-1)}
+      />
     </div>
   );
 };

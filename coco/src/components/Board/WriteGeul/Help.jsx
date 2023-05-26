@@ -23,8 +23,35 @@ export const Help = ({ title }) => {
     setHtmlString(html);
   };
 
-  const uploadCallback = () => {
-    console.log("이미지 업로드");
+  const uploadCallback = (imagefile) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          "http://localhost:8000/image/upload-temp",
+          {
+            file: imagefile, // 파일
+          },
+          {
+            headers: {
+              "Content-Type": `multipart/form-data; `,
+              Authorization: "Bearer " + userInfo.access_token,
+            },
+            params: {
+              type: 2,
+            },
+          }
+        )
+        .then((res) => {
+          resolve(res);
+        })
+        .catch(reject);
+    })
+      .then((res) => {
+        return { data: { link: res.data } };
+      })
+      .catch(() => {
+        return { data: { link: "이미지 업로드 실패" } };
+      });
   };
 
   const onSubmitHandler = () => {
@@ -39,10 +66,12 @@ export const Help = ({ title }) => {
           {
             user_id: userInfo.id,
             title: title,
-            context: htmlString,
+            context: JSON.stringify(
+              convertToRaw(editorState.getCurrentContent())
+            ),
             category: 2,
             code: code,
-            group_id: 0
+            group_id: 0,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -90,7 +119,7 @@ export const Help = ({ title }) => {
               textAlign: { inDropdown: true },
               link: { inDropdown: true },
               history: { inDropdown: true },
-              image: { uploadCallback: uploadCallback },
+              image: { uploadCallback: uploadCallback, previewImage: true },
               fontFamily: {
                 options: [
                   "GmarketSansMedium",

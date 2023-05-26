@@ -7,6 +7,7 @@
 
 .gi {
   width: clamp(650px, 90%, 1200px);
+  height: auto;
 }
 
 .gi-head {
@@ -83,13 +84,17 @@
   column-gap: 3vw;
 }
 
+.gi-ML {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+}
+
 .member-list {
   display: flex;
   flex-flow: column nowrap;
   border: 2px solid skyblue;
   border-radius: 15px;
-  position: sticky;
-  top: 80px;
 }
 
 .member-list p {
@@ -145,7 +150,104 @@
   color: rgb(114, 114, 255);
 }
 
-/*=============그룹 게시판==================*/
+/*=======================================가입신청 리스트=================================*/
+
+.apply {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border-radius: 15px;
+  border: 2px solid rgb(255, 99, 255);
+  padding: 0 10px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.apply h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  margin: 0 !important;
+  padding-top: 8px;
+  font-size: 17px;
+}
+
+.apply .usersTop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  width: 100%;
+  border-top: 2px solid rgb(197, 197, 197);
+  border-bottom: 2px solid rgb(197, 197, 197);
+}
+
+.usersTop p {
+  color: black;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 !important;
+}
+
+.apply .users {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding-top: 5px;
+
+  text-align: center;
+  width: 100%;
+  border-bottom: 2px solid rgb(197, 197, 197);
+  color: gray;
+}
+
+.users:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.users p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 !important;
+
+  padding-bottom: 3px;
+}
+
+.users p:nth-child(5) {
+  grid-column: 1/5;
+  grid-row: 2/3;
+  text-align: center;
+  border-top: 1px dotted darkgray;
+  padding-top: 3px;
+}
+
+.users:hover {
+  cursor: pointer;
+}
+
+.users .check {
+  grid-column: 1/5;
+  grid-row: 3/4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid gray;
+}
+
+.check p {
+  padding-top: 3px;
+}
+
+.check p:nth-child(1):hover {
+  background-color: rgb(168, 255, 168);
+}
+.check p:nth-child(2):hover {
+  background-color: rgb(255, 186, 186);
+}
+
+/*==========================================그룹 게시판==================================*/
 
 .group-board {
   display: flex;

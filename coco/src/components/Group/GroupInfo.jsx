@@ -8,6 +8,8 @@ import fetchData from "../../api/fetchTask";
 import { Pagination } from "@mui/material";
 import { GoSearch } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/store";
+import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
@@ -107,7 +109,7 @@ const InviteNewMember = (props) => {
             </div>
             {userList.map((e) => {
               return (
-                <div class="searchResult">
+                <div className="searchResult">
                   <p>{e.id}</p>
                   <p>{e.name}</p>
                   <p>{e.exp}</p>
@@ -168,8 +170,6 @@ export const GroupInfo = () => {
             />
           </Suspense>
 
-          {/* <button>가입신청</button> */}
-
           <div id="gi-B">
             <div className="gi-GB">
               <div className="gb-header">
@@ -222,6 +222,8 @@ export const GroupInfo = () => {
                   )}
                 />
               </Suspense>
+
+              <Apply></Apply>
             </div>
           </div>
         </div>
@@ -267,6 +269,8 @@ const MemberList = ({ resource }) => {
   const leader = info.leader;
   const [modalShow, setModalShow] = useState(false);
 
+  const userInfo = useAppSelector((state) => state.loginState);
+
   return (
     <div className="member-list">
       <h3>Group Members</h3>
@@ -279,18 +283,25 @@ const MemberList = ({ resource }) => {
       {members.slice(10 * (page - 1), 10 * (page - 1) + 10).map((e) => {
         return <Member info={e} key={e.id} props={leader} />;
       })}
-      <div className="im-d">
-        <FiUserPlus size={18} />
-        <p id="invite_mem" onClick={() => setModalShow(true)}>
-          멤버 초대
-        </p>
-      </div>
 
-      <InviteNewMember
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        group_id={path.at(-1)}
-      />
+      {userInfo.id === leader ? (
+        <>
+          <div className="im-d">
+            <FiUserPlus size={18} />
+            <p id="invite_mem" onClick={() => setModalShow(true)}>
+              멤버 초대
+            </p>
+          </div>
+
+          <InviteNewMember
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            group_id={path.at(-1)}
+          />
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
@@ -308,6 +319,40 @@ const Member = ({ info, props }) => {
       <p>{info[0] === props ? <TbCrown size={25} color="orange" /> : ""}</p>
       <p>{info[0]}</p>
       <p>{info[1]}</p>
+    </div>
+  );
+};
+
+const Apply = () => {
+  // const info = resource.read();
+  // const applys = info.members;
+
+  const userInfo = useAppSelector((state) => state.loginState);
+
+  return (
+    <div className="apply">
+      <h5>가입 처리</h5>
+      <div className="usersTop">
+        <p>ID</p>
+        <p>Name</p>
+        <p>Exp</p>
+        <p>Lv</p>
+      </div>
+      <div className="users">
+        <p>t_id</p>
+        <p>t_name</p>
+        <p>30</p>
+        <p>12</p>
+        <p>열심히 하겠습니다.</p>
+        <div className="check">
+          <p>
+            <AiOutlineCheck size={25} color="green" />
+          </p>
+          <p>
+            <AiOutlineClose size={25} color="red" />
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

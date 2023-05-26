@@ -31,7 +31,6 @@ import {
   TiBatteryHigh,
   TiBatteryFull,
 } from "react-icons/ti";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
@@ -168,6 +167,8 @@ export const GroupInfo = () => {
               )}
             />
           </Suspense>
+
+          {/* <button>가입신청</button> */}
 
           <div id="gi-B">
             <div className="gi-GB">

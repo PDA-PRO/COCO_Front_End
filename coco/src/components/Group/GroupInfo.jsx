@@ -328,32 +328,34 @@ const Apply = () => {
   // const applys = info.members;
 
   const userInfo = useAppSelector((state) => state.loginState);
-
+  const leader = info.leader;
+  
   return (
-    <div className="apply">
-      <h5>가입 처리</h5>
-      <div className="usersTop">
-        <p>ID</p>
-        <p>Name</p>
-        <p>Exp</p>
-        <p>Lv</p>
-      </div>
-      <div className="users">
-        <p>t_id</p>
-        <p>t_name</p>
-        <p>30</p>
-        <p>12</p>
-        <p>열심히 하겠습니다.</p>
-        <div className="check">
-          <p>
-            <AiOutlineCheck size={25} color="green" />
-          </p>
-          <p>
-            <AiOutlineClose size={25} color="red" />
-          </p>
-        </div>
+    {userInfo.id === leader ? (<div className="apply">
+    <h5>가입 처리</h5>
+    <div className="usersTop">
+      <p>ID</p>
+      <p>Name</p>
+      <p>Exp</p>
+      <p>Lv</p>
+    </div>
+    <div className="users">
+      <p>t_id</p>
+      <p>t_name</p>
+      <p>30</p>
+      <p>12</p>
+      <p>열심히 하겠습니다.</p>
+      <div className="check">
+        <p>
+          <AiOutlineCheck size={25} color="green" />
+        </p>
+        <p>
+          <AiOutlineClose size={25} color="red" />
+        </p>
       </div>
     </div>
+  </div>) : (<></>) }
+    
   );
 };
 

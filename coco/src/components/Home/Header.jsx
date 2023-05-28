@@ -25,6 +25,11 @@ export const Header = (props) => {
     setTarget(event.target);
   };
 
+  //img태그의 이미지 불러오기 오류시에 기본이미지로 대체
+  const onErrorImg = (e) => {
+    e.target.src = "/image/user.png";
+  };
+
   const handleShow = () => setShow(true);
 
   const movdPage = (n, id) => {
@@ -105,7 +110,15 @@ export const Header = (props) => {
                   style={{ cursor: "pointer" }}
                   className="login"
                 >
-                  <img src="/image/user.png" alt="" height="45px" />
+                  <img
+                    src={
+                      "http://localhost:8000/image/download/4/" +
+                      userInfo.id +
+                      ".jpg"
+                    }
+                    onError={onErrorImg}
+                    height="45px"
+                  />
                   <h3>{userInfo.id}</h3>
                 </div>
 
@@ -120,7 +133,15 @@ export const Header = (props) => {
                     <Popover.Header as="h3">Profile</Popover.Header>
                     <Popover.Body>
                       <div className="bodyOverlay">
-                        <img src="/image/user.png" alt="" width="100px" />
+                        <img
+                          src={
+                            "http://localhost:8000/image/download/4/" +
+                            userInfo.id +
+                            ".jpg"
+                          }
+                          onError={onErrorImg}
+                          width="100px"
+                        />
                         <h3>{userInfo.id}</h3>
                         <div className="footerOverlay">
                           <h4

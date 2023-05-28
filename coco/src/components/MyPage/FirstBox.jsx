@@ -19,22 +19,59 @@ export const FirstBox = (props) => {
   const refNowPW = useRef(null);
   const refNewPW = useRef(null);
   const refconfirmNewPW = useRef(null);
-  const [isPic, setIsPic] = useState(false);
+  const [isPicChange, setIsPicChange] = useState(false);
   const [fileImage, setFileImage] = useState("");
   const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
+    axios
+      .post(
+        "http://localhost:8000/image/upload-temp",
+        {
+          file: e.target.files[0],
+        },
+        {
+          headers: {
+            "Content-Type": `multipart/form-data; `,
+            Authorization: "Bearer " + userInfo.access_token,
+          },
+          params: {
+            type: 4,
+          },
+        }
+      )
+      .then(function (response) {
+        setFileImage(response.data);
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
+  };
+
+  //img태그의 이미지 불러오기 오류시에 기본이미지로 대체
+  const onErrorImg = (e) => {
+    e.target.src = "/image/user.png";
   };
 
   // 파일 삭제
   const deleteFileImage = () => {
-    setIsPic(false);
-    URL.revokeObjectURL(fileImage);
+    setIsPicChange(false);
     setFileImage("/image/user.png");
+    axios
+      .delete("http://localhost:8000/delete-image", {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token,
+        },
+      })
+      .then(function (response) {
+        setFileImage(response.data);
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
   };
 
   useEffect(() => {
-    console.log(isPic);
-  }, [isPic]);
+    console.log(isPicChange);
+  }, [isPicChange]);
 
   const changeEmail = () => {
     let email = refEmail.current.value;
@@ -103,15 +140,21 @@ export const FirstBox = (props) => {
     <div className="mp-infoBox">
       <div className="picBox">
         <>
-          {isPic ? (
-            <img alt="sample" src={fileImage} className="userImg" />
+          {isPicChange ? (
+            <img onError={onErrorImg} src={fileImage} className="userImg" />
           ) : (
-            <img alt="sample" src="/image/user.png" className="userImg" />
+            <img
+              onError={onErrorImg}
+              src={
+                "http://localhost:8000/image/download/4/" + userInfo.id + ".jpg"
+              }
+              className="userImg"
+            />
           )}
         </>
 
         <div className="picSelect">
-          <label htmlFor="imgUpload" onClick={() => setIsPic(true)}>
+          <label htmlFor="imgUpload" onClick={() => setIsPicChange(true)}>
             프로필 사진 변경
           </label>
           <input

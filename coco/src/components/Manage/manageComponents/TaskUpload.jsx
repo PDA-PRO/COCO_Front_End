@@ -16,7 +16,7 @@ import { json, useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftjsToHtml from "draftjs-to-html";
+import { useAppSelector } from "../../../app/store";
 
 export const TaskUpload = () => {
   const navigate = useNavigate();
@@ -42,6 +42,7 @@ export const TaskUpload = () => {
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
@@ -56,7 +57,10 @@ export const TaskUpload = () => {
             file: imagefile, // 파일
           },
           {
-            headers: { "Content-Type": `multipart/form-data; ` },
+            headers: {
+              "Content-Type": `multipart/form-data; `,
+              Authorization: "Bearer " + userInfo.access_token,
+            },
             params: {
               type: 3,
             },
@@ -147,8 +151,11 @@ export const TaskUpload = () => {
       );
 
       axios
-        .post("http://127.0.0.1:8000/manage", formData, {
-          headers: { "Content-Type": `multipart/form-data; ` },
+        .post("http://127.0.0.1:8000/manage/", formData, {
+          headers: {
+            "Content-Type": `multipart/form-data; `,
+            Authorization: "Bearer " + userInfo.access_token,
+          },
           params: {
             title: title,
             diff: diff,

@@ -64,7 +64,7 @@ const InviteNewMember = (props) => {
     axios
       .post("http://127.0.0.1:8000/group/invite_member/", {
         group_id: props.group_id,
-        user_id: id,
+        user_id: id
       })
       .then((res) => {
         console.log(res.data);
@@ -223,7 +223,14 @@ export const GroupInfo = () => {
                 />
               </Suspense>
 
-              <Apply></Apply>
+              <Suspense fallback={<Spinner />}>
+                <Apply
+                  resource={fetchData(
+                    `http://127.0.0.1:8000/group/group_apply/${path.at(-1)}/`
+                  )}
+                />
+              </Suspense>
+              {/* <Apply></Apply> */}
             </div>
           </div>
         </div>
@@ -323,39 +330,92 @@ const Member = ({ info, props }) => {
   );
 };
 
-const Apply = () => {
-  // const info = resource.read();
-  // const applys = info.members;
-
+const Apply = ({resource}) => {
+  const info = resource.read();
   const userInfo = useAppSelector((state) => state.loginState);
   const leader = info.leader;
+  const apply = info.apply;
+
+  const onAcceptHandler = (user_id, group_id) => {
+    console.log(user_id, group_id);
+    axios
+    .post("http://127.0.0.1:8000/group/invite_member/", {
+      group_id: group_id,
+      user_id: user_id,
+      apply: true
+    })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data === false) {
+        alert("이미 초대된 아이디입니다");
+      } else if (res.data === true) {
+        alert(`${user_id}님을 초대하였습니다`);        
+      }
+    })
+    .catch(() => {
+      alert("초대에 실패하였습니다");
+    });
+  }
+
+  const onRejectHandler = (user_id, group_id) => {
+    axios
+    .post("http://127.0.0.1:8000/group/reject_apply/", {
+      group_id: group_id,
+      user_id: user_id,
+    })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data === false) {
+        alert("이미 초대된 아이디입니다");
+      } else if (res.data === true) {
+        alert(`${user_id}님의 초대를 거절하였습니다`);        
+      }
+    })
+    .catch(() => {
+      alert("초대 거절에 실패하였습니다");
+    });
+  }
   
   return (
-    {userInfo.id === leader ? (<div className="apply">
-    <h5>가입 처리</h5>
-    <div className="usersTop">
-      <p>ID</p>
-      <p>Name</p>
-      <p>Exp</p>
-      <p>Lv</p>
-    </div>
-    <div className="users">
-      <p>t_id</p>
-      <p>t_name</p>
-      <p>30</p>
-      <p>12</p>
-      <p>열심히 하겠습니다.</p>
-      <div className="check">
-        <p>
-          <AiOutlineCheck size={25} color="green" />
-        </p>
-        <p>
-          <AiOutlineClose size={25} color="red" />
-        </p>
-      </div>
-    </div>
-  </div>) : (<></>) }
-    
+    <>
+      {userInfo.id === leader ? (
+        <div className="apply">
+          <h5>가입 처리</h5>
+          <div className="usersTop">
+            <p>ID</p>
+            <p>Name</p>
+            <p>Exp</p>
+            <p>Lv</p>
+          </div>
+          {
+            apply.map((e) => {
+              return (
+                <>
+                  <div className="users">
+                    <p>{e.user_id}</p>
+                    <p>{e.name}</p>
+                    <p>{e.exp}</p>
+                    <p>{e.level}</p>
+                    <p>{e.message}</p>
+                    <div className="check">
+                      <p>
+                        <AiOutlineCheck size={25} color="green" onClick={() => onAcceptHandler(e.user_id, e.group_id)} />
+                      </p>
+                      <p>
+                        <AiOutlineClose size={25} color="red" onClick={() => onRejectHandler(e.user_id, e.group_id)}/>
+                      </p>
+                    </div>
+                  </div>
+                </>
+              );
+            })
+          }
+
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

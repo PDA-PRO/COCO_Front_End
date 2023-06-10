@@ -64,7 +64,7 @@ const InviteNewMember = (props) => {
     axios
       .post("http://127.0.0.1:8000/group/invite_member/", {
         group_id: props.group_id,
-        user_id: id
+        user_id: id,
       })
       .then((res) => {
         console.log(res.data);
@@ -141,6 +141,8 @@ const InviteNewMember = (props) => {
 export const GroupInfo = () => {
   var path = window.location.pathname;
   path = path.split("/");
+  const userInfo = useAppSelector((state) => state.loginState);
+  const userID = userInfo.id;
 
   const [page, setPage] = useState(1);
 
@@ -155,6 +157,26 @@ export const GroupInfo = () => {
 
   const moveWrite = (id) => {
     navigate(`/group/board/write`, { state: id });
+  };
+
+  const onLeaveHandler = (group_id, user_id) => {
+    axios
+      .post("http://127.0.0.1:8000/group/leave_group/", {
+        group_id: group_id,
+        user_id: user_id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === false) {
+          alert("이미 탈퇴처리된 그룹입니다");
+        } else if (res.data === true) {
+          alert(`그룹을 탈퇴하였습니다`);
+          navigate("/group");
+        }
+      })
+      .catch(() => {
+        alert("그룹 탈퇴에 실패하였습니다");
+      });
   };
 
   return (
@@ -214,6 +236,7 @@ export const GroupInfo = () => {
                 </Suspense>
               )}
             </div>
+
             <div className="gi-ML">
               <Suspense fallback={<Spinner />}>
                 <MemberList
@@ -228,9 +251,13 @@ export const GroupInfo = () => {
                   resource={fetchData(
                     `http://127.0.0.1:8000/group/group_apply/${path.at(-1)}/`
                   )}
+                  userID={userID}
                 />
               </Suspense>
-              {/* <Apply></Apply> */}
+
+              <button onClick={() => onLeaveHandler(path.at(-1), userInfo.id)}>
+                그룹 탈퇴
+              </button>
             </div>
           </div>
         </div>
@@ -330,55 +357,54 @@ const Member = ({ info, props }) => {
   );
 };
 
-const Apply = ({resource}) => {
+const Apply = ({ resource, userID }) => {
   const info = resource.read();
-  const userInfo = useAppSelector((state) => state.loginState);
   const leader = info.leader;
   const apply = info.apply;
 
   const onAcceptHandler = (user_id, group_id) => {
     console.log(user_id, group_id);
     axios
-    .post("http://127.0.0.1:8000/group/invite_member/", {
-      group_id: group_id,
-      user_id: user_id,
-      apply: true
-    })
-    .then((res) => {
-      console.log(res.data);
-      if (res.data === false) {
-        alert("이미 초대된 아이디입니다");
-      } else if (res.data === true) {
-        alert(`${user_id}님을 초대하였습니다`);        
-      }
-    })
-    .catch(() => {
-      alert("초대에 실패하였습니다");
-    });
-  }
+      .post("http://127.0.0.1:8000/group/invite_member/", {
+        group_id: group_id,
+        user_id: user_id,
+        apply: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === false) {
+          alert("이미 초대된 아이디입니다");
+        } else if (res.data === true) {
+          alert(`${user_id}님을 초대하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert("초대에 실패하였습니다");
+      });
+  };
 
   const onRejectHandler = (user_id, group_id) => {
     axios
-    .post("http://127.0.0.1:8000/group/reject_apply/", {
-      group_id: group_id,
-      user_id: user_id,
-    })
-    .then((res) => {
-      console.log(res.data);
-      if (res.data === false) {
-        alert("이미 초대된 아이디입니다");
-      } else if (res.data === true) {
-        alert(`${user_id}님의 초대를 거절하였습니다`);        
-      }
-    })
-    .catch(() => {
-      alert("초대 거절에 실패하였습니다");
-    });
-  }
-  
+      .post("http://127.0.0.1:8000/group/reject_apply/", {
+        group_id: group_id,
+        user_id: user_id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === false) {
+          alert("이미 초대된 아이디입니다");
+        } else if (res.data === true) {
+          alert(`${user_id}님의 초대를 거절하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert("초대 거절에 실패하였습니다");
+      });
+  };
+
   return (
     <>
-      {userInfo.id === leader ? (
+      {userID === leader ? (
         <div className="apply">
           <h5>가입 처리</h5>
           <div className="usersTop">
@@ -387,30 +413,35 @@ const Apply = ({resource}) => {
             <p>Exp</p>
             <p>Lv</p>
           </div>
-          {
-            apply.map((e) => {
-              return (
-                <>
-                  <div className="users">
-                    <p>{e.user_id}</p>
-                    <p>{e.name}</p>
-                    <p>{e.exp}</p>
-                    <p>{e.level}</p>
-                    <p>{e.message}</p>
-                    <div className="check">
-                      <p>
-                        <AiOutlineCheck size={25} color="green" onClick={() => onAcceptHandler(e.user_id, e.group_id)} />
-                      </p>
-                      <p>
-                        <AiOutlineClose size={25} color="red" onClick={() => onRejectHandler(e.user_id, e.group_id)}/>
-                      </p>
-                    </div>
+          {apply.map((e) => {
+            return (
+              <>
+                <div className="users">
+                  <p>{e.user_id}</p>
+                  <p>{e.name}</p>
+                  <p>{e.exp}</p>
+                  <p>{e.level}</p>
+                  <p>{e.message}</p>
+                  <div className="check">
+                    <p>
+                      <AiOutlineCheck
+                        size={25}
+                        color="green"
+                        onClick={() => onAcceptHandler(e.user_id, e.group_id)}
+                      />
+                    </p>
+                    <p>
+                      <AiOutlineClose
+                        size={25}
+                        color="red"
+                        onClick={() => onRejectHandler(e.user_id, e.group_id)}
+                      />
+                    </p>
                   </div>
-                </>
-              );
-            })
-          }
-
+                </div>
+              </>
+            );
+          })}
         </div>
       ) : (
         <></>

@@ -68,6 +68,7 @@ export const SignIn = () => {
               role: jwt_role,
               exp: jwt_exp,
               level: jwt_level,
+              imagetoken: new Date().getTime(),
             });
             navigateToHome();
           }

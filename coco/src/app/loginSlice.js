@@ -23,6 +23,7 @@ export const loginSlice = createSlice({
       state.role = action.role;
       state.exp = action.exp;
       state.level = action.level;
+      state.imagetoken = action.imagetoken;
     },
     logout: (state) => {
       state.access_token = "";
@@ -32,6 +33,7 @@ export const loginSlice = createSlice({
       state.role = null;
       state.exp = 0;
       state.level = 1;
+      state.imagetoken = -1;
     },
     initlogin: (state) => {
       state.access_token = initialState.access_token;
@@ -41,6 +43,11 @@ export const loginSlice = createSlice({
       state.role = initialState.role;
       state.exp = initialState.exp;
       state.level = initialState.level;
+      state.imagetoken = initialState.imagetoken;
+    },
+    changimage: (state, action) => {
+      state = state;
+      state.imagetoken = action.imagetoken;
     },
   },
   extraReducers: (builder) => {
@@ -48,6 +55,6 @@ export const loginSlice = createSlice({
   },
 });
 
-export var { login, logout, initlogin } = loginSlice.actions;
+export var { login, logout, initlogin, changimage } = loginSlice.actions;
 
 export default loginSlice.reducer;

@@ -114,7 +114,8 @@ export const Header = (props) => {
                     src={
                       "http://localhost:8000/image/download/4/" +
                       userInfo.id +
-                      ".jpg"
+                      ".jpg?time=" +
+                      userInfo.imagetoken
                     }
                     onError={onErrorImg}
                     height="45px"
@@ -137,7 +138,8 @@ export const Header = (props) => {
                           src={
                             "http://localhost:8000/image/download/4/" +
                             userInfo.id +
-                            ".jpg"
+                            ".jpg?time=" +
+                            userInfo.imagetoken
                           }
                           onError={onErrorImg}
                           width="100px"

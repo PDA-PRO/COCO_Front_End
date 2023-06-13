@@ -574,3 +574,45 @@
   background-color: aliceblue;
   cursor: pointer;
 }
+
+.exit {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.exit p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+.exit:hover {
+  text-decoration: underline;
+  color: green;
+}
+
+.explode {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.explode p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+.explode:hover {
+  text-decoration: underline;
+  color: red;
+}

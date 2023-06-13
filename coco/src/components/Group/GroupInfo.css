@@ -7,6 +7,7 @@
 
 .gi {
   width: clamp(650px, 90%, 1200px);
+  height: auto;
 }
 
 .gi-head {
@@ -83,13 +84,17 @@
   column-gap: 3vw;
 }
 
+.gi-ML {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+}
+
 .member-list {
   display: flex;
   flex-flow: column nowrap;
   border: 2px solid skyblue;
   border-radius: 15px;
-  position: sticky;
-  top: 80px;
 }
 
 .member-list p {
@@ -145,7 +150,104 @@
   color: rgb(114, 114, 255);
 }
 
-/*=============그룹 게시판==================*/
+/*=======================================가입신청 리스트=================================*/
+
+.apply {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border-radius: 15px;
+  border: 2px solid rgb(255, 99, 255);
+  padding: 0 10px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.apply h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  margin: 0 !important;
+  padding-top: 8px;
+  font-size: 17px;
+}
+
+.apply .usersTop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  width: 100%;
+  border-top: 2px solid rgb(197, 197, 197);
+  border-bottom: 2px solid rgb(197, 197, 197);
+}
+
+.usersTop p {
+  color: black;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 !important;
+}
+
+.apply .users {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding-top: 5px;
+
+  text-align: center;
+  width: 100%;
+  border-bottom: 2px solid rgb(197, 197, 197);
+  color: gray;
+}
+
+.users:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.users p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 !important;
+
+  padding-bottom: 3px;
+}
+
+.users p:nth-child(5) {
+  grid-column: 1/5;
+  grid-row: 2/3;
+  text-align: center;
+  border-top: 1px dotted darkgray;
+  padding-top: 3px;
+}
+
+.users:hover {
+  cursor: pointer;
+}
+
+.users .check {
+  grid-column: 1/5;
+  grid-row: 3/4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid gray;
+}
+
+.check p {
+  padding-top: 3px;
+}
+
+.check p:nth-child(1):hover {
+  background-color: rgb(168, 255, 168);
+}
+.check p:nth-child(2):hover {
+  background-color: rgb(255, 186, 186);
+}
+
+/*==========================================그룹 게시판==================================*/
 
 .group-board {
   display: flex;
@@ -373,4 +475,102 @@
 
 .task-top p:nth-child(1) {
   color: red;
+}
+
+/*--------------멤버 추가----------------*/
+
+.im-d {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: gray;
+}
+
+#invite_mem {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+#search_mem {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.im-d:hover {
+  color: rgb(128, 128, 206) !important;
+}
+
+#contained-modal-title-vcenter {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.3em;
+  margin: 0 !important;
+  color: rgb(96, 147, 241);
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-body .mb-3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.modal-body .mb-3 input {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  /* border: none;
+  border-bottom: 2px solid lightgray !important; */
+  border-radius: 10px;
+}
+
+#searchResultTop {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0 10px 10px 10px;
+
+  border-bottom: 1px solid gray !important;
+}
+
+.searchResult {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 7px 10px;
+  border-bottom: 1px solid skyblue;
+
+  color: gray;
+}
+
+#searchResultTop p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.searchResult p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.searchResult:hover {
+  color: rgb(89, 138, 212);
+  background-color: aliceblue;
+  cursor: pointer;
 }

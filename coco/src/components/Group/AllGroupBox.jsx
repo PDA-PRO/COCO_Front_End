@@ -1,12 +1,54 @@
 import React from "react";
 import "./Group.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../app/store";
+import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export const AllGroupBox = (info) => {
   const navigate = useNavigate();
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const GoInfo = (e) => {
-    navigate(`/group/${e}`);
+    axios
+      .post("http://127.0.0.1:8000/group/check_member/", {
+        user_id: userInfo.id,
+        group_id: e,
+      })
+      .then((res) => {
+        if (res.data === true) {
+          navigate(`/group/${e}`);
+        } else {
+          const result = window.confirm(
+            "가입되지 않은 그룹입니다\n가입하시겠습니까"
+          );
+          if (result === true) {
+            const message = window.prompt("가입 문구를 작성해주세요");
+            axios
+              .post("http://127.0.0.1:8000/group/join_group/", {
+                user_id: userInfo.id,
+                group_id: e,
+                message: message
+              })
+              .then((res) => {
+                const result = res.data;
+                if(result === false){
+                  alert("이미 가입 신청한 그룹입니다");
+                }else{
+                  alert("가입 신청이 완료되었습니다.");
+                  navigate("/group/")
+                }
+              })
+              .catch(() => {
+                alert("그룹 가입에 실패하였습니다.");
+              });
+          }
+        }
+      })
+      .catch(() => {
+        alert("그룹 확인에 실패하였습니다");
+      });
   };
 
   return (

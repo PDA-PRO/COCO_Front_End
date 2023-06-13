@@ -17,6 +17,7 @@ import {
   BsTrash,
 } from "react-icons/bs";
 import Pagination from "@mui/material/Pagination";
+import { useAppSelector } from "../../../app/store";
 
 export const PostList = () => {
   return (
@@ -32,20 +33,27 @@ export const PostList = () => {
 };
 
 const BoardList = ({ resource }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const problemList = resource.read();
   const [tasks, settasks] = useState(problemList);
-  
-  const maxPage = Math.ceil(problemList.length/10);
+
+  const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
-    if(event.target.innerHTML === '<path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path>'){
-      setPage(page-1)
-    }else if(event.target.innerHTML === '<path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"></path>'){
-      setPage(page+1)
-    }else{
+    if (
+      event.target.innerHTML ===
+      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
+    ) {
+      setPage(page - 1);
+    } else if (
+      event.target.innerHTML ===
+      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
+    ) {
+      setPage(page + 1);
+    } else {
       setPage(parseInt(event.target.outerText));
     }
-  }
+  };
 
   return (
     <div className="m-upload">
@@ -58,11 +66,9 @@ const BoardList = ({ resource }) => {
         <h3>조회수</h3>
         <h3>좋아요</h3>
       </div>
-      {
-        tasks.slice(20*(page-1), 20*(page-1)+20).map((e) => {
-          return <ListPost info={e} settasks={settasks}/>;
-        })
-      }
+      {tasks.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+        return <ListPost info={e} userinfo={userInfo} settasks={settasks} />;
+      })}
       {/* {tasks.map((e) => {
         return <ListPost info={e} settasks={settasks}></ListPost>;
       })} */}
@@ -79,7 +85,7 @@ const BoardList = ({ resource }) => {
   );
 };
 
-const ListPost = ({ info, settasks }) => {
+const ListPost = ({ info, userinfo, settasks }) => {
   const navigate = useNavigate();
   const moveDetail = (e) => {
     navigate(`/board/${e}`);
@@ -131,7 +137,14 @@ const ListPost = ({ info, settasks }) => {
 
   const loadlist = (e) => {
     axios
-      .get("http://127.0.0.1:8000/deleteBoard/" + info.id)
+      .post(
+        "http://127.0.0.1:8000/delete_content/",
+        {
+          board_id: info.id,
+          user_id: userinfo.id,
+        },
+        { headers: { Authorization: "Bearer " + userinfo.access_token } }
+      )
       .then(function (response) {
         axios.get("http://127.0.0.1:8000/boardlist").then(function (response) {
           console.log(response.data);

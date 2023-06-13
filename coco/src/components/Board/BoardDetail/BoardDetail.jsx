@@ -23,6 +23,7 @@ import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import CodeMirror from "@uiw/react-codemirror";
+import draftToHtml from "draftjs-to-html";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
@@ -223,7 +224,11 @@ const GetBoardDetail = ({ resource }) => {
 
           <div className="BDContent">
             <div className="BDTxt">
-              <div dangerouslySetInnerHTML={{ __html: detail.context }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: draftToHtml(JSON.parse(detail.context)),
+                }}
+              />
             </div>
 
             {detail.category === 2 ? <CodeHere /> : <></>}

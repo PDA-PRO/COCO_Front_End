@@ -16,7 +16,7 @@ import { json, useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftjsToHtml from "draftjs-to-html";
+import { useAppSelector } from "../../../app/store";
 
 export const TaskUpload = () => {
   const navigate = useNavigate();
@@ -24,7 +24,6 @@ export const TaskUpload = () => {
     navigate("/");
   };
   const [title, setTitle] = useState(""); // 제목 State !필수
-  const [desc, setDesc] = useState("");
 
   const [diff, setDiff] = useState(""); // 난이도 State !필수
   const [time, setTime] = useState(""); // 시간제한 State !필수
@@ -43,11 +42,10 @@ export const TaskUpload = () => {
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const userInfo = useAppSelector((state) => state.loginState);
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
-    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
-    setDesc(html);
   };
 
   const uploadCallback = (imagefile) => {
@@ -59,7 +57,10 @@ export const TaskUpload = () => {
             file: imagefile, // 파일
           },
           {
-            headers: { "Content-Type": `multipart/form-data; ` },
+            headers: {
+              "Content-Type": `multipart/form-data; `,
+              Authorization: "Bearer " + userInfo.access_token,
+            },
             params: {
               type: 3,
             },
@@ -120,37 +121,14 @@ export const TaskUpload = () => {
   // --------------------------- POST 보낼 값 State 화 ----------------------
 
   // --------------------------- 파일 업로드에 관한 코드 ---------------------
-  const [image, setImage] = React.useState("");
-  const imageRef = React.useRef(null);
-
-  function useDisplayImage() {
-    const [result, setResult] = React.useState("");
-
-    function uploader(e) {
-      const imageFile = e.target.files[0];
-
-      const reader = new FileReader();
-      reader.addEventListener("load", (e) => {
-        setResult(e.target.result);
-      });
-
-      reader.readAsDataURL(imageFile);
-    }
-
-    return { result, uploader };
-  }
-
-  const { result, uploader } = useDisplayImage();
 
   // --------------------------- 파일 업로드에 관한 코드 ---------------------
 
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
-    console.log(desc);
     e.preventDefault();
     if (
       title == "" ||
-      desc == "" ||
       diff == "" ||
       time == "" ||
       mem == "" ||
@@ -173,11 +151,13 @@ export const TaskUpload = () => {
       );
 
       axios
-        .post("http://127.0.0.1:8000/manage", formData, {
-          headers: { "Content-Type": `multipart/form-data; ` },
+        .post("http://127.0.0.1:8000/manage/", formData, {
+          headers: {
+            "Content-Type": `multipart/form-data; `,
+            Authorization: "Bearer " + userInfo.access_token,
+          },
           params: {
             title: title,
-            desc, desc,
             diff: diff,
             timeLimit: time,
             memLimit: mem,

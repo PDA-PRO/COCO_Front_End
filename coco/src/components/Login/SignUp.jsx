@@ -1,19 +1,11 @@
 import React from "react";
 import "./SignUp.css";
-import {
-  Button,
-  OverlayTrigger,
-  Popover,
-  InputGroup,
-  Form,
-} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
-import { RiLockPasswordLine, RiQuestionLine } from "react-icons/ri";
-import { BiPencil } from "react-icons/bi";
-import { MdOutlineSchool, MdInsertEmoticon } from "react-icons/md";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 axios.defaults.withCredentials = true;
@@ -29,13 +21,7 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [confirm, setConfirm] = useState("");
 
-  const [student, setStudent] = useState(false);
-  const [teacher, setTeacher] = useState(false);
-  const [age, setAge] = useState(0);
-
   const [checkId, setCheckId] = useState(false);
-
-  const [showAge, setShowAge] = useState(false);
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -86,8 +72,6 @@ export const SignUp = () => {
     } else {
       if (pw !== confirm) {
         return alert("비밀번호가 일치하지 않습니다");
-      } else if (student === false && teacher === false) {
-        return alert("유형을 선택해주세요");
       } else {
         axios
           .post("http://127.0.0.1:8000/signup", {
@@ -95,8 +79,7 @@ export const SignUp = () => {
             id: id,
             pw: pw,
             email: email,
-            role: student === true ? 0 : 1,
-            age: age,
+            role: 0,
           })
           .then(function (response) {
             if (response.data.code === 1) {
@@ -108,21 +91,6 @@ export const SignUp = () => {
           });
       }
     }
-  };
-
-  const radioHandler1 = (e) => {
-    setStudent(!student);
-    setTeacher(false);
-    setShowAge(true);
-  };
-  const radioHandler2 = (e) => {
-    setTeacher(!teacher);
-    setStudent(false);
-    setShowAge(false);
-  };
-
-  const onAgeHandler = (e) => {
-    setAge(e.target.value);
   };
 
   return (
@@ -163,37 +131,6 @@ export const SignUp = () => {
           type={"password"}
           autoComplete={"false"}
           onChange={onConfirmHandler}
-        />
-      </div>
-      <div className="loginBox signUpTypes" style={{ marginBottom: "0px" }}>
-        <div className="signUpType">
-          <div className="signUpRadio">
-            <div>
-              <BiPencil size={"25"} />
-            </div>
-            <span>학생</span>
-          </div>
-          <input type={"radio"} onChange={radioHandler1} checked={student} />
-        </div>
-
-        <div className="signUpType">
-          <div className="signUpRadio">
-            <div>
-              <MdOutlineSchool size={"25"} />
-            </div>
-            <span>선생님</span>
-          </div>
-          <input type={"radio"} onChange={radioHandler2} checked={teacher} />
-        </div>
-      </div>
-
-      <div className="loginBox" style={{ display: showAge ? "flex" : "none" }}>
-        <RiQuestionLine size="25" />
-        <input
-          placeholder={"나이"}
-          type={"number"}
-          autoComplete={"false"}
-          onChange={onAgeHandler}
         />
       </div>
       <div className="loginBox loginConfirm">

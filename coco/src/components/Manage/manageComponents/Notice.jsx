@@ -57,7 +57,10 @@ const GetNotice = ({ resource }) => {
             file: imagefile, // 파일
           },
           {
-            headers: { "Content-Type": `multipart/form-data; ` },
+            headers: {
+              "Content-Type": `multipart/form-data; `,
+              Authorization: "Bearer " + userInfo.access_token,
+            },
             params: {
               type: 1,
             },

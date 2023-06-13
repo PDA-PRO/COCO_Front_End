@@ -2,7 +2,7 @@ import React from "react";
 import "./MyPage.css";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { IoMdSchool } from "react-icons/io";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -10,31 +10,73 @@ import { IoMailOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRunning } from "react-icons/fa";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { useAppSelector } from "../../app/store";
+import { useAppSelector, useAppDispatch } from "../../app/store";
 
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
+  const dispatch = useAppDispatch();
   const refEmail = useRef(null);
   const refNowPW = useRef(null);
   const refNewPW = useRef(null);
   const refconfirmNewPW = useRef(null);
-  const [isPic, setIsPic] = useState(false);
-  const [fileImage, setFileImage] = useState("");
+  const [fileImage, setFileImage] = useState(userInfo.imagetoken);
   const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
+    axios
+      .post(
+        "http://localhost:8000/image/upload-temp",
+        {
+          file: e.target.files[0],
+        },
+        {
+          headers: {
+            "Content-Type": `multipart/form-data; `,
+            Authorization: "Bearer " + userInfo.access_token,
+          },
+          params: {
+            type: 4,
+          },
+        }
+      )
+      .then(function (response) {
+        var new_imgaetoken = new Date().getTime();
+        dispatch({
+          type: "loginSlice/changimage",
+          imagetoken: new_imgaetoken,
+        });
+        console.log("이미지 변경", response);
+        setFileImage(new_imgaetoken);
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
+  };
+
+  //img태그의 이미지 불러오기 오류시에 기본이미지로 대체
+  const onErrorImg = (e) => {
+    e.target.src = "/image/user.png";
   };
 
   // 파일 삭제
   const deleteFileImage = () => {
-    setIsPic(false);
-    URL.revokeObjectURL(fileImage);
-    setFileImage("/image/user.png");
+    axios
+      .delete("http://localhost:8000/image/delete-image", {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token,
+        },
+      })
+      .then(function () {
+        var new_imgaetoken = new Date().getTime();
+        dispatch({
+          type: "loginSlice/changimage",
+          imagetoken: new_imgaetoken,
+        });
+        setFileImage(new_imgaetoken);
+        alert("이미지 삭제 성공");
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
   };
-
-  useEffect(() => {
-    console.log(isPic);
-  }, [isPic]);
 
   const changeEmail = () => {
     let email = refEmail.current.value;
@@ -103,17 +145,20 @@ export const FirstBox = (props) => {
     <div className="mp-infoBox">
       <div className="picBox">
         <>
-          {isPic ? (
-            <img alt="sample" src={fileImage} className="userImg" />
-          ) : (
-            <img alt="sample" src="/image/user.png" className="userImg" />
-          )}
+          <img
+            onError={onErrorImg}
+            src={
+              "http://localhost:8000/image/download/4/" +
+              userInfo.id +
+              ".jpg?time=" +
+              fileImage
+            }
+            className="userImg"
+          />
         </>
 
         <div className="picSelect">
-          <label htmlFor="imgUpload" onClick={() => setIsPic(true)}>
-            프로필 사진 변경
-          </label>
+          <label htmlFor="imgUpload">프로필 사진 변경</label>
           <input
             id="imgUpload"
             name="imgUpload"

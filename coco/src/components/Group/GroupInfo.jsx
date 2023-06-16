@@ -706,26 +706,25 @@ const LeaveOrDelete = ({ resource }) => {
     }
   };
 
-  const onDeleteHandler = (group_id, user_id) => {
+  const onDeleteHandler = (group_id) => {
     let val = window.confirm("정말 그룹을 삭제하시겠습니까?");
     if (val === true) {
-      // axios        // 여기 api 주소만 바꾸면 끝
-      //   .post("http://127.0.0.1:8000/group/leave_group/", {
-      //     group_id: group_id,
-      //     user_id: user_id,
-      //   })
-      //   .then((res) => {
-      //     console.log(res.data);
-      //     if (res.data === false) {
-      //       alert("이미 삭제된 그룹입니다");
-      //     } else if (res.data === true) {
-      //       alert(`그룹을 삭제하였습니다`);
-      //       navigate("/group");
-      //     }
-      //   })
-      //   .catch(() => {
-      //     alert("그룹 삭제에 실패하였습니다");
-      //   });
+      axios        // 여기 api 주소만 바꾸면 끝
+        .post("http://127.0.0.1:8000/group/delete_group/", {
+          group_id: group_id,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === false) {
+            alert("이미 삭제된 그룹입니다");
+          } else if (res.data === true) {
+            alert(`그룹을 삭제하였습니다`);
+            navigate("/group");
+          }
+        })
+        .catch(() => {
+          alert("그룹 삭제에 실패하였습니다");
+        });
     } else {
     }
   };
@@ -735,7 +734,7 @@ const LeaveOrDelete = ({ resource }) => {
       {leader === userID ? (
         <div
           className="explode"
-          onClick={() => onDeleteHandler(path.at(-1), userID)}
+          onClick={() => onDeleteHandler(path.at(-1))}
         >
           <p>그룹 삭제</p>
           <MdClear size={28} color="red" />

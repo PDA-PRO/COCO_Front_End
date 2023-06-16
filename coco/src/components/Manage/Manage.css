@@ -397,3 +397,84 @@
   margin-top: 30px;
   min-height: 300px;
 }
+
+/*--------------------- 유저 관리 ---------------------*/
+.divide-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2vw;
+}
+
+.divide-box .box {
+  justify-self: center;
+  width: 90%;
+}
+
+.box p {
+  text-align: center;
+  font-weight: 600;
+}
+
+.box .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(245, 252, 255);
+  padding: 10px;
+}
+
+.searchBar #goSearch {
+  cursor: pointer;
+}
+
+.searchBar input {
+  background-color: rgb(245, 252, 255);
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  color: rgb(60, 108, 211);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid rgb(98, 148, 255);
+  padding: 2px 5px;
+  width: 80%;
+}
+.searchBar input:focus {
+  outline: none;
+}
+
+.userList-manage {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-top: 20px;
+}
+
+.userList-manage p {
+  margin: 0 !important;
+}
+
+.uL-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 2px solid lightgray;
+}
+
+.uL-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.uL-content p {
+  font-weight: 500;
+}
+
+#mm {
+  padding-top: 0 !important;
+}

@@ -36,6 +36,8 @@ import {
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import { GiExitDoor } from "react-icons/gi";
+import { MdClear } from "react-icons/md";
 
 const InviteNewMember = (props) => {
   const [search, setSearch] = useState("");
@@ -159,26 +161,6 @@ export const GroupInfo = () => {
     navigate(`/group/board/write`, { state: id });
   };
 
-  const onLeaveHandler = (group_id, user_id) => {
-    axios
-      .post("http://127.0.0.1:8000/group/leave_group/", {
-        group_id: group_id,
-        user_id: user_id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === false) {
-          alert("이미 탈퇴처리된 그룹입니다");
-        } else if (res.data === true) {
-          alert(`그룹을 탈퇴하였습니다`);
-          navigate("/group");
-        }
-      })
-      .catch(() => {
-        alert("그룹 탈퇴에 실패하였습니다");
-      });
-  };
-
   return (
     <>
       <Header />
@@ -255,9 +237,13 @@ export const GroupInfo = () => {
                 />
               </Suspense>
 
-              <button onClick={() => onLeaveHandler(path.at(-1), userInfo.id)}>
-                그룹 탈퇴
-              </button>
+              <Suspense fallback={<Spinner />}>
+                <LeaveOrDelete
+                  resource={fetchData(
+                    `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                  )}
+                />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -683,5 +669,85 @@ const GroupTask = ({ props }) => {
 
       <h4>{lan(props.lan_c, props.lan_py)}</h4>
     </div>
+  );
+};
+
+const LeaveOrDelete = ({ resource }) => {
+  var path = window.location.pathname;
+  const info = resource.read();
+  const leader = info.leader;
+  path = path.split("/");
+  const userInfo = useAppSelector((state) => state.loginState);
+  const userID = userInfo.id;
+
+  const navigate = useNavigate();
+
+  const onLeaveHandler = (group_id, user_id) => {
+    let val = window.confirm("정말 그룹을 탈퇴하시겠습니까?");
+    if (val === true) {
+      axios
+        .post("http://127.0.0.1:8000/group/leave_group/", {
+          group_id: group_id,
+          user_id: user_id,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === false) {
+            alert("이미 탈퇴처리된 그룹입니다");
+          } else if (res.data === true) {
+            alert(`그룹을 탈퇴하였습니다`);
+            navigate("/group");
+          }
+        })
+        .catch(() => {
+          alert("그룹 탈퇴에 실패하였습니다");
+        });
+    } else {
+    }
+  };
+
+  const onDeleteHandler = (group_id) => {
+    let val = window.confirm("정말 그룹을 삭제하시겠습니까?");
+    if (val === true) {
+      axios        // 여기 api 주소만 바꾸면 끝
+        .post("http://127.0.0.1:8000/group/delete_group/", {
+          group_id: group_id,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === false) {
+            alert("이미 삭제된 그룹입니다");
+          } else if (res.data === true) {
+            alert(`그룹을 삭제하였습니다`);
+            navigate("/group");
+          }
+        })
+        .catch(() => {
+          alert("그룹 삭제에 실패하였습니다");
+        });
+    } else {
+    }
+  };
+
+  return (
+    <>
+      {leader === userID ? (
+        <div
+          className="explode"
+          onClick={() => onDeleteHandler(path.at(-1))}
+        >
+          <p>그룹 삭제</p>
+          <MdClear size={28} color="red" />
+        </div>
+      ) : (
+        <div
+          className="exit"
+          onClick={() => onLeaveHandler(path.at(-1), userID)}
+        >
+          <p>그룹 탈퇴</p>
+          <GiExitDoor size={26} color="lightgreen" />
+        </div>
+      )}
+    </>
   );
 };

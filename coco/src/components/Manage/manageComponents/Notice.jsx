@@ -1,20 +1,16 @@
 import "../Manage.css";
-import React, { useState, Suspense } from "react";
+import React, { useState, useMemo, useRef, Suspense } from "react";
 import Button from "react-bootstrap/Button";
-import { Editor } from "react-draft-wysiwyg";
-import {
-  EditorState,
-  convertToRaw,
-  convertFromRaw,
-  ContentState,
-} from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftjsToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../../api/fetchTask";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import Quill from "quill";
+import ImageResize from "@looop/quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
 
 export const Notice = () => {
   return (
@@ -33,28 +29,32 @@ export const Notice = () => {
 
 const GetNotice = ({ resource }) => {
   const notice = resource.read();
-  const initPlaceholder = <div dangerouslySetInnerHTML={{ __html: notice }} />;
-  const userInfo = useAppSelector((state) => state.loginState);
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(
-      ContentState.createFromBlockArray(htmlToDraft(notice).contentBlocks)
-    )
-  );
-  const [htmlString, setHtmlString] = useState("");
+  const [quillValue, setquillValue] = useState(notice); // 메인 설명 html State !필수
+  const quillRef = useRef(); // quill editor에 접근하기 위한 ref
+  const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
-  const updateTextDescription = async (state) => {
-    await setEditorState(state);
-    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
-    setHtmlString(html);
-  };
+  // --------------------------- quill editor 관련 함수 ----------------------
+  const imageHandler = () => {
+    // 1. 이미지를 저장할 input type=file DOM을 만든다.
+    const input = document.createElement("input");
 
-  const uploadCallback = (imagefile) => {
-    return new Promise((resolve, reject) => {
+    // 속성 써주기
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
+    // input이 클릭되면 파일 선택창이 나타난다.
+
+    // input에 변화가 생긴다면 = 이미지를 선택
+    input.addEventListener("change", async () => {
+      const file = input.files[0];
+      const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+      //현재 에디터 커서 위치값을 가져온다
+      const range = editor.getSelection();
       axios
         .post(
           "http://localhost:8000/image/upload-temp",
           {
-            file: imagefile, // 파일
+            file: file, // 파일
           },
           {
             headers: {
@@ -67,23 +67,56 @@ const GetNotice = ({ resource }) => {
           }
         )
         .then((res) => {
-          resolve(res);
+          const IMG_URL = res.data;
+          // 가져온 위치에 이미지를 삽입한다
+          editor.insertEmbed(range.index, "image", IMG_URL);
+          //커서를 한칸 뒤로 이동
+          editor.setSelection(range.index + 1);
         })
-        .catch(reject);
-    })
-      .then((res) => {
-        return { data: { link: res.data } };
-      })
-      .catch(() => {
-        return { data: { link: "이미지 업로드 실패" } };
-      });
+        .catch(() => {
+          //오류시에 안내 메시지를 삽입
+          editor.insertText(range.index, "이미지 업로드에 실패했습니다", {
+            color: "#ff0000",
+            bold: true,
+          });
+        });
+    });
   };
+
+  //userMemo를 써야 오류가 안난다.
+  const quill_module = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [
+            { size: ["small", false, "large", "huge"] },
+            { header: [1, 2, 3, 4, 5, 6, false] },
+          ], // custom dropdown
+          ["bold", "underline", "link", "image"], // toggled buttons
+
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "super" }], // superscript
+
+          [{ color: [] }], // dropdown with defaults from theme
+          [{ align: [] }],
+
+          ["clean"],
+        ],
+        handlers: {
+          // 이미지 처리는 imageHandler로 처리
+          image: imageHandler,
+        },
+      },
+      imageResize: {
+        modules: ["Resize", "DisplaySize"],
+      },
+    };
+  }, []);
 
   const onSubmitHandler = () => {
     axios
       .post("http://127.0.0.1:8000/manage/notice/", {
-        entity: convertToRaw(editorState.getCurrentContent()).entityMap,
-        html: htmlString,
+        html: quillValue,
       })
       .then(function (res) {
         console.log("response: ", res);
@@ -95,58 +128,17 @@ const GetNotice = ({ resource }) => {
 
   return (
     <>
-      <Editor
-        placeholder={"내용을 작성해주세요."}
-        editorState={editorState}
-        onEditorStateChange={updateTextDescription}
-        toolbar={{
-          options: [
-            "inline",
-            "blockType",
-            "fontSize",
-            "fontFamily",
-            "list",
-            "textAlign",
-            "colorPicker",
-            "link",
-            "emoji",
-            "image",
-            "remove",
-            "history",
-          ],
-          inline: { inDropdown: true },
-          list: { inDropdown: true },
-          textAlign: { inDropdown: true },
-          link: { inDropdown: true },
-          history: { inDropdown: true },
-          image: {
-            uploadCallback: uploadCallback,
-            previewImage: true,
-          },
-          fontFamily: {
-            options: [
-              "GmarketSansMedium",
-              "Pretendard-Regular",
-              "Impact",
-              "Open Sans",
-              "Roboto",
-              "Tahoma",
-              "Times New Roman",
-              "Verdana",
-            ],
-          },
-        }}
-        localization={{ locale: "ko" }}
-        editorStyle={{
-          height: "480px",
-          width: "100%",
-          border: "3px solid lightgray",
-          padding: "20px",
-          fontFamily: "Pretendard-Regular",
-        }}
+      <ReactQuill
+        theme="snow"
+        value={quillValue}
+        modules={quill_module}
+        onChange={setquillValue}
+        ref={quillRef}
+        placeholder={"문제의 메인 설명 입력"}
+        style={{ height: "480px", marginBottom: "50px" }}
       />
       <div className="notice_result">
-        <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+        <div dangerouslySetInnerHTML={{ __html: quillValue }} />
       </div>
       <Button
         variant="outline-secondary"

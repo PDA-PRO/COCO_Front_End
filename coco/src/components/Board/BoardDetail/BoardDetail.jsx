@@ -11,7 +11,6 @@ import {
 } from "react-icons/bs";
 import { SlPencil } from "react-icons/sl";
 import { VscCommentDiscussion } from "react-icons/vsc";
-
 import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
@@ -23,7 +22,6 @@ import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import CodeMirror from "@uiw/react-codemirror";
-import draftToHtml from "draftjs-to-html";
 
 export const BoardDetail = () => {
   var path = window.location.pathname;
@@ -226,7 +224,7 @@ const GetBoardDetail = ({ resource }) => {
             <div className="BDTxt">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: draftToHtml(JSON.parse(detail.context)),
+                  __html: detail.context,
                 }}
               />
             </div>

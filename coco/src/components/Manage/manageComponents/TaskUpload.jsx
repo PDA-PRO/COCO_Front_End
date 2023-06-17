@@ -1,6 +1,6 @@
 import "../Manage.css";
 import React from "react";
-import { useState } from "react";
+import { useState, useMemo, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import {
@@ -12,17 +12,15 @@ import {
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
-import { json, useNavigate } from "react-router-dom";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useAppSelector } from "../../../app/store";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import Quill from "quill";
+import ImageResize from "@looop/quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
 
 export const TaskUpload = () => {
-  const navigate = useNavigate();
-  const moveHome = () => {
-    navigate("/");
-  };
   const [title, setTitle] = useState(""); // 제목 State !필수
 
   const [diff, setDiff] = useState(""); // 난이도 State !필수
@@ -41,20 +39,32 @@ export const TaskUpload = () => {
   const [cLan, setCLan] = useState(false); // 설정 언어 State !필수
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
 
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const userInfo = useAppSelector((state) => state.loginState);
+  const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
+  const quillRef = useRef(); // quill editor에 접근하기 위한 ref
+  const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
-  const updateTextDescription = async (state) => {
-    await setEditorState(state);
-  };
+  // --------------------------- quill editor 관련 함수 ----------------------
+  const imageHandler = () => {
+    // 1. 이미지를 저장할 input type=file DOM을 만든다.
+    const input = document.createElement("input");
 
-  const uploadCallback = (imagefile) => {
-    return new Promise((resolve, reject) => {
+    // 속성 써주기
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
+    // input이 클릭되면 파일 선택창이 나타난다.
+
+    // input에 변화가 생긴다면 = 이미지를 선택
+    input.addEventListener("change", async () => {
+      const file = input.files[0];
+      const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+      //현재 에디터 커서 위치값을 가져온다
+      const range = editor.getSelection();
       axios
         .post(
           "http://localhost:8000/image/upload-temp",
           {
-            file: imagefile, // 파일
+            file: file, // 파일
           },
           {
             headers: {
@@ -67,17 +77,53 @@ export const TaskUpload = () => {
           }
         )
         .then((res) => {
-          resolve(res);
+          const IMG_URL = res.data;
+          // 가져온 위치에 이미지를 삽입한다
+          editor.insertEmbed(range.index, "image", IMG_URL);
+          //커서를 한칸 뒤로 이동
+          editor.setSelection(range.index + 1);
         })
-        .catch(reject);
-    })
-      .then((res) => {
-        return { data: { link: res.data } };
-      })
-      .catch(() => {
-        return { data: { link: "이미지 업로드 실패" } };
-      });
+        .catch(() => {
+          //오류시에 안내 메시지를 삽입
+          editor.insertText(range.index, "이미지 업로드에 실패했습니다", {
+            color: "#ff0000",
+            bold: true,
+          });
+        });
+    });
   };
+
+  //userMemo를 써야 오류가 안난다.
+  const quill_module = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [
+            { size: ["small", false, "large", "huge"] },
+            { header: [1, 2, 3, 4, 5, 6, false] },
+          ], // custom dropdown
+          ["bold", "underline", "link", "image"], // toggled buttons
+
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "super" }], // superscript
+
+          [{ color: [] }], // dropdown with defaults from theme
+          [{ align: [] }],
+
+          ["clean"],
+        ],
+        handlers: {
+          // 이미지 처리는 imageHandler로 처리
+          image: imageHandler,
+        },
+      },
+      imageResize: {
+        modules: ["Resize", "DisplaySize"],
+      },
+    };
+  }, []);
+
+  // --------------------------- 문제 업로드에 필요한 값들의 state 업데이트 ----------------------
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -118,11 +164,6 @@ export const TaskUpload = () => {
   const onOutputEx2Handler = (e) => {
     setOutputEx2(e.currentTarget.value);
   };
-  // --------------------------- POST 보낼 값 State 화 ----------------------
-
-  // --------------------------- 파일 업로드에 관한 코드 ---------------------
-
-  // --------------------------- 파일 업로드에 관한 코드 ---------------------
 
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
@@ -144,11 +185,8 @@ export const TaskUpload = () => {
       //File 추가
       formData.append("testCase", testCase);
 
-      //객체를 Json타입으로 파싱하여 Blob객테 생성, type에 json 타입 지정
-      formData.append(
-        "description",
-        JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      );
+      //quill editor에 의해 생성된 메인 설명의 html을 form-data에 삽입
+      formData.append("description", quillValue);
 
       axios
         .post("http://127.0.0.1:8000/manage/", formData, {
@@ -174,7 +212,6 @@ export const TaskUpload = () => {
         .then(function (response) {
           if (response.data.result === 1) {
             alert(`${title} 업로드 성공`);
-            moveHome();
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }
@@ -196,54 +233,15 @@ export const TaskUpload = () => {
         </InputGroup>
         <div className="m-upload-context">
           <div className="m-desc">
-            <Editor
-              placeholder={"내용을 작성해주세요."}
-              editorState={editorState}
-              onEditorStateChange={updateTextDescription}
-              toolbar={{
-                options: [
-                  "inline",
-                  "blockType",
-                  "fontSize",
-                  "fontFamily",
-                  "list",
-                  "textAlign",
-                  "colorPicker",
-                  "link",
-                  "emoji",
-                  "image",
-                  "remove",
-                  "history",
-                ],
-                inline: { inDropdown: true },
-                list: { inDropdown: true },
-                textAlign: { inDropdown: true },
-                link: { inDropdown: true },
-                history: { inDropdown: true },
-                image: { uploadCallback: uploadCallback, previewImage: true },
-                fontFamily: {
-                  options: [
-                    "GmarketSansMedium",
-                    "Pretendard-Regular",
-                    "Impact",
-                    "Open Sans",
-                    "Roboto",
-                    "Tahoma",
-                    "Times New Roman",
-                    "Verdana",
-                  ],
-                },
-              }}
-              localization={{ locale: "ko" }}
-              editorStyle={{
-                minHeight: "550px",
-                width: "100%",
-                border: "3px solid lightgray",
-                padding: "20px",
-                fontFamily: "Pretendard-Regular",
-              }}
+            <ReactQuill
+              theme="snow"
+              value={quillValue}
+              modules={quill_module}
+              onChange={setquillValue}
+              ref={quillRef}
+              placeholder={"문제의 메인 설명 입력"}
+              style={{ minHeight: "550px" }}
             />
-
             {/* 문제에 대한 난이도 선정 */}
             <div className="m-diff">
               <FloatingLabel controlId="floatingSelect" label="난이도">
@@ -258,7 +256,6 @@ export const TaskUpload = () => {
               </FloatingLabel>
             </div>
             {/* 문제에 대한 난이도 선정 */}
-
             {/* 문제에 대한 시간제한 선정 */}
             <InputGroup id="m-timeLimit">
               <InputGroup.Text>Time Limit</InputGroup.Text>
@@ -266,7 +263,6 @@ export const TaskUpload = () => {
               <InputGroup.Text>SEC</InputGroup.Text>
             </InputGroup>
             {/* 문제에 대한 시간제한 선정 */}
-
             {/* 문제에 대한 메모리 제한 선정 */}
             <InputGroup id="m-memLimit">
               <InputGroup.Text>Memory Limit</InputGroup.Text>
@@ -354,7 +350,7 @@ export const TaskUpload = () => {
               />
             </FloatingLabel>
 
-            {/* 문제 입력에 대한 설명 */}
+            {/* 문제 출력에 대한 설명 */}
 
             {/* 문제 풀이 가능 언어 선택 */}
             <Form className="m-choLen">

@@ -24,10 +24,10 @@ import draftToHtml from "draftjs-to-html";
 import { convertFromRaw } from "draft-js";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { IoMdPaperPlane } from "react-icons/io";
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -49,7 +49,7 @@ const GetDetail = ({ resource }) => {
   const navigate = useNavigate();
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
-  const [codeLang, setcodeLang] = useState(1);
+  const [codeLang, setcodeLang] = useState(2);
   //submit이후 결과창 이동
   const goToResult = (e) => {
     console.log(e);
@@ -93,7 +93,7 @@ const GetDetail = ({ resource }) => {
         {
           user_id: userInfo.id,
           task_id: task_id,
-          solved: 0
+          solved: 0,
         },
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -110,7 +110,6 @@ const GetDetail = ({ resource }) => {
         alert("내 문제집에 추가하지 못했습니다");
       });
   };
-
 
   return (
     <div className="PBD">
@@ -152,7 +151,8 @@ const GetDetail = ({ resource }) => {
               <MyGroup
                 resource={fetchData(
                   `http://127.0.0.1:8000/group/mygroup/${userInfo.id}`
-                )} task_id={detail.id}
+                )}
+                task_id={detail.id}
               />
             </Suspense>
           </div>
@@ -175,7 +175,7 @@ const GetDetail = ({ resource }) => {
               <div
                 className="PBD-txt"
                 dangerouslySetInnerHTML={{
-                  __html: draftToHtml(JSON.parse(detail.mainDesc)),
+                  __html: detail.mainDesc,
                 }}
               />
             </div>
@@ -248,15 +248,19 @@ const GetDetail = ({ resource }) => {
                       setcodeLang(e.currentTarget.value);
                     }}
                   >
-                    <option value={1}>Python3</option>
-                    <option value={2}>C</option>
+                    {detail.python === 1 ? (
+                      <option value={2}>Python3</option>
+                    ) : (
+                      <></>
+                    )}
+                    {detail.C_Lan === 1 ? <option value={1}>C</option> : <></>}
                   </Form.Select>
                 </div>
               </div>
               <div className="PBD-scroll">
                 <CodeMirror
-                  value="print('hello')"
-                  extensions={codeLang == 1 ? [python()] : [cpp()]}
+                  value=""
+                  extensions={codeLang == 1 ? [cpp()] : [python()]}
                   onChange={(value) => {
                     setCode(value);
                   }}
@@ -288,20 +292,22 @@ const GetDetail = ({ resource }) => {
   );
 };
 
-const MyGroup = ({resource, task_id}) => {
+const MyGroup = ({ resource, task_id }) => {
   const data = resource.read();
   const toGroupTask = (group_id, task_id) => {
-    console.log(group_id, task_id)
-  }
+    console.log(group_id, task_id);
+  };
   return (
     <>
-    <DropdownButton id="dropdown-basic-button" title="그룹 문제집에 추가">
-      {
-        data.map((e) => {
-          return <Dropdown.Item onClick={() => toGroupTask(e.id, task_id)}>{e.name}</Dropdown.Item>;
-        })
-      }
-    </DropdownButton>
+      <DropdownButton id="dropdown-basic-button" title="그룹 문제집에 추가">
+        {data.map((e) => {
+          return (
+            <Dropdown.Item onClick={() => toGroupTask(e.id, task_id)}>
+              {e.name}
+            </Dropdown.Item>
+          );
+        })}
+      </DropdownButton>
     </>
   );
-}
+};

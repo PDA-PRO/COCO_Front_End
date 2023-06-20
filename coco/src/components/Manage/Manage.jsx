@@ -5,6 +5,7 @@ import { TaskUpload } from "./manageComponents/TaskUpload";
 import { TaskList } from "./manageComponents/TaskList";
 import { PostList } from "./manageComponents/PostList";
 import { Notice } from "./manageComponents/Notice";
+import { User } from "./manageComponents/User";
 import { useEffect } from "react";
 import { HiMenu } from "react-icons/hi";
 import $ from "jquery";
@@ -37,6 +38,8 @@ export const Manage = () => {
         return <PostList />;
       case 4:
         return <Notice />;
+      case 5:
+        return <User />;
     }
   };
   return (
@@ -104,6 +107,7 @@ const Menu = (props) => {
         <h3 onClick={() => props.moveTo(2)}>- TASK LIST</h3>
         <h3 onClick={() => props.moveTo(3)}>- POST LIST</h3>
         <h3 onClick={() => props.moveTo(4)}>- NOTICE</h3>
+        <h3 onClick={() => props.moveTo(5)}>- User Management</h3>
       </div>
     </div>
   );

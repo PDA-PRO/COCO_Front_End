@@ -224,7 +224,7 @@ const GetBoardDetail = ({ resource }) => {
             <div className="BDTxt">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: detail.context,
+                  __html: detail.context
                 }}
               />
             </div>

@@ -10,6 +10,8 @@ export const AllGroupBox = (info) => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
 
+  console.log(info)
+
   const GoInfo = (e) => {
     axios
       .post("http://127.0.0.1:8000/group/check_member/", {
@@ -58,7 +60,7 @@ export const AllGroupBox = (info) => {
         <p>{info.info.name}</p>
         <p>{info.info.members}명</p>
         <p>{info.info.leader}</p>
-        <p>{info.info.id}점</p>
+        <p>{info.info.exp}점</p>
       </div>
       <div className="groupListBottom">
         <p>{info.info.desc}</p>

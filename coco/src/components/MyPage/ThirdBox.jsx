@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const ThirdBox = (props) => {
   const navigate = useNavigate();
@@ -83,6 +84,28 @@ export const ThirdBox = (props) => {
     navigate(`/board_modify/${e}`);
   };
 
+  const onDeleteHandler = (e) => {
+    const result = window.confirm("게시글을 삭제하시겠습니까?");
+    if (result === true) {
+      axios
+        .post("http://127.0.0.1:8000/delete_myboard/", {
+          board_id: e,
+        })
+        .then((res) => {
+          const result = res.data;
+          if (result === true) {
+            alert("게시글을 삭제하였습니다");
+          } else {
+            alert("게시글 삭제에 실패하였습니다");
+            // navigate("/group/");
+          }
+        })
+        .catch(() => {
+          alert("게시글 삭제에 실패하였습니다");
+        });
+    }
+  };
+
   return (
     <div className="mp-ThirdBox">
       {props.props.map((e) => {
@@ -118,7 +141,12 @@ export const ThirdBox = (props) => {
               size={20}
               onClick={() => modify(e.id)}
             />
-            <BsTrash id="delGuel" size={20} color="red" />
+            <BsTrash
+              id="delGuel"
+              size={20}
+              color="red"
+              onClick={() => onDeleteHandler(e.id)}
+            />
           </div>
         );
       })}

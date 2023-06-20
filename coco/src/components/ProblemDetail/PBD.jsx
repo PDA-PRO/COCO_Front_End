@@ -49,7 +49,7 @@ const GetDetail = ({ resource }) => {
   const navigate = useNavigate();
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
-  const [codeLang, setcodeLang] = useState(1);
+  const [codeLang, setcodeLang] = useState(2);
   //submit이후 결과창 이동
   const goToResult = (e) => {
     console.log(e);
@@ -248,15 +248,19 @@ const GetDetail = ({ resource }) => {
                       setcodeLang(e.currentTarget.value);
                     }}
                   >
-                    <option value={1}>Python3</option>
-                    <option value={2}>C</option>
+                    {detail.python === 1 ? (
+                      <option value={2}>Python3</option>
+                    ) : (
+                      <></>
+                    )}
+                    {detail.C_Lan === 1 ? <option value={1}>C</option> : <></>}
                   </Form.Select>
                 </div>
               </div>
               <div className="PBD-scroll">
                 <CodeMirror
-                  value="print('hello')"
-                  extensions={codeLang == 1 ? [python()] : [cpp()]}
+                  value=""
+                  extensions={codeLang == 1 ? [cpp()] : [python()]}
                   onChange={(value) => {
                     setCode(value);
                   }}

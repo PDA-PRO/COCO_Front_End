@@ -8,12 +8,14 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const userInfo = useAppSelector((state) => state.loginState);
   const Large = useMediaQuery({ minWidth: 1250 });
+  const navigate = useNavigate();
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -23,9 +25,7 @@ export const FastWrite = () => {
     setContext(e.currentTarget.value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log("shoot");
+  const submitConfirm = () => {
     if (title == "" || context == "") {
       return alert("완전히 입력해주세요.");
     } else {
@@ -37,7 +37,7 @@ export const FastWrite = () => {
             title: title,
             context: context,
             category: 3,
-            group_id: 0
+            group_id: 0,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -55,7 +55,21 @@ export const FastWrite = () => {
           alert("인증실패");
         });
     }
-  };
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (userInfo.id === "" && userInfo.pw === "") {
+      const check = window.confirm(
+        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
+      );
+      if (check === true) {
+        navigate("/login");
+      }
+    } else {
+      submitConfirm();
+    }
+  }
 
   return (
     <div className="FastWrite">

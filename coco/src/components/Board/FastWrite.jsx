@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   BsFillLightningFill,
   BsFillExclamationTriangleFill,
@@ -9,24 +9,29 @@ import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
-  const [context, setContext] = useState("");
   const userInfo = useAppSelector((state) => state.loginState);
   const Large = useMediaQuery({ minWidth: 1250 });
   const navigate = useNavigate();
+
+  const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
   };
 
-  const onContextHandler = (e) => {
-    setContext(e.currentTarget.value);
-  };
+  const quill_module = useMemo(() => {
+    return {
+      toolbar: { container: ["bold"] },
+    };
+  }, []);
 
   const submitConfirm = () => {
-    if (title == "" || context == "") {
+    if (title == "" || quillValue == "") {
       return alert("완전히 입력해주세요.");
     } else {
       axios
@@ -35,7 +40,7 @@ export const FastWrite = () => {
           {
             user_id: userInfo.id,
             title: title,
-            context: context,
+            context: quillValue,
             category: 3,
             group_id: 0,
           },
@@ -55,11 +60,11 @@ export const FastWrite = () => {
           alert("인증실패");
         });
     }
-  }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (userInfo.id === "" && userInfo.pw === "") {
+    if (userInfo.id === "") {
       const check = window.confirm(
         "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
       );
@@ -69,7 +74,7 @@ export const FastWrite = () => {
     } else {
       submitConfirm();
     }
-  }
+  };
 
   return (
     <div className="FastWrite">
@@ -89,13 +94,13 @@ export const FastWrite = () => {
       />
 
       <br />
-
-      <Form.Control
-        as="textarea"
+      <ReactQuill
+        theme="bubble"
         id="txtInput"
-        style={{ height: "270px" }}
-        placeholder="내용을 입력해주세요."
-        onChange={onContextHandler}
+        onChange={setquillValue}
+        modules={quill_module}
+        value={quillValue}
+        placeholder={"내용을 입력해주세요."}
       />
       <Button variant="outline-primary" id="FastSubmit" onClick={onSubmit}>
         Submit

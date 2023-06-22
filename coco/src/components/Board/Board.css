@@ -140,8 +140,8 @@
   border-radius: 12px !important;
   font-family: "Pretendard-Regular";
   margin: 0 !important;
-  font-size: 1em;
-  font-weight: 580;
+  height: 270px;
+  background-color: #fff;
 }
 
 #FastSubmit {

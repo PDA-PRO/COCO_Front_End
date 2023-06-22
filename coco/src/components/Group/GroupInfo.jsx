@@ -7,13 +7,12 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import { Pagination } from "@mui/material";
 import { GoSearch } from "react-icons/go";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../app/store";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
-  BsHeart,
   BsHeartFill,
   BsFillLightbulbFill,
   BsMegaphoneFill,
@@ -38,6 +37,7 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { GiExitDoor } from "react-icons/gi";
 import { MdClear } from "react-icons/md";
+import { BsTrash } from "react-icons/bs";
 
 const InviteNewMember = (props) => {
   const [search, setSearch] = useState("");
@@ -552,9 +552,6 @@ const GroupPost = ({ props }) => {
 
 const GroupTasks = ({ resource }) => {
   const info = resource.read();
-
-  console.log(info);
-
   const maxPage = Math.ceil(info.length / 10);
   const [page, setPage] = useState(1);
 
@@ -602,6 +599,7 @@ const GroupTasks = ({ resource }) => {
 };
 
 const GroupTask = ({ props }) => {
+  console.log(props)
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
@@ -649,12 +647,37 @@ const GroupTask = ({ props }) => {
       );
     }
   };
+
+  const deleteTask = (e) => {
+    const del = window.confirm(`${e}번 문제를 문제집에서 삭제하시겠습니까?`);
+    if(del === true){
+      axios
+      .post("http://127.0.0.1:8000/group/delete_problem", {
+        group_id: props.group_id,
+        task_id: e,
+      })
+      .then((res) => {
+        if(res.data === true){
+          alert(`${e}번 문제를 문제집에서 삭제하였습니다`);
+          navigate(`/group/${props.group_id}`);
+        }
+        else{
+          alert(`문제 삭제에 실패하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert(`${e}번 문제를 그룹 문제집에서 삭제하였습니다`);
+      });
+    }
+  };
+
   return (
-    <div className="problemsBox" onClick={() => goDetail(props.id)}>
-      <h4>No.{props.id}</h4>
-      <h4>{props.title}</h4>
-      <h4>{setLevel(props.diff)}</h4>
+    <div className="groupProblem">
+      <h4 onClick={() => goDetail(props.id)}>No.{props.id}</h4>
+      <h4 onClick={() => goDetail(props.id)}>{props.title}</h4>
+      <h4 onClick={() => goDetail(props.id)}>{setLevel(props.diff)}</h4>
       <h4
+        onClick={() => goDetail(props.id)}
         style={{
           color:
             props.rate == 0
@@ -667,7 +690,12 @@ const GroupTask = ({ props }) => {
         {props.rate}%
       </h4>
 
-      <h4>{lan(props.lan_c, props.lan_py)}</h4>
+      <h4 onClick={() => goDetail(props.id)}>
+        {lan(props.lan_c, props.lan_py)}
+      </h4>
+      <p style={{ margin: "0", textAlign: "center" }}>
+        <BsTrash onClick={() => deleteTask(props.id)} size={19} color="red" />
+      </p>
     </div>
   );
 };
@@ -709,7 +737,7 @@ const LeaveOrDelete = ({ resource }) => {
   const onDeleteHandler = (group_id) => {
     let val = window.confirm("정말 그룹을 삭제하시겠습니까?");
     if (val === true) {
-      axios        // 여기 api 주소만 바꾸면 끝
+      axios // 여기 api 주소만 바꾸면 끝
         .post("http://127.0.0.1:8000/group/delete_group/", {
           group_id: group_id,
         })
@@ -732,10 +760,7 @@ const LeaveOrDelete = ({ resource }) => {
   return (
     <>
       {leader === userID ? (
-        <div
-          className="explode"
-          onClick={() => onDeleteHandler(path.at(-1))}
-        >
+        <div className="explode" onClick={() => onDeleteHandler(path.at(-1))}>
           <p>그룹 삭제</p>
           <MdClear size={28} color="red" />
         </div>

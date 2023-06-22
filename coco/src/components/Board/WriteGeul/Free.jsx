@@ -10,7 +10,7 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 
 Quill.register("modules/imageResize", ImageResize);
 
-export const Free = ({ title }) => {
+export const Free = ({ title, cate }) => {
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
@@ -106,7 +106,7 @@ export const Free = ({ title }) => {
             user_id: userInfo.id,
             title: title,
             context: quillValue,
-            category: 3,
+            category: cate,
             group_id: 0,
           },
           {

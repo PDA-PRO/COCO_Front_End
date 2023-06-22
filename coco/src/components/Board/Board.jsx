@@ -1,15 +1,15 @@
 import React from "react";
 import "./Board.css";
-import { useState } from "react";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import { BoardBody } from "./BoardBody";
 import { SlPencil } from "react-icons/sl";
 import { IoChatbubblesOutline } from "react-icons/io5";
-import { WriteGeul } from "./WriteGeul/WriteGuel";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../app/store";
 
 export const Board = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
 
   const reload = (e) => {
@@ -17,7 +17,16 @@ export const Board = () => {
   };
 
   const movePage = () => {
-    navigate("/write");
+    if (userInfo.id === "" && userInfo.pw === "") {
+      const check = window.confirm(
+        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
+      );
+      if (check === true) {
+        navigate("/login");
+      }
+    } else {
+      navigate("/write");
+    }
   };
   // ---------------------------------- 카테고리 변경 State ----------------------
   return (

@@ -294,15 +294,34 @@ const GetDetail = ({ resource }) => {
 
 const MyGroup = ({ resource, task_id }) => {
   const data = resource.read();
-  const toGroupTask = (group_id, task_id) => {
-    console.log(group_id, task_id);
+  console.log(data)
+  const toGroupTask = (group_id, group_name, task_id) => {
+    axios
+    .post(
+      "http://127.0.0.1:8000/group/add_problem",
+      {
+        group_id: group_id,
+        task_id: task_id,
+      }
+    )
+    .then((res) => {
+      console.log(res)
+      if (res.data === false) {
+        alert("이미 추가된 문제입니다");
+      } else {
+        alert(`${group_name} 문제집에 추가하였습니다`);
+      }
+    })
+    .catch(() => {
+      alert(`${group_name} 문제집에 추가하지 못했습니다`);
+    });
   };
   return (
     <>
       <DropdownButton id="dropdown-basic-button" title="그룹 문제집에 추가">
         {data.map((e) => {
           return (
-            <Dropdown.Item onClick={() => toGroupTask(e.id, task_id)}>
+            <Dropdown.Item onClick={() => toGroupTask(e.id, e.name, task_id)}>
               {e.name}
             </Dropdown.Item>
           );

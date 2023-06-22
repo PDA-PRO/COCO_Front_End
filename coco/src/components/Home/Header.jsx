@@ -16,21 +16,17 @@ export const Header = (props) => {
   const Small = useMediaQuery({ maxWidth: 949.99999 });
 
   const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     setShow(!show);
-    setTarget(event.target);
   };
 
   //img태그의 이미지 불러오기 오류시에 기본이미지로 대체
   const onErrorImg = (e) => {
     e.target.src = "/image/user.png";
   };
-
-  const handleShow = () => setShow(true);
 
   const movdPage = (n, id) => {
     switch (n) {
@@ -68,6 +64,7 @@ export const Header = (props) => {
     setOpen(!open);
   };
 
+  console.log("헤더 렌더링");
   return (
     <div
       className="navbar"
@@ -105,11 +102,7 @@ export const Header = (props) => {
               <h3 onClick={() => movdPage(5)}>LOGIN</h3>
             ) : (
               <div ref={ref} onClick={handleClick}>
-                <div
-                  onClick={handleShow}
-                  style={{ cursor: "pointer" }}
-                  className="login"
-                >
+                <div style={{ cursor: "pointer" }} className="login">
                   <img
                     src={
                       "http://localhost:8000/image/download/4/" +
@@ -125,7 +118,7 @@ export const Header = (props) => {
 
                 <Overlay
                   show={show}
-                  target={target}
+                  target={ref}
                   placement="bottom"
                   container={ref}
                   containerPadding={20}
@@ -202,18 +195,23 @@ export const Header = (props) => {
                   <h3 onClick={() => movdPage(5)}>LOGIN</h3>
                 ) : (
                   <div ref={ref} onClick={handleClick}>
-                    <div
-                      onClick={handleShow}
-                      style={{ cursor: "pointer" }}
-                      className="login"
-                    >
-                      <img src="/image/user.png" alt="" height="55px" />
+                    <div style={{ cursor: "pointer" }} className="login">
+                      <img
+                        src={
+                          "http://localhost:8000/image/download/4/" +
+                          userInfo.id +
+                          ".jpg?time=" +
+                          userInfo.imagetoken
+                        }
+                        onError={onErrorImg}
+                        height="55px"
+                      />
                       <h3 style={{ fontSize: "1.4em" }}>{userInfo.id}</h3>
                     </div>
 
                     <Overlay
                       show={show}
-                      target={target}
+                      target={ref}
                       placement="bottom"
                       container={ref}
                       containerPadding={20}

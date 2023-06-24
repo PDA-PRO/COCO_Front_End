@@ -30,7 +30,7 @@ export const MakeGroup = () => {
   const onSearchHandler = (info) => {
     axios
       .post("http://127.0.0.1:8000/group/search_user/", {
-        user_id: info
+        user_id: info,
       })
       .then((res) => {
         setUsers(res.data);
@@ -38,19 +38,22 @@ export const MakeGroup = () => {
   };
 
   const onCreateHanlder = (members) => {
-    console.log(members[0]);
-    axios
-      .post("http://127.0.0.1:8000/group/makegroup/", {
-        name: name,
-        desc: desc,
-        leader: members[0],
-        members: members,
-      })
-      .then((res) => {
-        console.log(res);
-        alert("그룹을 생성하였습니다");
-        navigate(`/group/${res.data}`);
-      });
+    if (name === "" || desc === "") {
+      alert("그룹명과 그룹설명을 모두 작성해주세요");
+    } else {
+      axios
+        .post("http://127.0.0.1:8000/group/makegroup/", {
+          name: name,
+          desc: desc,
+          leader: members[0],
+          members: members,
+        })
+        .then((res) => {
+          console.log(res);
+          alert("그룹을 생성하였습니다");
+          navigate(`/group/${res.data}`);
+        });
+    }
   };
 
   useEffect(() => {}, [name, desc]);
@@ -98,6 +101,10 @@ export const MakeGroup = () => {
                 </p>
                 <p>
                   - 유해한 그룹이라 판단되는 경우, 강제로 그룹이 삭제될 수
+                  있습니다.
+                </p>
+                <p>
+                  - 그룹명과 그룹 설명은 반드시 작성해야 그룹을 생성할 수
                   있습니다.
                 </p>
               </div>

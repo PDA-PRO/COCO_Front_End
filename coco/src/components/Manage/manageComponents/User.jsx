@@ -81,19 +81,21 @@ const SearchBar = ({ search }) => {
   );
 };
 
-const SearchList = ({order}) => {
+const SearchList = ({ order }) => {
   const addMananger = (user_id) => {
+    console.log(user_id);
     axios
-    .post("http://127.0.0.1:8000/manage/add_manager/", {
-      user_id: user_id
-    })
-    .then((res) => {
-      if(res.data === true){
-        alert(`${user_id}님을 관리자에 추가하였습니다`);
-      }
-    }).catch(() => {
-      alert("관리자 추가에 실패하였습니다.")
-    })
+      .post("http://127.0.0.1:8000/manage/add_manager", {
+        user_id: user_id,
+      })
+      .then((res) => {
+        if (res.data === true) {
+          alert(`${user_id}님을 관리자에 추가하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert("관리자 추가에 실패하였습니다.");
+      });
   };
   return (
     <div className="userList-manage">
@@ -124,16 +126,17 @@ const SearchList = ({order}) => {
 const UserList = ({ resource }) => {
   const addMananger = (user_id) => {
     axios
-    .post("http://127.0.0.1:8000/manage/add_manager/", {
-      user_id: user_id
-    })
-    .then((res) => {
-      if(res.data === true){
-        alert(`${user_id}님을 관리자에 추가하였습니다`);
-      }
-    }).catch(() => {
-      alert("관리자 추가에 실패하였습니다.")
-    })
+      .post("http://127.0.0.1:8000/manage/add_manager/", {
+        user_id: user_id,
+      })
+      .then((res) => {
+        if (res.data === true) {
+          alert(`${user_id}님을 관리자에 추가하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert("관리자 추가에 실패하였습니다.");
+      });
   };
   const users = resource.read();
 
@@ -167,18 +170,19 @@ const Managers = ({ resource }) => {
   const managers = resource.read();
   const minusMananger = (user_id) => {
     axios
-    .post("http://127.0.0.1:8000/manage/delete_manager/", {
-      user_id: user_id
-    })
-    .then((res) => {
-      if(res.data === true){
-        alert(`${user_id}님을 관리자에서 삭제하였습니다`);
-      }
-    }).catch(() => {
-      alert("관리자 삭제에 실패하였습니다.")
-    })
+      .post("http://127.0.0.1:8000/manage/delete_manager/", {
+        user_id: user_id,
+      })
+      .then((res) => {
+        if (res.data === true) {
+          alert(`${user_id}님을 관리자에서 삭제하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert("관리자 삭제에 실패하였습니다.");
+      });
   };
-  
+
   return (
     <div className="userList-manage" id="mm">
       <div className="uL-top">

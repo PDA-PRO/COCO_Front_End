@@ -51,6 +51,9 @@ export const Header = (props) => {
       case 7:
         navigate(`/group`);
         break;
+      case 8:
+        navigate(`/manage`);
+        break;
     }
   };
 
@@ -64,7 +67,6 @@ export const Header = (props) => {
     setOpen(!open);
   };
 
-  console.log("헤더 렌더링");
   return (
     <div
       className="navbar"
@@ -83,7 +85,7 @@ export const Header = (props) => {
           <div className="leftDiv">
             <div className="titleLogo" onClick={() => movdPage(1)}>
               <img src="/image/logo.png" alt="" />
-              {/* <img src="/image/cocoLogo.png" alt="" /> */}
+
               <h2>
                 <span style={{ color: "#00ff00" }}>C</span>O
                 <span style={{ color: "#00ff00" }}>C</span>O
@@ -112,6 +114,8 @@ export const Header = (props) => {
                     }
                     onError={onErrorImg}
                     height="45px"
+                    width="45px"
+                    style={{ borderRadius: "50%" }}
                   />
                   <h3>{userInfo.id}</h3>
                 </div>
@@ -136,6 +140,8 @@ export const Header = (props) => {
                           }
                           onError={onErrorImg}
                           width="100px"
+                          height="100px"
+                          style={{ borderRadius: "50%" }}
                         />
                         <h3>{userInfo.id}</h3>
                         <div className="footerOverlay">
@@ -154,6 +160,18 @@ export const Header = (props) => {
                             LogOut
                           </h4>
                         </div>
+                        {userInfo.role === 1 ? (
+                          <h4
+                            id="goManage"
+                            onClick={() => {
+                              movdPage(8);
+                            }}
+                          >
+                            Manage
+                          </h4>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     </Popover.Body>
                   </Popover>
@@ -205,6 +223,8 @@ export const Header = (props) => {
                         }
                         onError={onErrorImg}
                         height="55px"
+                        width="55px"
+                        style={{ borderRadius: "50%" }}
                       />
                       <h3 style={{ fontSize: "1.4em" }}>{userInfo.id}</h3>
                     </div>
@@ -238,6 +258,18 @@ export const Header = (props) => {
                                 LogOut
                               </h4>
                             </div>
+                            {userInfo.role === 1 ? (
+                              <h4
+                                id="goManage"
+                                onClick={() => {
+                                  movdPage(8);
+                                }}
+                              >
+                                Manage
+                              </h4>
+                            ) : (
+                              <></>
+                            )}
                           </div>
                         </Popover.Body>
                       </Popover>

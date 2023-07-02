@@ -457,7 +457,7 @@
 
 .task-top {
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr 0.3fr;
   align-items: center;
   border: 2px solid rgb(98, 148, 255);
   border-radius: 15px 15px 0 0;

@@ -8,8 +8,10 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { Free } from "./Free";
 import { Help } from "./Help";
+import { useAppSelector } from "../../../app/store";
 
 export const WriteGeul = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const [title, setTitle] = useState("");
   const [cate, setCate] = useState(3);
 
@@ -18,8 +20,15 @@ export const WriteGeul = () => {
   };
 
   const onCategoryHandler = (e) => {
-    console.log(e.currentTarget.value);
     setCate(e.currentTarget.value);
+  };
+
+  const writeBoard = () => {
+    if (cate == 2) {
+      return <Help title={title} />;
+    } else {
+      return <Free title={title} cate={cate} />;
+    }
   };
 
   return (
@@ -48,20 +57,12 @@ export const WriteGeul = () => {
               <Form.Select aria-label="F" onChange={onCategoryHandler}>
                 <option value="3">자유</option>
                 <option value="2">HELP</option>
-                <option value="1">공지</option>
+                {userInfo.role == 1 ? <option value="1">공지</option> : <></>}
               </Form.Select>
             </FloatingLabel>
           </div>
 
-          <div className="wG_two">
-            {cate === 2 ? (
-              <Help title={title} />
-            ) : cate === 3 ? (
-              <Free title={title} />
-            ) : (
-              <Help title={title} />
-            )}
-          </div>
+          <div className="wG_two">{writeBoard()}</div>
         </div>
       </div>
 

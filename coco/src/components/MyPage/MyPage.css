@@ -102,23 +102,6 @@
   gap: 45px;
 }
 
-.levelField .ip1 {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.ip1 p {
-  margin: 0 !important;
-  font-family: "Pretendard-Regular";
-  font-weight: 600 !important;
-  font-size: 1.2rem !important;
-  color: black !important;
-}
-
 .levelField h3 {
   font-family: "Pretendard-Regular";
   font-weight: 600;

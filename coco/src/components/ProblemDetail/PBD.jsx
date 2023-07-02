@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import "./PBD.css";
 import Button from "react-bootstrap/Button";
 import { IoLogoPython } from "react-icons/io5";
+import $ from "jquery";
 import {
   BsClipboardCheck,
   BsArrowDownRight,
@@ -52,7 +53,6 @@ const GetDetail = ({ resource }) => {
   const [codeLang, setcodeLang] = useState(2);
   //submit이후 결과창 이동
   const goToResult = (e) => {
-    console.log(e);
     navigate(`/status?user_id=${userInfo.id}`, {
       state: { user_id: userInfo.id },
     });
@@ -60,29 +60,31 @@ const GetDetail = ({ resource }) => {
 
   //코드 submit
   const submitCode = () => {
-    Promise.resolve().then(
-      axios
-        .post(
-          "http://127.0.0.1:8000/submission",
-          {
-            taskid: detail.id,
-            userid: userInfo.id,
-            sourcecode: code,
-            callbackurl: "string",
-            lang: codeLang,
-          },
-          {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          }
-        )
-        .then(function (response) {
-          alert(`${userInfo.id}님 ${detail.id} 제출완료`);
-          goToResult(userInfo.id, { state: { userid: userInfo.id } });
-        })
-        .catch(() => {
-          alert("인증실패");
-        })
-    );
+    console.log($(".cm-activeLine.cm-line").val());
+    //setCode($("#hereCode").val);
+    // Promise.resolve().then(
+    //   axios
+    //     .post(
+    //       "http://127.0.0.1:8000/submission",
+    //       {
+    //         taskid: detail.id,
+    //         userid: userInfo.id,
+    //         sourcecode: code,
+    //         callbackurl: "string",
+    //         lang: codeLang,
+    //       },
+    //       {
+    //         headers: { Authorization: "Bearer " + userInfo.access_token },
+    //       }
+    //     )
+    //     .then(function (response) {
+    //       alert(`${userInfo.id}님 ${detail.id} 제출완료`);
+    //       goToResult(userInfo.id, { state: { userid: userInfo.id } });
+    //     })
+    //     .catch(() => {
+    //       alert("인증실패");
+    //     })
+    // );
   };
 
   const setMyTask = (task_id) => {
@@ -147,7 +149,7 @@ const GetDetail = ({ resource }) => {
           </div>
 
           <div id="pbd-pick">
-            <Suspense fallback={<>등록된 내 그룹이 없습니다</>}>
+            <Suspense fallback={<>그룹 문제집에 추가</>}>
               <MyGroup
                 resource={fetchData(
                   `http://127.0.0.1:8000/group/mygroup/${userInfo.id}`
@@ -261,9 +263,6 @@ const GetDetail = ({ resource }) => {
                 <CodeMirror
                   value=""
                   extensions={codeLang == 1 ? [cpp()] : [python()]}
-                  onChange={(value) => {
-                    setCode(value);
-                  }}
                 />
               </div>
             </div>
@@ -294,15 +293,30 @@ const GetDetail = ({ resource }) => {
 
 const MyGroup = ({ resource, task_id }) => {
   const data = resource.read();
-  const toGroupTask = (group_id, task_id) => {
-    console.log(group_id, task_id);
+  const toGroupTask = (group_id, group_name, task_id) => {
+    axios
+      .post("http://127.0.0.1:8000/group/add_problem", {
+        group_id: group_id,
+        task_id: task_id,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data === false) {
+          alert("이미 추가된 문제입니다");
+        } else {
+          alert(`${group_name} 문제집에 추가하였습니다`);
+        }
+      })
+      .catch(() => {
+        alert(`${group_name} 문제집에 추가하지 못했습니다`);
+      });
   };
   return (
     <>
       <DropdownButton id="dropdown-basic-button" title="그룹 문제집에 추가">
         {data.map((e) => {
           return (
-            <Dropdown.Item onClick={() => toGroupTask(e.id, task_id)}>
+            <Dropdown.Item onClick={() => toGroupTask(e.id, e.name, task_id)}>
               {e.name}
             </Dropdown.Item>
           );

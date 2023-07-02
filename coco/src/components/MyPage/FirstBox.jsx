@@ -175,15 +175,6 @@ export const FirstBox = (props) => {
       </div>
 
       <div className="levelField">
-        <div className="ip1">
-          {props.props.role === 1 ? (
-            <IoMdSchool size={33} />
-          ) : (
-            <FaRunning size={33} />
-          )}
-          <p>{props.props.role === 1 ? "선생님" : "학생"}</p>
-        </div>
-
         <h3>Level 3</h3>
         <p>다음 레벨까지 100pts</p>
       </div>

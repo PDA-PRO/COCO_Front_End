@@ -41,7 +41,7 @@ export const Group = () => {
                 style={{ cursor: "pointer" }}
               />
               <h4 onClick={() => reload()} style={{ cursor: "pointer" }}>
-                COCO GROUP
+                COCO STUDY ROOM
               </h4>
             </div>
 
@@ -52,7 +52,7 @@ export const Group = () => {
               }}
             >
               <AiOutlineUsergroupAdd size={30} />
-              <h3>그룹 만들기</h3>
+              <h3>STUDY 개설</h3>
             </div>
           </div>
 
@@ -65,12 +65,12 @@ export const Group = () => {
               <div className="allGroups">
                 <div className="l-top">
                   <p style={{ color: "red" }}>순위</p>
-                  <p>그룹 명</p>
-                  <p>구성원 수</p>
+                  <p>스터디룸</p>
+                  <p>멤버 수</p>
                   <p>
                     <TbCrown size={25} color="orange" />
                   </p>
-                  <p>그룹 pt</p>
+                  <p>STUDY pt</p>
                 </div>
 
                 <Suspense fallback={<Spinner />}>
@@ -93,12 +93,12 @@ export const Group = () => {
               <div className="myGroups">
                 <div className="myGroupsTop">
                   <p>순위</p>
-                  <p>그룹 명</p>
-                  <p>구성원 수</p>
+                  <p>스터디룸</p>
+                  <p>멤버 수</p>
                   <p>
                     <TbCrown size={25} color="orange" />
                   </p>
-                  <p>그룹 pt</p>
+                  <p>STUDY pt</p>
                 </div>
 
                 {userInfo.id === "" ? (
@@ -128,12 +128,11 @@ const SearchBar = ({ search }) => {
   const onSearchHandler = (e) => {
     var info = document.getElementById("SV").value;
     search(info);
-    console.log(info);
   };
 
   return (
     <div className="searchBar">
-      <input type="text" placeholder="그룹명 검색" id="SV" />
+      <input type="text" placeholder="스터디룸 이름 검색" id="SV" />
       <GoSearch
         size={23}
         color="rgb(98, 148, 255)"

@@ -38,6 +38,8 @@ import axios from "axios";
 import { GiExitDoor } from "react-icons/gi";
 import { MdClear } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
+import { PiFolderNotchPlusDuotone } from "react-icons/pi";
+import { LiaSchoolSolid } from "react-icons/lia";
 
 const InviteNewMember = (props) => {
   const [search, setSearch] = useState("");
@@ -180,21 +182,27 @@ export const GroupInfo = () => {
                 {page === 1 ? (
                   <div id="he1" onClick={() => moveWorkbook()}>
                     <ImBooks size={25} color="green" />
-                    <p>그룹 문제집열기</p>
+                    <p>학습 RoadMap 열기</p>
                   </div>
                 ) : (
                   <div id="he1" onClick={() => moveBoard()}>
                     <IoChatbubblesOutline size={25} color="green" />
-                    <p>그룹 게시판 열기</p>
+                    <p>Q & A 열기</p>
                   </div>
                 )}
                 {page === 1 ? (
                   <div id="he1" onClick={() => moveWrite(path.at(-1))}>
                     <TfiPencil size={25} />
-                    <p>글쓰기</p>
+                    <p>질문 작성</p>
                   </div>
                 ) : (
-                  <p></p>
+                  <Suspense fallback={<Spinner />}>
+                    <MakeRoadMap
+                      resource={fetchData(
+                        `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                      )}
+                    />
+                  </Suspense>
                 )}
               </div>
 
@@ -253,10 +261,31 @@ export const GroupInfo = () => {
   );
 };
 
+const MakeRoadMap = ({ resource }) => {
+  var path = window.location.pathname;
+  path = path.split("/");
+  const userInfo = useAppSelector((state) => state.loginState);
+  const userID = userInfo.id;
+
+  const info = resource.read();
+
+  if (info.leader === userID) {
+    return (
+      <div id="he1">
+        <PiFolderNotchPlusDuotone size={24} />
+        <p>로드맵 추가하기</p>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
+};
+
 const GiHeader = ({ resource }) => {
   const info = resource.read();
   return (
     <div className="gi-head">
+      {/* <LiaSchoolSolid size={30} /> */}
       <img src="\image\group.png" />
       <div className="headOne">
         <div>
@@ -264,13 +293,13 @@ const GiHeader = ({ resource }) => {
         </div>
 
         <div>
-          <p>전체 그룹 랭킹 : 3위</p>
-          <p>현재 그룹원 수 : {info.members.length}명</p>
+          <p>전체 스터디 랭킹 : 3위</p>
+          <p>현재 튜티 수 : {info.members.length - 1}명</p>
         </div>
       </div>
       <div className="headTwo">
         <p>{info.desc}</p>
-        <p>그룹 장 : {info.leader}님</p>
+        <p>튜터 : {info.leader}님</p>
       </div>
     </div>
   );
@@ -293,7 +322,7 @@ const MemberList = ({ resource }) => {
 
   return (
     <div className="member-list">
-      <h3>Group Members</h3>
+      <h3>튜티</h3>
 
       <div className="member-list-header">
         <p> </p>
@@ -309,7 +338,7 @@ const MemberList = ({ resource }) => {
           <div className="im-d">
             <FiUserPlus size={18} />
             <p id="invite_mem" onClick={() => setModalShow(true)}>
-              멤버 초대
+              튜티 초대
             </p>
           </div>
 
@@ -335,7 +364,10 @@ const Member = ({ info, props }) => {
   };
 
   return (
-    <div className="oneMember">
+    <div
+      className="oneMember"
+      style={info[0] === props ? { display: "none" } : {}}
+    >
       <p>{info[0] === props ? <TbCrown size={25} color="orange" /> : ""}</p>
       <p>{info[0]}</p>
       <p>{info[1]}</p>
@@ -599,7 +631,7 @@ const GroupTasks = ({ resource }) => {
 };
 
 const GroupTask = ({ props }) => {
-  console.log(props)
+  console.log(props);
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
@@ -650,24 +682,23 @@ const GroupTask = ({ props }) => {
 
   const deleteTask = (e) => {
     const del = window.confirm(`${e}번 문제를 문제집에서 삭제하시겠습니까?`);
-    if(del === true){
+    if (del === true) {
       axios
-      .post("http://127.0.0.1:8000/group/delete_problem", {
-        group_id: props.group_id,
-        task_id: e,
-      })
-      .then((res) => {
-        if(res.data === true){
-          alert(`${e}번 문제를 문제집에서 삭제하였습니다`);
-          navigate(`/group/${props.group_id}`);
-        }
-        else{
-          alert(`문제 삭제에 실패하였습니다`);
-        }
-      })
-      .catch(() => {
-        alert(`${e}번 문제를 그룹 문제집에서 삭제하였습니다`);
-      });
+        .post("http://127.0.0.1:8000/group/delete_problem", {
+          group_id: props.group_id,
+          task_id: e,
+        })
+        .then((res) => {
+          if (res.data === true) {
+            alert(`${e}번 문제를 문제집에서 삭제하였습니다`);
+            navigate(`/group/${props.group_id}`);
+          } else {
+            alert(`문제 삭제에 실패하였습니다`);
+          }
+        })
+        .catch(() => {
+          alert(`${e}번 문제를 그룹 문제집에서 삭제하였습니다`);
+        });
     }
   };
 
@@ -735,7 +766,7 @@ const LeaveOrDelete = ({ resource }) => {
   };
 
   const onDeleteHandler = (group_id) => {
-    let val = window.confirm("정말 그룹을 삭제하시겠습니까?");
+    let val = window.confirm("정말 스터디룸을 삭제하시겠습니까?");
     if (val === true) {
       axios // 여기 api 주소만 바꾸면 끝
         .post("http://127.0.0.1:8000/group/delete_group/", {
@@ -744,14 +775,14 @@ const LeaveOrDelete = ({ resource }) => {
         .then((res) => {
           console.log(res.data);
           if (res.data === false) {
-            alert("이미 삭제된 그룹입니다");
+            alert("이미 삭제된 스터디룸입니다");
           } else if (res.data === true) {
-            alert(`그룹을 삭제하였습니다`);
+            alert(`스터디룸을 삭제하였습니다`);
             navigate("/group");
           }
         })
         .catch(() => {
-          alert("그룹 삭제에 실패하였습니다");
+          alert("스터디룸 삭제에 실패하였습니다");
         });
     } else {
     }
@@ -761,7 +792,7 @@ const LeaveOrDelete = ({ resource }) => {
     <>
       {leader === userID ? (
         <div className="explode" onClick={() => onDeleteHandler(path.at(-1))}>
-          <p>그룹 삭제</p>
+          <p>스터디룸 삭제</p>
           <MdClear size={28} color="red" />
         </div>
       ) : (

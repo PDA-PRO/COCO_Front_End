@@ -32,7 +32,7 @@
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
-    "react-icons": "^4.6.0",
+    "react-icons": "^4.10.1",
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-responsive": "^9.0.0",

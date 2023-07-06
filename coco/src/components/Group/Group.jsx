@@ -87,7 +87,7 @@ export const Group = () => {
 
             <div className="group-right">
               <div className="r-top">
-                <h2>My Groups</h2>
+                <h2>My Study</h2>
               </div>
 
               <div className="myGroups">

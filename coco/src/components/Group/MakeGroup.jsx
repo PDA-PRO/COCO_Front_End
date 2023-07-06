@@ -39,7 +39,7 @@ export const MakeGroup = () => {
 
   const onCreateHanlder = (members) => {
     if (name === "" || desc === "") {
-      alert("그룹명과 그룹설명을 모두 작성해주세요");
+      alert("스터디룸명과 스터디룸 설명을 모두 작성해주세요");
     } else {
       axios
         .post("http://127.0.0.1:8000/group/makegroup/", {
@@ -50,7 +50,7 @@ export const MakeGroup = () => {
         })
         .then((res) => {
           console.log(res);
-          alert("그룹을 생성하였습니다");
+          alert("스터디룸을 생성하였습니다");
           navigate(`/group/${res.data}`);
         });
     }
@@ -65,13 +65,13 @@ export const MakeGroup = () => {
         <div className="mGroup-Body">
           <div className="mG-Header">
             <HiUserGroup size={28} color="#553830" />
-            <h2>그룹 만들기</h2>
+            <h2>STUDY 개설</h2>
           </div>
 
           <div className="mG-Body">
             <div className="mG-inputs">
               <div className="Gname">
-                <p>그룹 명</p>
+                <p>스터디룸 명</p>
                 <InputGroup className="mb-3">
                   <Form.Control
                     placeholder="ex) CBNU 소프트웨어학과"
@@ -81,7 +81,7 @@ export const MakeGroup = () => {
               </div>
 
               <div className="Gname">
-                <p>그룹 설명</p>
+                <p>스터디룸 설명</p>
                 <InputGroup className="mb-3">
                   <Form.Control
                     placeholder="ex) FE 개발자 그룹 #React #CSS"
@@ -91,20 +91,22 @@ export const MakeGroup = () => {
               </div>
 
               <div className="mG-tips">
-                <p>- 그룹 생성 후, 그룹 게시판을 이용할 수 있습니다.</p>
+                <p>- 스터디룸 생성 후, 질문 보드를 이용할 수 있습니다.</p>
+                <p>- 튜터는 튜티를 초대 및 강퇴할 권한을 가집니다.</p>
                 <p>
-                  - 그룹 문제집을 통해 그룹원들과 풀 문제를 선정할 수 있습니다.
+                  - 튜터는 자신만의 학습 로드맵을 만들어 튜티를 학습시킬 수
+                  있습니다.
                 </p>
                 <p style={{ whiteSpace: "pre" }}>
-                  - 그룹점수는 구성원들의 점수 합산을 통해 배점되며,
-                  <br /> <u00A0 /> <u00A0 /> 이를 통해 그룹랭킹을 산정합니다.
+                  - STUDY pt 는 튜티들의 점수 합산을 통해 배점되며,
+                  <br /> <u00A0 /> <u00A0 /> 이를 통해 스터디 랭킹을 산정합니다.
                 </p>
                 <p>
-                  - 유해한 그룹이라 판단되는 경우, 강제로 그룹이 삭제될 수
+                  - 유해한 스터디라 판단되는 경우, 강제로 스터디룸이 삭제될 수
                   있습니다.
                 </p>
                 <p>
-                  - 그룹명과 그룹 설명은 반드시 작성해야 그룹을 생성할 수
+                  - 스터디룸 명과 설명은 반드시 작성해야 스터디룸을 생성할 수
                   있습니다.
                 </p>
               </div>
@@ -149,16 +151,16 @@ const SearchResult = (props) => {
     if (members.includes(e)) {
       alert("이미 초대된 인원입니다.");
     } else {
-      alert(`id : ${e.id}님을 그룹에 추가하였습니다.`);
+      alert(`id : ${e.id}님을 스터디에 추가하였습니다.`);
       setMembers([...members, e]);
     }
   };
 
   const deleteMembers = (e) => {
     if (e === userInfo.id) {
-      alert("그룹장은 그룹에서 제거할 수 없습니다.");
+      alert("튜터은 스터디에서 제거할 수 없습니다.");
     } else {
-      alert(`id : ${e}님을 그룹에서 제거하였습니다.`);
+      alert(`id : ${e}님을 스터디에서 제거하였습니다.`);
       setMembers(members.filter((member) => member.id !== e));
     }
   };
@@ -207,7 +209,7 @@ const SearchResult = (props) => {
 
       {/* 추가한 멤버 보여줌 */}
       <div className="mG-now">
-        <h4>추가된 그룹원</h4>
+        <h4>추가된 튜티</h4>
 
         {members.map((e) => {
           return <NowMems info={e} key={e.id} deleteMembers={deleteMembers} />;
@@ -215,7 +217,7 @@ const SearchResult = (props) => {
       </div>
 
       <Button id="btn-mG" variant="outline-warning" onClick={onCreateHanlder}>
-        그룹 생성
+        스터디 생성
       </Button>
     </>
   );
@@ -229,7 +231,7 @@ const SearchBar = ({ search }) => {
 
   return (
     <div className="searchBar">
-      <input type="text" placeholder="유저 검색" id="SV" />
+      <input type="text" placeholder="튜티 검색" id="SV" />
       <GoSearch
         size={23}
         color="brown"

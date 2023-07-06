@@ -95,7 +95,7 @@ export const Header = (props) => {
               <h3 onClick={() => movdPage(2)}>문제</h3>
               <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
               <h3 onClick={() => movdPage(4)}>채점상황</h3>
-              <h3 onClick={() => movdPage(7)}>그룹</h3>
+              <h3 onClick={() => movdPage(7)}>스터디룸</h3>
             </div>
           </div>
 
@@ -207,6 +207,7 @@ export const Header = (props) => {
                 <h3 onClick={() => movdPage(2)}>문제</h3>
                 <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
                 <h3 onClick={() => movdPage(4)}>채점상황</h3>
+                <h3 onClick={() => movdPage(7)}>스터디룸</h3>
               </div>
               <div>
                 {userInfo.id === "" ? (

@@ -51,17 +51,31 @@ export const QA = () => {
   );
 };
 
-const Question = () => {
+const Question = ({}) => {
+  // const info = resource.read();
+
   return (
     <Accordion.Item eventKey="0">
       <div className="Head-Ac">
-        <Accordion.Header>Q : 이거 어캐함요</Accordion.Header>
-        <div className="check">
-          <BsCheckCircle size={25} color="skyblue" />
-        </div>
+        <Accordion.Header>
+          Q :{" "}
+          {/* <div
+            dangerouslySetInnerHTML={{
+              __html: info.context,
+            }}
+          ></div> */}
+        </Accordion.Header>
+        {/* <div className="check">
+          {info.check ? (
+            <BsCheckCircle size={25} color="skyblue" />
+          ) : (
+            <BsDashCircle size={25} color="grey" />
+          )}
+        </div> */}
       </div>
 
       <Accordion.Body>
+        {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
         <Answer />
         <Answer />
         <MakeAnswer />
@@ -73,12 +87,25 @@ const Question = () => {
 const Answer = () => {
   return (
     <div className="ans">
+      <p>작성자 : id1님</p>
       <p>1. 이렇게 이렇게 저렇게 하면 됩니다. 병신아</p>
+      <p>print('hello')</p>
     </div>
   );
 };
 
 const MakeAnswer = () => {
+  const [context, setContext] = useState("");
+  const [code, setCode] = useState("");
+
+  const onContextHandler = (e) => {
+    setContext(e.currentTarget.value);
+  };
+
+  const uploadAnswer = () => {
+    alert("답변이 등록되었습니다.");
+  };
+
   return (
     <div className="makeAns">
       <Form.Control
@@ -86,17 +113,20 @@ const MakeAnswer = () => {
         id="commentArea"
         style={{ height: "100px" }}
         placeholder="답변 내용 작성"
-        // onChange={onContextHandler}
+        onChange={onContextHandler}
       />
       <CodeMirror
         value="print('hello')"
-
-        // onChange={(value) => {
-        //   setCode(value);
-        // }}
+        onChange={(value) => {
+          setCode(value);
+        }}
       />
 
-      <Button variant="outline-info" id="answerSubmit">
+      <Button
+        variant="outline-info"
+        id="answerSubmit"
+        onClick={() => uploadAnswer()}
+      >
         Submit
       </Button>
     </div>

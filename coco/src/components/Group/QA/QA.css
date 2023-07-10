@@ -37,6 +37,15 @@
   grid-column: 2/3;
 } */
 
+.ans {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid skyblue;
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
 .makeAns {
   display: flex;
   flex-flow: column nowrap;

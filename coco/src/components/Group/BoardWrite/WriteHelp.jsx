@@ -11,7 +11,7 @@ import { python } from "@codemirror/lang-python";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 
-export const WriteHelp = ({ title, group_id }) => {
+export const WriteHelp = ({ title, room_id }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [htmlString, setHtmlString] = useState("");
   const [code, setCode] = useState(""); //작성한 코드
@@ -30,28 +30,28 @@ export const WriteHelp = ({ title, group_id }) => {
   const onSubmitHandler = () => {
     console.log(code);
     console.log(htmlString);
+    console.log(room_id);
     if (title === "" || htmlString === "") {
       return alert("완전히 입력해주세요");
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/write_board/",
+          "http://127.0.0.1:8000/room/write_question/",
           {
-            user_id: userInfo.id,
+            room_id: room_id,
             title: title,
-            context: htmlString,
-            category: 2,
+            question: htmlString,
             code: code,
-            group_id: group_id
+            writer: userInfo.id
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
           }
         )
         .then(function (response) {
-          if (response.data.code === 1) {
+          if (response.data === true) {
             alert(`${title} 업로드 성공`);
-            window.location.replace(`/group/board/${group_id}`);
+            window.location.replace(`/room/${room_id}/`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

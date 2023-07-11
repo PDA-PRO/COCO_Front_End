@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Pagination from "@mui/material/Pagination";
 import { BsCheckCircle, BsDashCircle } from "react-icons/bs";
@@ -8,8 +8,13 @@ import Button from "react-bootstrap/Button";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
+import Spinner from "react-bootstrap/esm/Spinner";
+import fetchData from "../../../api/fetchTask";
 
 export const QA = () => {
+  var path = window.location.pathname;
+  path = path.split("/");
+
   // const maxPage = Math.ceil(problemList.length / 10);
   const maxPage = 10;
   const [page, setPage] = useState(1);
@@ -34,7 +39,13 @@ export const QA = () => {
       <div className="questions-body">
         <div className="qContents">
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Question />
+            <Suspense fallback={<Spinner />}>
+              <Question
+                resource={fetchData(
+                  `http://127.0.0.1:8000/room/questions/${path.at(-1)}/`
+                )}
+              />
+            </Suspense>
           </Accordion>
         </div>
       </div>
@@ -51,36 +62,48 @@ export const QA = () => {
   );
 };
 
-const Question = ({}) => {
-  // const info = resource.read();
+const Question = ({ resource }) => {
+  const info = resource.read();
 
   return (
-    <Accordion.Item eventKey="0">
-      <div className="Head-Ac">
-        <Accordion.Header>
-          Q :{" "}
-          {/* <div
-            dangerouslySetInnerHTML={{
-              __html: info.context,
-            }}
-          ></div> */}
-        </Accordion.Header>
-        {/* <div className="check">
-          {info.check ? (
-            <BsCheckCircle size={25} color="skyblue" />
-          ) : (
-            <BsDashCircle size={25} color="grey" />
-          )}
-        </div> */}
-      </div>
+    <>
+      {info.map((e) => {
+        console.log(e);
+        return (
+          <Accordion.Item eventKey="0">
+            <div className="Head-Ac">
+              <Accordion.Header>
+                Q :{" "}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: e.title,
+                  }}
+                ></div>
+              </Accordion.Header>
+              {/* <div className="check">
+            {info.check ? (
+              <BsCheckCircle size={25} color="skyblue" />
+            ) : (
+              <BsDashCircle size={25} color="grey" />
+            )}
+          </div> */}
+            </div>
 
-      <Accordion.Body>
-        {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
-        <Answer />
-        <Answer />
-        <MakeAnswer />
-      </Accordion.Body>
-    </Accordion.Item>
+            <Accordion.Body>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: e.question,
+                }}
+              ></div>
+              {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
+              <Answer />
+              <Answer />
+              <MakeAnswer />
+            </Accordion.Body>
+          </Accordion.Item>
+        );
+      })}
+    </>
   );
 };
 

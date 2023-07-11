@@ -143,7 +143,7 @@ export const GroupInfo = () => {
   const navigate = useNavigate();
 
   const moveWrite = (id) => {
-    navigate(`/group/board/write`, { state: id });
+    navigate(`/room/qa/write`, { state: id });
   };
 
   return (
@@ -154,7 +154,7 @@ export const GroupInfo = () => {
           <Suspense fallback={<Spinner />}>
             <GiHeader
               resource={fetchData(
-                `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                `http://127.0.0.1:8000/room/${path.at(-1)}/`
               )}
             />
           </Suspense>
@@ -182,7 +182,7 @@ export const GroupInfo = () => {
                   <Suspense fallback={<Spinner />}>
                     <MakeRoadMap
                       resource={fetchData(
-                        `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                        `http://127.0.0.1:8000/room/${path.at(-1)}/`
                       )}
                     />
                   </Suspense>
@@ -193,7 +193,7 @@ export const GroupInfo = () => {
                 <Suspense fallback={<Spinner />}>
                   {/* <GroupBoard
                     resource={fetchData(
-                      `http://127.0.0.1:8000/group/board/${path.at(-1)}/`
+                      `http://127.0.0.1:8000/room/board/${path.at(-1)}/`
                     )}
                   /> */}
                   <QA />
@@ -215,7 +215,7 @@ export const GroupInfo = () => {
               <Suspense fallback={<Spinner />}>
                 <MemberList
                   resource={fetchData(
-                    `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                    `http://127.0.0.1:8000/room/${path.at(-1)}/`
                   )}
                 />
               </Suspense>
@@ -223,7 +223,7 @@ export const GroupInfo = () => {
               <Suspense fallback={<Spinner />}>
                 <LeaveOrDelete
                   resource={fetchData(
-                    `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                    `http://127.0.0.1:8000/room/${path.at(-1)}/`
                   )}
                 />
               </Suspense>

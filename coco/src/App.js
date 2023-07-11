@@ -105,9 +105,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="/group/:id" element={<GroupInfo />} />
-          <Route path="/makegroup" element={<MakeGroup />} />
+          <Route path="/room" element={<Group />} />
+          <Route path="/room/:id" element={<GroupInfo />} />
+          <Route path="/makeroom" element={<MakeGroup />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
           <Route
@@ -119,7 +119,7 @@ function App() {
             }
           />
           <Route path="/board" element={<Board />} />
-          <Route path="/group/board/write" element={<GroupBoard />} />
+          <Route path="/room/board/write" element={<GroupBoard />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />

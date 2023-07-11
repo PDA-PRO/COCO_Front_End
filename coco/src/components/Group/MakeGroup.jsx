@@ -29,7 +29,7 @@ export const MakeGroup = () => {
 
   const onSearchHandler = (info) => {
     axios
-      .post("http://127.0.0.1:8000/group/search_user/", {
+      .post("http://127.0.0.1:8000/room/search_user/", {
         user_id: info,
       })
       .then((res) => {
@@ -42,7 +42,7 @@ export const MakeGroup = () => {
       alert("스터디룸명과 스터디룸 설명을 모두 작성해주세요");
     } else {
       axios
-        .post("http://127.0.0.1:8000/group/makegroup/", {
+        .post("http://127.0.0.1:8000/room/", {
           name: name,
           desc: desc,
           leader: members[0],
@@ -51,7 +51,7 @@ export const MakeGroup = () => {
         .then((res) => {
           console.log(res);
           alert("스터디룸을 생성하였습니다");
-          navigate(`/group/${res.data}`);
+          navigate(`/room/${res.data}`);
         });
     }
   };
@@ -148,7 +148,7 @@ const SearchResult = (props) => {
   const maxPage = Math.ceil(data.length / 10);
 
   const addMembers = (e) => {
-    if (members.includes(e)) {
+    if (e === userInfo.id || members.includes(e)) {
       alert("이미 초대된 인원입니다.");
     } else {
       alert(`id : ${e.id}님을 스터디에 추가하였습니다.`);
@@ -158,7 +158,7 @@ const SearchResult = (props) => {
 
   const deleteMembers = (e) => {
     if (e === userInfo.id) {
-      alert("튜터은 스터디에서 제거할 수 없습니다.");
+      alert("튜터를 스터디에서 제거할 수 없습니다.");
     } else {
       alert(`id : ${e}님을 스터디에서 제거하였습니다.`);
       setMembers(members.filter((member) => member.id !== e));

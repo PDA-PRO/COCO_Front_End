@@ -36,7 +36,7 @@ export const WriteHelp = ({ title, room_id }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/room/write_question/",
+          "http://127.0.0.1:8000/room/write-question/",
           {
             room_id: room_id,
             title: title,
@@ -51,7 +51,7 @@ export const WriteHelp = ({ title, room_id }) => {
         .then(function (response) {
           if (response.data === true) {
             alert(`${title} 업로드 성공`);
-            window.location.replace(`/room/${room_id}/`);
+            window.location.replace(`/room/${room_id}`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

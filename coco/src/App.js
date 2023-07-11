@@ -119,7 +119,7 @@ function App() {
             }
           />
           <Route path="/board" element={<Board />} />
-          <Route path="/room/board/write" element={<GroupBoard />} />
+          <Route path="/room/qa/write" element={<GroupBoard />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />

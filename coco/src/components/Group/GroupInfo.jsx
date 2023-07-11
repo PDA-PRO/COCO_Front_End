@@ -9,15 +9,6 @@ import { Pagination } from "@mui/material";
 import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/store";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-import {
-  BsFillEyeFill,
-  BsChatSquareTextFill,
-  BsHeartFill,
-  BsFillLightbulbFill,
-  BsMegaphoneFill,
-  BsQuestionLg,
-} from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { TbCrown } from "react-icons/tb";
 import { TfiPencil } from "react-icons/tfi";
@@ -25,21 +16,13 @@ import { ImBooks } from "react-icons/im";
 import { FiUserPlus } from "react-icons/fi";
 import { RiUserAddLine } from "react-icons/ri";
 import { IoChatbubblesOutline } from "react-icons/io5";
-import {
-  TiBatteryCharge,
-  TiBatteryLow,
-  TiBatteryMid,
-  TiBatteryHigh,
-  TiBatteryFull,
-} from "react-icons/ti";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import { GiExitDoor } from "react-icons/gi";
 import { MdClear } from "react-icons/md";
-import { BsTrash } from "react-icons/bs";
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
-import { LiaSchoolSolid } from "react-icons/lia";
+import { QA } from "./QA/QA";
+import { RoadMap } from "./RoadMap/RoadMap";
 
 const InviteNewMember = (props) => {
   const [search, setSearch] = useState("");
@@ -213,6 +196,7 @@ export const GroupInfo = () => {
                       `http://127.0.0.1:8000/group/board/${path.at(-1)}/`
                     )}
                   /> */}
+                  <QA />
                 </Suspense>
               ) : (
                 <Suspense fallback={<Spinner />}>
@@ -235,15 +219,6 @@ export const GroupInfo = () => {
                   )}
                 />
               </Suspense>
-
-              {/* <Suspense fallback={<Spinner />}>
-                <Apply
-                  resource={fetchData(
-                    `http://127.0.0.1:8000/group/group_apply/${path.at(-1)}/`
-                  )}
-                  userID={userID}
-                />
-              </Suspense> */}
 
               <Suspense fallback={<Spinner />}>
                 <LeaveOrDelete

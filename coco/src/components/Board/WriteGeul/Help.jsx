@@ -151,7 +151,7 @@ export const Help = ({ title }) => {
         </div>
         <div style={{ border: "2px solid lightgray" }}>
           <CodeMirror
-            width="30vw"
+            width="27vw"
             value="print('hello')"
             extensions={[python(), cpp()]}
             onChange={(value) => {

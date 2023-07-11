@@ -49,7 +49,7 @@ export const Header = (props) => {
         navigate(`/mypage/${id}`);
         break;
       case 7:
-        navigate(`/group`);
+        navigate(`/room`);
         break;
       case 8:
         navigate(`/manage`);

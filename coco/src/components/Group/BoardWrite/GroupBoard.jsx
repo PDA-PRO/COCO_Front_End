@@ -37,7 +37,7 @@ export const GroupBoard = () => {
           </div>
 
           <div className="wG_two">
-            <WriteHelp group_id={state} title={title} />
+            <WriteHelp room_id={state} title={title} />
           </div>
         </div>
       </div>

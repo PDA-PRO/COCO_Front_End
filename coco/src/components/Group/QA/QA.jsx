@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense, useMemo } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Pagination from "@mui/material/Pagination";
 import { BsCheckCircle, BsDashCircle } from "react-icons/bs";
@@ -8,8 +8,17 @@ import Button from "react-bootstrap/Button";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
+import Spinner from "react-bootstrap/esm/Spinner";
+import fetchData from "../../../api/fetchTask";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
+import axios from "axios";
+import { useAppSelector } from "../../../app/store";
 
 export const QA = () => {
+  var path = window.location.pathname;
+  path = path.split("/");
+
   // const maxPage = Math.ceil(problemList.length / 10);
   const maxPage = 10;
   const [page, setPage] = useState(1);
@@ -34,7 +43,13 @@ export const QA = () => {
       <div className="questions-body">
         <div className="qContents">
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Question />
+            <Suspense fallback={<Spinner />}>
+              <Question
+                resource={fetchData(
+                  `http://127.0.0.1:8000/room/questions/${path.at(-1)}/`
+                )}
+              />
+            </Suspense>
           </Accordion>
         </div>
       </div>
@@ -51,70 +66,118 @@ export const QA = () => {
   );
 };
 
-const Question = ({}) => {
-  // const info = resource.read();
+const Question = ({ resource }) => {
+  const info = resource.read();
+  var path = window.location.pathname;
+  path = path.split("/");
+  console.log(info);
 
   return (
-    <Accordion.Item eventKey="0">
-      <div className="Head-Ac">
-        <Accordion.Header>
-          Q :{" "}
-          {/* <div
-            dangerouslySetInnerHTML={{
-              __html: info.context,
-            }}
-          ></div> */}
-        </Accordion.Header>
-        {/* <div className="check">
-          {info.check ? (
-            <BsCheckCircle size={25} color="skyblue" />
-          ) : (
-            <BsDashCircle size={25} color="grey" />
-          )}
-        </div> */}
-      </div>
+    <>
+      {info.map((e) => {
+        return (
+          <Accordion.Item eventKey={e.question.id}>
+            <div className="Head-Ac">
+              <Accordion.Header>
+                Q :{" "}
+                <div 
+                  dangerouslySetInnerHTML={{
+                    __html: e.question.title,
+                  }}
+                ></div>
+              </Accordion.Header>
+              {/* <div className="check">
+            {info.check ? (
+              <BsCheckCircle size={25} color="skyblue" />
+            ) : (
+              <BsDashCircle size={25} color="grey" />
+            )}
+          </div> */}
+            </div>
 
-      <Accordion.Body>
-        {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
-        <Answer />
-        <Answer />
-        <MakeAnswer />
-      </Accordion.Body>
-    </Accordion.Item>
+            <Accordion.Body>
+              <div className="q_content"
+                dangerouslySetInnerHTML={{
+                  __html: e.question.question,
+                }}
+              ></div>
+              {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
+              {e.answers.map((ans) => {
+                return <Answer info={ans} />;
+              })}
+              <MakeAnswer room_id={path.at(-1)} q_id={e.id} />
+            </Accordion.Body>
+          </Accordion.Item>
+        );
+      })}
+    </>
   );
 };
 
-const Answer = () => {
+const Answer = ({ info }) => {
+  console.log(info);
   return (
     <div className="ans">
-      <p>작성자 : id1님</p>
-      <p>1. 이렇게 이렇게 저렇게 하면 됩니다. 병신아</p>
-      <p>print('hello')</p>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: info.answer,
+        }}
+      ></div>
+      <CodeMirror width="100%" value={info.code} readOnly={true} />
     </div>
   );
 };
 
-const MakeAnswer = () => {
-  const [context, setContext] = useState("");
+const MakeAnswer = ({ room_id, q_id }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
+  const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const [code, setCode] = useState("");
 
-  const onContextHandler = (e) => {
-    setContext(e.currentTarget.value);
-  };
+  const quill_module = useMemo(() => {
+    return {
+      toolbar: { container: ["bold"] },
+    };
+  }, []);
 
   const uploadAnswer = () => {
-    alert("답변이 등록되었습니다.");
+    axios
+      .post(
+        "http://127.0.0.1:8000/room/write-answer",
+        {
+          room_id: room_id,
+          q_id: q_id,
+          answer: quillValue,
+          code: code,
+          ans_writer: userInfo.id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
+      .then(function (response) {
+        if (response.data === true) {
+          alert(`답변 업로드 성공`);
+          window.location.replace(`/room/${room_id}`);
+        } else {
+          alert("ERROR - SERVER COMMUNICATION FAILED");
+        }
+      })
+      .catch(() => {
+        alert("인증실패");
+      });
   };
 
   return (
     <div className="makeAns">
-      <Form.Control
-        as="textarea"
-        id="commentArea"
-        style={{ height: "100px" }}
-        placeholder="답변 내용 작성"
-        onChange={onContextHandler}
+      <ReactQuill
+        id="quill"
+        theme="bubble"
+        onChange={setquillValue}
+        modules={quill_module}
+        value={quillValue}
+        placeholder={"내용을 입력해주세요."}
       />
+
       <CodeMirror
         value="print('hello')"
         onChange={(value) => {

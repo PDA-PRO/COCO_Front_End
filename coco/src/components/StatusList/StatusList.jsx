@@ -116,8 +116,8 @@ export const StatusList = () => {
               </p>
               <Form.Check
                 type="checkbox"
-                checked={option[1] === 0 ? true : false}
-                onChange={() => onlyLangHandler(0)}
+                checked={option[1] === 2 ? true : false}
+                onChange={() => onlyLangHandler(2)}
               />
             </div>
 

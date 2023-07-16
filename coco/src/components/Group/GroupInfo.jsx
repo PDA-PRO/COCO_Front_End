@@ -207,6 +207,7 @@ export const GroupInfo = () => {
                       )}/`
                     )}
                   /> */}
+                  <RoadMap />
                 </Suspense>
               )}
             </div>

@@ -76,7 +76,7 @@ export const Group = () => {
                 <Suspense fallback={<Spinner />}>
                   <GetGroups
                     resource={fetchData(
-                      `http://127.0.0.1:8000/group/all_groups`
+                      `http://127.0.0.1:8000/room/`
                     )}
                   />
                 </Suspense>
@@ -109,7 +109,7 @@ export const Group = () => {
                   <Suspense fallback={<Spinner />}>
                     <GetMyGroups
                       resource={fetchData(
-                        `http://127.0.0.1:8000/group/mygroup/${userInfo.id}`
+                        `http://127.0.0.1:8000/room/myroom/${userInfo.id}`
                       )}
                     />
                   </Suspense>

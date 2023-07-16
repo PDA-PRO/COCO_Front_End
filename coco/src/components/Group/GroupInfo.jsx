@@ -35,8 +35,8 @@ const InviteNewMember = (props) => {
   const onSubmitHandler = (e) => {
     console.log(search);
     axios
-      .post("http://127.0.0.1:8000/group/search_user/", {
-        user_id: search,
+      .get("http://127.0.0.1:8000/room/search_user/", {
+        params:{user_id: search}
       })
       .then((res) => {
         setUserList([...res.data]);
@@ -49,9 +49,9 @@ const InviteNewMember = (props) => {
   const onInviteHanlder = (id) => {
     console.log(id);
     axios
-      .post("http://127.0.0.1:8000/group/invite_member/", {
-        group_id: props.group_id,
-        user_id: id,
+      .put("http://127.0.0.1:8000/room/member/", {
+        room_id: props.group_id,
+        user_id: [id],
       })
       .then((res) => {
         console.log(res.data);
@@ -143,7 +143,7 @@ export const GroupInfo = () => {
   const navigate = useNavigate();
 
   const moveWrite = (id) => {
-    navigate(`/group/board/write`, { state: id });
+    navigate(`/room/qa/write`, { state: id });
   };
 
   return (
@@ -154,7 +154,7 @@ export const GroupInfo = () => {
           <Suspense fallback={<Spinner />}>
             <GiHeader
               resource={fetchData(
-                `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                `http://127.0.0.1:8000/room/${path.at(-1)}/`
               )}
             />
           </Suspense>
@@ -182,7 +182,7 @@ export const GroupInfo = () => {
                   <Suspense fallback={<Spinner />}>
                     <MakeRoadMap
                       resource={fetchData(
-                        `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                        `http://127.0.0.1:8000/room/${path.at(-1)}/`
                       )}
                     />
                   </Suspense>
@@ -193,7 +193,7 @@ export const GroupInfo = () => {
                 <Suspense fallback={<Spinner />}>
                   {/* <GroupBoard
                     resource={fetchData(
-                      `http://127.0.0.1:8000/group/board/${path.at(-1)}/`
+                      `http://127.0.0.1:8000/room/board/${path.at(-1)}/`
                     )}
                   /> */}
                   <QA />
@@ -216,7 +216,7 @@ export const GroupInfo = () => {
               <Suspense fallback={<Spinner />}>
                 <MemberList
                   resource={fetchData(
-                    `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                    `http://127.0.0.1:8000/room/${path.at(-1)}/`
                   )}
                 />
               </Suspense>
@@ -224,7 +224,7 @@ export const GroupInfo = () => {
               <Suspense fallback={<Spinner />}>
                 <LeaveOrDelete
                   resource={fetchData(
-                    `http://127.0.0.1:8000/group/${path.at(-1)}/`
+                    `http://127.0.0.1:8000/room/${path.at(-1)}/`
                   )}
                 />
               </Suspense>

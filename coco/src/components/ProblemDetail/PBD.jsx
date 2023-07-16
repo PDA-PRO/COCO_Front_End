@@ -1,8 +1,7 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import "./PBD.css";
 import Button from "react-bootstrap/Button";
 import { IoLogoPython } from "react-icons/io5";
-import $ from "jquery";
 import {
   BsClipboardCheck,
   BsArrowDownRight,
@@ -21,19 +20,13 @@ import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
-import draftToHtml from "draftjs-to-html";
-import { convertFromRaw } from "draft-js";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { IoMdPaperPlane } from "react-icons/io";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Popover from "react-bootstrap/Popover";
 
 export const PBD = () => {
   var path = window.location.pathname;
   path = path.split("/");
   // const resource = fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}`);
+  console.log("PBD 렌더링")
   return (
     <>
       <Suspense fallback={<>문제가 존재하지 않습니다</>}>
@@ -48,43 +41,41 @@ export const PBD = () => {
 const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
   const navigate = useNavigate();
-  const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(2);
+  var code=""
   //submit이후 결과창 이동
   const goToResult = (e) => {
     navigate(`/status?user_id=${userInfo.id}`, {
       state: { user_id: userInfo.id },
     });
   };
-
   //코드 submit
   const submitCode = () => {
-    console.log($(".cm-activeLine.cm-line").val());
-    //setCode($("#hereCode").val);
-    // Promise.resolve().then(
-    //   axios
-    //     .post(
-    //       "http://127.0.0.1:8000/submission",
-    //       {
-    //         taskid: detail.id,
-    //         userid: userInfo.id,
-    //         sourcecode: code,
-    //         callbackurl: "string",
-    //         lang: codeLang,
-    //       },
-    //       {
-    //         headers: { Authorization: "Bearer " + userInfo.access_token },
-    //       }
-    //     )
-    //     .then(function (response) {
-    //       alert(`${userInfo.id}님 ${detail.id} 제출완료`);
-    //       goToResult(userInfo.id, { state: { userid: userInfo.id } });
-    //     })
-    //     .catch(() => {
-    //       alert("인증실패");
-    //     })
-    // );
+    console.log(code)
+    Promise.resolve().then(
+      axios
+        .post(
+          "http://127.0.0.1:8000/submission",
+          {
+            taskid: detail.id,
+            userid: userInfo.id,
+            sourcecode: code,
+            callbackurl: "string",
+            lang: codeLang,
+          },
+          {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          }
+        )
+        .then(function (response) {
+          alert(`${userInfo.id}님 ${detail.id} 제출완료`);
+          goToResult(userInfo.id, { state: { userid: userInfo.id } });
+        })
+        .catch(() => {
+          alert("인증실패");
+        })
+    );
   };
 
   const setMyTask = (task_id) => {
@@ -146,17 +137,6 @@ const GetDetail = ({ resource }) => {
               {"정답률 :"}
             </span>
             {detail.rate}%
-          </div>
-
-          <div id="pbd-pick">
-            <Suspense fallback={<>그룹 문제집에 추가</>}>
-              <MyGroup
-                resource={fetchData(
-                  `http://127.0.0.1:8000/group/mygroup/${userInfo.id}`
-                )}
-                task_id={detail.id}
-              />
-            </Suspense>
           </div>
 
           <div id="pbd-pick" onClick={() => setMyTask(detail.id)}>
@@ -263,6 +243,9 @@ const GetDetail = ({ resource }) => {
                 <CodeMirror
                   value=""
                   extensions={codeLang == 1 ? [cpp()] : [python()]}
+                  onChange={(val) => {
+                    code=val
+                  }}
                 />
               </div>
             </div>
@@ -288,40 +271,5 @@ const GetDetail = ({ resource }) => {
         </Button>
       </div>
     </div>
-  );
-};
-
-const MyGroup = ({ resource, task_id }) => {
-  const data = resource.read();
-  const toGroupTask = (group_id, group_name, task_id) => {
-    axios
-      .post("http://127.0.0.1:8000/group/add_problem", {
-        group_id: group_id,
-        task_id: task_id,
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data === false) {
-          alert("이미 추가된 문제입니다");
-        } else {
-          alert(`${group_name} 문제집에 추가하였습니다`);
-        }
-      })
-      .catch(() => {
-        alert(`${group_name} 문제집에 추가하지 못했습니다`);
-      });
-  };
-  return (
-    <>
-      <DropdownButton id="dropdown-basic-button" title="그룹 문제집에 추가">
-        {data.map((e) => {
-          return (
-            <Dropdown.Item onClick={() => toGroupTask(e.id, e.name, task_id)}>
-              {e.name}
-            </Dropdown.Item>
-          );
-        })}
-      </DropdownButton>
-    </>
   );
 };

@@ -1,0 +1,42 @@
+.roadMap {
+  display: grid;
+  padding: 30px 20px;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2vw;
+  row-gap: 1.5rem;
+  justify-items: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+}
+.roadMap .road {
+  border: 2px solid lightgray;
+  width: 100%;
+  border-radius: 15px;
+  padding: 1rem;
+}
+
+.road:hover {
+  border: 2px solid skyblue;
+  cursor: pointer;
+  background-color: rgb(249, 252, 255);
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.road h4 {
+  font-weight: 600;
+  margin-bottom: 13px;
+}
+
+.road .tasks {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  color: black !important;
+}
+
+.road p:nth-child(4) {
+  margin: 0 !important;
+  color: gray;
+}

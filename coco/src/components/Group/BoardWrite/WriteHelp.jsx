@@ -36,7 +36,7 @@ export const WriteHelp = ({ title, room_id }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/room/write-question/",
+          "http://127.0.0.1:8000/room/question/",
           {
             room_id: room_id,
             title: title,

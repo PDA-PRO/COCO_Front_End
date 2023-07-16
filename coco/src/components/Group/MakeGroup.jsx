@@ -29,8 +29,8 @@ export const MakeGroup = () => {
 
   const onSearchHandler = (info) => {
     axios
-      .post("http://127.0.0.1:8000/room/search_user/", {
-        user_id: info,
+      .get("http://127.0.0.1:8000/room/search_user/", {
+        params:{user_id: info},
       })
       .then((res) => {
         setUsers(res.data);

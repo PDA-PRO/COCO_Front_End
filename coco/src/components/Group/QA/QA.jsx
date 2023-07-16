@@ -46,7 +46,7 @@ export const QA = () => {
             <Suspense fallback={<Spinner />}>
               <Question
                 resource={fetchData(
-                  `http://127.0.0.1:8000/room/questions/${path.at(-1)}/`
+                  `http://127.0.0.1:8000/room/question/${path.at(-1)}/`
                 )}
               />
             </Suspense>
@@ -105,7 +105,7 @@ const Question = ({ resource }) => {
               {e.answers.map((ans) => {
                 return <Answer info={ans} />;
               })}
-              <MakeAnswer room_id={path.at(-1)} q_id={e.id} />
+              <MakeAnswer room_id={path.at(-1)} q_id={e.question.id} />
             </Accordion.Body>
           </Accordion.Item>
         );
@@ -140,9 +140,10 @@ const MakeAnswer = ({ room_id, q_id }) => {
   }, []);
 
   const uploadAnswer = () => {
+    console.log(q_id)
     axios
       .post(
-        "http://127.0.0.1:8000/room/write-answer",
+        "http://127.0.0.1:8000/room/answer",
         {
           room_id: room_id,
           q_id: q_id,
@@ -163,7 +164,7 @@ const MakeAnswer = ({ room_id, q_id }) => {
         }
       })
       .catch(() => {
-        alert("인증실패");
+        alert("답변 등록 실패");
       });
   };
 

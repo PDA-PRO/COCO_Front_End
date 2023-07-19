@@ -20,41 +20,27 @@ import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
 
 export const PostList = () => {
+  const [page, setPage] = useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   return (
     <>
       <h2 className="mTi">POST LIST</h2>
       <div>
         <Suspense fallback={<Spinner />}>
-          <BoardList resource={fetchData(`http://127.0.0.1:8000/boardlist`)} />
+          <BoardList resource={fetchData("http://127.0.0.1:8000/board?page="+page+"&size="+3)} page={page} handleChange={handleChange} />
         </Suspense>
       </div>
     </>
   );
 };
 
-const BoardList = ({ resource }) => {
+const BoardList = ({ resource,page,handleChange  }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const problemList = resource.read();
-  const [tasks, settasks] = useState(problemList);
-
-  const maxPage = Math.ceil(problemList.length / 10);
-  const [page, setPage] = useState(1);
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
-
+  const [tasks, settasks] = useState(problemList.board);
+  console.log(tasks)
   return (
     <div className="m-upload">
       <div className="postTop">
@@ -74,11 +60,12 @@ const BoardList = ({ resource }) => {
       })} */}
       <div className="pageController">
         <Pagination
-          count={maxPage}
+          count={Math.ceil( problemList.total/problemList.size)}
           variant="outlined"
           shape="rounded"
+          page={page}
           defaultPage={1}
-          onChange={(e) => handlePage(e)}
+          onChange={handleChange}
         />
       </div>
     </div>

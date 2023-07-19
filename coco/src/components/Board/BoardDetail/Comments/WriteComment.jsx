@@ -20,7 +20,7 @@ export const WriteComment = ({ commentShoot }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("shoot");
+
     if (context == "") {
       return alert("내용을 입력해주세요.");
     } else {
@@ -28,7 +28,7 @@ export const WriteComment = ({ commentShoot }) => {
       path = path.split("/");
       axios
         .post(
-          "http://127.0.0.1:8000/comment",
+          "http://127.0.0.1:8000/board/comment/",
           {
             user_id: userInfo.id,
             context: context,
@@ -41,7 +41,8 @@ export const WriteComment = ({ commentShoot }) => {
         .then(function (response) {
           if (response.data.code === 1) {
             alert(`댓글 작성 완료`);
-            navigate(0);
+            commentShoot(2);
+            // navigate(0);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

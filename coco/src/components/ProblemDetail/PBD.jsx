@@ -25,13 +25,11 @@ import { IoMdPaperPlane } from "react-icons/io";
 export const PBD = () => {
   var path = window.location.pathname;
   path = path.split("/");
-  // const resource = fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}`);
-  console.log("PBD 렌더링")
   return (
     <>
       <Suspense fallback={<>문제가 존재하지 않습니다</>}>
         <GetDetail
-          resource={fetchData(`http://127.0.0.1:8000/problems/${path.at(-1)}/`)}
+          resource={fetchData(`http://127.0.0.1:8000/task/${path.at(-1)}/`)}
         />
       </Suspense>
     </>
@@ -43,7 +41,7 @@ const GetDetail = ({ resource }) => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(2);
-  var code=""
+  var code = "";
   //submit이후 결과창 이동
   const goToResult = (e) => {
     navigate(`/status?user_id=${userInfo.id}`, {
@@ -52,7 +50,7 @@ const GetDetail = ({ resource }) => {
   };
   //코드 submit
   const submitCode = () => {
-    console.log(code)
+    console.log(code);
     Promise.resolve().then(
       axios
         .post(
@@ -230,12 +228,8 @@ const GetDetail = ({ resource }) => {
                       setcodeLang(e.currentTarget.value);
                     }}
                   >
-                    {detail.python === 1 ? (
-                      <option value={2}>Python3</option>
-                    ) : (
-                      <></>
-                    )}
-                    {detail.C_Lan === 1 ? <option value={1}>C</option> : <></>}
+                    <option value={2}>Python3</option>
+                    <option value={1}>C</option>
                   </Form.Select>
                 </div>
               </div>
@@ -244,7 +238,7 @@ const GetDetail = ({ resource }) => {
                   value=""
                   extensions={codeLang == 1 ? [cpp()] : [python()]}
                   onChange={(val) => {
-                    code=val
+                    code = val;
                   }}
                 />
               </div>

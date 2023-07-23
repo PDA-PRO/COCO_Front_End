@@ -1,50 +1,59 @@
 import "../Manage.css";
-import React, { Suspense, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import fetchData from "../../../api/fetchTask";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BsTrash } from "react-icons/bs";
 import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
 
+//페이지 네이션, 문제 삭제시 리스트 재호출, 첫 렌더링을 모두 api 호출 한번에 해결하려면
+//이 방법밖에 생각이 나질 않았습니다. suspense를 쓰지 말아주세요
+//역시 튜닝의 끝은 순정인가 봅니다.
 export const TaskList = () => {
+  const [page, setPage] = useState(1);
+  const [del, setDel] = useState(0);
+  const [taskList, setTaskList] = useState({});
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/manage/tasklist`, {
+        params: {
+          size: 10,
+          page: page,
+        },
+      })
+      .then(({ data }) => {
+        setTaskList(data);
+        setLoading(false);
+      });
+  }, [del, page]);
   return (
     <>
       <h2 className="mTi">TASK LIST</h2>
       <div>
-        <Suspense fallback={<Spinner />}>
-          <TasksList resource={fetchData(`http://127.0.0.1:8000/tasklist`)} />
-        </Suspense>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <TasksList
+            resource={taskList}
+            setPage={(value) => {
+              setPage(value);
+              setLoading(true);
+            }}
+            page={page}
+            setDel={setDel}
+            setLoading={setLoading}
+          />
+        )}
       </div>
     </>
   );
 };
 
-const TasksList = ({ resource }) => {
+const TasksList = ({ resource, page, setPage, setDel, setLoading }) => {
   const userInfo = useAppSelector((state) => state.loginState);
-  const problemList = resource.read();
-  const [tasks, settasks] = useState(problemList);
-
-  const maxPage = Math.ceil(problemList.length / 10);
-  const [page, setPage] = useState(1);
-
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
-
+  const problemList = resource;
   return (
     <div className="m-upload">
       <div className="taskTop">
@@ -53,73 +62,46 @@ const TasksList = ({ resource }) => {
         <h3>난이도</h3>
         <h3>정답률</h3>
         <h3>제출수</h3>
-        <h3>언어</h3>
       </div>
-      {/* {tasks.map((e) => {
-        return <ListBox info={e} settasks={settasks}></ListBox>;
-      })} */}
-      {tasks.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {problemList.tasks.map((e) => {
         return (
-          <ListBox info={e} token={userInfo.access_token} settasks={settasks} />
+          <ListBox
+            key={e.id}
+            info={e}
+            token={userInfo.access_token}
+            setDel={setDel}
+            setLoading={setLoading}
+          />
         );
       })}
       <div className="pageController">
         <Pagination
-          count={maxPage}
+          count={Math.ceil(problemList.total / problemList.size)}
           variant="outlined"
           shape="rounded"
           defaultPage={1}
-          onChange={(e) => handlePage(e)}
+          page={page}
+          onChange={(e, value) => setPage(value)}
         />
       </div>
     </div>
   );
 };
 
-const ListBox = ({ info, token, settasks }) => {
-  const lan = (e1, e2) => {
-    if (e1 === 1 && e2 === 1) {
-      return (
-        <div>
-          <img src="./image/lan_c.png" height="30px" alt="" />
-          <img
-            src="./image/python.png"
-            height="30px"
-            style={{ paddingRight: "10px" }}
-            alt=""
-          />
-        </div>
-      );
-    } else if (e1 === 1 && e2 === 0) {
-      return (
-        <div>
-          <img src="./image/lan_c.png" height="30px" alt="" />
-        </div>
-      );
-    } else if (e1 === 0 && e2 === 1) {
-      return (
-        <div>
-          <img src="./image/python.png" height="30px" alt="" />
-        </div>
-      );
-    }
-  };
+const ListBox = ({ info, token, setDel, setLoading }) => {
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
   };
   const loadlist = (e) => {
     axios
-      .get("http://127.0.0.1:8000/deletetask/" + info.id, {
+      .delete("http://127.0.0.1:8000/task/", {
+        params: { task_id: info.id },
         headers: { Authorization: "Bearer " + token },
       })
-      .then(function (response) {
-        axios.get("http://127.0.0.1:8000/tasklist").then(function (response) {
-          alert("task를 삭제하였습니다.");
-          console.log(response.data);
-          settasks(response.data);
-        });
-        // 성공 핸들링
+      .then(() => {
+        setDel(info.id);
+        setLoading(true);
       });
   };
   return (
@@ -135,7 +117,6 @@ const ListBox = ({ info, token, settasks }) => {
       <h4>{info.diff}</h4>
       <h4>{info.rate}%</h4>
       <h4>{info.count == null ? 0 : info.count}</h4>
-      <h4>{lan(info.lan_c, info.lan_py)}</h4>
       <BsTrash
         cursor="pointer"
         size={20}

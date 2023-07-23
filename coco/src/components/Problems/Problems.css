@@ -59,7 +59,7 @@
 
 .BodyLeft .leftTop {
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr;
   align-items: center;
   border: 2px solid rgb(98, 148, 255);
   border-radius: 15px 15px 0 0;
@@ -105,7 +105,7 @@
 .problemsBox {
   border-bottom: 2px solid rgb(98, 148, 255);
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr;
   align-items: center;
   padding: 11px 15px;
   cursor: pointer;
@@ -150,10 +150,6 @@
   border-radius: 15px;
   background-color: rgb(245, 252, 255);
   padding: 10px;
-}
-
-.searchBar #goSearch {
-  cursor: pointer;
 }
 
 .searchBar input {
@@ -221,7 +217,7 @@
   height: 0px;
   overflow: hidden;
   text-align: center;
-  transition: height 0.4s ease;
+  transition: height 0.2s ease;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -255,6 +251,11 @@
   justify-content: space-between;
   padding: 0 5px;
   margin: 3px 0;
+}
+
+.slide .category {
+  width: 270px;
+  z-index: 1;
 }
 
 .chose4 {
@@ -308,6 +309,16 @@
   margin-top: 10px;
 }
 
+#touch0 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch0:checked + .slide {
+  height: 70px;
+}
+
 #touch {
   position: absolute;
   opacity: 0;
@@ -325,7 +336,9 @@
 }
 
 #touch2:checked + .slide {
-  height: 140px;
+  height: 70px;
+  opacity: 1;
+  overflow: visible;
 }
 
 #touch3 {
@@ -401,7 +414,6 @@
   align-items: center;
   margin: 0 !important;
 }
-
 
 .groupProblem {
   border-bottom: 2px solid rgb(98, 148, 255);

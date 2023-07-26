@@ -1,6 +1,5 @@
 import React from "react";
 import "./Problems.css";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {
   TiBatteryCharge,
@@ -31,34 +30,6 @@ export const ProblemBox = (info) => {
     }
   };
 
-  const lan = (e1, e2) => {
-    if (e1 === 1 && e2 === 1) {
-      return (
-        <div>
-          <img src="./image/lan_c.png" height="30px" alt="" />
-          <img
-            src="./image/python.png"
-            height="30px"
-            style={{ paddingRight: "10px" }}
-            alt=""
-          />
-        </div>
-      );
-    } else if (e1 === 1 && e2 === 0) {
-      return (
-        <div>
-          <img src="./image/lan_c.png" height="30px" alt="" />
-        </div>
-      );
-    } else if (e1 === 0 && e2 === 1) {
-      return (
-        <div>
-          <img src="./image/python.png" height="30px" alt="" />
-        </div>
-      );
-    }
-  };
-
   return (
     <div className="problemsBox" onClick={() => goDetail(info.info.id)}>
       <h4>No.{info.info.id}</h4>
@@ -76,8 +47,6 @@ export const ProblemBox = (info) => {
       >
         {info.info.rate}%
       </h4>
-
-      <h4>{lan(info.info.lan_c, info.info.lan_py)}</h4>
     </div>
   );
 };

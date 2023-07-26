@@ -1,6 +1,6 @@
 import "../Manage.css";
 import React from "react";
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, Suspense } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import {
@@ -19,10 +19,27 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import CreatableSelect from "react-select/creatable";
 import JSZip from "jszip";
+import Spinner from "react-bootstrap/esm/Spinner";
+import fetchData from "../../../api/fetchTask";
 
 Quill.register("modules/imageResize", ImageResize);
 
-export const TaskUpload = () => {
+export const TaskModify = () => {
+  var path = window.location.pathname;
+  path = path.split("/");
+  return (
+    <>
+      <Suspense fallback={<Spinner />}>
+        <TaskModifyPage
+          resource={fetchData(`http://localhost:8000/task/${path.at(-1)}/`)}
+        />
+      </Suspense>
+    </>
+  );
+};
+
+export const TaskModifyPage = ({ resource }) => {
+  var taskData = resource.read();
   const titleRef = useRef();
 
   const diffRef = useRef();
@@ -45,6 +62,33 @@ export const TaskUpload = () => {
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
+  var defaultValue = [];
+
+  useEffect(() => {
+    titleRef.current.value = taskData.title;
+    diffRef.current.value = taskData.diff;
+    timeRef.current.value = taskData.timeLimit;
+    memRef.current.value = taskData.memLimit;
+    inputDescRef.current.value = taskData.inDesc;
+    inputEx1Ref.current.value = taskData.inputEx1;
+    inputEx2Ref.current.value = taskData.inputEx2;
+    outputDescRef.current.value = taskData.outDesc;
+    outputEx1Ref.current.value = taskData.outputEx1;
+    outputEx2Ref.current.value = taskData.outputEx2;
+    for (let i = 0; i < taskData.category.length; i++) {
+      defaultValue.push({
+        value: taskData.category[i],
+        label: taskData.category[i],
+      });
+    }
+    // 테스트 케이스 수정
+    // const filedata = new File([taskData], "testcase.zip", {
+    //   type: "application/x-zip-compressed",
+    // });
+    // setTestCase(filedata);
+    // fileMeta(taskData);
+  }, []);
+
   // --------------------------- quill editor 관련 함수 ----------------------
   const imageHandler = () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
@@ -61,6 +105,8 @@ export const TaskUpload = () => {
       const file = input.files[0];
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
       //현재 에디터 커서 위치값을 가져온다
+      console.log(quillRef.current.value);
+      console.log(editor.getText());
       const range = editor.getSelection();
       axios
         .post(
@@ -151,12 +197,13 @@ export const TaskUpload = () => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post("http://127.0.0.1:8000/task/", formData, {
+        .put("http://127.0.0.1:8000/task/", formData, {
           headers: {
             "Content-Type": `multipart/form-data; `,
             Authorization: "Bearer " + userInfo.access_token,
           },
           params: {
+            task_id: taskData.id,
             title: titleRef.current.value,
             inputDescription: inputDescRef.current.value,
             inputEx1: inputEx1Ref.current.value,
@@ -175,7 +222,7 @@ export const TaskUpload = () => {
         })
         .then(function (response) {
           if (response.data.result === 1) {
-            alert(`${titleRef.current.value} 업로드 성공`);
+            alert(`${titleRef.current.value} 업데이트 성공`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }
@@ -185,6 +232,7 @@ export const TaskUpload = () => {
 
   const fileMeta = (zipfile) => {
     const zip = new JSZip();
+    console.log(zipfile);
     if (zipfile) {
       zip.loadAsync(zipfile).then((zip) => {
         let inputContent = [];
@@ -242,6 +290,7 @@ export const TaskUpload = () => {
               theme="snow"
               modules={quill_module}
               ref={quillRef}
+              defaultValue={taskData.mainDesc}
               placeholder={"문제의 메인 설명 입력"}
               style={{ minHeight: "550px" }}
             />
@@ -363,7 +412,11 @@ export const TaskUpload = () => {
                 </span>
                 카테고리
               </p>
-              <CheckCategory categoryRef={categoryRef} userInfo={userInfo} />
+              <CheckCategory
+                defaultValue={defaultValue}
+                categoryRef={categoryRef}
+                userInfo={userInfo}
+              />
             </div>
 
             {/* 문제 풀이 가능 언어 선택 */}
@@ -377,6 +430,7 @@ export const TaskUpload = () => {
               </Form.Label>
               <Form.Control
                 type="file"
+                fi
                 onChange={(e) => {
                   fileMeta(e.target.files[0]);
                 }}
@@ -400,7 +454,7 @@ export const TaskUpload = () => {
   );
 };
 
-const CheckCategory = ({ userInfo, categoryRef }) => {
+const CheckCategory = ({ userInfo, categoryRef, defaultValue }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [options, setOptions] = useState([]);
 
@@ -446,6 +500,7 @@ const CheckCategory = ({ userInfo, categoryRef }) => {
       isMulti
       onCreateOption={handleCreate}
       options={options}
+      defaultValue={defaultValue}
     />
   );
 };

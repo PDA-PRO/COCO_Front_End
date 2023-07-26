@@ -339,7 +339,7 @@
 /*----------------------TASK LIST-------------------*/
 .taskTop {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
   border: 2px solid gray;
   align-items: center;
   padding: 10px 0 10px 0;
@@ -361,7 +361,7 @@
 
 .taskList {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
   border-bottom: 2px solid lightgray;
   align-items: center;
   padding-top: 10px;

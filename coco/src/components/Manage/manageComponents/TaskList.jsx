@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { BsTrash } from "react-icons/bs";
+import { BsTrash, BsFillPencilFill } from "react-icons/bs";
 import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
 
@@ -62,6 +62,8 @@ const TasksList = ({ resource, page, setPage, setDel, setLoading }) => {
         <h3>난이도</h3>
         <h3>정답률</h3>
         <h3>제출수</h3>
+        <h3>수정</h3>
+        <h3>삭제</h3>
       </div>
       {problemList.tasks.map((e) => {
         return (
@@ -117,6 +119,15 @@ const ListBox = ({ info, token, setDel, setLoading }) => {
       <h4>{info.diff}</h4>
       <h4>{info.rate}%</h4>
       <h4>{info.count == null ? 0 : info.count}</h4>
+      <BsFillPencilFill
+        cursor="pointer"
+        size={20}
+        color="red"
+        onClick={() => {
+          navigate(`/manage/modify/${info.id}`);
+        }}
+        style={{ justifySelf: "center" }}
+      />
       <BsTrash
         cursor="pointer"
         size={20}

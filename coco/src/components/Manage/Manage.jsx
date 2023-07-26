@@ -107,7 +107,7 @@ const Menu = (props) => {
         <h3 onClick={() => props.moveTo(2)}>- TASK LIST</h3>
         <h3 onClick={() => props.moveTo(3)}>- POST LIST</h3>
         <h3 onClick={() => props.moveTo(4)}>- NOTICE</h3>
-        <h3 onClick={() => props.moveTo(5)}>- User Management</h3>
+        <h3 onClick={() => props.moveTo(5)}>- USER MANAGEMENT</h3>
       </div>
     </div>
   );

@@ -36,13 +36,12 @@ export const FastWrite = () => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/write_board/",
+          "http://127.0.0.1:8000/board/",
           {
             user_id: userInfo.id,
             title: title,
             context: quillValue,
-            category: 3,
-            group_id: 0,
+            category: 3
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

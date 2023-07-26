@@ -105,14 +105,13 @@ export const Help = ({ title }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/write_board/",
+          "http://127.0.0.1:8000/board/",
           {
             user_id: userInfo.id,
             title: title,
             context: quillValue,
             category: 2,
             code: code,
-            group_id: 0,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

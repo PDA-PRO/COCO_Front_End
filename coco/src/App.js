@@ -127,9 +127,10 @@ function App() {
           <Route
             path="/write"
             element={
-              <AuthRouter role={0}>
-                <WriteGeul />
-              </AuthRouter>
+              <WriteGeul />
+              // <AuthRouter role={0}>
+              //   <WriteGeul />
+              // </AuthRouter>
             }
           />
           <Route path="/status" element={<StatusList />} />

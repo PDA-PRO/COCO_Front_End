@@ -11,29 +11,14 @@ export const Comments = (props) => {
   console.log(props);
   const [isMe, setIsMe] = useState(false);
   const userInfo = useAppSelector((state) => state.loginState);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(props.props.is_liked);
   const navigate = useNavigate();
   const [likeNum, setLikeNum] = useState(props.props.likes);
-  var numLike = props.props.likes;
-
-  const likedComment = () => {
-    for (let i = 0; i < props.is_liked.length; i++) {
-      if (
-        props.is_liked[i][0] === userInfo.id &&
-        props.is_liked[i][1] === props.props.id
-      ) {
-        setLike(true);
-        break;
-      }
-    }
-    return;
-  };
 
   useEffect(() => {
     if (props.props.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
-    likedComment();
   }, [isMe]);
 
   function timeForToday(value) {
@@ -64,21 +49,18 @@ export const Comments = (props) => {
   const onLikesHandler = () => {
     if (!like) {
       setLikeNum(likeNum + 1);
-      numLike += 1;
       setLike(true);
     } else {
       setLikeNum(likeNum - 1);
-      numLike -= 1;
       setLike(false);
     }
     axios
-      .post(
-        "http://127.0.0.1:8000/comment_likes/",
+      .patch(
+        "http://127.0.0.1:8000/board/comment/likes/",
         {
-          comment_id: props.props.id,
           user_id: userInfo.id,
           board_id: props.props.board_id,
-          likes: numLike,
+          comment_id: props.props.id,
           type: like,
         },
         {
@@ -95,14 +77,14 @@ export const Comments = (props) => {
 
   const onDeleteHandler = () => {
     axios
-      .post(
-        "http://127.0.0.1:8000/delete_comment/",
-        {
-          comment_id: props.props.id,
-          user_id: userInfo.id,
-        },
+      .delete(
+        "http://127.0.0.1:8000/board/comment/",
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          params:{
+            board_id: props.props.board_id,
+            comment_id: props.props.id,
+          },
         }
       )
       .then((res) => {

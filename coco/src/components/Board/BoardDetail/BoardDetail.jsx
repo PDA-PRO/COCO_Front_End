@@ -24,6 +24,7 @@ import { Loader } from "../../Loader/Loader";
 import CodeMirror from "@uiw/react-codemirror";
 
 export const BoardDetail = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
 
@@ -32,7 +33,8 @@ export const BoardDetail = () => {
       <Header />
       <Suspense fallback={<Loader />}>
         <GetBoardDetail
-          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}/`)}
+          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}?user_id=`+userInfo.id)}
+          userInfo={userInfo}
           key={path.at(-1)}
         />
       </Suspense>
@@ -41,32 +43,19 @@ export const BoardDetail = () => {
   );
 };
 
-const GetBoardDetail = ({ resource }) => {
+const GetBoardDetail = ({ resource,userInfo }) => {
   const detail = resource.read(); //api fetch 결과
-  const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
   const [write, setWrite] = useState(false);
-  const [like, setLike] = useState(false);
-
+  const [like, setLike] = useState(detail.is_board_liked);
   const [likeNum, setLikeNum] = useState(detail.likes);
-  var numLike = detail.likes;
   const [isMe, setIsMe] = useState(false);
-
-  const likedBoard = () => {
-    for (let i = 0; i < detail.is_board_liked.length; i++) {
-      if (detail.is_board_liked[i] === userInfo.id) {
-        setLike(true);
-        break;
-      }
-    }
-  };
 
   useEffect(() => {
     if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
       setIsMe(true);
     }
-
-    likedBoard();
+    // likedBoard();
   }, [isMe]);
 
   const commentShoot = (e) => {
@@ -105,20 +94,17 @@ const GetBoardDetail = ({ resource }) => {
   const onLikesHandler = () => {
     if (!like) {
       setLikeNum(likeNum + 1);
-      numLike += 1;
       setLike(true);
     } else {
       setLikeNum(likeNum - 1);
-      numLike -= 1;
       setLike(false);
     }
     axios
-      .post(
-        "http://127.0.0.1:8000/board_likes/",
+      .patch(
+        "http://127.0.0.1:8000/board/likes/",
         {
           user_id: userInfo.id,
           board_id: detail.id,
-          likes: numLike,
           type: like,
         },
         {
@@ -132,14 +118,14 @@ const GetBoardDetail = ({ resource }) => {
 
   const onDeleteHandler = () => {
     axios
-      .post(
-        "http://127.0.0.1:8000/delete_content/",
-        {
-          board_id: detail.id,
-          user_id: userInfo.id,
-        },
+      .delete(
+        "http://127.0.0.1:8000/board/",
+
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          params:{
+            board_id: detail.id
+          },
         }
       )
       .then((res) => {
@@ -261,7 +247,6 @@ const GetBoardDetail = ({ resource }) => {
                   <Comments
                     props={e}
                     key={e.id}
-                    is_liked={detail.is_comment_liked}
                   />
                 );
               })}

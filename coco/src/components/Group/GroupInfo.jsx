@@ -36,7 +36,7 @@ const InviteNewMember = (props) => {
     console.log(search);
     axios
       .get("http://127.0.0.1:8000/room/search_user/", {
-        params:{user_id: search}
+        params: { user_id: search },
       })
       .then((res) => {
         setUserList([...res.data]);
@@ -153,9 +153,7 @@ export const GroupInfo = () => {
         <div className="gi">
           <Suspense fallback={<Spinner />}>
             <GiHeader
-              resource={fetchData(
-                `http://127.0.0.1:8000/room/${path.at(-1)}/`
-              )}
+              resource={fetchData(`http://127.0.0.1:8000/room/${path.at(-1)}/`)}
             />
           </Suspense>
 
@@ -200,14 +198,13 @@ export const GroupInfo = () => {
                 </Suspense>
               ) : (
                 <Suspense fallback={<Spinner />}>
-                  {/* <GroupTasks
+                  <RoadMap
                     resource={fetchData(
-                      `http://127.0.0.1:8000/group/group_workbooks/${path.at(
+                      `http://127.0.0.1:8000/room/roadmap/${path.at(
                         -1
-                      )}/`
+                      )}?user_id=${userID}`
                     )}
-                  /> */}
-                  <RoadMap />
+                  />
                 </Suspense>
               )}
             </div>

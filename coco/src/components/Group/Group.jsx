@@ -23,7 +23,7 @@ export const Group = () => {
   };
 
   const movePage = () => {
-    navigate("/makegroup");
+    navigate("/makeroom");
   };
 
   return (
@@ -75,9 +75,7 @@ export const Group = () => {
 
                 <Suspense fallback={<Spinner />}>
                   <GetGroups
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/room/`
-                    )}
+                    resource={fetchData(`http://127.0.0.1:8000/room/`)}
                   />
                 </Suspense>
               </div>

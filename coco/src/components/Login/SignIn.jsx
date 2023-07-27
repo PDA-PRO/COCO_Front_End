@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { CgPassword } from "react-icons/cg";
 import { Button } from "react-bootstrap";
@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import Modal from "react-bootstrap/Modal";
 import { FiMail } from "react-icons/fi";
+import { HiOutlineIdentification } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 import jwtdecode from "../../app/jwtdecode";
@@ -22,8 +23,8 @@ export const SignIn = () => {
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
-  const [modalShow, setModalShow] = React.useState(false);
-  const [find, setFind] = useState(0);
+  const [idmodalShow, setIdModalShow] = useState(false);
+  const [emailmodalShow, setEmailModalShow] = useState(false);
   const [autologin, setautologin] = useState(false);
 
   const onIDHandler = (e) => {
@@ -122,8 +123,7 @@ export const SignIn = () => {
           <span
             style={{ marginRight: "10px", cursor: "pointer" }}
             onClick={() => {
-              setModalShow(true);
-              setFind(1);
+              setIdModalShow(true);
             }}
           >
             아이디 찾기
@@ -131,85 +131,57 @@ export const SignIn = () => {
           <span
             style={{ cursor: "pointer" }}
             onClick={() => {
-              setModalShow(true);
-              setFind(2);
+              setEmailModalShow(true);
             }}
           >
-            비밀번호 찾기
+            비밀번호 재설정
           </span>
         </div>
       </div>
 
-      <FindInfoModal
-        show={modalShow}
+      <FindIdModal
+        show={idmodalShow}
         onHide={() => {
-          setModalShow(false);
-          setFind(0);
+          setIdModalShow(false);
         }}
-        num={find}
+      />
+      <FindEmailModal
+        show={emailmodalShow}
+        onHide={() => {
+          setEmailModalShow(false);
+        }}
       />
     </>
   );
 };
 
-function FindInfoModal(props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+const FindIdModal = (props) => {
+  const nameRef = useRef();
+  const emailRef = useRef();
   const [id, setId] = useState("");
 
-  const onNameHandler = (e) => {
-    setName(e.currentTarget.value);
+  const idHandler = () => {
+    axios
+      .get("http://127.0.0.1:8000/findid", {
+        params: {
+          name: nameRef.current.value,
+          email: emailRef.current.value,
+        },
+      })
+      .then((res) => {
+        if (res.data.code == 0) {
+          setId("일치하는 사용자 정보가 없습니다");
+        } else {
+          setId(`아이디는 ${res.data.code} 입니다`);
+        }
+      })
+      .catch(() => {
+        setId(`이메일 형식이 틀립니다.`);
+      });
   };
-
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const onIDHandler = (e) => {
-    setId(e.currentTarget.value);
-  };
-
-  const onSubmitHandler = () => {
-    if (props.num === 1) {
-      if (name !== "" && email !== "") {
-        axios
-          .post("http://127.0.0.1:8000/findid", {
-            name: name,
-            email: email,
-          })
-          .then((res) => {
-            if (res.data.code == 0) {
-              return alert(`일치하는 사용자 정보가 없습니다`);
-            } else {
-              return alert(`아이디는 ${res.data.code} 입니다`);
-            }
-          });
-      } else {
-        return;
-      }
-    } else if (props.num === 2) {
-      if (name !== "" && email !== "" && id !== "") {
-        axios
-          .post("http://127.0.0.1:8000/findpw", {
-            name: name,
-            id: id,
-            email: email,
-          })
-          .then((res) => {
-            if (res.data.code == 0) {
-              return alert(`일치하는 사용자 정보가 없습니다`);
-            } else {
-              return alert(`비밀번호는 ${res.data.code} 입니다`);
-            }
-          });
-      } else {
-        return;
-      }
-    }
-  };
-
   return (
     <Modal
+      onShow={() => setId("")}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -217,44 +189,116 @@ function FindInfoModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {props.num === 1
-            ? "아이디 찾기"
-            : props.num === 2
-            ? "비밀번호 찾기"
-            : ""}
+          아이디 찾기
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {props.num === 1 ? (
-          <></>
-        ) : (
-          <div className="loginBox">
-            <FaRegUserCircle size="25" />
-            <input placeholder={"아이디을 입력하세요"} onChange={onIDHandler} />
-          </div>
-        )}
         <div className="loginBox">
           <FaRegUser size="25" />
-          <input placeholder={"이름을 입력하세요"} onChange={onNameHandler} />
+          <input ref={nameRef} placeholder={"이름을 입력하세요"} />
+        </div>
+        <div className="loginBox">
+          <FiMail size="25" />
+          <input ref={emailRef} placeholder={"이메일을 입력하세요"} />
+        </div>
+        {id ? (
+          <div className="loginBox">
+            <HiOutlineIdentification size="25" />
+            <input style={{ color: "black" }} disabled value={id} />
+          </div>
+        ) : (
+          <></>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={idHandler}>확인하기</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+const FindEmailModal = (props) => {
+  const idRef = useRef();
+  const pwRef = useRef();
+  const pw2Ref = useRef();
+  const [result, setResult] = useState("");
+
+  const Handler = () => {
+    if (pwRef.current.value == pw2Ref.current.value) {
+      axios
+        .patch(
+          "http://127.0.0.1:8000/pw/",
+          {},
+          {
+            params: {
+              pw: pwRef.current.value,
+              id: idRef.current.value,
+            },
+          }
+        )
+        .then((res) => {
+          setResult("비밀번호를 재설정했습니다.");
+        })
+        .catch(({ response }) => {
+          console.log(response);
+          if (response.status == 404) {
+            setResult("존재하는 id가 아닙니다.");
+          } else if (response.status == 422) {
+            setResult(
+              "비밀번호는 영어, 숫자, 특수기호를 포함하고 8-15 길이여야합니다."
+            );
+          }
+        });
+    } else {
+      setResult("비밀번호가 일치하지 않습니다.");
+    }
+  };
+  return (
+    <Modal
+      onShow={() => setResult("")}
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          비밀번호 재설정
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="loginBox">
+          <FaRegUser size="25" />
+          <input ref={idRef} placeholder={"id를 입력하세요"} />
         </div>
         <div className="loginBox">
           <FiMail size="25" />
           <input
-            placeholder={"이메일을 입력하세요"}
-            onChange={onEmailHandler}
+            type="password"
+            ref={pwRef}
+            placeholder={"새로운 비밀번호를 입력하세요"}
           />
         </div>
+        <div className="loginBox">
+          <FiMail size="25" />
+          <input
+            type="password"
+            ref={pw2Ref}
+            placeholder={"비밀번호를 재입력하세요"}
+          />
+        </div>
+        {result ? (
+          <div className="loginBox">
+            <HiOutlineIdentification size="25" />
+            <input style={{ color: "black" }} disabled value={result} />
+          </div>
+        ) : (
+          <></>
+        )}
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          onClick={() => {
-            props.onHide();
-            onSubmitHandler();
-          }}
-        >
-          확인하기
-        </Button>
+        <Button onClick={Handler}>확인하기</Button>
       </Modal.Footer>
     </Modal>
   );
-}
+};

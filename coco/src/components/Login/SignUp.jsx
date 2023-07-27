@@ -44,8 +44,10 @@ export const SignUp = () => {
       return alert("아이디를 입력하세요");
     } else {
       axios
-        .post("http://127.0.0.1:8000/checkids", {
-          id: id,
+        .get("http://127.0.0.1:8000/checkids", {
+          params: {
+            id: id,
+          },
         })
         .then(function (response) {
           if (response.data.code === 1) {

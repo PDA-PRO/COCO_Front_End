@@ -1,45 +1,53 @@
 import React from "react";
 import "./RoadMap.css";
-import { grey } from "@mui/material/colors";
+import axios from "axios";
 
-export const RoadMap = () => {
+export const RoadMap = ({ resource }) => {
+  const info = resource.read();
   return (
     <div className="roadMap">
-      <div className="road">
-        <h4>로드맵 제목</h4>
-        <p style={{ color: "gray" }}>로드맵 설명</p>
-        <div className="tasks">
-          <p>
-            학습 달성률 : <span style={{ color: "blue" }}>75%</span>
-          </p>
-          <p>3 / 4</p>
-        </div>
-        <p>마지막 업데이트 날짜 : 2023-07-11</p>
-      </div>
+      {info.room_info.map((e) => {
+        return <Road info={e} key={e.id} solve={info.solved_task} />;
+      })}
+    </div>
+  );
+};
 
-      <div className="road">
-        <h4>로드맵 제목</h4>
-        <p style={{ color: "gray" }}>로드맵 설명</p>
-        <div className="tasks">
-          <p>
-            학습 달성률 : <span style={{ color: "blue" }}>75%</span>
-          </p>
-          <p>3 / 4</p>
-        </div>
-        <p>마지막 업데이트 날짜 : 2023-07-11</p>
-      </div>
+const Road = (props) => {
+  const data = props.info;
+  var solve = props.solve;
 
-      <div className="road">
-        <h4>로드맵 제목</h4>
-        <p style={{ color: "gray" }}>로드맵 설명</p>
-        <div className="tasks">
-          <p>
-            학습 달성률 : <span style={{ color: "blue" }}>75%</span>
-          </p>
-          <p>3 / 4</p>
-        </div>
-        <p>마지막 업데이트 날짜 : 2023-07-11</p>
+  var allTasks = data.tasks;
+  var tasksLength = allTasks.length - 1;
+  var converted = allTasks.filter((x) => solve.includes(x));
+  console.log(converted);
+  var cnt = converted.length;
+  var percentage = (cnt / tasksLength) * 100;
+  var date = data.last_modify.slice(0, 10);
+
+  return (
+    <div
+      className="road"
+      style={
+        percentage === 100
+          ? { borderColor: "#afaefa" }
+          : { borderColor: "lightgray" }
+      }
+    >
+      <h4>{data.name}</h4>
+      <p style={{ color: "gray" }}>{data.desc}</p>
+      <div className="tasks">
+        <p>
+          학습 달성률 : <span style={{ color: "blue" }}>{percentage}%</span>
+        </p>
+        <p>
+          {cnt} / {tasksLength}
+        </p>
       </div>
+      <div className="barOrigin">
+        <div className="barContent" style={{ width: `${percentage}%` }}></div>
+      </div>
+      <p>마지막 업데이트 날짜 : {date}</p>
     </div>
   );
 };

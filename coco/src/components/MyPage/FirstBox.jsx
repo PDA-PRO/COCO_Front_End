@@ -15,6 +15,11 @@ import { useAppSelector, useAppDispatch } from "../../app/store";
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const dispatch = useAppDispatch();
+  const path = window.location.pathname.split("/");
+
+  var me = userInfo.id;
+  var now = path.at(-1);
+
   const refEmail = useRef(null);
   const refNowPW = useRef(null);
   const refNewPW = useRef(null);
@@ -156,22 +161,27 @@ export const FirstBox = (props) => {
             className="userImg"
           />
         </>
+        {me === now ? (
+          <div className="picSelect">
+            <label htmlFor="imgUpload">프로필 사진 변경</label>
+            <input
+              id="imgUpload"
+              name="imgUpload"
+              type="file"
+              accept="image/*"
+              onChange={saveFileImage}
+              style={{
+                display: "none",
+              }}
+            />
 
-        <div className="picSelect">
-          <label htmlFor="imgUpload">프로필 사진 변경</label>
-          <input
-            id="imgUpload"
-            name="imgUpload"
-            type="file"
-            accept="image/*"
-            onChange={saveFileImage}
-            style={{
-              display: "none",
-            }}
-          />
-
-          <label onClick={() => deleteFileImage()}>기본 이미지로 설정</label>
-        </div>
+            <label onClick={() => deleteFileImage()}>기본 이미지로 설정</label>
+          </div>
+        ) : (
+          <>
+            <h2 style={{ paddingTop: 10, paddingLeft: 0 }}>{now}</h2>
+          </>
+        )}
       </div>
 
       <div className="levelField">
@@ -179,67 +189,77 @@ export const FirstBox = (props) => {
         <p>다음 레벨까지 100pts</p>
       </div>
 
-      <div className="txtInputBox">
-        <h3>
-          <span>
-            <IoMailOutline
-              size={23}
-              color="green"
-              style={{ marginRight: "10px" }}
+      {me === now ? (
+        <div className="txtInputBox">
+          <h3>
+            <span>
+              <IoMailOutline
+                size={23}
+                color="green"
+                style={{ marginRight: "10px" }}
+              />
+            </span>
+            이메일 변경
+          </h3>
+          <InputGroup className="mb-3">
+            <Form.Control placeholder={`${props.props.email}`} ref={refEmail} />
+            <Button
+              variant="outline-success"
+              id="button-addon2"
+              onClick={() => changeEmail()}
+            >
+              변경
+            </Button>
+          </InputGroup>
+
+          <h3 style={{ marginTop: "12px" }}>
+            <span>
+              <RiLockPasswordLine
+                size={22}
+                color="green"
+                style={{ marginRight: "10px" }}
+              />
+            </span>
+            비밀번호 변경
+          </h3>
+
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="현재 비밀번호"
+              type="password"
+              ref={refNowPW}
             />
-          </span>
-          이메일 변경
-        </h3>
-        <InputGroup className="mb-3">
-          <Form.Control placeholder={`${props.props.email}`} ref={refEmail} />
+          </InputGroup>
+
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="새 비밀번호 입력"
+              type="password"
+              ref={refNewPW}
+            />
+          </InputGroup>
+
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="새 비밀번호 확인"
+              type="password"
+              ref={refconfirmNewPW}
+            />
+          </InputGroup>
+
           <Button
             variant="outline-success"
-            id="button-addon2"
-            onClick={() => changeEmail()}
+            id="pwBtn"
+            onClick={() => changePW()}
           >
-            변경
+            change
           </Button>
-        </InputGroup>
-
-        <h3 style={{ marginTop: "12px" }}>
-          <span>
-            <RiLockPasswordLine
-              size={22}
-              color="green"
-              style={{ marginRight: "10px" }}
-            />
-          </span>
-          비밀번호 변경
-        </h3>
-
-        <InputGroup className="mb-3">
-          <Form.Control
-            placeholder="현재 비밀번호"
-            type="password"
-            ref={refNowPW}
-          />
-        </InputGroup>
-
-        <InputGroup className="mb-3">
-          <Form.Control
-            placeholder="새 비밀번호 입력"
-            type="password"
-            ref={refNewPW}
-          />
-        </InputGroup>
-
-        <InputGroup className="mb-3">
-          <Form.Control
-            placeholder="새 비밀번호 확인"
-            type="password"
-            ref={refconfirmNewPW}
-          />
-        </InputGroup>
-
-        <Button variant="outline-success" id="pwBtn" onClick={() => changePW()}>
-          change
-        </Button>
-      </div>
+        </div>
+      ) : (
+        <>
+          <p> </p>
+        </>
+      )}
     </div>
   );
 };

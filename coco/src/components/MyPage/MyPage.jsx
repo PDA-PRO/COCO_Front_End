@@ -20,6 +20,9 @@ export const MyPage = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const path = window.location.pathname.split("/");
 
+  var me = userInfo.id;
+  var now = path.at(-1);
+
   return (
     <>
       <Header />
@@ -40,7 +43,9 @@ export const MyPage = () => {
               resource={fetchData(
                 `http://127.0.0.1:8000/myPageOne/${path.at(-1)}/`,
                 {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                  headers: {
+                    Authorization: "Bearer " + userInfo.access_token,
+                  },
                 }
               )}
             />
@@ -53,58 +58,70 @@ export const MyPage = () => {
                 style={{ paddingBottom: "3px", marginRight: "13px" }}
               />
             </span>
-            내 역량
+            {me === now ? "내 역량" : `${now}님 역량`}
           </h2>
           <Suspense fallback={<Spinner />}>
             <GetSecond
               resource={fetchData(
                 `http://127.0.0.1:8000/myPageTwo/${path.at(-1)}/`,
                 {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                  headers: {
+                    Authorization: "Bearer " + userInfo.access_token,
+                  },
                 }
               )}
             />
           </Suspense>
-          <h2>
-            <span>
-              <GiNotebook
-                size={29}
-                color="green"
-                style={{ paddingBottom: "3px", marginRight: "13px" }}
-              />
-            </span>
-            내 게시글
-          </h2>
-          <Suspense fallback={<Spinner />}>
-            <GetThird
-              resource={fetchData(
-                `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
-            />
-          </Suspense>
-          <h2>
-            <span>
-              <GiBlackBook
-                size={29}
-                color="green"
-                style={{ paddingBottom: "3px", marginRight: "13px" }}
-              />
-            </span>
-            내 문제집
-          </h2>
-          <Suspense fallback={<Spinner />}>
-            <GetMyTasks
-              resource={fetchData(
-                `http://127.0.0.1:8000/mytasks/${path.at(-1)}/`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
-            />
-          </Suspense>
+          {me === now ? (
+            <>
+              <h2>
+                <span>
+                  <GiNotebook
+                    size={29}
+                    color="green"
+                    style={{ paddingBottom: "3px", marginRight: "13px" }}
+                  />
+                </span>
+                내 게시글
+              </h2>
+              <Suspense fallback={<Spinner />}>
+                <GetThird
+                  resource={fetchData(
+                    `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`,
+                    {
+                      headers: {
+                        Authorization: "Bearer " + userInfo.access_token,
+                      },
+                    }
+                  )}
+                />
+              </Suspense>
+              <h2>
+                <span>
+                  <GiBlackBook
+                    size={29}
+                    color="green"
+                    style={{ paddingBottom: "3px", marginRight: "13px" }}
+                  />
+                </span>
+                내 문제집
+              </h2>
+              <Suspense fallback={<Spinner />}>
+                <GetMyTasks
+                  resource={fetchData(
+                    `http://127.0.0.1:8000/mytasks/${path.at(-1)}/`,
+                    {
+                      headers: {
+                        Authorization: "Bearer " + userInfo.access_token,
+                      },
+                    }
+                  )}
+                />
+              </Suspense>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <Footer />

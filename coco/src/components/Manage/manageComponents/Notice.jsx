@@ -115,11 +115,11 @@ const GetNotice = ({ resource }) => {
 
   const onSubmitHandler = () => {
     axios
-      .post("http://127.0.0.1:8000/manage/notice/", {
+      .put("http://127.0.0.1:8000/manage/notice/", {
         html: quillValue,
       })
       .then(function (res) {
-        console.log("response: ", res);
+        alert("공지 업데이트를 성공했습니다.");
       })
       .catch(() => {
         alert("인증실패");

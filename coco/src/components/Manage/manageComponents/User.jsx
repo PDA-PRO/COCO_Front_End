@@ -1,32 +1,45 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useEffect, useRef } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import fetchData from "../../../api/fetchTask";
 import { GoSearch } from "react-icons/go";
 import { HiUserPlus, HiUserMinus } from "react-icons/hi2";
-import Form from "react-bootstrap/Form";
+import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 
 export const User = () => {
+  const [page, setPage] = useState(1);
+  const [reload, setReload] = useState(null);
+  const [userList, setUserList] = useState(null);
+  const [managerList, setManagerList] = useState(null);
+  const [loading, setLoading] = useState(true);
   const userInfo = useAppSelector((state) => state.loginState);
-  const [order, setOrder] = useState([]);
 
-  const onSearchHandler = (info) => {
-    axios
-      .post(
-        "http://127.0.0.1:8000/manage/search_user/",
-        {
-          user_id: info,
-        }
-        // {
-        //   headers: { Authorization: "Bearer " + userInfo.access_token },
-        // }
-      )
-      .then((res) => {
-        setOrder(res.data);
-      });
+  const keywordRef = useRef();
+
+  useEffect(() => {
+    Promise.all([
+      axios.get(`http://127.0.0.1:8000/manage/user/`, {
+        params: {
+          size: 10,
+          page: page,
+          keyword: keywordRef.current.value,
+          role: 0,
+        },
+      }),
+      axios.get(`http://127.0.0.1:8000/manage/manager/`),
+    ]).then((value) => {
+      let userData = value[0].data;
+      let managerData = value[1].data;
+      setUserList(userData);
+      setManagerList(managerData);
+      setLoading(false);
+    });
+  }, [reload, page]);
+
+  const onSearchHandler = () => {
+    setReload(`search${Math.random()}`);
+    setLoading(true);
   };
-
   return (
     <>
       <h2 className="mTi">User Management</h2>
@@ -34,26 +47,46 @@ export const User = () => {
         <div className="divide-box">
           <div className="box">
             <p>유저 목록</p>
-            <SearchBar search={onSearchHandler} />
-            {order.length === 0 ? (
-              <Suspense fallback={<Spinner />}>
-                <UserList
-                  resource={fetchData(`http://127.0.0.1:8000/manage/user_list`)}
-                />
-              </Suspense>
+            <div className="searchBar">
+              <input
+                ref={keywordRef}
+                type="text"
+                placeholder="search"
+                id="SV"
+              />
+              <GoSearch
+                size={23}
+                color="rgb(98, 148, 255)"
+                id="goSearch"
+                onClick={() => onSearchHandler()}
+              />
+            </div>
+            {loading ? (
+              <Spinner />
             ) : (
-              <SearchList order={order} />
+              <UserList
+                userList={userList}
+                setPage={(value) => {
+                  setPage(value);
+                  setLoading(true);
+                }}
+                page={page}
+                setReload={setReload}
+                setLoading={setLoading}
+              />
             )}
           </div>
           <div className="box">
             <p>관리자 목록</p>
-            <Suspense fallback={<Spinner />}>
+            {loading ? (
+              <Spinner />
+            ) : (
               <Managers
-                resource={fetchData(
-                  `http://127.0.0.1:8000/manage/manager_list`
-                )}
+                managerList={managerList}
+                setReload={setReload}
+                setLoading={setLoading}
               />
-            </Suspense>
+            )}
           </div>
         </div>
       </div>
@@ -61,84 +94,25 @@ export const User = () => {
   );
 };
 
-const SearchBar = ({ search }) => {
-  const onSearchHandler = (e) => {
-    var info = document.getElementById("SV").value;
-    search(info);
-    console.log(info);
-  };
-
-  return (
-    <div className="searchBar">
-      <input type="text" placeholder="search" id="SV" />
-      <GoSearch
-        size={23}
-        color="rgb(98, 148, 255)"
-        id="goSearch"
-        onClick={() => onSearchHandler()}
-      />
-    </div>
-  );
-};
-
-const SearchList = ({ order }) => {
+const UserList = ({ userList, page, setPage, setReload, setLoading }) => {
   const addMananger = (user_id) => {
-    console.log(user_id);
     axios
-      .post("http://127.0.0.1:8000/manage/add_manager", {
-        user_id: user_id,
+      .patch("http://127.0.0.1:8000/manage/role/", {
+        id: user_id,
+        role: 1,
       })
       .then((res) => {
-        if (res.data === true) {
+        if (res.data == true) {
           alert(`${user_id}님을 관리자에 추가하였습니다`);
+          setReload(`add${user_id}`);
+          setLoading(true);
         }
       })
       .catch(() => {
         alert("관리자 추가에 실패하였습니다.");
       });
   };
-  return (
-    <div className="userList-manage">
-      <div className="uL-top">
-        <p>ID</p>
-        <p>Name</p>
-        <p>관리자 추가</p>
-      </div>
-
-      {order.map((e) => {
-        return (
-          <div className="uL-content">
-            <p>{e.id}</p>
-            <p>{e.name}</p>
-            <p
-              style={{ cursor: "pointer", color: "skyblue" }}
-              onClick={() => addMananger(e.id)}
-            >
-              <HiUserPlus size={23} />
-            </p>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-const UserList = ({ resource }) => {
-  const addMananger = (user_id) => {
-    axios
-      .post("http://127.0.0.1:8000/manage/add_manager/", {
-        user_id: user_id,
-      })
-      .then((res) => {
-        if (res.data === true) {
-          alert(`${user_id}님을 관리자에 추가하였습니다`);
-        }
-      })
-      .catch(() => {
-        alert("관리자 추가에 실패하였습니다.");
-      });
-  };
-  const users = resource.read();
+  const users = userList.userlist;
 
   return (
     <div className="userList-manage">
@@ -150,32 +124,45 @@ const UserList = ({ resource }) => {
 
       {users.map((e) => {
         return (
-          <div className="uL-content">
+          <div key={e.id} className="uL-content">
             <p>{e.id}</p>
             <p>{e.name}</p>
             <p
               style={{ cursor: "pointer", color: "skyblue" }}
-              onClick={() => addMananger()}
+              onClick={() => addMananger(e.id)}
             >
               <HiUserPlus size={23} />
             </p>
           </div>
         );
       })}
+      <div className="pageController">
+        <Pagination
+          count={Math.ceil(userList.total / userList.size)}
+          variant="outlined"
+          shape="rounded"
+          defaultPage={1}
+          page={page}
+          onChange={(e, value) => setPage(value)}
+        />
+      </div>
     </div>
   );
 };
 
-const Managers = ({ resource }) => {
-  const managers = resource.read();
+const Managers = ({ managerList, setReload, setLoading }) => {
+  const managers = managerList;
   const minusMananger = (user_id) => {
     axios
-      .post("http://127.0.0.1:8000/manage/delete_manager/", {
-        user_id: user_id,
+      .patch("http://127.0.0.1:8000/manage/role/", {
+        id: user_id,
+        role: 0,
       })
       .then((res) => {
-        if (res.data === true) {
+        if (res.data == true) {
           alert(`${user_id}님을 관리자에서 삭제하였습니다`);
+          setReload(`remove${user_id}`);
+          setLoading(true);
         }
       })
       .catch(() => {
@@ -193,7 +180,7 @@ const Managers = ({ resource }) => {
 
       {managers.map((e) => {
         return (
-          <div className="uL-content">
+          <div key={e.id} className="uL-content">
             <p>{e.id}</p>
             <p>{e.name}</p>
             <p

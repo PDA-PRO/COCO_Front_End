@@ -102,6 +102,7 @@ const ListBox = ({ info, token, setDel, setLoading }) => {
         headers: { Authorization: "Bearer " + token },
       })
       .then(() => {
+        alert(`id : ${info.id}, 제목 : ${info.title} 문제를 삭제했습니다.`);
         setDel(info.id);
         setLoading(true);
       });

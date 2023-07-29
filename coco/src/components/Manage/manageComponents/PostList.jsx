@@ -1,15 +1,12 @@
 import "../Manage.css";
 
-import React, { Suspense, useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import fetchData from "../../../api/fetchTask";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
-  BsHeart,
   BsHeartFill,
   BsFillLightbulbFill,
   BsMegaphoneFill,
@@ -21,26 +18,49 @@ import { useAppSelector } from "../../../app/store";
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+  const [reload, setReload] = useState(0);
+  const [postList, setPostList] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/manage/post", {
+        params: {
+          size: 10,
+          page: page,
+        },
+      })
+      .then(({ data }) => {
+        setPostList(data);
+        setLoading(false);
+      });
+  }, [reload, page]);
   return (
     <>
       <h2 className="mTi">POST LIST</h2>
       <div>
-        <Suspense fallback={<Spinner />}>
-          <BoardList resource={fetchData("http://127.0.0.1:8000/board?page="+page+"&size="+3)} page={page} handleChange={handleChange} />
-        </Suspense>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <BoardList
+            postList={postList}
+            setPage={(value) => {
+              setPage(value);
+              setLoading(true);
+            }}
+            page={page}
+            setReload={setReload}
+            setLoading={setLoading}
+          />
+        )}
       </div>
     </>
   );
 };
 
-const BoardList = ({ resource,page,handleChange  }) => {
+const BoardList = ({ postList, setPage, page, setReload, setLoading }) => {
   const userInfo = useAppSelector((state) => state.loginState);
-  const problemList = resource.read();
-  const [tasks, settasks] = useState(problemList.board);
-  console.log(tasks)
+
   return (
     <div className="m-upload">
       <div className="postTop">
@@ -52,27 +72,32 @@ const BoardList = ({ resource,page,handleChange  }) => {
         <h3>조회수</h3>
         <h3>좋아요</h3>
       </div>
-      {tasks.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-        return <ListPost info={e} userinfo={userInfo} settasks={settasks} />;
+      {postList.boardlist.map((e) => {
+        return (
+          <ListPost
+            key={e.id}
+            info={e}
+            userinfo={userInfo}
+            setReload={setReload}
+            setLoading={setLoading}
+          />
+        );
       })}
-      {/* {tasks.map((e) => {
-        return <ListPost info={e} settasks={settasks}></ListPost>;
-      })} */}
       <div className="pageController">
         <Pagination
-          count={Math.ceil( problemList.total/problemList.size)}
+          count={Math.ceil(postList.total / postList.size)}
           variant="outlined"
           shape="rounded"
           page={page}
           defaultPage={1}
-          onChange={handleChange}
+          onChange={(e, value) => setPage(value)}
         />
       </div>
     </div>
   );
 };
 
-const ListPost = ({ info, userinfo, settasks }) => {
+const ListPost = ({ info, userinfo, setReload, setLoading }) => {
   const navigate = useNavigate();
   const moveDetail = (e) => {
     navigate(`/board/${e}`);
@@ -123,21 +148,16 @@ const ListPost = ({ info, userinfo, settasks }) => {
   };
 
   const loadlist = (e) => {
+    console.log(info.id);
     axios
-      .post(
-        "http://127.0.0.1:8000/delete_content/",
-        {
-          board_id: info.id,
-          user_id: userinfo.id,
-        },
-        { headers: { Authorization: "Bearer " + userinfo.access_token } }
-      )
+      .delete("http://127.0.0.1:8000/board/", {
+        params: { board_id: info.id },
+        headers: { Authorization: "Bearer " + userinfo.access_token },
+      })
       .then(function (response) {
-        axios.get("http://127.0.0.1:8000/boardlist").then(function (response) {
-          console.log(response.data);
-          settasks(response.data);
-        });
-        // 성공 핸들링
+        setReload(response.data);
+        setLoading(true);
+        alert(`id : ${info.id}, title : ${info.title} 게시글을 삭제했습니다.`);
       });
   };
 

@@ -1,6 +1,7 @@
 import "./MyPage.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useAppSelector } from "../../app/store";
 import {
   ResponsiveContainer,
   LineChart,
@@ -17,6 +18,11 @@ import {
 
 export const SecondBox = (props) => {
   const navigate = useNavigate();
+  const userInfo = useAppSelector((state) => state.loginState);
+  const path = window.location.pathname.split("/");
+
+  var me = userInfo.id;
+  var now = path.at(-1);
 
   const movePage = (id) => {
     navigate(`/problems/${id}`);
@@ -137,9 +143,16 @@ export const SecondBox = (props) => {
       </div>
 
       <div className="secBox-col" style={{ width: "100%", height: "400px" }}>
-        <h3>
-          - 내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
-        </h3>
+        {me === now ? (
+          <h3>
+            - 내 성장 그래프 <span>( 난이도 x 문제 수 )</span>
+          </h3>
+        ) : (
+          <h3>
+            - {now}님 성장 그래프 <span>( 난이도 x 문제 수 )</span>
+          </h3>
+        )}
+
         <ResponsiveContainer width="100%">
           <LineChart
             width={1000}

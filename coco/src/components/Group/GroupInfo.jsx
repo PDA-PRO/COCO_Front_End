@@ -333,7 +333,7 @@ const Member = ({ info, props }) => {
 
   const GoInfo = (e) => {
     // 누른 멤버의 마이페이지로 이동
-    navigate(`/group/${e}`);
+    navigate(`/mypage/${e}`);
   };
 
   return (
@@ -342,7 +342,7 @@ const Member = ({ info, props }) => {
       style={info[0] === props ? { display: "none" } : {}}
     >
       <p>{info[0] === props ? <TbCrown size={25} color="orange" /> : ""}</p>
-      <p>{info[0]}</p>
+      <p onClick={() => GoInfo(info[0])}>{info[0]}</p>
       <p>{info[1]}</p>
     </div>
   );

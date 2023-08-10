@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Login } from "../../components/Login/Login";
 import { useState } from "react";
 import { useAppDispatch } from "../../app/store";
+import { API } from "api/config";
 
 export const AuthRouter = ({ role, children }) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -15,7 +16,7 @@ export const AuthRouter = ({ role, children }) => {
   if (checkToken(userInfo.access_token)) {
     //토큰이 유효하다면
     axios
-      .get("http://127.0.0.1:8000/auth", {
+      .get(API.AUTHROUTER, {
         headers: { Authorization: "Bearer " + userInfo.access_token },
       })
       .then(function (response) {

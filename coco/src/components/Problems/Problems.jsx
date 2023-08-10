@@ -11,7 +11,6 @@ import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 import { useMediaQuery } from "react-responsive";
 import Select from "react-select";
-
 import {
   TiBatteryCharge,
   TiBatteryLow,
@@ -22,6 +21,7 @@ import {
 import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
+import { API } from "api/config";
 
 export const Problems = () => {
   const Large = useMediaQuery({ minWidth: 1100 });
@@ -50,7 +50,7 @@ export const Problems = () => {
               </div>
               <Suspense fallback={<Spinner />}>
                 <GetProblems
-                  resource={fetchData("http://127.0.0.1:8000/task/", {
+                  resource={fetchData(API.TASK, {
                     params: {
                       keyword: filter.keyword,
                       diff: filter.diff,
@@ -84,7 +84,7 @@ const BodyRight = ({ setFilter }) => {
   const keywordRef = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/task/category").then((value) => {
+    axios.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });

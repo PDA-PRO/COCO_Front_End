@@ -13,6 +13,7 @@ import { GoSearch } from "react-icons/go";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
+import { API } from "api/config";
 
 export const StatusList = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -68,7 +69,7 @@ export const StatusList = () => {
           </div>
           <Suspense fallback={<Spinner />}>
             <Getsubmits
-              resource={fetchData("http://127.0.0.1:8000/status/", {
+              resource={fetchData(API.STATUS, {
                 params: {
                   task_id: filter.task_id,
                   lang: filter.lang,

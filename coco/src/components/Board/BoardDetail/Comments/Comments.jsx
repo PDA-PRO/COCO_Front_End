@@ -5,6 +5,7 @@ import { useAppSelector } from "../../../../app/store";
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API } from "api/config";
 
 export const Comments = (props) => {
   //props: id, context, write_time, likes, user_id, board_id
@@ -56,7 +57,7 @@ export const Comments = (props) => {
     }
     axios
       .patch(
-        "http://127.0.0.1:8000/board/comment/likes/",
+        API.COMMENTLIKE,
         {
           user_id: userInfo.id,
           board_id: props.props.board_id,
@@ -77,16 +78,13 @@ export const Comments = (props) => {
 
   const onDeleteHandler = () => {
     axios
-      .delete(
-        "http://127.0.0.1:8000/board/comment/",
-        {
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-          params:{
-            board_id: props.props.board_id,
-            comment_id: props.props.id,
-          },
-        }
-      )
+      .delete(API.COMMENT, {
+        headers: { Authorization: "Bearer " + userInfo.access_token },
+        params: {
+          board_id: props.props.board_id,
+          comment_id: props.props.id,
+        },
+      })
       .then((res) => {
         console.log(res.data);
         if (res.data.code === 1) {

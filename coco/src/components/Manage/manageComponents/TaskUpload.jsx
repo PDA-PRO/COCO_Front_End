@@ -19,6 +19,7 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import CreatableSelect from "react-select/creatable";
 import JSZip from "jszip";
+import { API } from "api/config";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -64,7 +65,7 @@ export const TaskUpload = () => {
       const range = editor.getSelection();
       axios
         .post(
-          "http://localhost:8000/image/upload-temp",
+          API.IMAGEUPLOAD,
           {
             file: file, // 파일
           },
@@ -151,7 +152,7 @@ export const TaskUpload = () => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post("http://127.0.0.1:8000/task/", formData, {
+        .post(API.TASK, formData, {
           headers: {
             "Content-Type": `multipart/form-data; `,
             Authorization: "Bearer " + userInfo.access_token,
@@ -405,7 +406,7 @@ const CheckCategory = ({ userInfo, categoryRef }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/task/category").then((value) => {
+    axios.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });
@@ -419,7 +420,7 @@ const CheckCategory = ({ userInfo, categoryRef }) => {
     setIsLoading(true);
     axios
       .post(
-        "http://localhost:8000/task/category",
+        API.CATEGORY,
         {},
         {
           headers: {

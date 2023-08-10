@@ -15,6 +15,7 @@ import {
 } from "react-icons/bs";
 import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
@@ -24,7 +25,7 @@ export const PostList = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/manage/post", {
+      .get(API.MANAGEPOST, {
         params: {
           size: 10,
           page: page,
@@ -150,7 +151,7 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
   const loadlist = (e) => {
     console.log(info.id);
     axios
-      .delete("http://127.0.0.1:8000/board/", {
+      .delete(API.BOARD, {
         params: { board_id: info.id },
         headers: { Authorization: "Bearer " + userinfo.access_token },
       })

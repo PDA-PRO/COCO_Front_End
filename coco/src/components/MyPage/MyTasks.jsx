@@ -3,7 +3,6 @@ import "./MyPage.css";
 import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
-import fetchData from "../../api/fetchTask";
 import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import {
@@ -18,7 +17,7 @@ import { BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
 
-export const MyTasks = () => {
+export const MyTasks = ({ props }) => {
   const userInfo = useAppSelector((state) => state.loginState);
 
   return (
@@ -34,13 +33,7 @@ export const MyTasks = () => {
         </div>
 
         <Suspense fallback={<Spinner />}>
-          <GetProblems
-            resource={fetchData(
-              `http://127.0.0.1:8000/mytasks/${userInfo.id}`,
-              {
-                headers: { Authorization: "Bearer " + userInfo.access_token },
-              }
-            )} user={userInfo}/>
+          <GetProblems resource={props} user={userInfo} />
         </Suspense>
       </div>
     </div>
@@ -48,7 +41,7 @@ export const MyTasks = () => {
 };
 
 const GetProblems = ({ resource }) => {
-  const problemList = resource.read();
+  const problemList = resource;
   const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
@@ -70,7 +63,7 @@ const GetProblems = ({ resource }) => {
   return (
     <>
       {problemList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-        return <MyTasksBox info={e} key={e.id}/>;
+        return <MyTasksBox info={e} key={e.id} />;
       })}
       <div
         className="leftBottom"

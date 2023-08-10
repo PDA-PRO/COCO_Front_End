@@ -22,6 +22,7 @@ import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import CodeMirror from "@uiw/react-codemirror";
+import { API } from "api/config";
 
 export const BoardDetail = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -33,7 +34,9 @@ export const BoardDetail = () => {
       <Header />
       <Suspense fallback={<Loader />}>
         <GetBoardDetail
-          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}?user_id=`+userInfo.id)}
+          resource={fetchData(API.BOARD + path.at(-1), {
+            params: { user_id: userInfo.id },
+          })}
           userInfo={userInfo}
           key={path.at(-1)}
         />
@@ -43,7 +46,7 @@ export const BoardDetail = () => {
   );
 };
 
-const GetBoardDetail = ({ resource,userInfo }) => {
+const GetBoardDetail = ({ resource, userInfo }) => {
   const detail = resource.read(); //api fetch 결과
   const navigate = useNavigate();
   const [write, setWrite] = useState(false);
@@ -101,7 +104,7 @@ const GetBoardDetail = ({ resource,userInfo }) => {
     }
     axios
       .patch(
-        "http://127.0.0.1:8000/board/likes/",
+        API.BAORDLIKE,
         {
           user_id: userInfo.id,
           board_id: detail.id,
@@ -119,12 +122,12 @@ const GetBoardDetail = ({ resource,userInfo }) => {
   const onDeleteHandler = () => {
     axios
       .delete(
-        "http://127.0.0.1:8000/board/",
+        API.BOARD,
 
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
-          params:{
-            board_id: detail.id
+          params: {
+            board_id: detail.id,
           },
         }
       )
@@ -210,7 +213,7 @@ const GetBoardDetail = ({ resource,userInfo }) => {
             <div className="BDTxt">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: detail.context
+                  __html: detail.context,
                 }}
               />
             </div>
@@ -243,12 +246,7 @@ const GetBoardDetail = ({ resource,userInfo }) => {
               )}
 
               {detail.comments_datail.map((e) => {
-                return (
-                  <Comments
-                    props={e}
-                    key={e.id}
-                  />
-                );
+                return <Comments props={e} key={e.id} />;
               })}
             </div>
           </div>

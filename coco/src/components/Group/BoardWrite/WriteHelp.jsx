@@ -10,6 +10,7 @@ import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
 
 export const WriteHelp = ({ title, room_id }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -36,13 +37,13 @@ export const WriteHelp = ({ title, room_id }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/room/question/",
+          API.ROOMQUESTION,
           {
             room_id: room_id,
             title: title,
             question: htmlString,
             code: code,
-            writer: userInfo.id
+            writer: userInfo.id,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

@@ -7,6 +7,7 @@ import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { API } from "api/config";
 
 axios.defaults.withCredentials = true;
 
@@ -44,7 +45,7 @@ export const SignUp = () => {
       return alert("아이디를 입력하세요");
     } else {
       axios
-        .get("http://127.0.0.1:8000/checkids", {
+        .get(API.CHECKID, {
           params: {
             id: id,
           },
@@ -103,7 +104,7 @@ export const SignUp = () => {
         return alert("비밀번호가 일치하지 않습니다.");
       } else {
         axios
-          .post("http://127.0.0.1:8000/signup", {
+          .post(API.SIGNUP, {
             name: name,
             id: id,
             pw: pw,

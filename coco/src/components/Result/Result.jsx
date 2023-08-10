@@ -10,6 +10,7 @@ import styled from "styled-components";
 import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
+import { API } from "api/config";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export const Result = (code) => {
       <Header />
       <Suspense fallback={<Spinner />}>
         <ResultBox
-          resource={fetchData(`http://127.0.0.1:8000/result/${num}`, {
+          resource={fetchData(API.RESULT + num, {
             headers: { Authorization: "Bearer " + userInfo.access_token },
           })}
           info={locate.state.info}

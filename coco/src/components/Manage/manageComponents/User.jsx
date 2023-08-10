@@ -5,6 +5,7 @@ import { HiUserPlus, HiUserMinus } from "react-icons/hi2";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
 
 export const User = () => {
   const [page, setPage] = useState(1);
@@ -18,7 +19,7 @@ export const User = () => {
 
   useEffect(() => {
     Promise.all([
-      axios.get(`http://127.0.0.1:8000/manage/user/`, {
+      axios.get(API.MANAGEUSER, {
         params: {
           size: 10,
           page: page,
@@ -26,7 +27,7 @@ export const User = () => {
           role: 0,
         },
       }),
-      axios.get(`http://127.0.0.1:8000/manage/manager/`),
+      axios.get(API.MANAGEMANAGER),
     ]).then((value) => {
       let userData = value[0].data;
       let managerData = value[1].data;
@@ -97,7 +98,7 @@ export const User = () => {
 const UserList = ({ userList, page, setPage, setReload, setLoading }) => {
   const addMananger = (user_id) => {
     axios
-      .patch("http://127.0.0.1:8000/manage/role/", {
+      .patch(API.MANAGEROLE, {
         id: user_id,
         role: 1,
       })
@@ -154,7 +155,7 @@ const Managers = ({ managerList, setReload, setLoading }) => {
   const managers = managerList;
   const minusMananger = (user_id) => {
     axios
-      .patch("http://127.0.0.1:8000/manage/role/", {
+      .patch(API.MANAGEROLE, {
         id: user_id,
         role: 0,
       })

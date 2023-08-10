@@ -10,6 +10,7 @@ import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -38,7 +39,7 @@ export const Help = ({ title }) => {
       const range = editor.getSelection();
       axios
         .post(
-          "http://localhost:8000/image/upload-temp",
+          API.IMAGEUPLOAD,
           {
             file: file, // 파일
           },
@@ -105,7 +106,7 @@ export const Help = ({ title }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/board/",
+          API.BOARD,
           {
             user_id: userInfo.id,
             title: title,

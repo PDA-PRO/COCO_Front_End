@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAppSelector } from "../../../../app/store";
 import { useNavigate } from "react-router-dom";
+import { API } from "api/config";
 
 export const WriteComment = ({ commentShoot }) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -28,7 +29,7 @@ export const WriteComment = ({ commentShoot }) => {
       path = path.split("/");
       axios
         .post(
-          "http://127.0.0.1:8000/board/comment/",
+          API.COMMENT,
           {
             user_id: userInfo.id,
             context: context,

@@ -11,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
+import { API } from "api/config";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
@@ -36,12 +37,12 @@ export const FastWrite = () => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/board/",
+          API.BOARD,
           {
             user_id: userInfo.id,
             title: title,
             context: quillValue,
-            category: 3
+            category: 3,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

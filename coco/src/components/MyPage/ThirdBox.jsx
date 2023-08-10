@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API } from "api/config";
 
 export const ThirdBox = (props) => {
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ export const ThirdBox = (props) => {
     const result = window.confirm("게시글을 삭제하시겠습니까?");
     if (result === true) {
       axios
-        .post("http://127.0.0.1:8000/delete_myboard/", {
+        .post(API.DELETEMYBOARD, {
           board_id: e,
         })
         .then((res) => {

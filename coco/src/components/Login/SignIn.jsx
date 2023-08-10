@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import qs from "qs";
 import jwtdecode from "../../app/jwtdecode";
 import Form from "react-bootstrap/Form";
+import { API } from "api/config";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -42,15 +43,18 @@ export const SignIn = () => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/login?autologin=" + autologin,
-          qs.stringify({
-            grant_type: "",
-            username: id,
-            password: pw,
-            scope: "",
-            client_id: "",
-            client_secret: "",
-          })
+          API.LOGIN,
+          qs.stringify(
+            {
+              grant_type: "",
+              username: id,
+              password: pw,
+              scope: "",
+              client_id: "",
+              client_secret: "",
+            },
+            { params: { autologin: autologin } }
+          )
         )
         .then(function (response) {
           if (response.status == 200) {
@@ -162,7 +166,7 @@ const FindIdModal = (props) => {
 
   const idHandler = () => {
     axios
-      .get("http://127.0.0.1:8000/findid", {
+      .get(API.FINDID, {
         params: {
           name: nameRef.current.value,
           email: emailRef.current.value,
@@ -227,7 +231,7 @@ const FindEmailModal = (props) => {
     if (pwRef.current.value == pw2Ref.current.value) {
       axios
         .patch(
-          "http://127.0.0.1:8000/pw/",
+          API.PWUPDATE,
           {},
           {
             params: {

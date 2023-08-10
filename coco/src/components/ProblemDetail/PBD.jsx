@@ -80,13 +80,13 @@ const GetDetail = ({ resource }) => {
     axios
       .post(
         API.MYTASK,
-        {
-          user_id: userInfo.id,
-          task_id: task_id,
-          solved: 0,
-        },
+        {},
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          params: {
+            user_id: userInfo.id,
+            task_id: task_id,
+          },
         }
       )
       .then((res) => {

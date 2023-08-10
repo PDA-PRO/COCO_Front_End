@@ -83,6 +83,7 @@ export const MyPage = () => {
                       Authorization: "Bearer " + userInfo.access_token,
                     },
                   })}
+                  userinfo={userInfo}
                 />
               </Suspense>
               <h2>
@@ -125,9 +126,9 @@ const GetSecond = ({ resource }) => {
   return <>{<SecondBox props={res} key={res.id} />}</>;
 };
 
-const GetThird = ({ resource }) => {
+const GetThird = ({ resource, userinfo }) => {
   const res = resource.read();
-  return <>{<ThirdBox props={res} key={res.id} />}</>;
+  return <>{<ThirdBox props={res} key={res.id} userinfo={userinfo} />}</>;
 };
 
 const GetMyTasks = ({ resource }) => {

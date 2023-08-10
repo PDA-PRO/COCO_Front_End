@@ -16,6 +16,7 @@ import { GoCheck, GoX, GoDash } from "react-icons/go";
 import { BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
+import { API } from "api/config";
 
 export const MyTasks = ({ props }) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -94,16 +95,13 @@ export const MyTasksBox = (info) => {
 
   const deleteTask = (e) => {
     axios
-      .post(
-        "http://127.0.0.1:8000/delete_mytask",
-        {
+      .delete(API.MYTASK, {
+        params: {
           user_id: userInfo.id,
           task_id: e,
         },
-        {
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-        }
-      )
+        headers: { Authorization: "Bearer " + userInfo.access_token },
+      })
       .then((res) => {
         if (res.data === false) {
           alert("내 문제집에서 삭제하지 못했습니다");

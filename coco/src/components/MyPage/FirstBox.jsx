@@ -89,13 +89,14 @@ export const FirstBox = (props) => {
     } else {
       axios
         .post(
-          API.CHANGEEMAIL,
-          {
-            user_id: props.props.id,
-            new_info: email,
-          },
+          API.EMAILUPDATE,
+          {},
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
+            params: {
+              id: props.props.id,
+              email: email,
+            },
           }
         )
         .then(function (response) {
@@ -125,13 +126,11 @@ export const FirstBox = (props) => {
       } else {
         axios
           .post(
-            API.CHANGEPW,
-            {
-              user_id: props.props.id,
-              new_info: inputNew,
-            },
+            API.PWUPDATE,
+            {},
             {
               headers: { Authorization: "Bearer " + userInfo.access_token },
+              params: { id: props.props.id, pw: inputNew },
             }
           )
           .then(function (response) {

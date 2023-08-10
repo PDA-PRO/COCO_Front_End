@@ -3,7 +3,6 @@ import "./MyPage.css";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
-  BsHeart,
   BsHeartFill,
   BsFillLightbulbFill,
   BsMegaphoneFill,
@@ -11,7 +10,6 @@ import {
   BsTrash,
   BsPencilSquare,
 } from "react-icons/bs";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API } from "api/config";
@@ -88,18 +86,18 @@ export const ThirdBox = (props) => {
   const onDeleteHandler = (e) => {
     const result = window.confirm("게시글을 삭제하시겠습니까?");
     if (result === true) {
+      console.log("왜 아무 소식이 없죠", props);
       axios
-        .post(API.DELETEMYBOARD, {
-          board_id: e,
+        .delete(API.BOARD, {
+          headers: {
+            Authorization: "Bearer " + props.userinfo.access_token,
+          },
+          params: {
+            board_id: e,
+          },
         })
         .then((res) => {
-          const result = res.data;
-          if (result === true) {
-            alert("게시글을 삭제하였습니다");
-          } else {
-            alert("게시글 삭제에 실패하였습니다");
-            // navigate("/group/");
-          }
+          alert("게시글을 삭제하였습니다");
         })
         .catch(() => {
           alert("게시글 삭제에 실패하였습니다");

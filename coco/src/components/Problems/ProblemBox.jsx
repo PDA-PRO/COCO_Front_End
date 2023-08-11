@@ -8,12 +8,15 @@ import {
   TiBatteryHigh,
   TiBatteryFull,
 } from "react-icons/ti";
+import { BsJournalPlus, BsJournalMinus } from "react-icons/bs";
 
-export const ProblemBox = (info) => {
+export const ProblemBox = ({ info, type, addProblems, deleteProblem }) => {
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
   };
+
+  const nothing = () => {};
 
   const setLevel = (e) => {
     switch (e) {
@@ -31,22 +34,50 @@ export const ProblemBox = (info) => {
   };
 
   return (
-    <div className="problemsBox" onClick={() => goDetail(info.info.id)}>
-      <h4>No.{info.info.id}</h4>
-      <h4>{info.info.title}</h4>
-      <h4>{setLevel(info.info.diff)}</h4>
+    <div
+      className={
+        type === 0
+          ? "problemsBox"
+          : type === 1
+          ? "problemsBox_type1"
+          : "problemsBox_type2"
+      }
+      onClick={() => {
+        type === 0 ? goDetail(info.id) : nothing();
+      }}
+    >
+      <h4>No.{info.id}</h4>
+      <h4
+        onClick={() => {
+          type !== 0 ? goDetail(info.id) : nothing();
+        }}
+      >
+        {info.title}
+      </h4>
+      <h4>{setLevel(info.diff)}</h4>
       <h4
         style={{
           color:
-            info.info.rate == 0
+            info.rate == 0
               ? "gray"
-              : info.info.rate >= 40
+              : info.rate >= 40
               ? "skyblue"
               : "rgb(218, 55, 55)",
         }}
       >
-        {info.info.rate}%
+        {info.rate}%
       </h4>
+      {type === 1 ? (
+        <h4 onClick={() => addProblems(info.id)}>
+          <BsJournalPlus size={23} color="purple" />
+        </h4>
+      ) : type === 2 ? (
+        <h4 onClick={() => deleteProblem(info.id)}>
+          <BsJournalMinus size={23} color="red" />
+        </h4>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

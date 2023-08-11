@@ -241,10 +241,15 @@ const MakeRoadMap = ({ resource }) => {
   const userID = userInfo.id;
 
   const info = resource.read();
+  const navigate = useNavigate();
+
+  const createRoadmap = (id) => {
+    navigate(`/room/createRoadmap/${id}`);
+  };
 
   if (info.leader === userID) {
     return (
-      <div id="he1">
+      <div id="he1" onClick={() => createRoadmap(path.at(-1))}>
         <PiFolderNotchPlusDuotone size={24} />
         <p>로드맵 추가하기</p>
       </div>

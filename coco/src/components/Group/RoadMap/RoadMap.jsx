@@ -18,11 +18,11 @@ const Road = (props) => {
   var solve = props.solve;
 
   var allTasks = data.tasks;
-  var tasksLength = allTasks.length - 1;
+  var tasksLength = allTasks.length;
   var converted = allTasks.filter((x) => solve.includes(x));
   console.log(converted);
   var cnt = converted.length;
-  var percentage = (cnt / tasksLength) * 100;
+  var percentage = ((cnt / tasksLength) * 100).toFixed(1);
   var date = data.last_modify.slice(0, 10);
 
   return (

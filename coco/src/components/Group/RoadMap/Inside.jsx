@@ -11,6 +11,7 @@ import { Loader } from "../../Loader/Loader";
 import { ProblemBox } from "../../Problems/ProblemBox";
 import Pagination from "@mui/material/Pagination";
 import { useMediaQuery } from "react-responsive";
+import axios from "axios";
 
 export const Inside = () => {
   const path = window.location.pathname.split("/");
@@ -45,6 +46,8 @@ const Content = ({ resource }) => {
 
   const navigate = useNavigate();
 
+  const path = window.location.pathname.split("/");
+
   const goMypage = (e) => {
     navigate(`/mypage/${e}`);
   };
@@ -75,6 +78,19 @@ const Content = ({ resource }) => {
       (problem) => problem === e
     );
     return idx !== -1 ? 1 : 0;
+  };
+
+  const deleteRoadmap = (e) => {
+    if (window.confirm("정말 ROADMAP을 삭제하시겠습니까?")) {
+      axios
+        .delete(`http://127.0.0.1:8000/room/roadmap/${path.at(-2)}`, {
+          params: { roadmap_id: path.at(-1) },
+        })
+        .then(() => {
+          alert(`ROADMAP이 삭제되었습니다.`);
+          navigate(`/room/${path.at(-2)}`);
+        });
+    }
   };
 
   return (
@@ -153,7 +169,11 @@ const Content = ({ resource }) => {
                 <p>로드맵 수정</p>
                 <MdConstruction size={20} />
               </div>
-              <div className="deleteRoadmap" style={{ marginTop: "1.5em" }}>
+              <div
+                className="deleteRoadmap"
+                style={{ marginTop: "1.5em" }}
+                onClick={() => deleteRoadmap(data.roadmap.id)}
+              >
                 <p>로드맵 삭제</p>
                 <BsTrash size={20} />
               </div>

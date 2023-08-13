@@ -184,11 +184,6 @@ export const GroupInfo = () => {
 
               {page == 1 ? (
                 <Suspense fallback={<Spinner />}>
-                  {/* <GroupBoard
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/room/board/${path.at(-1)}/`
-                    )}
-                  /> */}
                   <QA />
                 </Suspense>
               ) : (
@@ -226,10 +221,15 @@ const MakeRoadMap = ({ resource }) => {
   const userID = userInfo.id;
 
   const info = resource.read();
+  const navigate = useNavigate();
+
+  const createRoadmap = (id) => {
+    navigate(`/room/createRoadmap/${id}`);
+  };
 
   if (info.leader === userID) {
     return (
-      <div id="he1">
+      <div id="he1" onClick={() => createRoadmap(path.at(-1))}>
         <PiFolderNotchPlusDuotone size={24} />
         <p>로드맵 추가하기</p>
       </div>

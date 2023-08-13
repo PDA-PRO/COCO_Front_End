@@ -134,30 +134,13 @@ const BodyRight = ({ setFilter }) => {
   return (
     <>
       <div className="rightBox1">
-        <h4>문제 보기</h4>
-        <nav>
-          <label for="touch0">
-            <h3>
-              키워드
-              <span>
-                <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-              </span>
-            </h3>
-          </label>
-          <input type="checkbox" id="touch0" />
+        <div className="searchBar">
+          <input ref={keywordRef} type="text" placeholder="search" id="SV" />
+          <GoSearch size={23} color="rgb(98, 148, 255)" id="goSearch" />
+        </div>
 
-          <div className="slide">
-            <div className="searchBar">
-              <input
-                ref={keywordRef}
-                type="text"
-                placeholder="search"
-                id="SV"
-              />
-              <GoSearch size={23} color="rgb(98, 148, 255)" id="goSearch" />
-            </div>
-          </div>
-        </nav>
+        <h4>문제 보기</h4>
+
         <nav>
           <label for="touch">
             <h3>
@@ -285,7 +268,7 @@ const BodyRight = ({ setFilter }) => {
                 onChange={(e) => onRateHander(e.target.value)}
               />
               <h5>기본</h5>
-              <BsArrowDownRight size={22} color="red" />
+              <BsArrowDownRight size={22} color="green" />
             </div>
           </div>
         </nav>
@@ -308,10 +291,12 @@ const BodyRight = ({ setFilter }) => {
 const GetProblems = ({ resource, page, setPage }) => {
   const problemList = resource.read();
 
+  console.log(problemList);
+
   return (
     <>
       {problemList.tasks.map((e) => {
-        return <ProblemBox info={e} key={e.id} />;
+        return <ProblemBox info={e} key={e.id} type={0} />;
       })}
       <div className="leftBottom">
         <Pagination

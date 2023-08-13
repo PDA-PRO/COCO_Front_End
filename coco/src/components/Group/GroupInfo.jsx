@@ -189,11 +189,6 @@ export const GroupInfo = () => {
 
               {page == 1 ? (
                 <Suspense fallback={<Spinner />}>
-                  {/* <GroupBoard
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/room/board/${path.at(-1)}/`
-                    )}
-                  /> */}
                   <QA />
                 </Suspense>
               ) : (

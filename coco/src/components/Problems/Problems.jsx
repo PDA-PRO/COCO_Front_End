@@ -291,6 +291,8 @@ const BodyRight = ({ setFilter }) => {
 const GetProblems = ({ resource, page, setPage }) => {
   const problemList = resource.read();
 
+  console.log(problemList);
+
   return (
     <>
       {problemList.tasks.map((e) => {

@@ -9,8 +9,15 @@ import {
   TiBatteryFull,
 } from "react-icons/ti";
 import { BsJournalPlus, BsJournalMinus } from "react-icons/bs";
+import { AiOutlineCheckCircle, AiOutlineMinusCircle } from "react-icons/ai";
 
-export const ProblemBox = ({ info, type, addProblems, deleteProblem }) => {
+export const ProblemBox = ({
+  info,
+  type,
+  addProblems,
+  deleteProblem,
+  check,
+}) => {
   const navigate = useNavigate();
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
@@ -40,7 +47,9 @@ export const ProblemBox = ({ info, type, addProblems, deleteProblem }) => {
           ? "problemsBox"
           : type === 1
           ? "problemsBox_type1"
-          : "problemsBox_type2"
+          : type === 2
+          ? "problemsBox_type2"
+          : "problemsBox_type3"
       }
       onClick={() => {
         type === 0 ? goDetail(info.id) : nothing();
@@ -74,6 +83,14 @@ export const ProblemBox = ({ info, type, addProblems, deleteProblem }) => {
       ) : type === 2 ? (
         <h4 onClick={() => deleteProblem(info.id)}>
           <BsJournalMinus size={23} color="red" />
+        </h4>
+      ) : type === 3 ? (
+        <h4>
+          {check === 1 ? (
+            <AiOutlineCheckCircle size={23} color="#1876FB" />
+          ) : (
+            <AiOutlineMinusCircle size={23} color="lightgray" />
+          )}
         </h4>
       ) : (
         <></>

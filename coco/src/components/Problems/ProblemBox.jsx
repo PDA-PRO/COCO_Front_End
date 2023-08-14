@@ -52,13 +52,13 @@ export const ProblemBox = ({
           : "problemsBox_type3"
       }
       onClick={() => {
-        type === 0 ? goDetail(info.id) : nothing();
+        type === 0 || type === 3 ? goDetail(info.id) : nothing();
       }}
     >
       <h4>No.{info.id}</h4>
       <h4
         onClick={() => {
-          type !== 0 ? goDetail(info.id) : nothing();
+          type === 1 && type === 2 ? goDetail(info.id) : nothing();
         }}
       >
         {info.title}

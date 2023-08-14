@@ -19,6 +19,9 @@ export const ProblemBox = ({
   check,
 }) => {
   const navigate = useNavigate();
+  {
+    /* 문제 이동 새 페이지로 열어서 */
+  }
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
   };
@@ -58,7 +61,7 @@ export const ProblemBox = ({
       <h4>No.{info.id}</h4>
       <h4
         onClick={() => {
-          type === 1 && type === 2 ? goDetail(info.id) : nothing();
+          type === 1 || type === 2 ? goDetail(info.id) : nothing();
         }}
       >
         {info.title}

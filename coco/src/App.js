@@ -113,14 +113,7 @@ function App() {
           <Route path="/makeroom" element={<MakeGroup />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
-          <Route
-            path="/result/:id"
-            element={
-              <AuthRouter role={0}>
-                <Result />
-              </AuthRouter>
-            }
-          />
+          <Route path="/result/:id" element={<Result />} />
           <Route path="/board" element={<Board />} />
           <Route path="/room/qa/write" element={<GroupBoard />} />
           <Route path="/room/roadmap/:room_id/:id" element={<Inside />} />

@@ -125,6 +125,7 @@ const Content = ({ resource }) => {
       </div>
       {/* 왼쪽에 문제 오른쪽에 유저리스트 */}
       <div className="grid-body">
+        {/* 문제 */}
         <div className="insideTasks">
           <div className="taskHead">
             <p>No</p>
@@ -147,6 +148,7 @@ const Content = ({ resource }) => {
             />
           </div>
         </div>
+        {/* 유저 */}
         <div className="insideUsers">
           <div className="userHead">
             <p>Name</p>

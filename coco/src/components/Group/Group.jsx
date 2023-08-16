@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { AllGroupBox } from "./AllGroupBox";
 import { TbCrown } from "react-icons/tb";
+import { API } from "api/config";
 
 export const Group = () => {
   const navigate = useNavigate();
@@ -74,9 +75,7 @@ export const Group = () => {
                 </div>
 
                 <Suspense fallback={<Spinner />}>
-                  <GetGroups
-                    resource={fetchData(`http://127.0.0.1:8000/room/`)}
-                  />
+                  <GetGroups resource={fetchData(API.ROOM)} />
                 </Suspense>
               </div>
             </div>
@@ -106,9 +105,7 @@ export const Group = () => {
                 ) : (
                   <Suspense fallback={<Spinner />}>
                     <GetMyGroups
-                      resource={fetchData(
-                        `http://127.0.0.1:8000/room/myroom/${userInfo.id}`
-                      )}
+                      resource={fetchData(API.ROOMMYROOM + userInfo.id)}
                     />
                   </Suspense>
                 )}

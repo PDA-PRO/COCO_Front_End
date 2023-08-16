@@ -12,6 +12,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { useLocation, useNavigate } from "react-router-dom";
+import { API } from "api/config";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");
@@ -29,8 +30,8 @@ export const MakeGroup = () => {
 
   const onSearchHandler = (info) => {
     axios
-      .get("http://127.0.0.1:8000/room/search_user/", {
-        params:{user_id: info},
+      .get(API.ROOMSEARCHUSER, {
+        params: { user_id: info },
       })
       .then((res) => {
         setUsers(res.data);
@@ -42,7 +43,7 @@ export const MakeGroup = () => {
       alert("스터디룸명과 스터디룸 설명을 모두 작성해주세요");
     } else {
       axios
-        .post("http://127.0.0.1:8000/room/", {
+        .post(API.ROOM, {
           name: name,
           desc: desc,
           leader: members[0],

@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
+import { API } from "api/config";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -34,7 +35,7 @@ export const Free = ({ title, cate }) => {
       const range = editor.getSelection();
       axios
         .post(
-          "http://localhost:8000/image/upload-temp",
+          API.IMAGEUPLOAD,
           {
             file: file, // 파일
           },
@@ -101,12 +102,12 @@ export const Free = ({ title, cate }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/board/",
+          API.BOARD,
           {
             user_id: userInfo.id,
             title: title,
             context: quillValue,
-            category: cate
+            category: cate,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

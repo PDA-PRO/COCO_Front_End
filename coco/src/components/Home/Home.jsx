@@ -8,12 +8,12 @@ import { Block } from "./Block";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftjsToHtml from "draftjs-to-html";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { HomeGraph } from "./HomeGraph";
 import { DiffGraph } from "./DiffGraph";
 import { useMediaQuery } from "react-responsive";
 import { Loader } from "../Loader/Loader";
+import { API } from "api/config";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -58,14 +58,11 @@ export const Home = () => {
 
               <Suspense fallback={<Spinner />}>
                 <MyGraph
-                  resource={fetchData(
-                    `http://127.0.0.1:8000/my_status/${userInfo.id}/`,
-                    {
-                      headers: {
-                        Authorization: "Bearer " + userInfo.access_token,
-                      },
-                    }
-                  )}
+                  resource={fetchData(API.MYSTATUS + userInfo.id, {
+                    headers: {
+                      Authorization: "Bearer " + userInfo.access_token,
+                    },
+                  })}
                 />
               </Suspense>
             </div>
@@ -87,9 +84,7 @@ export const Home = () => {
 
           <div className="notice">
             <Suspense fallback={<Loader />}>
-              <GetNotice
-                resource={fetchData("http://127.0.0.1:8000/manage/notice")}
-              />
+              <GetNotice resource={fetchData(API.NOTICE)} />
             </Suspense>
           </div>
         </div>

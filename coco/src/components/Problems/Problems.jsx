@@ -11,7 +11,6 @@ import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 import { useMediaQuery } from "react-responsive";
 import Select from "react-select";
-
 import {
   TiBatteryCharge,
   TiBatteryLow,
@@ -22,6 +21,7 @@ import {
 import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
+import { API } from "api/config";
 
 export const Problems = () => {
   const Large = useMediaQuery({ minWidth: 1100 });
@@ -50,7 +50,7 @@ export const Problems = () => {
               </div>
               <Suspense fallback={<Spinner />}>
                 <GetProblems
-                  resource={fetchData("http://127.0.0.1:8000/task/", {
+                  resource={fetchData(API.TASK, {
                     params: {
                       keyword: filter.keyword,
                       diff: filter.diff,
@@ -84,7 +84,7 @@ const BodyRight = ({ setFilter }) => {
   const keywordRef = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/task/category").then((value) => {
+    axios.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });
@@ -134,30 +134,13 @@ const BodyRight = ({ setFilter }) => {
   return (
     <>
       <div className="rightBox1">
-        <h4>문제 보기</h4>
-        <nav>
-          <label for="touch0">
-            <h3>
-              키워드
-              <span>
-                <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-              </span>
-            </h3>
-          </label>
-          <input type="checkbox" id="touch0" />
+        <div className="searchBar">
+          <input ref={keywordRef} type="text" placeholder="search" id="SV" />
+          <GoSearch size={23} color="rgb(98, 148, 255)" id="goSearch" />
+        </div>
 
-          <div className="slide">
-            <div className="searchBar">
-              <input
-                ref={keywordRef}
-                type="text"
-                placeholder="search"
-                id="SV"
-              />
-              <GoSearch size={23} color="rgb(98, 148, 255)" id="goSearch" />
-            </div>
-          </div>
-        </nav>
+        <h4>문제 보기</h4>
+
         <nav>
           <label for="touch">
             <h3>
@@ -285,7 +268,7 @@ const BodyRight = ({ setFilter }) => {
                 onChange={(e) => onRateHander(e.target.value)}
               />
               <h5>기본</h5>
-              <BsArrowDownRight size={22} color="red" />
+              <BsArrowDownRight size={22} color="green" />
             </div>
           </div>
         </nav>
@@ -308,10 +291,12 @@ const BodyRight = ({ setFilter }) => {
 const GetProblems = ({ resource, page, setPage }) => {
   const problemList = resource.read();
 
+  console.log(problemList);
+
   return (
     <>
       {problemList.tasks.map((e) => {
-        return <ProblemBox info={e} key={e.id} />;
+        return <ProblemBox info={e} key={e.id} type={0} />;
       })}
       <div className="leftBottom">
         <Pagination

@@ -14,6 +14,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
 
 export const QA = () => {
   var path = window.location.pathname;
@@ -44,11 +45,7 @@ export const QA = () => {
         <div className="qContents">
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
             <Suspense fallback={<Spinner />}>
-              <Question
-                resource={fetchData(
-                  `http://127.0.0.1:8000/room/question/${path.at(-1)}/`
-                )}
-              />
+              <Question resource={fetchData(API.ROOMQUESTION + path.at(-1))} />
             </Suspense>
           </Accordion>
         </div>
@@ -80,7 +77,7 @@ const Question = ({ resource }) => {
             <div className="Head-Ac">
               <Accordion.Header>
                 Q :{" "}
-                <div 
+                <div
                   dangerouslySetInnerHTML={{
                     __html: e.question.title,
                   }}
@@ -96,7 +93,8 @@ const Question = ({ resource }) => {
             </div>
 
             <Accordion.Body>
-              <div className="q_content"
+              <div
+                className="q_content"
                 dangerouslySetInnerHTML={{
                   __html: e.question.question,
                 }}
@@ -140,10 +138,10 @@ const MakeAnswer = ({ room_id, q_id }) => {
   }, []);
 
   const uploadAnswer = () => {
-    console.log(q_id)
+    console.log(q_id);
     axios
       .post(
-        "http://127.0.0.1:8000/room/answer",
+        API.ROOMANSWER,
         {
           room_id: room_id,
           q_id: q_id,

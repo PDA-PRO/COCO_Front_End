@@ -1,9 +1,13 @@
 import React from "react";
 import "./RoadMap.css";
 import axios from "axios";
+import { Inside } from "./Inside";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const RoadMap = ({ resource }) => {
   const info = resource.read();
+
+  console.log(info);
   return (
     <div className="roadMap">
       {info.room_info.map((e) => {
@@ -18,12 +22,16 @@ const Road = (props) => {
   var solve = props.solve;
 
   var allTasks = data.tasks;
-  var tasksLength = allTasks.length - 1;
+  var tasksLength = allTasks.length;
   var converted = allTasks.filter((x) => solve.includes(x));
-  console.log(converted);
   var cnt = converted.length;
-  var percentage = (cnt / tasksLength) * 100;
+  var percentage = ((cnt / tasksLength) * 100).toFixed(1);
   var date = data.last_modify.slice(0, 10);
+
+  var path = window.location.pathname;
+  path = path.split("/");
+
+  const navigate = useNavigate();
 
   return (
     <div
@@ -33,6 +41,7 @@ const Road = (props) => {
           ? { borderColor: "#afaefa" }
           : { borderColor: "lightgray" }
       }
+      onClick={() => navigate(`/room/roadmap/${path.at(-1)}/${data.id}`)}
     >
       <h4>{data.name}</h4>
       <p style={{ color: "gray" }}>{data.desc}</p>

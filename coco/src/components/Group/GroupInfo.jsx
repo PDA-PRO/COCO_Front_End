@@ -23,6 +23,7 @@ import { MdClear } from "react-icons/md";
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import { QA } from "./QA/QA";
 import { RoadMap } from "./RoadMap/RoadMap";
+import { API } from "api/config";
 
 const InviteNewMember = (props) => {
   const [search, setSearch] = useState("");
@@ -35,7 +36,7 @@ const InviteNewMember = (props) => {
   const onSubmitHandler = (e) => {
     console.log(search);
     axios
-      .get("http://127.0.0.1:8000/room/search_user/", {
+      .get(API.ROOMSEARCHUSER, {
         params: { user_id: search },
       })
       .then((res) => {
@@ -49,7 +50,7 @@ const InviteNewMember = (props) => {
   const onInviteHanlder = (id) => {
     console.log(id);
     axios
-      .put("http://127.0.0.1:8000/room/member/", {
+      .put(API.ROOMMEMBER, {
         room_id: props.group_id,
         user_id: [id],
       })
@@ -152,9 +153,7 @@ export const GroupInfo = () => {
       <div className="groupInfo">
         <div className="gi">
           <Suspense fallback={<Spinner />}>
-            <GiHeader
-              resource={fetchData(`http://127.0.0.1:8000/room/${path.at(-1)}/`)}
-            />
+            <GiHeader resource={fetchData(API.ROOM + path.at(-1))} />
           </Suspense>
 
           <div id="gi-B">
@@ -178,32 +177,21 @@ export const GroupInfo = () => {
                   </div>
                 ) : (
                   <Suspense fallback={<Spinner />}>
-                    <MakeRoadMap
-                      resource={fetchData(
-                        `http://127.0.0.1:8000/room/${path.at(-1)}/`
-                      )}
-                    />
+                    <MakeRoadMap resource={fetchData(API.ROOM + path.at(-1))} />
                   </Suspense>
                 )}
               </div>
 
               {page == 1 ? (
                 <Suspense fallback={<Spinner />}>
-                  {/* <GroupBoard
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/room/board/${path.at(-1)}/`
-                    )}
-                  /> */}
                   <QA />
                 </Suspense>
               ) : (
                 <Suspense fallback={<Spinner />}>
                   <RoadMap
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/room/roadmap/${path.at(
-                        -1
-                      )}?user_id=${userID}`
-                    )}
+                    resource={fetchData(API.ROOMROADMAP + path.at(-1), {
+                      params: { user_id: userID },
+                    })}
                   />
                 </Suspense>
               )}
@@ -211,19 +199,11 @@ export const GroupInfo = () => {
 
             <div className="gi-ML">
               <Suspense fallback={<Spinner />}>
-                <MemberList
-                  resource={fetchData(
-                    `http://127.0.0.1:8000/room/${path.at(-1)}/`
-                  )}
-                />
+                <MemberList resource={fetchData(API.ROOM + path.at(-1))} />
               </Suspense>
 
               <Suspense fallback={<Spinner />}>
-                <LeaveOrDelete
-                  resource={fetchData(
-                    `http://127.0.0.1:8000/room/${path.at(-1)}/`
-                  )}
-                />
+                <LeaveOrDelete resource={fetchData(API.ROOM + path.at(-1))} />
               </Suspense>
             </div>
           </div>
@@ -241,10 +221,15 @@ const MakeRoadMap = ({ resource }) => {
   const userID = userInfo.id;
 
   const info = resource.read();
+  const navigate = useNavigate();
+
+  const createRoadmap = (id) => {
+    navigate(`/room/createRoadmap/${id}`);
+  };
 
   if (info.leader === userID) {
     return (
-      <div id="he1">
+      <div id="he1" onClick={() => createRoadmap(path.at(-1))}>
         <PiFolderNotchPlusDuotone size={24} />
         <p>로드맵 추가하기</p>
       </div>
@@ -362,8 +347,10 @@ const LeaveOrDelete = ({ resource }) => {
     let val = window.confirm("정말 스터디룸을 삭제하시겠습니까?");
     if (val === true) {
       axios // 여기 api 주소만 바꾸면 끝
-        .post("http://127.0.0.1:8000/group/delete_group/", {
-          group_id: group_id,
+        .delete(API.ROOM, {
+          params: {
+            room_id: group_id,
+          },
         })
         .then((res) => {
           console.log(res.data);

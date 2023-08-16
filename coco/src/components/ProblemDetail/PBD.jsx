@@ -21,6 +21,7 @@ import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
 import { IoMdPaperPlane } from "react-icons/io";
+import { API } from "api/config";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -28,9 +29,7 @@ export const PBD = () => {
   return (
     <>
       <Suspense fallback={<>문제가 존재하지 않습니다</>}>
-        <GetDetail
-          resource={fetchData(`http://127.0.0.1:8000/task/${path.at(-1)}/`)}
-        />
+        <GetDetail resource={fetchData(API.TASK + path.at(-1))} />
       </Suspense>
     </>
   );
@@ -54,7 +53,7 @@ const GetDetail = ({ resource }) => {
     Promise.resolve().then(
       axios
         .post(
-          "http://127.0.0.1:8000/submission",
+          API.SUBMISSION,
           {
             taskid: detail.id,
             userid: userInfo.id,
@@ -80,14 +79,14 @@ const GetDetail = ({ resource }) => {
     console.log(task_id);
     axios
       .post(
-        "http://127.0.0.1:8000/mytask",
-        {
-          user_id: userInfo.id,
-          task_id: task_id,
-          solved: 0,
-        },
+        API.MYTASK,
+        {},
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          params: {
+            user_id: userInfo.id,
+            task_id: task_id,
+          },
         }
       )
       .then((res) => {

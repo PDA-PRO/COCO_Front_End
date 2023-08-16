@@ -3,14 +3,13 @@ import "./MyPage.css";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useRef } from "react";
-import { IoMdSchool } from "react-icons/io";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { IoMailOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { FaRunning } from "react-icons/fa";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../../app/store";
+import { API } from "api/config";
 
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -28,7 +27,7 @@ export const FirstBox = (props) => {
   const saveFileImage = (e) => {
     axios
       .post(
-        "http://localhost:8000/image/upload-temp",
+        API.IMAGEUPLOAD,
         {
           file: e.target.files[0],
         },
@@ -64,7 +63,7 @@ export const FirstBox = (props) => {
   // 파일 삭제
   const deleteFileImage = () => {
     axios
-      .delete("http://localhost:8000/image/delete-image", {
+      .delete(API.IMAGEDELETE, {
         headers: {
           Authorization: "Bearer " + userInfo.access_token,
         },
@@ -90,13 +89,14 @@ export const FirstBox = (props) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/changeEmail/",
-          {
-            user_id: props.props.id,
-            new_info: email,
-          },
+          API.EMAILUPDATE,
+          {},
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
+            params: {
+              id: props.props.id,
+              email: email,
+            },
           }
         )
         .then(function (response) {
@@ -126,13 +126,11 @@ export const FirstBox = (props) => {
       } else {
         axios
           .post(
-            "http://127.0.0.1:8000/changePW/",
-            {
-              user_id: props.props.id,
-              new_info: inputNew,
-            },
+            API.PWUPDATE,
+            {},
             {
               headers: { Authorization: "Bearer " + userInfo.access_token },
+              params: { id: props.props.id, pw: inputNew },
             }
           )
           .then(function (response) {
@@ -153,10 +151,7 @@ export const FirstBox = (props) => {
           <img
             onError={onErrorImg}
             src={
-              "http://localhost:8000/image/download/4/" +
-              userInfo.id +
-              ".jpg?time=" +
-              fileImage
+              API.IMAGEDOWNLOAD + "4/" + userInfo.id + ".jpg?time=" + fileImage
             }
             className="userImg"
           />

@@ -9,6 +9,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
+import { API } from "api/config";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -18,9 +19,7 @@ export const Notice = () => {
       <h2 className="mTi">NOTICE</h2>
       <div className="m-upload">
         <Suspense fallback={<Spinner />}>
-          <GetNotice
-            resource={fetchData("http://127.0.0.1:8000/manage/notice")}
-          />
+          <GetNotice resource={fetchData(API.NOTICE)} />
         </Suspense>
       </div>
     </>
@@ -52,7 +51,7 @@ const GetNotice = ({ resource }) => {
       const range = editor.getSelection();
       axios
         .post(
-          "http://localhost:8000/image/upload-temp",
+          API.IMAGEUPLOAD,
           {
             file: file, // 파일
           },
@@ -115,7 +114,7 @@ const GetNotice = ({ resource }) => {
 
   const onSubmitHandler = () => {
     axios
-      .put("http://127.0.0.1:8000/manage/notice/", {
+      .put(API.NOTICE, {
         html: quillValue,
       })
       .then(function (res) {

@@ -9,10 +9,10 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftjsToHtml from "draftjs-to-html";
 import Button from "react-bootstrap/Button";
 import { GoPencil } from "react-icons/go";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
+import { API } from "api/config";
 
 export const ModifyBoard = () => {
   var path = window.location.pathname;
@@ -22,7 +22,7 @@ export const ModifyBoard = () => {
       <Header />
       <Suspense fallback={<Spinner />}>
         <GetBoardDetail
-          resource={fetchData(`http://127.0.0.1:8000/board/${path.at(-1)}`)}
+          resource={fetchData(API.BOARD + path.at(-1))}
           key={path.at(-1)}
         />
       </Suspense>
@@ -41,10 +41,15 @@ const GetBoardDetail = ({ resource }) => {
           <h2>글쓰기</h2>
         </div>
         {detail.cateogry == 2 ? (
-          <Update boardId = {detail.id} title={detail.title} contents={detail.context} cateogry={2} />
+          <Update
+            boardId={detail.id}
+            title={detail.title}
+            contents={detail.context}
+            cateogry={2}
+          />
         ) : (
           <Update
-          boardId = {detail.id} 
+            boardId={detail.id}
             title={detail.title}
             contents={detail.context}
             category={detail.category}
@@ -56,7 +61,7 @@ const GetBoardDetail = ({ resource }) => {
 };
 
 const Update = ({ boardId, title, contents, category }) => {
-    console.log(category);
+  console.log(category);
   const [newTitle, setNewTitle] = useState(`${title}`); // 제목
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [htmlString, setHtmlString] = useState(""); //바뀔 내용(html로 저장)
@@ -86,13 +91,13 @@ const Update = ({ boardId, title, contents, category }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/update_board/",
+          API.BOARD,
           {
             board_id: boardId,
             user_id: userInfo.id,
             title: newTitle,
             context: htmlString,
-            category: category
+            category: category,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },

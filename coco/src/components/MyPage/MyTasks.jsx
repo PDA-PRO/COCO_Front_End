@@ -3,7 +3,6 @@ import "./MyPage.css";
 import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
-import fetchData from "../../api/fetchTask";
 import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import {
@@ -17,8 +16,9 @@ import { GoCheck, GoX, GoDash } from "react-icons/go";
 import { BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
+import { API } from "api/config";
 
-export const MyTasks = () => {
+export const MyTasks = ({ props }) => {
   const userInfo = useAppSelector((state) => state.loginState);
 
   return (
@@ -34,13 +34,7 @@ export const MyTasks = () => {
         </div>
 
         <Suspense fallback={<Spinner />}>
-          <GetProblems
-            resource={fetchData(
-              `http://127.0.0.1:8000/mytasks/${userInfo.id}`,
-              {
-                headers: { Authorization: "Bearer " + userInfo.access_token },
-              }
-            )} user={userInfo}/>
+          <GetProblems resource={props} user={userInfo} />
         </Suspense>
       </div>
     </div>
@@ -48,7 +42,7 @@ export const MyTasks = () => {
 };
 
 const GetProblems = ({ resource }) => {
-  const problemList = resource.read();
+  const problemList = resource;
   const maxPage = Math.ceil(problemList.length / 10);
   const [page, setPage] = useState(1);
   const handlePage = (event) => {
@@ -70,7 +64,7 @@ const GetProblems = ({ resource }) => {
   return (
     <>
       {problemList.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
-        return <MyTasksBox info={e} key={e.id}/>;
+        return <MyTasksBox info={e} key={e.id} />;
       })}
       <div
         className="leftBottom"
@@ -101,16 +95,13 @@ export const MyTasksBox = (info) => {
 
   const deleteTask = (e) => {
     axios
-      .post(
-        "http://127.0.0.1:8000/delete_mytask",
-        {
+      .delete(API.MYTASK, {
+        params: {
           user_id: userInfo.id,
           task_id: e,
         },
-        {
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-        }
-      )
+        headers: { Authorization: "Bearer " + userInfo.access_token },
+      })
       .then((res) => {
         if (res.data === false) {
           alert("내 문제집에서 삭제하지 못했습니다");

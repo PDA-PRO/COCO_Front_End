@@ -130,6 +130,92 @@
   font-weight: 600 !important;
 }
 
+.problemsBox_type1 {
+  border-bottom: 2px solid rgb(98, 148, 255);
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 11px 5px;
+  cursor: pointer;
+  background-color: rgb(248, 252, 255);
+}
+
+.problemsBox_type1:hover {
+  background-color: rgb(217, 238, 255);
+}
+
+.problemsBox_type1 h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.problemsBox_type1 h4:nth-child(1) {
+  width: 70px;
+  color: red;
+  font-weight: 600 !important;
+}
+
+.problemsBox_type2 {
+  border-bottom: 2px solid rgb(98, 255, 137);
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 11px 5px;
+  cursor: pointer;
+  /* background-color: rgb(248, 252, 255); */
+}
+
+.problemsBox_type2:hover {
+  background-color: rgb(238, 255, 242);
+}
+
+.problemsBox_type2 h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.problemsBox_type2 h4:nth-child(1) {
+  width: 70px;
+  color: red;
+  font-weight: 600 !important;
+}
+
+.problemsBox_type3 {
+  border-bottom: 1px solid lightgray;
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 11px 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  /* background-color: rgb(248, 252, 255); */
+}
+
+.problemsBox_type3:hover {
+  background-color: rgb(248, 248, 248);
+}
+
+.problemsBox_type3 h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.problemsBox_type3 h4:nth-child(1) {
+  width: 70px;
+  color: red;
+  font-weight: 600 !important;
+  padding-left: 15px;
+}
+
 .parentPC .proBody .BodyRight {
   grid-column: 2/3;
   display: flex;

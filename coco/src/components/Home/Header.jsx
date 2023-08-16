@@ -7,6 +7,7 @@ import { AiOutlineMenu, AiOutlineArrowDown } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
+import { API } from "api/config";
 
 export const Header = (props) => {
   const navigate = useNavigate();
@@ -107,7 +108,8 @@ export const Header = (props) => {
                 <div style={{ cursor: "pointer" }} className="login">
                   <img
                     src={
-                      "http://localhost:8000/image/download/4/" +
+                      API.IMAGEDOWNLOAD +
+                      "4/" +
                       userInfo.id +
                       ".jpg?time=" +
                       userInfo.imagetoken
@@ -133,7 +135,8 @@ export const Header = (props) => {
                       <div className="bodyOverlay">
                         <img
                           src={
-                            "http://localhost:8000/image/download/4/" +
+                            API.IMAGEDOWNLOAD +
+                            "4/" +
                             userInfo.id +
                             ".jpg?time=" +
                             userInfo.imagetoken
@@ -217,7 +220,8 @@ export const Header = (props) => {
                     <div style={{ cursor: "pointer" }} className="login">
                       <img
                         src={
-                          "http://localhost:8000/image/download/4/" +
+                          API.IMAGEDOWNLOAD +
+                          "4/" +
                           userInfo.id +
                           ".jpg?time=" +
                           userInfo.imagetoken

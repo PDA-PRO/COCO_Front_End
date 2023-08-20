@@ -67,6 +67,7 @@ const Question = ({ resource }) => {
   const info = resource.read();
   var path = window.location.pathname;
   path = path.split("/");
+
   console.log(info);
 
   return (
@@ -76,8 +77,11 @@ const Question = ({ resource }) => {
           <Accordion.Item eventKey={e.question.id}>
             <div className="Head-Ac">
               <Accordion.Header>
-                Q :{" "}
+                <span style={{ paddingRight: "7px", fontWeight: "600" }}>
+                  Q :
+                </span>
                 <div
+                  style={{ fontWeight: "600" }}
                   dangerouslySetInnerHTML={{
                     __html: e.question.title,
                   }}

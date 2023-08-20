@@ -91,6 +91,7 @@ import { GroupBoard } from "./components/Group/BoardWrite/GroupBoard";
 import { TaskModify } from "./components/Manage/manageComponents/TaskModify";
 import { MakeRoadMap } from "./components/Group/RoadMap/MakeRoadMap";
 import { Inside } from "./components/Group/RoadMap/Inside";
+import { Tutor } from "components/Group/Tutor/Tutor";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
@@ -110,6 +111,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/room" element={<Group />} />
           <Route path="/room/:id" element={<GroupInfo />} />
+          <Route path="/tutor" element={<Tutor />} />
           <Route path="/makeroom" element={<MakeGroup />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />

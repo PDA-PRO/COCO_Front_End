@@ -22,6 +22,7 @@ import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import { API } from "api/config";
+import { useAppSelector } from "../../app/store";
 
 export const Problems = () => {
   const Large = useMediaQuery({ minWidth: 1100 });
@@ -30,6 +31,7 @@ export const Problems = () => {
   };
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState({});
+  const userInfo = useAppSelector((state) => state.loginState);
 
   return (
     <div>
@@ -58,6 +60,7 @@ export const Problems = () => {
                       rateSort: filter.rateSort,
                       size: 10,
                       page: page,
+                      user_id: userInfo.id
                     },
                   })}
                   setPage={setPage}

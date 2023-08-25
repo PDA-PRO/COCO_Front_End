@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./MakeGroup.css";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
@@ -13,11 +13,16 @@ import Button from "react-bootstrap/Button";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "api/config";
+import Spinner from "react-bootstrap/Spinner";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState(null);
+  const seachbar = useRef();
   const navigate = useNavigate();
 
   const onNameHandler = (e) => {
@@ -26,16 +31,6 @@ export const MakeGroup = () => {
 
   const onDescHandler = (e) => {
     setDesc(e.currentTarget.value);
-  };
-
-  const onSearchHandler = (info) => {
-    axios
-      .get(API.ROOMSEARCHUSER, {
-        params: { user_id: info },
-      })
-      .then((res) => {
-        setUsers(res.data);
-      });
   };
 
   const onCreateHanlder = (members) => {
@@ -57,7 +52,16 @@ export const MakeGroup = () => {
     }
   };
 
-  useEffect(() => {}, [name, desc]);
+  useEffect(() => {
+    axios
+      .get(API.ROOMSEARCHUSER, {
+        params: { keyword: query, size: 5, page: page },
+      })
+      .then((res) => {
+        setUsers(res.data);
+        setLoading(false);
+      });
+  }, [page, query]);
 
   return (
     <>
@@ -116,7 +120,20 @@ export const MakeGroup = () => {
             {/* 여기부터 오른쪽 */}
             <div className="mG-right">
               <div className="mG-invite">
-                <SearchBar search={onSearchHandler} />
+                <div className="searchBar">
+                  <input
+                    ref={seachbar}
+                    type="text"
+                    placeholder="튜티 검색"
+                    id="SV"
+                  />
+                  <GoSearch
+                    size={23}
+                    color="brown"
+                    id="goSearch"
+                    onClick={() => setQuery(seachbar.current.value)}
+                  />
+                </div>
 
                 <div className="userTop">
                   <p>Lv</p>
@@ -128,7 +145,16 @@ export const MakeGroup = () => {
                 {/* 검색결과
                 여기서 멤버추가하고 만들기 버튼 누르면
                 MakeGroup에서 api 호출해서 생성 */}
-                <SearchResult users={users} create={onCreateHanlder} />
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <SearchResult
+                    users={users}
+                    create={onCreateHanlder}
+                    setPage={setPage}
+                    page={page}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -145,8 +171,6 @@ const SearchResult = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
 
   const [members, setMembers] = useState([userInfo]);
-  const [page, setPage] = useState(1);
-  const maxPage = Math.ceil(data.length / 10);
 
   const addMembers = (e) => {
     if (e === userInfo.id || members.includes(e)) {
@@ -166,22 +190,6 @@ const SearchResult = (props) => {
     }
   };
 
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
-
   const onCreateHanlder = () => {
     let memberList = [];
     for (let i = 0; i < members.length; i++) {
@@ -195,16 +203,17 @@ const SearchResult = (props) => {
   return (
     <>
       {/* 검색 결과 리스트 */}
-      {data.slice(20 * (page - 1), 20 * (page - 1) + 20).map((e) => {
+      {data.userlist.map((e) => {
         return <UserBox info={e} key={e.id} addMembers={addMembers} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>
         <Pagination
-          count={maxPage}
+          count={Math.ceil(data.total / data.size)}
           variant="outlined"
           shape="rounded"
           defaultPage={1}
-          onChange={(e) => handlePage(e)}
+          page={props.page}
+          onChange={(e, value) => props.setPage(value)}
         />
       </div>
 
@@ -221,25 +230,6 @@ const SearchResult = (props) => {
         스터디 생성
       </Button>
     </>
-  );
-};
-
-const SearchBar = ({ search }) => {
-  const onSearchHandler = (e) => {
-    var info = document.getElementById("SV").value;
-    search(info);
-  };
-
-  return (
-    <div className="searchBar">
-      <input type="text" placeholder="튜티 검색" id="SV" />
-      <GoSearch
-        size={23}
-        color="brown"
-        id="goSearch"
-        onClick={() => onSearchHandler()}
-      />
-    </div>
   );
 };
 

@@ -23,11 +23,9 @@ export const Group = () => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
 
-
   const [tutor, setTutor] = useState(0);
 
   console.log(userInfo);
-
 
   const [page, setPage] = useState(1);
 
@@ -103,7 +101,6 @@ export const Group = () => {
                   <SearchBar />
                 </div>
 
-
                 <div className="allGroups">
                   <div className="l-top">
                     <p style={{ color: "red" }}>순위</p>
@@ -115,29 +112,31 @@ export const Group = () => {
                     <p>STUDY pt</p>
                   </div>
 
-                <Suspense fallback={<Spinner />}>
-                  <GetGroups
-                    resource={fetchData(API.ROOM, {
-                      params: {
-                        size: 1,
-                        page: page,
-                      },
-                    })}
-                    setPage={setPage}
-                    page={page}
-                  />
-                </Suspense>
+                  <Suspense fallback={<Spinner />}>
+                    <GetGroups
+                      resource={fetchData(API.ROOM, {
+                        params: {
+                          size: 1,
+                          page: page,
+                        },
+                      })}
+                      setPage={setPage}
+                      page={page}
+                    />
+                  </Suspense>
+                </div>
               </div>
-            </div>
 
-            {/* 왼족 : 전체 그룹, 오른쪽 : 내 그룹*/}
-
+              {/* 왼족 : 전체 그룹, 오른쪽 : 내 그룹*/}
+              {/* <div className="group-right">
+                <div className="r-top">
+                  <h2>My Study</h2>
 
                   <Suspense fallback={<Spinner />}>
                     <GetGroups resource={fetchData(API.ROOM)} />
                   </Suspense>
                 </div>
-              </div>
+              </div> */}
 
               {/* 왼족 : 전체 그룹, 오른쪽 : 내 그룹*/}
 
@@ -203,9 +202,11 @@ const SearchBar = ({ search }) => {
 const GetGroups = ({ resource, page, setPage }) => {
   const GroupList = resource.read();
 
+  console.log(GroupList);
+
   return (
     <>
-      {GroupList.roomlist.map((e) => {
+      {GroupList.map((e) => {
         return <AllGroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>

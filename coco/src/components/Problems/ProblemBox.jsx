@@ -87,7 +87,7 @@ export const ProblemBox = ({
         <h4 onClick={() => deleteProblem(info.id)}>
           <BsJournalMinus size={23} color="red" />
         </h4>
-      ) : type === 3 ? (
+      ) : type === 3 || type === 0 ? (
         <h4>
           {check === 1 ? (
             <AiOutlineCheckCircle size={23} color="#1876FB" />

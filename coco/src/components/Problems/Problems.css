@@ -59,7 +59,7 @@
 
 .BodyLeft .leftTop {
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
   align-items: center;
   border: 2px solid rgb(98, 148, 255);
   border-radius: 15px 15px 0 0;
@@ -103,17 +103,16 @@
 }
 
 .problemsBox {
-  border-bottom: 2px solid rgb(98, 148, 255);
+  border-bottom: 1px solid rgb(167, 195, 255);
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
   align-items: center;
   padding: 11px 15px;
   cursor: pointer;
-  background-color: rgb(248, 252, 255);
 }
 
 .problemsBox:hover {
-  background-color: rgb(217, 238, 255);
+  background-color: rgb(243, 250, 255);
 }
 
 .problemsBox h4 {

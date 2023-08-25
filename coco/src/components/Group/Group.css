@@ -179,7 +179,7 @@
 .myGroups {
   display: flex;
   flex-flow: column nowrap;
-  padding: 0 1.5rem;
+  padding: 0 1.5rem 15px 1.5rem;
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1em;

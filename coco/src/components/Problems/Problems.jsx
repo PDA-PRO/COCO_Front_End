@@ -49,6 +49,7 @@ export const Problems = () => {
                 <h4>문제 제목</h4>
                 <h4>난이도</h4>
                 <h4>정답률</h4>
+                <h4>Solve</h4>
               </div>
               <Suspense fallback={<Spinner />}>
                 <GetProblems
@@ -60,7 +61,7 @@ export const Problems = () => {
                       rateSort: filter.rateSort,
                       size: 10,
                       page: page,
-                      user_id: userInfo.id
+                      user_id: userInfo.id,
                     },
                   })}
                   setPage={setPage}
@@ -294,12 +295,19 @@ const BodyRight = ({ setFilter }) => {
 const GetProblems = ({ resource, page, setPage }) => {
   const problemList = resource.read();
 
-  console.log(problemList);
+  console.log("PL", problemList);
+
+  const compare = (e) => {
+    var idx = problemList.solved_list.findIndex((problem) => problem === e);
+    return idx !== -1 ? 1 : 0;
+  };
 
   return (
     <>
       {problemList.tasks.map((e) => {
-        return <ProblemBox info={e} key={e.id} type={0} />;
+        return (
+          <ProblemBox info={e} key={e.id} type={0} check={compare(e.id)} />
+        );
       })}
       <div className="leftBottom">
         <Pagination

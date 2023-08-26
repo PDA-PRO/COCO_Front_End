@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import "./MakeRoadMap.css";
 import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
@@ -8,8 +8,7 @@ import { GoSearch } from "react-icons/go";
 import { Suspense } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/esm/Spinner";
 import {
   TiBatteryCharge,
@@ -25,6 +24,13 @@ import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import Select from "react-select";
 import { ProblemBox } from "../../Problems/ProblemBox";
 import fetchData from "../../../api/fetchTask";
+import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
+import ReactQuill from "react-quill";
+import Quill from "quill";
+import ImageResize from "@looop/quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
 
 export const MakeRoadMap = () => {
   const [tasks, setTasks] = useState([]);
@@ -34,24 +40,37 @@ export const MakeRoadMap = () => {
   const [filter, setFilter] = useState({});
 
   const nameRef = useRef(null);
-  const descRef = useRef(null);
+
+  const quillRef = useRef(); // quill editor에 접근하기 위한 ref
+  const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
   const confirmRoadmap = () => {
     const updateName = nameRef.current.value;
-    const updateDesc = descRef.current.value;
 
-    if (updateName === "" || updateDesc === "" || tasks.length === 0) {
+    if (
+      updateName === "" ||
+      quillRef.current.value === "" ||
+      tasks.length === 0
+    ) {
       alert(
         "Roadmap 이름과 설명을 모두 작성해주세요.\n문제는 최소 1문제 이상 포함되어야 합니다."
       );
     } else {
       axios
-        .post("http://127.0.0.1:8000/room/roadmap", {
-          id: path.at(-1),
-          name: updateName,
-          desc: updateDesc,
-          tasks: tasks,
-        })
+        .post(
+          "http://127.0.0.1:8000/room/roadmap",
+          {
+            id: path.at(-1),
+            name: updateName,
+            desc: quillRef.current.value,
+            tasks: tasks,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + userInfo.access_token,
+            },
+          }
+        )
         .then((res) => {
           alert("로드맵을 생성하였습니다");
           navigate(`/room/${path.at(-1)}`);
@@ -73,6 +92,86 @@ export const MakeRoadMap = () => {
     setTasks(tasks.filter((value) => value !== e));
   };
 
+  // --------------------------- quill editor 관련 함수 ----------------------
+  const imageHandler = () => {
+    // 1. 이미지를 저장할 input type=file DOM을 만든다.
+    const input = document.createElement("input");
+
+    // 속성 써주기
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
+    // input이 클릭되면 파일 선택창이 나타난다.
+
+    // input에 변화가 생긴다면 = 이미지를 선택
+    input.addEventListener("change", async () => {
+      const file = input.files[0];
+      const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+      //현재 에디터 커서 위치값을 가져온다
+      const range = editor.getSelection();
+      axios
+        .post(
+          API.IMAGEUPLOAD,
+          {
+            file: file, // 파일
+          },
+          {
+            headers: {
+              "Content-Type": `multipart/form-data; `,
+              Authorization: "Bearer " + userInfo.access_token,
+            },
+            params: {
+              type: 5,
+            },
+          }
+        )
+        .then((res) => {
+          const IMG_URL = res.data;
+          // 가져온 위치에 이미지를 삽입한다
+          editor.insertEmbed(range.index, "image", IMG_URL);
+          //커서를 한칸 뒤로 이동
+          editor.setSelection(range.index + 1);
+        })
+        .catch(() => {
+          //오류시에 안내 메시지를 삽입
+          editor.insertText(range.index, "이미지 업로드에 실패했습니다", {
+            color: "#ff0000",
+            bold: true,
+          });
+        });
+    });
+  };
+
+  //userMemo를 써야 오류가 안난다.
+  const quill_module = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [
+            { size: ["small", false, "large", "huge"] },
+            { header: [1, 2, 3, 4, 5, 6, false] },
+          ], // custom dropdown
+          ["bold", "underline", "link", "image"], // toggled buttons
+
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "super" }], // superscript
+
+          [{ color: [] }], // dropdown with defaults from theme
+          [{ align: [] }],
+
+          ["clean"],
+        ],
+        handlers: {
+          // 이미지 처리는 imageHandler로 처리
+          image: imageHandler,
+        },
+      },
+      imageResize: {
+        modules: ["Resize", "DisplaySize"],
+      },
+    };
+  }, []);
+
   return (
     <>
       <Header />
@@ -88,14 +187,24 @@ export const MakeRoadMap = () => {
               </InputGroup>
             </div>
             <div className="name">
-              <p>RoadMap 설명</p>
-              <InputGroup className="mb-0">
+              <ReactQuill
+                theme="snow"
+                modules={quill_module}
+                ref={quillRef}
+                placeholder={"ex) for 문은 파이썬의 기본적인 반복문으로써 ..."}
+                style={{
+                  height: "400px",
+                  width: "100%",
+                  marginBottom: "50px",
+                }}
+              />
+              {/* <InputGroup className="mb-0">
                 <Form.Control
                   as="textarea"
                   ref={descRef}
                   placeholder="ex) 조건문과 반복문을 숙지하자"
                 />
-              </InputGroup>
+              </InputGroup> */}
             </div>
           </div>
           <div className="inputBox">

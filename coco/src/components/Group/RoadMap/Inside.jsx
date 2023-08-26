@@ -101,7 +101,11 @@ const Content = ({ resource }) => {
       </div>
       <hr />
       <div className="mid">
-        <p>{data.roadmap.desc}</p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: data.roadmap.desc,
+          }}
+        />
         <div className="taskRating">
           <p>
             총 문제 수 : <b>{data.problem_list.length}</b>

@@ -44,7 +44,6 @@ const Road = (props) => {
       onClick={() => navigate(`/room/roadmap/${path.at(-1)}/${data.id}`)}
     >
       <h4>{data.name}</h4>
-      <p style={{ color: "gray" }}>{data.desc}</p>
       <div className="tasks">
         <p>
           학습 달성률 : <span style={{ color: "blue" }}>{percentage}%</span>

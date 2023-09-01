@@ -1,25 +1,28 @@
-import React, { useState, Suspense, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Pagination from "@mui/material/Pagination";
-import { BsCheckCircle, BsDashCircle } from "react-icons/bs";
-import Form from "react-bootstrap/Form";
 import "./QA.css";
 import Button from "react-bootstrap/Button";
 import CodeMirror from "@uiw/react-codemirror";
-import { cpp } from "@codemirror/lang-cpp";
-import { python } from "@codemirror/lang-python";
-import Spinner from "react-bootstrap/esm/Spinner";
-import fetchData from "../../../api/fetchTask";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
+import { useQuery } from "@tanstack/react-query";
 
 export const QA = () => {
   var path = window.location.pathname;
   path = path.split("/");
-
+  const { data } = useQuery(
+    ["qa"],
+    () => {
+      return axios.get(API.ROOMQUESTION + path.at(-1));
+    },
+    {
+      suspense: true,
+    }
+  );
   // const maxPage = Math.ceil(problemList.length / 10);
   const maxPage = 10;
   const [page, setPage] = useState(1);
@@ -44,9 +47,7 @@ export const QA = () => {
       <div className="questions-body">
         <div className="qContents">
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Suspense fallback={<Spinner />}>
-              <Question resource={fetchData(API.ROOMQUESTION + path.at(-1))} />
-            </Suspense>
+            <Question resource={data.data} />
           </Accordion>
         </div>
       </div>
@@ -64,7 +65,7 @@ export const QA = () => {
 };
 
 const Question = ({ resource }) => {
-  const info = resource.read();
+  const info = resource;
   var path = window.location.pathname;
   path = path.split("/");
 

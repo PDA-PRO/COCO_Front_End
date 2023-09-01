@@ -4,12 +4,10 @@ import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import { Suspense } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
-import fetchData from "../../api/fetchTask";
-import { Pagination } from "@mui/material";
 import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TbCrown } from "react-icons/tb";
 import { TfiPencil } from "react-icons/tfi";
 import { ImBooks } from "react-icons/im";
@@ -24,6 +22,182 @@ import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import { QA } from "./QA/QA";
 import { RoadMap } from "./RoadMap/RoadMap";
 import { API } from "api/config";
+import { useQuery } from "@tanstack/react-query";
+
+export const GroupInfo = () => {
+  var path = window.location.pathname.split("/");
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["roominfo"],
+    queryFn: () => axios.get(API.ROOM + path.at(-1)),
+  });
+  const userInfo = useAppSelector((state) => state.loginState);
+  const userID = userInfo.id;
+
+  const [page, setPage] = useState(1);
+
+  const moveWorkbook = () => {
+    setPage(2);
+  };
+  const moveBoard = () => {
+    setPage(1);
+  };
+
+  const navigate = useNavigate();
+
+  const moveWrite = (id) => {
+    navigate(`/room/qa/write`, { state: id });
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="groupInfo">
+        <div className="gi">
+          {isLoading ? <Spinner /> : <GiHeader info={data.data} />}
+
+          <div id="gi-B">
+            <div className="gi-GB">
+              <div className="gb-header">
+                {page === 1 ? (
+                  <div id="he1" onClick={() => moveWorkbook()}>
+                    <ImBooks size={25} color="green" />
+                    <p>학습 RoadMap 열기</p>
+                  </div>
+                ) : (
+                  <div id="he1" onClick={() => moveBoard()}>
+                    <IoChatbubblesOutline size={25} color="green" />
+                    <p>Q & A 열기</p>
+                  </div>
+                )}
+                {page === 1 ? (
+                  <div id="he1" onClick={() => moveWrite(path.at(-1))}>
+                    <TfiPencil size={25} />
+                    <p>질문 작성</p>
+                  </div>
+                ) : isLoading ? (
+                  <Spinner />
+                ) : (
+                  <MakeRoadMap resource={data.data} />
+                )}
+              </div>
+
+              {page == 1 ? (
+                <Suspense fallback={<Spinner />}>
+                  <QA />
+                </Suspense>
+              ) : (
+                <Suspense fallback={<Spinner />}>
+                  <RoadMap userID={userID} path={path.at(-1)} />
+                </Suspense>
+              )}
+            </div>
+
+            <div className="gi-ML">
+              {isLoading ? <Spinner /> : <MemberList resource={data.data} />}
+              {isLoading ? <Spinner /> : <LeaveOrDelete resource={data.data} />}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+const MakeRoadMap = ({ resource }) => {
+  var path = window.location.pathname;
+  path = path.split("/");
+  const userInfo = useAppSelector((state) => state.loginState);
+  const userID = userInfo.id;
+
+  const info = resource;
+  const navigate = useNavigate();
+
+  const createRoadmap = (id) => {
+    navigate(`/room/createRoadmap/${id}`);
+  };
+
+  if (info.leader === userID) {
+    return (
+      <div id="he1" onClick={() => createRoadmap(path.at(-1))}>
+        <PiFolderNotchPlusDuotone size={24} />
+        <p>로드맵 추가하기</p>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
+};
+
+const GiHeader = ({ info }) => {
+  return (
+    <div className="gi-head">
+      {/* <LiaSchoolSolid size={30} /> */}
+      <img src="\image\group.png" />
+      <div className="headOne">
+        <div>
+          <h2>{info.name}</h2>
+        </div>
+
+        <div>
+          <p>전체 스터디 랭킹 : 3위</p>
+          <p>현재 튜티 수 : {info.members.length - 1}명</p>
+        </div>
+      </div>
+      <div className="headTwo">
+        <p>{info.desc}</p>
+        <p>튜터 : {info.leader}님</p>
+      </div>
+    </div>
+  );
+};
+
+const MemberList = ({ resource }) => {
+  var path = window.location.pathname;
+  path = path.split("/");
+  const info = resource;
+  const members = info.members;
+  members.sort(function (a, b) {
+    return b[1] - a[1];
+  });
+  const leader = info.leader;
+  const [modalShow, setModalShow] = useState(false);
+  const userInfo = useAppSelector((state) => state.loginState);
+
+  return (
+    <div className="member-list">
+      <h3>튜티</h3>
+
+      <div className="member-list-header">
+        <p> </p>
+        <p>ID</p>
+        <p>Score</p>
+      </div>
+      {members.map((e) => {
+        return <Member info={e} key={e.id} props={leader} />;
+      })}
+
+      {userInfo.id === leader ? (
+        <>
+          <div className="im-d">
+            <FiUserPlus size={18} />
+            <p id="invite_mem" onClick={() => setModalShow(true)}>
+              튜티 초대
+            </p>
+          </div>
+
+          <InviteNewMember
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            group_id={path.at(-1)}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+};
 
 const InviteNewMember = (props) => {
   const [search, setSearch] = useState("");
@@ -34,13 +208,12 @@ const InviteNewMember = (props) => {
   };
 
   const onSubmitHandler = (e) => {
-    console.log(search);
     axios
       .get(API.ROOMSEARCHUSER, {
-        params: { user_id: search },
+        params: { keyword: search, size: 100, page: 1 },
       })
-      .then((res) => {
-        setUserList([...res.data]);
+      .then(({ data }) => {
+        setUserList([...data.userlist]);
       })
       .catch(() => {
         alert("검색에 실패하였습니다");
@@ -48,22 +221,20 @@ const InviteNewMember = (props) => {
   };
 
   const onInviteHanlder = (id) => {
-    console.log(id);
     axios
       .put(API.ROOMMEMBER, {
         room_id: props.group_id,
         user_id: [id],
       })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === false) {
-          alert("이미 초대된 아이디입니다");
-        } else if (res.data === true) {
-          alert(`${id}님을 초대하였습니다`);
-        }
+      .then(() => {
+        alert(`${id}님을 초대하였습니다`);
       })
-      .catch(() => {
-        alert("검색에 실패하였습니다");
+      .catch(({ response }) => {
+        if (response.status == 409) {
+          alert("이미 초대된 아이디입니다.");
+        } else {
+          alert("알 수 없는 오류");
+        }
       });
   };
 
@@ -84,7 +255,7 @@ const InviteNewMember = (props) => {
           <Form.Control
             type="text"
             placeholder="ID or 이름으로 검색"
-            onChange={onSearchHandler}
+            onBlur={onSearchHandler}
           />
         </Form.Group>
         {userList.length > 0 ? (
@@ -126,193 +297,6 @@ const InviteNewMember = (props) => {
   );
 };
 
-export const GroupInfo = () => {
-  var path = window.location.pathname;
-  path = path.split("/");
-  const userInfo = useAppSelector((state) => state.loginState);
-  const userID = userInfo.id;
-
-  const [page, setPage] = useState(1);
-
-  const moveWorkbook = () => {
-    setPage(2);
-  };
-  const moveBoard = () => {
-    setPage(1);
-  };
-
-  const navigate = useNavigate();
-
-  const moveWrite = (id) => {
-    navigate(`/room/qa/write`, { state: id });
-  };
-
-  return (
-    <>
-      <Header />
-      <div className="groupInfo">
-        <div className="gi">
-          <Suspense fallback={<Spinner />}>
-            <GiHeader resource={fetchData(API.ROOM + path.at(-1))} />
-          </Suspense>
-
-          <div id="gi-B">
-            <div className="gi-GB">
-              <div className="gb-header">
-                {page === 1 ? (
-                  <div id="he1" onClick={() => moveWorkbook()}>
-                    <ImBooks size={25} color="green" />
-                    <p>학습 RoadMap 열기</p>
-                  </div>
-                ) : (
-                  <div id="he1" onClick={() => moveBoard()}>
-                    <IoChatbubblesOutline size={25} color="green" />
-                    <p>Q & A 열기</p>
-                  </div>
-                )}
-                {page === 1 ? (
-                  <div id="he1" onClick={() => moveWrite(path.at(-1))}>
-                    <TfiPencil size={25} />
-                    <p>질문 작성</p>
-                  </div>
-                ) : (
-                  <Suspense fallback={<Spinner />}>
-                    <MakeRoadMap resource={fetchData(API.ROOM + path.at(-1))} />
-                  </Suspense>
-                )}
-              </div>
-
-              {page == 1 ? (
-                <Suspense fallback={<Spinner />}>
-                  <QA />
-                </Suspense>
-              ) : (
-                <Suspense fallback={<Spinner />}>
-                  <RoadMap
-                    resource={fetchData(API.ROOMROADMAP + path.at(-1), {
-                      params: { user_id: userID },
-                    })}
-                  />
-                </Suspense>
-              )}
-            </div>
-
-            <div className="gi-ML">
-              <Suspense fallback={<Spinner />}>
-                <MemberList resource={fetchData(API.ROOM + path.at(-1))} />
-              </Suspense>
-
-              <Suspense fallback={<Spinner />}>
-                <LeaveOrDelete resource={fetchData(API.ROOM + path.at(-1))} />
-              </Suspense>
-            </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
-};
-
-const MakeRoadMap = ({ resource }) => {
-  var path = window.location.pathname;
-  path = path.split("/");
-  const userInfo = useAppSelector((state) => state.loginState);
-  const userID = userInfo.id;
-
-  const info = resource.read();
-  const navigate = useNavigate();
-
-  const createRoadmap = (id) => {
-    navigate(`/room/createRoadmap/${id}`);
-  };
-
-  if (info.leader === userID) {
-    return (
-      <div id="he1" onClick={() => createRoadmap(path.at(-1))}>
-        <PiFolderNotchPlusDuotone size={24} />
-        <p>로드맵 추가하기</p>
-      </div>
-    );
-  } else {
-    return <></>;
-  }
-};
-
-const GiHeader = ({ resource }) => {
-  const info = resource.read();
-  return (
-    <div className="gi-head">
-      {/* <LiaSchoolSolid size={30} /> */}
-      <img src="\image\group.png" />
-      <div className="headOne">
-        <div>
-          <h2>{info.name}</h2>
-        </div>
-
-        <div>
-          <p>전체 스터디 랭킹 : 3위</p>
-          <p>현재 튜티 수 : {info.members.length - 1}명</p>
-        </div>
-      </div>
-      <div className="headTwo">
-        <p>{info.desc}</p>
-        <p>튜터 : {info.leader}님</p>
-      </div>
-    </div>
-  );
-};
-
-const MemberList = ({ resource }) => {
-  var path = window.location.pathname;
-  path = path.split("/");
-  const info = resource.read();
-  const members = info.members;
-  members.sort(function (a, b) {
-    return b[1] - a[1];
-  });
-  const maxPage = Math.ceil(members.length / 10);
-  const [page, setPage] = useState(1);
-  const leader = info.leader;
-  const [modalShow, setModalShow] = useState(false);
-
-  const userInfo = useAppSelector((state) => state.loginState);
-
-  return (
-    <div className="member-list">
-      <h3>튜티</h3>
-
-      <div className="member-list-header">
-        <p> </p>
-        <p>ID</p>
-        <p>Score</p>
-      </div>
-      {members.slice(10 * (page - 1), 10 * (page - 1) + 10).map((e) => {
-        return <Member info={e} key={e.id} props={leader} />;
-      })}
-
-      {userInfo.id === leader ? (
-        <>
-          <div className="im-d">
-            <FiUserPlus size={18} />
-            <p id="invite_mem" onClick={() => setModalShow(true)}>
-              튜티 초대
-            </p>
-          </div>
-
-          <InviteNewMember
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            group_id={path.at(-1)}
-          />
-        </>
-      ) : (
-        <></>
-      )}
-    </div>
-  );
-};
-
 const Member = ({ info, props }) => {
   const navigate = useNavigate();
 
@@ -335,7 +319,7 @@ const Member = ({ info, props }) => {
 
 const LeaveOrDelete = ({ resource }) => {
   var path = window.location.pathname;
-  const info = resource.read();
+  const info = resource;
   const leader = info.leader;
   path = path.split("/");
   const userInfo = useAppSelector((state) => state.loginState);

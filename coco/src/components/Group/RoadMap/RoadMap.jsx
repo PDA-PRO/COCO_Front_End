@@ -1,13 +1,23 @@
 import React from "react";
 import "./RoadMap.css";
 import axios from "axios";
-import { Inside } from "./Inside";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API } from "api/config";
+import { useQuery } from "@tanstack/react-query";
 
-export const RoadMap = ({ resource }) => {
-  const info = resource.read();
-
-  console.log(info);
+export const RoadMap = ({ userID, path }) => {
+  const { data } = useQuery(
+    ["roadmap"],
+    () => {
+      return axios.get(API.ROOMROADMAP + path, {
+        params: { user_id: userID },
+      });
+    },
+    {
+      suspense: true,
+    }
+  );
+  const info = data.data;
   return (
     <div className="roadMap">
       {info.room_info.map((e) => {

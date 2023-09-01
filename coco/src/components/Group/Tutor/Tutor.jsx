@@ -3,13 +3,29 @@ import "./Tutor.css";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { BsSendPlus } from "react-icons/bs";
+import axios from "axios";
+import { API } from "api/config";
+import { useAppSelector } from "../../../app/store";
 
 export const Tutor = () => {
   const [reason, setReason] = useState("");
+  const userInfo = useAppSelector((state) => state.loginState);
+  const userID = userInfo.id;
   const onReasonHandler = (e) => {
     setReason(e.currentTarget.value);
   };
-
+  const onSubmitHandler = () => {
+    axios
+      .post(
+        API.TUTORREQUEST,
+        {},
+        {
+          params: { user_id: userID, reason: reason },
+        }
+      )
+      .then(() => alert("신청성공"))
+      .catch(() => alert("이미 신청을 완료했습니다"));
+  };
   return (
     <div className="tutor">
       <div className="left">
@@ -37,12 +53,12 @@ export const Tutor = () => {
           <InputGroup className="mb-0">
             <Form.Control
               placeholder="조건 충족 시, 신청사유를 작성하지 않아도 됩니다."
-              onChange={onReasonHandler}
+              onBlur={onReasonHandler}
             />
           </InputGroup>
         </div>
 
-        <div className="btn-application">
+        <div className="btn-application" onClick={onSubmitHandler}>
           <p>신청하기</p>
           <BsSendPlus size={20} />
         </div>

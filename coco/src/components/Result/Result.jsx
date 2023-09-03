@@ -23,6 +23,7 @@ import {
   BsBoxArrowInRight,
 } from "react-icons/bs";
 import { VscListFlat } from "react-icons/vsc";
+import { MdOutlineManageSearch } from "react-icons/md";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -134,9 +135,6 @@ const ResultBox = ({ resource, info }) => {
     })
     .join("<br>");
 
-  console.log(info);
-  console.log("PL", problemList);
-
   return (
     <div className="Res">
       <div className="res-body">
@@ -204,6 +202,17 @@ const ResultBox = ({ resource, info }) => {
             <BsBoxArrowInRight size={23} />
           </div>
         )}
+
+        <div className="pylint">
+          <div className="un">
+            <MdOutlineManageSearch size={30} color="lightgreen" />
+            <p>채점결과 세부사항</p>
+          </div>
+          <div className="detail">
+            <li>오류 타입 : 'error'</li>
+            <li>오류 메세지 : " Undefined variable 'dddddd' "</li>
+          </div>
+        </div>
       </div>
     </div>
   );

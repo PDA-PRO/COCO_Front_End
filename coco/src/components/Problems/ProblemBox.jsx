@@ -9,7 +9,11 @@ import {
   TiBatteryFull,
 } from "react-icons/ti";
 import { BsJournalPlus, BsJournalMinus } from "react-icons/bs";
-import { AiOutlineCheckCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import {
+  AiOutlineCheckCircle,
+  AiOutlineMinusCircle,
+  AiOutlineCloseCircle,
+} from "react-icons/ai";
 
 export const ProblemBox = ({
   info,
@@ -91,8 +95,10 @@ export const ProblemBox = ({
         <h4>
           {check === 1 ? (
             <AiOutlineCheckCircle size={23} color="#1876FB" />
-          ) : (
+          ) : check === 0 ? (
             <AiOutlineMinusCircle size={23} color="lightgray" />
+          ) : (
+            <AiOutlineCloseCircle size={23} color="red" />
           )}
         </h4>
       ) : (

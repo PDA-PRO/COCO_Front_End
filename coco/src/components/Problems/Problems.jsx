@@ -298,8 +298,13 @@ const GetProblems = ({ resource, page, setPage }) => {
   console.log("PL", problemList);
 
   const compare = (e) => {
-    var idx = problemList.solved_list.findIndex((problem) => problem === e);
-    return idx !== -1 ? 1 : 0;
+    if(problemList.solved_list.includes(e)){
+      return 1
+    }else if (problemList.wrong_list.includes(e)){
+      return 2
+    }else{
+      return 0
+    }
   };
 
   return (

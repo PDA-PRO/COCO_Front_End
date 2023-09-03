@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const RoadMap = ({ userID, path }) => {
   const { data } = useQuery(
-    ["roadmap"],
+    ["roadmaps"],
     () => {
       return axios.get(API.ROOMROADMAP + path, {
         params: { user_id: userID },

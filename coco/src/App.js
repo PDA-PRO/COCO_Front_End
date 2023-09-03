@@ -90,6 +90,7 @@ import { GroupInfo } from "./components/Group/GroupInfo";
 import { GroupBoard } from "./components/Group/BoardWrite/GroupBoard";
 import { TaskModify } from "./components/Manage/manageComponents/TaskModify";
 import { MakeRoadMap } from "./components/Group/RoadMap/MakeRoadMap";
+import { ModifyRoadMap } from "./components/Group/RoadMap/ModifyRoadMap";
 import { Inside } from "./components/Group/RoadMap/Inside";
 import { Tutor } from "components/Group/Tutor/Tutor";
 
@@ -120,6 +121,10 @@ function App() {
           <Route path="/room/qa/write" element={<GroupBoard />} />
           <Route path="/room/roadmap/:room_id/:id" element={<Inside />} />
           <Route path="/room/createRoadmap/:id" element={<MakeRoadMap />} />
+          <Route
+            path="/room/modifyRoadmap/:room_id/:id"
+            element={<ModifyRoadMap />}
+          />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />

@@ -6,15 +6,17 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const TutorApp = () => {
-  const { data: tutorRequest } = useQuery({
+  const { data: tutorRequest, isFetching: isFetching1 } = useQuery({
     queryKey: ["tutorrequestlist"],
     queryFn: () => axios.get(API.VIEWTUTORREQUEST),
   });
-  const { data: tutorlist } = useQuery({
+  const { data: tutorlist, isFetching: isFetching2 } = useQuery({
     queryKey: ["tutorlist"],
     queryFn: () => axios.get(API.TUTOR),
   });
-  console.log(tutorRequest.data, tutorlist.data);
+  if (isFetching1 || isFetching2) {
+    return <></>;
+  }
   return (
     <>
       <h2 className="mTi">TUTOR APPLICATION</h2>

@@ -38,4 +38,7 @@ export const API = {
   SUBMISSION: `${BASE_URL}/submission/`,
   RESULT: `${BASE_URL}/result/`,
   STATUS: `${BASE_URL}/status/`,
+  TUTORREQUEST: `${BASE_URL}/room/tutor-request`,
+  VIEWTUTORREQUEST: `${BASE_URL}/manage/tutor-request`,
+  TUTOR: `${BASE_URL}/manage/tutor`,
 };

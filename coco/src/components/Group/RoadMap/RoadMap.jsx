@@ -1,13 +1,23 @@
 import React from "react";
 import "./RoadMap.css";
 import axios from "axios";
-import { Inside } from "./Inside";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API } from "api/config";
+import { useQuery } from "@tanstack/react-query";
 
-export const RoadMap = ({ resource }) => {
-  const info = resource.read();
-
-  console.log(info);
+export const RoadMap = ({ userID, path }) => {
+  const { data } = useQuery(
+    ["roadmaps"],
+    () => {
+      return axios.get(API.ROOMROADMAP + path, {
+        params: { user_id: userID },
+      });
+    },
+    {
+      suspense: true,
+    }
+  );
+  const info = data.data;
   return (
     <div className="roadMap">
       {info.room_info.map((e) => {
@@ -44,7 +54,6 @@ const Road = (props) => {
       onClick={() => navigate(`/room/roadmap/${path.at(-1)}/${data.id}`)}
     >
       <h4>{data.name}</h4>
-      <p style={{ color: "gray" }}>{data.desc}</p>
       <div className="tasks">
         <p>
           학습 달성률 : <span style={{ color: "blue" }}>{percentage}%</span>

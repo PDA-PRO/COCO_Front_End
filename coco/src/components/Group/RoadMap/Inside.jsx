@@ -51,6 +51,9 @@ const Content = ({ resource }) => {
   const goMypage = (e) => {
     navigate(`/mypage/${e}`);
   };
+  const goModifyRoadMap = () => {
+    navigate(`/room/modifyRoadmap/${path.at(-2)}/${path.at(-1)}`);
+  };
 
   const Phone = useMediaQuery({ maxWidth: 810 });
 
@@ -101,7 +104,11 @@ const Content = ({ resource }) => {
       </div>
       <hr />
       <div className="mid">
-        <p>{data.roadmap.desc}</p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: data.roadmap.desc,
+          }}
+        />
         <div className="taskRating">
           <p>
             총 문제 수 : <b>{data.problem_list.length}</b>
@@ -167,7 +174,11 @@ const Content = ({ resource }) => {
           {/* 여기는 그룹장만 가능하게 */}
           {data.roadmap.leader === userID ? (
             <>
-              <div className="fixRoadmap" style={{ marginTop: "3em" }}>
+              <div
+                className="fixRoadmap"
+                style={{ marginTop: "3em" }}
+                onClick={() => goModifyRoadMap()}
+              >
                 <p>로드맵 수정</p>
                 <MdConstruction size={20} />
               </div>

@@ -43,7 +43,7 @@ export const User = () => {
   };
   return (
     <>
-      <h2 className="mTi">User Management</h2>
+      <h2 className="mTi">USER MANAGEMENT</h2>
       <div className="m-upload">
         <div className="divide-box">
           <div className="box">

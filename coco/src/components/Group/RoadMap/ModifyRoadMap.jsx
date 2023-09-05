@@ -29,10 +29,11 @@ import { API } from "api/config";
 import ReactQuill from "react-quill";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
+import { useQuery } from "@tanstack/react-query";
 
 Quill.register("modules/imageResize", ImageResize);
 
-export const MakeRoadMap = () => {
+export const ModifyRoadMap = () => {
   const [tasks, setTasks] = useState([]);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
@@ -44,11 +45,21 @@ export const MakeRoadMap = () => {
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
-  const confirmRoadmap = () => {
-    const updateName = nameRef.current.value;
+  const { data, isFetching } = useQuery(
+    ["roadmap", path.at(-2), path.at(-1)],
+    () => axios.get(`${API.ROOMROADMAP}${path.at(-2)}/${path.at(-1)}`)
+  );
 
+  useEffect(() => {
+    if (!isFetching) {
+      nameRef.current.value = data.data.roadmap.name;
+      setTasks([...data.data.problem_list.map((e) => e.id)]);
+    }
+  }, [isFetching]);
+
+  const confirmRoadmap = () => {
     if (
-      updateName === "" ||
+      nameRef.current.value === "" ||
       quillRef.current.value === "" ||
       tasks.length === 0
     ) {
@@ -57,11 +68,11 @@ export const MakeRoadMap = () => {
       );
     } else {
       axios
-        .post(
-          "http://127.0.0.1:8000/room/roadmap",
+        .put(
+          API.ROOMROADMAP,
           {
-            id: path.at(-1),
-            name: updateName,
+            id: path.at(-2),
+            name: nameRef.current.value,
             desc: quillRef.current.value,
             tasks: tasks,
           },
@@ -69,11 +80,14 @@ export const MakeRoadMap = () => {
             headers: {
               Authorization: "Bearer " + userInfo.access_token,
             },
+            params: {
+              roadmap_id: path.at(-1),
+            },
           }
         )
         .then((res) => {
-          alert("로드맵을 생성하였습니다");
-          navigate(`/room/${path.at(-1)}`);
+          alert("로드맵을 수정하였습니다");
+          navigate(`/room/${path.at(-2)}`);
         });
     }
   };
@@ -172,12 +186,15 @@ export const MakeRoadMap = () => {
     };
   }, []);
 
+  if (isFetching) {
+    return <Spinner />;
+  }
   return (
     <>
       <Header />
       <div className="makeRM">
         <div className="makeRM-Body">
-          <h3>Create RoadMap</h3>
+          <h3>Modify RoadMap</h3>
           <hr />
           <div className="nameAndDesc">
             <div className="name">
@@ -189,6 +206,7 @@ export const MakeRoadMap = () => {
             <div className="name">
               <ReactQuill
                 theme="snow"
+                defaultValue={data.data.roadmap.desc}
                 modules={quill_module}
                 ref={quillRef}
                 placeholder={"ex) for 문은 파이썬의 기본적인 반복문으로써 ..."}
@@ -198,21 +216,10 @@ export const MakeRoadMap = () => {
                   marginBottom: "50px",
                 }}
               />
-              {/* <InputGroup className="mb-0">
-                <Form.Control
-                  as="textarea"
-                  ref={descRef}
-                  placeholder="ex) 조건문과 반복문을 숙지하자"
-                />
-              </InputGroup> */}
             </div>
           </div>
           <div className="inputBox">
             <div className="firstBox">
-              {/* TODO: 모든 문제 리스트 */}
-              {/* <Suspense fallback={<Spinner />}>
-                <TasksList resource="" />
-              </Suspense> */}
               <TasksList setFilter={setFilter} />
             </div>
             <div className="secondBox">
@@ -242,7 +249,6 @@ export const MakeRoadMap = () => {
               </Suspense>
             </div>
 
-            {/* TODO: 추가된 문제 리스트 */}
             <div className="thirdBox">
               <div className="leftTop">
                 <h4>No</h4>
@@ -272,7 +278,7 @@ export const MakeRoadMap = () => {
             id="submit_btn"
             onClick={() => confirmRoadmap()}
           >
-            CREATE
+            MODIFY
           </Button>
         </div>
       </div>

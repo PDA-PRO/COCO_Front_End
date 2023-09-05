@@ -39,7 +39,7 @@ const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
-  const [codeLang, setcodeLang] = useState(2);
+  const [codeLang, setcodeLang] = useState(0);
   var code = "";
   //submit이후 결과창 이동
   const goToResult = (e) => {
@@ -227,7 +227,7 @@ const GetDetail = ({ resource }) => {
                       setcodeLang(e.currentTarget.value);
                     }}
                   >
-                    <option value={2}>Python3</option>
+                    <option value={0}>Python3</option>
                     <option value={1}>C</option>
                   </Form.Select>
                 </div>

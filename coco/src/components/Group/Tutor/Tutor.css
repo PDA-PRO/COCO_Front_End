@@ -1,0 +1,58 @@
+.tutor {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2vw;
+  padding: 0 1vw;
+  font-family: "Pretendard-Regular";
+}
+
+.tutor .left h4 {
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.tutor .left p {
+  margin: 0 !important;
+  padding-bottom: 6px;
+  color: rgb(73, 73, 73);
+  font-size: 1em;
+}
+
+.tutor .right p {
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.tutor .uop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  gap: 1vw;
+}
+
+.uop .mb-0 {
+  width: fit-content;
+  flex-grow: 1;
+}
+
+.tutor .btn-application {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 3em;
+}
+
+.tutor .btn-application p {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.tutor .btn-application:hover {
+  color: rgb(154, 154, 255);
+  text-decoration: underline;
+}

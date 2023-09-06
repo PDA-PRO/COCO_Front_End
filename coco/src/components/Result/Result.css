@@ -202,7 +202,7 @@
   font-weight: 500;
 }
 
-li {
+.detail li {
   list-style-type: circle;
   padding-bottom: 8px;
   color: rgb(95, 95, 95);

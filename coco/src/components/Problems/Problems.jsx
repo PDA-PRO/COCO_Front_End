@@ -298,12 +298,16 @@ const GetProblems = ({ resource, page, setPage }) => {
   console.log("PL", problemList);
 
   const compare = (e) => {
-    if(problemList.solved_list.includes(e)){
-      return 1
-    }else if (problemList.wrong_list.includes(e)){
-      return 2
-    }else{
-      return 0
+    if (problemList.solved_list) {
+      if (problemList.solved_list.includes(e)) {
+        return 1;
+      } else if (problemList.wrong_list.includes(e)) {
+        return 2;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
     }
   };
 

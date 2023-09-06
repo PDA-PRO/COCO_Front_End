@@ -14,14 +14,20 @@ import {
   BiPause,
   BiDotsHorizontalRounded,
 } from "react-icons/bi";
+import { useAppSelector } from "../../app/store";
 
 export const StatusListBox = (info) => {
   const navigate = useNavigate();
+  const userInfo = useAppSelector((state) => state.loginState);
 
   console.log("status", info.info);
   const goDetail = (e) => {
     console.log(e);
-    navigate(`/result/${e}`, { state: { info: info.info } });
+    if (userInfo.id != "") {
+      navigate(`/result/${e}`, { state: { info: info.info } });
+    } else {
+      alert("로그인이 필요합니다");
+    }
   };
 
   var status = "대기";

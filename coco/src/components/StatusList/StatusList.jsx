@@ -5,12 +5,11 @@ import "./StatusList.css";
 import { StatusListBox } from "./StatusListBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import { GoSearch } from "react-icons/go";
-import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
 import { API } from "api/config";
@@ -75,7 +74,7 @@ export const StatusList = () => {
                   lang: filter.lang,
                   user_id: filter.onlyme ? userInfo.user_id : null,
                   answer: filter.answer,
-                  size: 1,
+                  size: 10,
                   page: page,
                 },
               })}

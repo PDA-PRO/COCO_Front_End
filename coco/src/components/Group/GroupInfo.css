@@ -1,0 +1,618 @@
+.groupInfo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 1rem 0 5rem 0;
+}
+
+.gi {
+  width: clamp(650px, 90%, 1200px);
+  height: auto;
+}
+
+.gi-head {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 15px;
+  padding-top: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid rgb(226, 226, 226);
+  padding-bottom: 15px;
+}
+
+.gi-head img {
+  grid-column: 1/2;
+  grid-row: 1/3;
+  height: 75px;
+  margin: 0 auto;
+}
+
+.gi-head .headOne {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  padding-left: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gi-head .headTwo {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-left: 1rem;
+}
+
+.headTwo p:nth-child(1) {
+  color: rgb(109, 109, 109);
+}
+
+.headOne > div:nth-child(1) {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 25px;
+  align-items: center;
+}
+
+.headOne > div:nth-child(2) {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 25px;
+}
+
+.gi-head h2 {
+  font-weight: 600;
+  font-size: 1.5em;
+  margin: 0 !important;
+}
+
+.gi-head p {
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+/*----------------------body---------------*/
+#gi-B {
+  display: grid;
+  grid-template-columns: 2.3fr 0.7fr;
+  column-gap: 3vw;
+}
+
+.gi-ML {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+}
+
+.member-list {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid skyblue;
+  border-radius: 15px;
+}
+
+.member-list p {
+  text-align: center;
+}
+
+.member-list h3 {
+  text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+  padding: 10px;
+  color: rgb(82, 139, 189);
+  margin: 0 !important;
+}
+
+.member-list-header {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1fr;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  border-bottom: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.member-list-header p {
+  margin: 0 !important;
+}
+
+.member-list .oneMember {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1fr;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+.oneMember p {
+  margin: 0 !important;
+}
+
+.oneMember p:nth-child(2) {
+  cursor: pointer;
+}
+.oneMember p:nth-child(2):hover {
+  color: rgb(114, 114, 255);
+}
+
+/*=======================================가입신청 리스트=================================*/
+
+.apply {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border-radius: 15px;
+  border: 2px solid rgb(255, 99, 255);
+  padding: 0 10px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.apply h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  margin: 0 !important;
+  padding-top: 8px;
+  font-size: 17px;
+}
+
+.apply .usersTop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  width: 100%;
+  border-top: 2px solid rgb(197, 197, 197);
+  border-bottom: 2px solid rgb(197, 197, 197);
+}
+
+.usersTop p {
+  color: black;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 !important;
+}
+
+.apply .users {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding-top: 5px;
+
+  text-align: center;
+  width: 100%;
+  border-bottom: 2px solid rgb(197, 197, 197);
+  color: gray;
+}
+
+.users:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.users p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 !important;
+
+  padding-bottom: 3px;
+}
+
+.users p:nth-child(5) {
+  grid-column: 1/5;
+  grid-row: 2/3;
+  text-align: center;
+  border-top: 1px dotted darkgray;
+  padding-top: 3px;
+}
+
+.users:hover {
+  cursor: pointer;
+}
+
+.users .check {
+  grid-column: 1/5;
+  grid-row: 3/4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid gray;
+}
+
+.check p {
+  padding-top: 3px;
+}
+
+.check p:nth-child(1):hover {
+  background-color: rgb(168, 255, 168);
+}
+.check p:nth-child(2):hover {
+  background-color: rgb(255, 186, 186);
+}
+
+/*==========================================그룹 게시판==================================*/
+
+.group-board {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.gb-header {
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 2vw 0 1vw;
+  cursor: pointer;
+}
+
+.gb-header p {
+  margin: 0 !important;
+}
+
+.gb-header #he1 {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
+
+.gb-header #he1:hover {
+  color: rgb(73, 73, 141);
+  text-decoration: underline;
+}
+
+.gb-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1vw;
+  padding: 30px;
+}
+
+@media screen and (max-width: 1130px) and (min-width: 850px) {
+  .gb-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    width: 100%;
+    row-gap: 20px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .boardBody {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 3rem;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .gb-body {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1/4;
+    gap: 15px;
+  }
+}
+
+.gb-body .gPost {
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 15px;
+  width: 100%;
+  height: 250px;
+  background-color: aliceblue;
+}
+
+.gb-body .gPost:hover {
+  cursor: pointer;
+  -webkit-animation: shadow-drop-2-center 0.4s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.gPost .gPostInner {
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+.gPostInner h2 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.4em;
+}
+
+.gPostInner h4 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.gPostInner p {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.gPostInner .gPostTitle {
+  display: -webkit-box;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.gPost .un {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gPost .un2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 7px;
+}
+
+@media screen and (max-width: 850px) {
+  .gPost {
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+    /* padding: 20px; */
+    display: block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .gPost .un {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2022-12-1 21:57:29
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation shadow-drop-2-center
+ * ----------------------------------------
+ */
+@-webkit-keyframes shadow-drop-2-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px);
+    transform: translateZ(50px);
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+}
+@keyframes shadow-drop-2-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px);
+    transform: translateZ(50px);
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/*-----------그룹 문제집-------------------*/
+
+.group-tasks {
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+  padding: 20px 30px;
+}
+
+.task-top {
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr 0.3fr;
+  align-items: center;
+  border: 2px solid rgb(98, 148, 255);
+  border-radius: 15px 15px 0 0;
+  padding: 10px 15px;
+}
+
+.task-top p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+  color: rgb(90, 90, 90);
+}
+
+.task-top p:nth-child(1) {
+  color: red;
+}
+
+/*--------------멤버 추가----------------*/
+
+.im-d {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: gray;
+}
+
+#invite_mem {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+#search_mem {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.im-d:hover {
+  color: rgb(128, 128, 206) !important;
+}
+
+#contained-modal-title-vcenter {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.3em;
+  margin: 0 !important;
+  color: rgb(96, 147, 241);
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-body .mb-3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.modal-body .mb-3 input {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  /* border: none;
+  border-bottom: 2px solid lightgray !important; */
+  border-radius: 10px;
+}
+
+#searchResultTop {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0 10px 10px 10px;
+
+  border-bottom: 1px solid gray !important;
+}
+
+.searchResult {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 7px 10px;
+  border-bottom: 1px solid skyblue;
+
+  color: gray;
+}
+
+#searchResultTop p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.searchResult p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.searchResult:hover {
+  color: rgb(89, 138, 212);
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.exit {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.exit p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+.exit:hover {
+  text-decoration: underline;
+  color: green;
+}
+
+.explode {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.explode p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+}
+
+.explode:hover {
+  text-decoration: underline;
+  color: red;
+}

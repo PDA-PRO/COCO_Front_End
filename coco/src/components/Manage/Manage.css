@@ -1,0 +1,559 @@
+/*-------------로그인 섹션------------------*/
+.manageLogin {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 50px;
+  background-color: #222222;
+}
+
+.manageLogin h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 2.2rem;
+  color: skyblue;
+  width: 330px;
+  text-align: center;
+  border: 1px solid rgb(176, 229, 252);
+  padding: 10px;
+  margin-bottom: 70px;
+}
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+}
+.form__field {
+  font-family: "Pretendard-Regular";
+  width: 100%;
+  width: 330px;
+  border: 0;
+  border-bottom: 2px solid skyblue;
+  outline: 0;
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 6px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.form__field::placeholder {
+  color: transparent;
+}
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.2rem;
+  cursor: text;
+  top: 20px;
+}
+.form__label {
+  position: absolute;
+  top: 0;
+  display: flex;
+  transition: 0.2s;
+  color: #9b9b9b;
+}
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 600;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #71cafd, #3872ef);
+  border-image-slice: 1;
+}
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.1s;
+  font-size: 1.1rem;
+  color: #3872ef;
+  font-weight: 600;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+.manageLogin div[class*="box"] {
+  margin-top: 30px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manageLogin .btn {
+  background-color: rgba(34, 34, 34, 0.1);
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 45px;
+  letter-spacing: 2px;
+  height: 60px;
+  text-align: center;
+  width: 330px;
+  cursor: pointer;
+}
+
+.manageLogin .btn-one {
+  color: skyblue;
+  transition: all 0.4s;
+  position: relative;
+}
+.manageLogin .btn-one span {
+  transition: all 0.3s;
+}
+.manageLogin .btn-one::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+  transform: scale(0.1, 1);
+}
+.manageLogin .btn-one:hover span {
+  letter-spacing: 5px;
+}
+.manageLogin .btn-one:hover::before {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+.manageLogin .btn-one::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.3s;
+  background-color: rgba(34, 34, 34, 0.1);
+}
+.manageLogin .btn-one:hover::after {
+  opacity: 0;
+  transform: scale(0.1, 1);
+}
+
+/*-------------로그인 섹션------------------*/
+
+.manage {
+  display: flex;
+  flex-flow: column;
+  margin-top: 3rem;
+  align-items: center;
+  padding-bottom: 10rem;
+}
+
+.manage .manageBody {
+  width: clamp(750px, 90%, 1200px);
+}
+
+.manage .mTi {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-top: 5rem;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.m-head {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.m-head h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+#m-Logo {
+  color: #00ff00;
+  cursor: pointer;
+}
+
+.m-upload {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+  border: 2px solid darkgray;
+  border-radius: 30px;
+  padding: 3rem;
+  font-family: "Pretendard-Regular";
+}
+
+.m-upload-context {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5vw;
+  margin-top: 3rem;
+}
+
+.m-upload-context .m-desc {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.m-upload-context .m-desc .m-des-img {
+  margin-top: 80px;
+}
+
+.m-upload-context .m-desc .m-diff {
+  margin-top: 80px;
+}
+
+.m-upload-context .m-desc #m-timeLimit {
+  margin-top: 47px;
+}
+
+.m-upload-context .m-desc #m-memLimit {
+  margin-top: 47px;
+}
+
+.m-upload-context .m-inOut {
+  grid-column: 2/3;
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+}
+
+#m-submit_btn {
+  margin-top: 3rem !important;
+  border: 1px solid #00ff00;
+  border-radius: 20px;
+}
+
+#m-submit_btn:hover {
+  border: 1px solid #00ff00;
+  background-color: #00ff00 !important;
+}
+
+.m-upload .m-sub {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.m-choLen {
+  margin-top: 158px;
+}
+
+.m-testCase {
+  margin-top: 30px;
+}
+
+/*-----------------------------------Manage Menu-----------------------------------------*/
+.manageMenu {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  gap: 30px;
+  position: fixed;
+  left: 2vw;
+  top: 35px;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+.manageMenu h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.manageMenu h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.manageMenu h3:hover {
+  text-decoration: underline;
+  color: skyblue;
+}
+
+.manageMenu #menuDiv {
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+}
+
+/*----------------------POST LIST--------------------------*/
+.postTop {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr 1.3fr 1fr 1fr 1fr 1fr 0.5fr;
+  border: 2px solid gray;
+  align-items: center;
+  padding: 10px 0 10px 0;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+
+.postTop h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.postList {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr 1.3fr 1fr 1fr 1fr 1fr 0.5fr;
+  border-bottom: 2px solid lightgray;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.postList h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.postList h4:nth-child(2) {
+  cursor: pointer;
+}
+
+/*----------------------TASK LIST-------------------*/
+.taskTop {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
+  border: 2px solid gray;
+  align-items: center;
+  padding: 10px 0 10px 0;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+
+.taskTop h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.taskTop h3:nth-child(1) {
+  color: red;
+}
+
+.taskList {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
+  border-bottom: 2px solid lightgray;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.taskList h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.taskList h4:nth-child(1) {
+  border: 2px solid red;
+  border-radius: 10px;
+  padding: 4px 6px;
+  width: 70px;
+  justify-self: center;
+  color: red;
+  font-weight: 600 !important;
+  cursor: pointer;
+}
+
+.taskList h4:nth-child(2) {
+  cursor: pointer;
+}
+
+.notice_result {
+  border: 3px solid lightgray;
+  padding: 10px;
+  margin-top: 30px;
+  min-height: 300px;
+}
+
+/*--------------------- 유저 관리 ---------------------*/
+.divide-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2vw;
+}
+
+.divide-box .box {
+  justify-self: center;
+  width: 90%;
+}
+
+.box p {
+  text-align: center;
+  font-weight: 600;
+}
+
+.box .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(245, 252, 255);
+  padding: 10px;
+}
+
+.searchBar #goSearch {
+  cursor: pointer;
+}
+
+.searchBar input {
+  background-color: rgb(245, 252, 255);
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  color: rgb(60, 108, 211);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid rgb(98, 148, 255);
+  padding: 2px 5px;
+  width: 80%;
+}
+.searchBar input:focus {
+  outline: none;
+}
+
+.userList-manage {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-top: 20px;
+}
+
+.userList-manage p {
+  margin: 0 !important;
+}
+
+.uL-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 2px solid lightgray;
+}
+
+.uL-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.uL-content p {
+  font-weight: 500;
+}
+
+#mm {
+  padding-top: 0 !important;
+}
+
+/*--------------------- 튜터 관리 ---------------------*/
+
+.divide-box2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 2vw;
+}
+
+.divide-box2 .box {
+  justify-self: center;
+  width: 90%;
+}
+
+.box p {
+  text-align: center;
+  font-weight: 600;
+}
+
+.tgridTop {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  border-bottom: 2px solid lightgray;
+}
+
+.tgridTop p {
+  color: rgb(87, 87, 87);
+  margin: 0 !important;
+  padding-bottom: 5px;
+}
+
+.tutorGrid {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 1fr) 1fr;
+  border-bottom: 1px solid lightgray;
+  grid-template-rows: repeat(2, 1fr);
+  padding: 10px 0;
+  row-gap: 10px;
+}
+
+.tutorGrid p {
+  margin: 0 !important;
+}
+
+.tutorGrid .confirm {
+  grid-row: 1/3;
+  grid-column: 7/8;
+  align-self: center;
+  cursor: pointer;
+}
+
+.tutorGrid .reas {
+  grid-column: 2/7;
+  text-align: start;
+  font-weight: 500;
+}
+
+.tmemHead {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 2px solid lightgray;
+}
+
+.tmemHead p {
+  margin: 0 !important;
+  padding-bottom: 5px;
+}
+
+.tmem {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.tmem p {
+  margin: 0 !important;
+  cursor: pointer;
+}

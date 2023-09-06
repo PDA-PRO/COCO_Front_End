@@ -1,0 +1,330 @@
+.makeRM {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 1rem 0 5rem 0;
+  font-family: "Pretendard-Regular";
+}
+
+.makeRM-Body {
+  width: clamp(650px, 90%, 1200px);
+}
+
+.makeRM-Body h3 {
+  font-weight: 600;
+  font-size: 1.3em;
+  padding-left: 1vw;
+  margin: 1rem 0 1.5rem 0 !important;
+}
+
+.nameAndDesc {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+  margin-bottom: 20px;
+  padding: 1rem 1vw 0 1vw;
+}
+
+.nameAndDesc .mb-0 {
+  width: 85%;
+}
+
+.nameAndDesc .name {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.nameAndDesc p {
+  margin: 0 !important;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.inputBox {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr 2fr;
+  column-gap: 1vw;
+  padding: 1rem 1vw;
+}
+
+.inputBox .leftBox {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.inputBox .leftBox p {
+  padding-bottom: 10px;
+}
+
+.inputBox .leftBox .mb-3 textarea {
+  min-height: 300px;
+}
+
+.makeRM-Body #submit_btn {
+  display: flex;
+  float: right;
+  margin-right: 1vw;
+  width: 10vw;
+  flex-flow: row nowrap;
+  align-self: center;
+  justify-content: center;
+}
+
+.index {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.index .searchBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(245, 252, 255);
+  padding: 10px;
+}
+
+.index .searchBar input {
+  background-color: rgb(245, 252, 255);
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  color: rgb(60, 108, 211);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid rgb(98, 148, 255);
+
+  width: 100%;
+}
+.index .searchBar input:focus {
+  outline: none;
+}
+
+.index .items {
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  border: 2px solid rgb(182, 233, 255);
+
+  padding: 10px 0px 20px 0px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.index .items input {
+  cursor: pointer;
+}
+
+.index nav {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.index nav label {
+  width: 100%;
+}
+
+.index h3 {
+  color: rgb(12, 12, 12);
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.index .slide {
+  clear: both;
+  width: 100%;
+  height: 0px;
+  overflow: hidden;
+  text-align: center;
+  transition: height 0.2s ease;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide .chose {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 150px;
+  padding: 0 5px;
+  justify-content: space-between;
+}
+
+.slide .chose2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 180px;
+  padding: 0 5px;
+  justify-content: space-between;
+  margin: 3px 0;
+}
+
+.slide .chose3 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 170px;
+  justify-content: space-between;
+  padding: 0 5px;
+  margin: 3px 0;
+}
+
+.slide .category {
+  width: 100%;
+  min-width: 240px;
+  padding: 0 10px;
+  z-index: 1;
+}
+
+.chose4 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 10px;
+  position: relative;
+  margin-top: 15px;
+  align-items: center;
+}
+
+.chose4 .subOne {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.subOne:nth-child(1):hover {
+  color: rgb(98, 148, 255);
+}
+
+.subOne:nth-child(2):hover {
+  color: red;
+}
+
+.subOne h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.8em;
+  margin: 0 !important;
+}
+
+.slide h5 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-top: 3px;
+}
+
+.slide p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 0.8em;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+#touch0 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch0:checked + .slide {
+  height: 70px;
+}
+
+#touch {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch:checked + .slide {
+  height: 230px;
+}
+
+#touch2 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch2:checked + .slide {
+  height: 70px;
+  opacity: 1;
+  overflow: visible;
+}
+
+#touch3 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch3:checked + .slide {
+  height: 130px;
+}
+
+.form-check-input {
+  margin-top: 6px;
+}
+
+.secondBox .leftTop {
+  display: grid;
+  grid-template-columns: 0.8fr 2.4fr 1fr 1fr 0.5fr;
+  align-items: center;
+  border: 2px solid rgb(98, 148, 255);
+  border-radius: 15px 15px 0 0;
+  padding: 10px 5px;
+}
+
+.thirdBox .leftTop {
+  display: grid;
+  grid-template-columns: 0.8fr 2.4fr 1fr 1fr 0.5fr;
+  align-items: center;
+  border: 2px solid rgb(98, 255, 137);
+  border-radius: 15px 15px 0 0;
+  padding: 10px 5px;
+}
+
+.thirdBox .leftBottom {
+  align-items: center;
+  border-right: 2px solid rgb(98, 255, 137);
+  border-bottom: 2px solid rgb(98, 255, 137);
+  border-left: 2px solid rgb(98, 255, 137);
+  border-radius: 0 0 15px 15px;
+  padding: 10px 15px;
+}
+
+.leftTop h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+  color: rgb(128, 128, 128);
+}
+.leftTop h4:nth-child(1) {
+  color: red;
+}

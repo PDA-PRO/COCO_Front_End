@@ -1,0 +1,808 @@
+@font-face {
+  font-family: "yg-jalnan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "KyoboHandwriting2020A";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+@font-face {
+  font-family: "LeferiPoint-BlackA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-BlackA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-POP";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OTWelcomeRA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*--------------------------------------------- HEADER -------------------------------------------------------*/
+.navbar {
+  display: flex;
+  flex-flow: column;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ececec;
+  /* margin-bottom: 1rem; */
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: #ffffff;
+  align-items: center;
+}
+
+.navbar .navBody {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: clamp(450px, 90%, 1200px);
+}
+
+.navbar .elseNavBody {
+  display: flex;
+  flex-flow: column nowrap;
+  /* align-items: center; */
+  width: clamp(400px, 90%, 950px);
+}
+
+.elseNavBody .always {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.elseNavBody .hidingMenu {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 30px 20px 10px 10px;
+}
+.hidingMenu .rightSideMenu {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 13px;
+  align-items: flex-start;
+}
+
+.hidingMenu .rightSideMenu h3 {
+  color: rgb(80, 80, 80);
+}
+
+.hidingMenu .login {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(218, 218, 218);
+  padding: 10px 20px;
+  border-radius: 15px;
+}
+
+.hidingMenu .login:hover {
+  background-color: rgb(234, 249, 255);
+  border-color: skyblue;
+  color: rgb(6, 132, 182);
+}
+
+.hidingMenu .login h3:hover {
+  color: rgb(6, 132, 182);
+}
+
+.navbar h2 {
+  font-family: "GmarketSansMedium";
+  margin: 0 !important;
+  font-size: 1.6em;
+  font-weight: 650;
+  padding-top: 0.3rem;
+  letter-spacing: 4px;
+}
+
+.navbar h3 {
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.navbar h3:hover {
+  color: #00c200;
+}
+
+.navbar .titleLogo {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  cursor: pointer;
+}
+
+.navbar .titleLogo img:nth-child(1) {
+  height: 45px;
+  width: 45px;
+  margin-right: 15px;
+}
+
+.navbar .leftDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 6vw;
+}
+
+.menus {
+  display: flex;
+  flex-flow: row;
+  gap: 5vw;
+  width: fit-content;
+}
+
+.navbar h3:hover {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logoutModal {
+  padding: 5px 10px;
+}
+
+.logoutModal > * {
+  margin-left: 10px;
+}
+
+.logoutModal > *:hover {
+  cursor: pointer;
+  color: #00ff00;
+}
+
+.login {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+}
+
+.login > h3 {
+  display: grid;
+  align-content: center;
+}
+
+.bodyOverlay {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.bodyOverlay h3 {
+  margin-top: 0.7rem !important;
+}
+
+.footerOverlay {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+  border-top: 1px solid lightgray;
+  gap: 40px;
+  padding-top: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.footerOverlay h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 !important;
+}
+
+#goManage {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 8px 0 0 0 !important;
+  border-top: 1px solid lightgray;
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
+}
+
+#goManage:hover {
+  text-decoration: underline;
+  color: rgb(176, 229, 250);
+}
+
+/*--------------------------------------------- BODY -------------------------------------------------------*/
+.home {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home .home-body {
+  display: flex;
+  flex-flow: column wrap;
+  /* padding-left: 18vw;
+  padding-right: 18vw; */
+  align-items: center;
+  padding-top: 10rem;
+  background-image: url(../../../public/image/aa.png);
+  background-repeat: no-repeat;
+  background-position: 95% 65px;
+  background-size: 30%;
+  width: clamp(762px, 90%, 1200px);
+}
+
+.home .home-body .txt-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  font-family: "Pretendard-Regular";
+  width: 85%;
+  row-gap: 40px;
+}
+
+.home .home-body .txt-box #t1 {
+  grid-row: 1/2;
+  grid-column: 1/3;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+
+.home .home-body .txt-box #t2 {
+  grid-row: 2/3;
+  grid-column: 1/3;
+  font-size: 2em;
+  font-weight: 800;
+}
+
+.home .home-body .txt-box #t2-1 {
+  grid-row: 2/3;
+  grid-column: 2/4;
+  font-size: 1.4em;
+  font-weight: 800;
+  color: #00ff00;
+  font-family: "GmarketSansMedium";
+  letter-spacing: 5px;
+}
+
+.home .homeGraph {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-content: center;
+  width: 100%;
+  /* height: 300px; */
+  padding: 10px 0;
+  margin-top: 10rem;
+  gap: 30px;
+
+  /* align-items: center; */
+}
+
+.home .else {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  /* height: 300px; */
+  width: 90%;
+  padding: 10px 0;
+  margin-top: 10rem;
+  column-gap: 30px;
+  row-gap: 30px;
+}
+
+.levelGraph {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #effffec5;
+  border-radius: 20px;
+  align-items: center;
+}
+
+.levelGraph:hover {
+  cursor: pointer;
+  border: 2px solid #ecececce;
+}
+
+.levelGraph h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 500;
+  margin: 0 !important;
+  position: relative;
+  top: 10%;
+  color: rgb(85, 85, 85);
+  /* text-align: center; */
+}
+
+.levelGraph h2 {
+  font-family: "Pretendard-Regular";
+  font-size: 3em;
+  font-weight: 600;
+  margin: 0 !important;
+  position: relative;
+  top: 33%;
+}
+
+.levelGraph p {
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0 !important;
+  position: relative;
+  top: 50%;
+  color: gray;
+}
+
+.lineG {
+  background-color: #effffec5;
+  border-radius: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.lineG p {
+  font-family: "Pretendard-Regular";
+  font-size: 0.9em;
+  font-weight: 600;
+  margin: 3px 0 3px 0;
+  text-align: center;
+}
+
+.else .lineG {
+  grid-row: 2/3;
+  grid-column: 1/3;
+}
+
+.else .diffGraph {
+  grid-row: 1/2;
+  grid-column: 2/3;
+}
+
+.diffGraph {
+  background-color: #effffec5;
+  border-radius: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.diffGraph h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.diffGraph .graphBox {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.graphBox .det {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.det .barOrigin {
+  width: 165px;
+  height: 15px;
+  border-radius: 5px;
+  background-color: #dddddd;
+  z-index: 1;
+}
+.barOrigin .barContent {
+  height: 15px;
+  z-index: 2;
+  border-radius: 5px;
+  background-color: #7472ce;
+}
+
+.det p {
+  font-family: "Pretendard-Regular";
+  font-size: 0.9em;
+  font-weight: 600;
+  margin: 0 !important;
+  color: gray;
+  width: 30px;
+  text-align: center;
+}
+
+.home .Block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6vw;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+  .home .Block {
+    display: flex;
+    flex-flow: column nowrap;
+    grid-template-rows: 1fr 1fr;
+    gap: 50px;
+
+    width: clamp(500px, 80%, 600px);
+  }
+}
+
+.Block .boxTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.boxTitle h2 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.Block .box1 {
+  grid-column: 1/2;
+  cursor: pointer;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+
+.Block .box2 {
+  cursor: pointer;
+  grid-column: 2/3;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+
+.Block .blockBox {
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.blockBox .blockContent {
+  width: 100%;
+}
+
+.blockBox .blockTop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blockBox .blockTop2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.blockTop h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockTop h4 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockTop2 h3 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBox .blockSec {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.blockBox .blockSec2 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.blockSec #blockCat {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #494949;
+  margin: 0 !important;
+}
+
+.blockSec .block_un {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.blockSec .block_un2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.block_un .unOne {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.block_un p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.block_un2 p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBox .blockBody {
+  display: flex;
+  margin-top: 15px;
+  border-top: 2px solid lightgray;
+  padding-top: 15px;
+}
+
+.blockSec p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockSec2 p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBox .blockThird {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  margin-top: 25px;
+  justify-content: space-between;
+}
+
+.blockBox .blockThird p {
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockBody p {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.blockTop2 .redBox {
+  border: 2px solid red;
+  border-radius: 10px;
+  color: red;
+  width: fit-content;
+  padding: 2px 15px 0px 15px;
+}
+
+.home-body .ad-box {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  width: 97%;
+}
+
+.home .notice {
+  display: flex;
+  flex-flow: column;
+  background-color: #e7e7e7;
+  border-radius: 20px;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  color: rgb(29, 29, 29);
+  margin-bottom: 8rem;
+  width: 97%;
+}
+
+.notice .noticeHere .title-notice {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(194, 194, 194);
+  margin: 0 30px 1.5rem 30px;
+}
+
+.title-notice h2 {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-size: 2em;
+  font-weight: 600;
+  padding-left: 1rem;
+}
+
+.notice .body-notice {
+  list-style-type: disc;
+  padding-left: 4rem;
+  margin-top: 1rem;
+  max-height: 400px;
+}
+.body-notice {
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+/*--------------------------------------------- FOOTER -------------------------------------------------------*/
+.footer {
+  display: flex;
+  flex-flow: column wrap;
+
+  padding-top: 3rem;
+  align-items: center;
+  padding-bottom: 2rem;
+  color: rgb(165, 165, 165);
+}
+
+.footerBody {
+  width: clamp(750px, 90%, 1150px);
+  display: flex;
+  flex-flow: column wrap;
+  gap: 15px;
+}
+
+.footer h2 {
+  font-family: "GmarketSansMedium";
+  font-size: 1.5rem;
+}
+
+.pageIcons {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 1rem;
+  width: 150px;
+  align-items: baseline;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.footerLogo {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.footerLogo h2 {
+  color: #00ff00 !important;
+}
+
+.txts {
+  display: flex;
+  flex-flow: row wrap;
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+}
+
+.txtz2 {
+  display: flex;
+  flex-flow: row wrap;
+  font-family: "Pretendard-Regular";
+  font-size: 0.9em;
+}
+
+.txtz2 p {
+  margin-right: 5rem;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 870px) {
+  .txtz2 p {
+    margin-right: 3rem;
+  }
+}
+
+.txts .TT {
+  font-family: "GmarketSansMedium";
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.div1 {
+  margin-right: 4rem;
+}
+
+.div2 {
+  margin-right: 4rem;
+}

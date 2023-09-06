@@ -1,0 +1,231 @@
+/* 로그인 화면 전체 */
+.loginWhole {
+  background-color: rgb(199, 199, 199);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 7vw 0 8vw 19vw;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1300px) {
+  .loginWhole {
+    padding: 7vw 0 8vw 10vw;
+  }
+}
+
+/* 탭 메뉴 상단 글씨 */
+.nav-link {
+  color: rgb(0, 0, 0) !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+button.active {
+  color: #5fe45f !important;
+}
+
+/* 로그인 화면 오른쪽 사진 */
+.loginImg {
+  background-image: url("../../../public/image/login_logo1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 로그인 박스 */
+.loginContainer {
+  width: 500px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.loginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-content: center;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  border-left: 1px solid rgb(224, 224, 224);
+  border-right: 1px solid rgb(224, 224, 224);
+  padding: 40px 30px 0px 30px;
+}
+
+/* 로그인 박스 내부 한 칸(아이디, 비밀번호,...) */
+.loginBox {
+  margin: 0px 10px;
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  /* align-items: center; */
+}
+
+.loginBox :nth-child(1) {
+  margin-bottom: 7px;
+}
+
+.loginBox > input {
+  width: 100%;
+  border: none;
+  padding: 10px 10px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 5px;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  color: rgb(146, 146, 146);
+}
+
+.loginBox > input:focus {
+  background-color: #9ff99f;
+  outline: none;
+  color: rgb(87, 87, 87);
+  /* color: gray; */
+}
+
+/* 로그인 완료 버튼 */
+.loginConfirm > Button {
+  width: 100%;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 10px;
+}
+
+.loginConfirm > Button:hover {
+  border: 1px solid #5fe45f;
+  background-color: #5fe45f;
+}
+
+.loginConfirm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0 40px 0;
+}
+
+/* 자동로그인 버튼 */
+.loginAuto {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginAuto p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 0 10px !important;
+}
+.loginAuto > input {
+  width: 80%;
+  margin: 0px !important;
+}
+
+.loginAuto > input:hover {
+  border: 1px solid #5fe45f;
+  background-color: #5fe45f;
+}
+
+/* 아이디 및 비밀번호 찾기 */
+.loginOptions {
+  font-size: small;
+  text-decoration: underline;
+  color: gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5%;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.loginOptions > span {
+  cursor: pointer;
+}
+
+.loginOptions > span:hover {
+  color: #00ff00;
+}
+
+/* 아이디 중복 확인 */
+.checkID {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkID > input {
+  width: 100%;
+  border: none;
+  padding: 10px 10px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 5px;
+  margin-bottom: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.checkID > input:focus {
+  background-color: #9ff99f;
+  outline: none;
+  color: gray;
+}
+
+.checkID > span {
+  font-size: small;
+  margin-left: 20px;
+  width: max-content;
+  display: grid;
+  justify-content: center;
+  align-self: center;
+}
+
+.checkID > span > svg {
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+/* 학생 또는 선생 */
+.signUpTypes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.signUpType {
+  margin: 0 !important;
+  display: flex;
+  flex-direction: row;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.signUpRadio {
+  margin: 0 20px 0 0 !important;
+}
+
+.signUpRadio > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  margin-bottom: 0 !important;
+}
+
+.signUpRadio > div > svg {
+  margin: 0 !important;
+}
+.stdAge {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+}

@@ -1,0 +1,142 @@
+import "../Manage.css";
+import React, { useState, useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { BsTrash, BsFillPencilFill } from "react-icons/bs";
+import Pagination from "@mui/material/Pagination";
+import { useAppSelector } from "../../../app/store";
+import { API } from "api/config";
+
+//페이지 네이션, 문제 삭제시 리스트 재호출, 첫 렌더링을 모두 api 호출 한번에 해결하려면
+//이 방법밖에 생각이 나질 않았습니다. suspense를 쓰지 말아주세요
+//역시 튜닝의 끝은 순정인가 봅니다.
+export const TaskList = () => {
+  const [page, setPage] = useState(1);
+  const [del, setDel] = useState(0);
+  const [taskList, setTaskList] = useState({});
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get(API.MANAGETASK, {
+        params: {
+          size: 10,
+          page: page,
+        },
+      })
+      .then(({ data }) => {
+        setTaskList(data);
+        setLoading(false);
+      });
+  }, [del, page]);
+  return (
+    <>
+      <h2 className="mTi">TASK LIST</h2>
+      <div>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <TasksList
+            resource={taskList}
+            setPage={(value) => {
+              setPage(value);
+              setLoading(true);
+            }}
+            page={page}
+            setDel={setDel}
+            setLoading={setLoading}
+          />
+        )}
+      </div>
+    </>
+  );
+};
+
+const TasksList = ({ resource, page, setPage, setDel, setLoading }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
+  const problemList = resource;
+  return (
+    <div className="m-upload">
+      <div className="taskTop">
+        <h3>ID</h3>
+        <h3>제목</h3>
+        <h3>난이도</h3>
+        <h3>정답률</h3>
+        <h3>제출수</h3>
+        <h3>수정</h3>
+        <h3>삭제</h3>
+      </div>
+      {problemList.tasks.map((e) => {
+        return (
+          <ListBox
+            key={e.id}
+            info={e}
+            token={userInfo.access_token}
+            setDel={setDel}
+            setLoading={setLoading}
+          />
+        );
+      })}
+      <div className="pageController">
+        <Pagination
+          count={Math.ceil(problemList.total / problemList.size)}
+          variant="outlined"
+          shape="rounded"
+          defaultPage={1}
+          page={page}
+          onChange={(e, value) => setPage(value)}
+        />
+      </div>
+    </div>
+  );
+};
+
+const ListBox = ({ info, token, setDel, setLoading }) => {
+  const navigate = useNavigate();
+  const goDetail = (e) => {
+    navigate(`/problems/${e}`);
+  };
+  const loadlist = (e) => {
+    axios
+      .delete(API.TASK, {
+        params: { task_id: info.id },
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then(() => {
+        alert(`id : ${info.id}, 제목 : ${info.title} 문제를 삭제했습니다.`);
+        setDel(info.id);
+        setLoading(true);
+      });
+  };
+  return (
+    <div className="taskList">
+      <h4>No.{info.id}</h4>
+      <h4
+        onClick={() => {
+          goDetail(info.id);
+        }}
+      >
+        {info.title}
+      </h4>
+      <h4>{info.diff}</h4>
+      <h4>{info.rate}%</h4>
+      <h4>{info.count == null ? 0 : info.count}</h4>
+      <BsFillPencilFill
+        cursor="pointer"
+        size={20}
+        color="red"
+        onClick={() => {
+          navigate(`/manage/modify/${info.id}`);
+        }}
+        style={{ justifySelf: "center" }}
+      />
+      <BsTrash
+        cursor="pointer"
+        size={20}
+        color="red"
+        onClick={loadlist}
+        style={{ justifySelf: "center" }}
+      />
+    </div>
+  );
+};

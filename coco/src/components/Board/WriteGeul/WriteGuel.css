@@ -1,0 +1,95 @@
+.writeGuel {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.writeGuel .WGBody {
+  width: clamp(600px, 90%, 1180px);
+}
+
+.writeGuel .wG_Head {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  margin-top: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 2rem;
+}
+
+.writeGuel .wG_Head h2 {
+  font-family: "GmarketSansMedium";
+  margin: 0 !important;
+  font-weight: 700;
+}
+
+.writeGuel .wG_one {
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: space-between;
+  align-items: center;
+  gap: 2vw;
+}
+
+#selectCate {
+  width: 250px;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+#selectCate #floatingSelect {
+  margin: 3px 0 0 0;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+}
+
+#selectCate option {
+  padding-top: 20px;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+}
+
+#wG_Title {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  padding-top: 14px;
+  font-size: 1.1em;
+  border-radius: 15px;
+}
+
+.freeWrite {
+  margin-top: 2rem;
+}
+
+#submitFree {
+  margin-top: 2rem;
+  width: 100%;
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  margin-bottom: 3rem;
+  border-radius: 12px;
+}
+
+#free_txtInput {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 580;
+  padding: 13px;
+}
+
+.helpWrite {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* margin: 0 -12vw; */
+}
+
+.helpWrite > div {
+  margin: 0 10px;
+}

@@ -1,0 +1,260 @@
+.PBD {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  --sash-size: 20px;
+  --sash-hover-size: 20px;
+  --focus-border: no-repeat center/contain url("/public/image/threeline.png")
+    rgb(241, 241, 241);
+}
+.PBD-title {
+  display: flex;
+  flex-flow: row;
+  padding: 0.6rem 2.5rem 0.6rem 1.5rem;
+  justify-content: space-between;
+  align-items: end;
+  border-bottom: rgb(216, 216, 216) solid 1px;
+  flex: 1 1 0;
+  background-color: rgb(241, 241, 241);
+}
+
+.problemsName-pbd {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+}
+
+.problemsName-pbd > div:nth-child(1) {
+  border: 2px solid red;
+  border-radius: 10px;
+  color: red;
+  padding: 5px 30px;
+  height: auto;
+  align-self: center;
+  margin-right: 1.5rem;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.problemsName-pbd > div:nth-child(2) {
+  font-size: 1.1rem;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  align-self: center;
+  padding-top: 0.4rem;
+}
+
+.PBD-secTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 100px;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #686868;
+}
+
+.pbd-topRight {
+  align-self: center;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.problemsAns-pbd {
+  color: skyblue;
+  text-align: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.2em;
+  display: flex;
+}
+
+#jung {
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1em;
+}
+
+#pbd-pick {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  gap: 6px;
+  cursor: pointer;
+  border-bottom: 2px solid rgb(172, 172, 172);
+  padding: 5px 10px 6px 7px;
+}
+
+#pbd-pick:hover {
+  border-bottom: 2px solid #5fe45f;
+  color: #5fe45f;
+}
+
+#pbd-pick p {
+  margin: 0 !important;
+}
+
+.PBD-body {
+  width: 100vw;
+  flex: 18 1 0;
+  font-family: "Pretendard-Regular";
+  font-size: 1.2rem;
+}
+
+.PBD-body .PBD-problem {
+  display: flex;
+  flex-flow: column;
+  padding: 1.5rem 1.5rem;
+}
+
+.PBD-pbTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  border-bottom: 2px solid lightgray;
+  gap: 10px;
+  font-weight: 600;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+.PBD-problem .PBD-txt {
+  white-space: pre-wrap;
+  font-weight: 500;
+  font-size: 0.9em;
+  font-family: "Pretendard-Regular";
+  padding: 1.5rem 1rem;
+}
+
+.PBD-txt p {
+  font-family: "Pretendard-Regular" !important;
+  margin: 0 !important;
+}
+
+#rightCode {
+  align-items: center;
+  padding-bottom: 0.6rem;
+}
+
+#rightCode h2 {
+  margin: 0 !important;
+}
+
+.PBD-pbTitle .form-floating {
+  width: 150px;
+  padding: 0 !important;
+  margin-left: 30px;
+}
+
+.PBD-pbTitle .form-floating select {
+  padding: 0 10px !important;
+  height: 40px !important;
+}
+
+.PBD-img {
+  width: 95%;
+  height: auto;
+  margin: 1.5rem 1rem;
+}
+.PBD-body h2 {
+  white-space: pre-wrap;
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0px 0px;
+}
+
+.PBD-body .PBD-problem .PBD-exBox {
+  display: grid;
+  grid-template-columns: 48% 48%;
+  justify-content: space-between;
+}
+
+.PBD-body .PBD-problem .PBD-exBox .PBD-txt2 {
+  white-space: pre-wrap;
+  min-height: 150px;
+  padding-left: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9em;
+  padding-top: 1rem;
+}
+
+.PBD-body .PBD-input {
+  margin-left: 25px;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  padding: 1.5rem 1.5rem;
+}
+
+.PBD-body .PBD-input .PBD-pbTitle {
+  margin-bottom: 2rem;
+}
+
+#submit_btn {
+  font-weight: 600;
+  font-size: 1rem;
+  padding: auto auto;
+  font-family: "Pretendard-Regular";
+}
+
+#submit_btn:hover {
+  border: 1px solid #5fe45f;
+  background-color: #5fe45f;
+}
+
+.PBD-menu {
+  border-top: rgb(216, 216, 216) solid 1px;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.6rem 1.5rem;
+  background-color: rgb(241, 241, 241);
+}
+
+.sash-hover {
+  margin-left: 5px;
+}
+
+.sash {
+  margin-left: 5px;
+
+  background: no-repeat center/contain url("/public/image/threeline2.png")
+    rgb(241, 241, 241);
+}
+
+.PBD-scroll {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.PBD-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(211, 211, 211);
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+}
+
+.PBD-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+#dropdown-basic-button {
+  background-color: rgb(241, 241, 241);
+  border: none;
+  color: black;
+  font-weight: 600;
+  font-family: "Pretendard-Regular";
+  padding: 0 !important;
+}
+
+.dropdown-menu {
+  width: 100px !important;
+}

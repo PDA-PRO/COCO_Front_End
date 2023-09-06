@@ -1,0 +1,199 @@
+.board {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.boardContent {
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+  min-height: 800px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.bcBody {
+  width: clamp(600px, 90%, 1200px);
+}
+
+.boardContent .boardHead {
+  display: flex;
+  flex-flow: row;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 3rem;
+  cursor: pointer;
+}
+
+.boardContent .boardHead .boardTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.boardContent .boardHead .boardTitle h2 {
+  font-family: "GmarketSansMedium";
+  font-weight: 600;
+  font-size: 1.7em;
+  color: rgb(63, 63, 63);
+  letter-spacing: 5px;
+  margin: 0 !important;
+  padding-left: 0.5rem;
+}
+
+.board .boardOn {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.board .boardOn h3 {
+  font-family: "Pretendard-Regular";
+  font-weight: 650;
+  font-size: 1.2em;
+  margin: 0 !important;
+  padding-left: 15px;
+}
+
+.boardBody {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top: 4rem;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.Bone {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  width: 100%;
+  row-gap: 20px;
+}
+
+.FastWrite {
+  display: flex;
+  justify-self: center;
+  flex-flow: column nowrap;
+  height: 550px;
+  border-radius: 20px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  width: 350px;
+  overflow: auto;
+  justify-content: stretch;
+  position: sticky !important;
+  z-index: 2;
+  top: 75px;
+}
+
+.FastWrite h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  margin: 0 !important;
+  font-size: 1.2em;
+}
+
+.FastWrite .FWHead {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(180, 180, 180);
+  margin-bottom: 20px;
+}
+
+.FastWrite .FWFooter {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.FastWrite .FWFooter p {
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #5c5c5c;
+}
+
+#txtTitle {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 580;
+}
+
+#txtInput {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  margin: 0 !important;
+  height: 270px;
+  background-color: #fff;
+}
+
+#FastSubmit {
+  border-radius: 12px !important;
+  font-family: "Pretendard-Regular";
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 1250px) {
+  .FastWrite {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 530px;
+    border-radius: 25px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    width: 300px;
+    overflow: auto;
+    justify-content: stretch;
+    position: sticky !important;
+    z-index: 2;
+    top: 75px;
+  }
+}
+
+@media screen and (max-width: 1130px) and (min-width: 850px) {
+  .Bone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    width: 100%;
+    row-gap: 20px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .boardBody {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 3rem;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .Bone {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1/4;
+    gap: 15px;
+  }
+}

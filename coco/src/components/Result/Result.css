@@ -1,0 +1,209 @@
+.Res {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 0 0 5rem 0;
+}
+
+.res-body {
+  width: clamp(750px, 90%, 1200px);
+}
+
+.res-top {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+  border-bottom: 1px solid lightgray;
+}
+
+.res-top p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+.taskNo {
+  color: red;
+}
+
+.taskNo2 {
+  color: rgb(255, 166, 0);
+}
+
+.res-top .box {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  justify-content: start;
+  align-items: start;
+}
+.un {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.box .un2 {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+}
+
+.box .un p {
+  padding-top: 4px;
+}
+
+.my_submit {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+  border-bottom: 1px solid lightgray;
+}
+
+.my_submit .fBox {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 15px;
+}
+
+.my_submit p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+.fBox .box {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  justify-content: start;
+  align-items: start;
+}
+
+.my_submit .scoring {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.my_submit .time {
+  color: rgb(94, 94, 94);
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.scoring .message {
+  font-size: 1em;
+  font-weight: 500;
+  color: gray;
+  padding-top: 10px;
+}
+
+.myCode {
+  padding: 1.3rem 1vw 1.3rem 1vw;
+
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.myCode p {
+  margin: 0 !important;
+}
+
+.myCode #R-Code {
+  padding: 1em 2vw;
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 15px;
+  cursor: text;
+  background-color: rgb(245, 245, 245);
+  margin: 10px 1vw !important;
+  white-space: pre-line;
+}
+
+.afterCorrect {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+  cursor: pointer;
+  width: fit-content;
+  float: right;
+  color: rgb(104, 104, 104);
+}
+
+.afterCorrect:hover {
+  color: rgb(98, 148, 255);
+}
+
+.afterCorrect p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-top: 2px;
+}
+
+.afterWrong {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+  cursor: pointer;
+  width: fit-content;
+  float: right;
+  color: rgb(104, 104, 104);
+}
+
+.afterWrong:hover {
+  color: rgb(98, 148, 255);
+}
+
+.afterWrong p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-top: 2px;
+}
+.pylint {
+  padding: 1.3rem 1vw 1.3rem 1vw;
+
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 20px;
+}
+
+.pylint p {
+  margin: 0 !important;
+}
+
+.pylint .detail {
+  padding: 1em 2vw;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.detail li {
+  list-style-type: circle;
+  padding-bottom: 8px;
+  color: rgb(95, 95, 95);
+}

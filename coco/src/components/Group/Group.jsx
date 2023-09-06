@@ -2,7 +2,7 @@ import React from "react";
 import "./Group.css";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 import { GroupBox } from "./GroupBox";
 import { Pagination } from "@mui/material";
@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Suspense } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useAppSelector } from "../../app/store";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { AllGroupBox } from "./AllGroupBox";
 import { TbCrown } from "react-icons/tb";
@@ -18,16 +18,14 @@ import { API } from "api/config";
 import { IoSchoolOutline } from "react-icons/io5";
 import { Tutor } from "./Tutor/Tutor";
 import { HiArrowUturnLeft } from "react-icons/hi2";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const Group = () => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
-
+  const [query, setQuery] = useState();
   const [tutor, setTutor] = useState(0);
-
-  console.log(userInfo);
-
-  const [page, setPage] = useState(1);
 
   const reload = () => {
     navigate(0);
@@ -98,7 +96,7 @@ export const Group = () => {
             <div className="group-bottom">
               <div className="group-left">
                 <div className="group-search">
-                  <SearchBar />
+                  <SearchBar setQuery={setQuery} />
                 </div>
 
                 <div className="allGroups">
@@ -113,32 +111,10 @@ export const Group = () => {
                   </div>
 
                   <Suspense fallback={<Spinner />}>
-                    <GetGroups
-                      resource={fetchData(API.ROOM, {
-                        params: {
-                          size: 1,
-                          page: page,
-                        },
-                      })}
-                      setPage={setPage}
-                      page={page}
-                    />
+                    <GetGroups query={query} />
                   </Suspense>
                 </div>
               </div>
-
-              {/* 왼족 : 전체 그룹, 오른쪽 : 내 그룹*/}
-              {/* <div className="group-right">
-                <div className="r-top">
-                  <h2>My Study</h2>
-
-                  <Suspense fallback={<Spinner />}>
-                    <GetGroups resource={fetchData(API.ROOM)} />
-                  </Suspense>
-                </div>
-              </div> */}
-
-              {/* 왼족 : 전체 그룹, 오른쪽 : 내 그룹*/}
 
               <div className="group-right">
                 <div className="r-top">
@@ -180,10 +156,9 @@ export const Group = () => {
   );
 };
 
-const SearchBar = ({ search }) => {
+const SearchBar = ({ setQuery }) => {
   const onSearchHandler = (e) => {
-    var info = document.getElementById("SV").value;
-    search(info);
+    setQuery(document.getElementById("SV").value);
   };
 
   return (
@@ -198,20 +173,29 @@ const SearchBar = ({ search }) => {
     </div>
   );
 };
+const GetGroups = ({ query }) => {
+  const [page, setPage] = useState(1);
 
-const GetGroups = ({ resource, page, setPage }) => {
-  const GroupList = resource.read();
-
-  console.log(GroupList);
-
+  const { data: GroupList } = useQuery(
+    ["roomlist", page, query],
+    () =>
+      axios.get(API.ROOM, {
+        params: {
+          size: 5,
+          page: page,
+          query: query,
+        },
+      }),
+    { suspense: true }
+  );
   return (
     <>
-      {GroupList.map((e) => {
+      {GroupList.data.room_list.map((e) => {
         return <AllGroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>
         <Pagination
-          count={Math.ceil(GroupList.total / GroupList.size)}
+          count={Math.ceil(GroupList.data.total / GroupList.data.size)}
           variant="outlined"
           shape="rounded"
           defaultPage={1}

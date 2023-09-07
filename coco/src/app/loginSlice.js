@@ -9,6 +9,7 @@ const initialState = {
   role: null,
   exp: 0,
   level: 1,
+  tutor: null,
 };
 
 export const loginSlice = createSlice({
@@ -24,6 +25,7 @@ export const loginSlice = createSlice({
       state.exp = action.exp;
       state.level = action.level;
       state.imagetoken = action.imagetoken;
+      state.tutor = action.tutor;
     },
     logout: (state) => {
       state.access_token = "";
@@ -34,6 +36,7 @@ export const loginSlice = createSlice({
       state.exp = 0;
       state.level = 1;
       state.imagetoken = -1;
+      state.tutor = null;
     },
     initlogin: (state) => {
       state.access_token = initialState.access_token;
@@ -44,6 +47,7 @@ export const loginSlice = createSlice({
       state.exp = initialState.exp;
       state.level = initialState.level;
       state.imagetoken = initialState.imagetoken;
+      state.tutor = initialState.tutor;
     },
     changimage: (state, action) => {
       state = state;

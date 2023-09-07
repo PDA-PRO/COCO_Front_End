@@ -55,7 +55,7 @@ export const Group = () => {
             </div>
 
             {/* 튜터 조건 맞으면 버튼 보여줘야됨 role === 1 이면 스터디 개설 0 이면 튜터 신청 */}
-            {userInfo.role === 1 ? (
+            {userInfo.tutor === 1 ? (
               <div
                 className="makeGroup"
                 onClick={() => {

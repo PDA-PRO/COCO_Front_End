@@ -80,11 +80,18 @@
   background-color: rgb(245, 245, 245);
 }
 
-.contentBody .cm-gutterElement.cm-activeLineGutter {
+.contentBody .cm-gutterElement {
   background-color: rgb(245, 245, 245);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 600;
+}
+
+.contentBody .cm-line {
+  background-color: rgb(255, 255, 255);
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
 }
 
 .contentBody .cm-activeLine {
@@ -161,8 +168,15 @@
   background-color: rgb(247, 252, 255);
 }
 
-.ans .cm-gutterElement.cm-activeLineGutter {
-  background-color: rgb(247, 252, 255);
+.ans .cm-gutterElement {
+  background-color: rgb(255, 255, 255);
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.ans .cm-line {
+  background-color: rgb(255, 255, 255);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;

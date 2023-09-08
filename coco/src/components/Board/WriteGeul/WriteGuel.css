@@ -84,12 +84,57 @@
 }
 
 .helpWrite {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  column-gap: 0.5vw;
+  /* flex-direction: row;
+  justify-content: space-between; */
   /* margin: 0 -12vw; */
 }
 
-.helpWrite > div {
-  margin: 0 10px;
+.helpWrite .helpContent {
+  min-height: 400px;
+}
+
+.helpContent .ql-editor {
+  min-height: 480px !important;
+  font-family: "Pretendard-Regular";
+
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.helpWrite .helpCode {
+  border: 1px solid lightgray;
+  width: 45%;
+  padding: 15px;
+}
+
+.helpCode .cm-content {
+  background-color: rgb(255, 255, 255);
+}
+
+.helpCode .cm-gutter {
+  background-color: rgb(247, 252, 255);
+}
+
+.helpCode .cm-gutterElement {
+  background-color: rgb(255, 255, 255);
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.helpCode .cm-line {
+  background-color: rgb(255, 255, 255);
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.helpCode .cm-activeLine {
+  background-color: rgb(255, 255, 255);
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
 }

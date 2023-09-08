@@ -148,7 +148,7 @@ const GetBoardDetail = ({ resource, userInfo }) => {
       <div className="BDCode">
         <div className="BD_codeTop">
           <BsCode size={33} />
-          <h2>CODE HERE</h2>
+          <h2>CODE</h2>
           <BsCodeSlash size={33} />
         </div>
 

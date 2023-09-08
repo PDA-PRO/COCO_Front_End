@@ -135,7 +135,7 @@ export const Help = ({ title }) => {
   return (
     <div className="freeWrite">
       <div className="helpWrite">
-        <div>
+        <div className="helpContent">
           <ReactQuill
             theme="snow"
             value={quillValue}
@@ -143,15 +143,10 @@ export const Help = ({ title }) => {
             onChange={setquillValue}
             ref={quillRef}
             placeholder={"내용을 작성해주세요"}
-            style={{
-              height: "480px",
-              marginBottom: "50px",
-            }}
           />
         </div>
-        <div style={{ border: "2px solid lightgray" }}>
+        <div className="helpCode">
           <CodeMirror
-            width="27vw"
             value="print('hello')"
             extensions={[python(), cpp()]}
             onChange={(value) => {

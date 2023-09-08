@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import { BsDashCircle } from "react-icons/bs";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 
 export const QA = () => {
   var path = window.location.pathname;
@@ -82,21 +83,27 @@ const Question = ({ resource }) => {
           </div> */}
             </div>
 
-            <Accordion.Body>
-              {"질문"}
-              <div
-                className="q_content"
-                dangerouslySetInnerHTML={{
-                  __html: e.question,
-                }}
-              ></div>
-              {"코드"}
-              <div className="q_content">
-                <CodeMirror value={e.code} editable={false} />
+            <Accordion.Body className="contentBody">
+              <h4>Q.</h4>
+              <div className="oneQuestion">
+                <div
+                  className="q_content"
+                  dangerouslySetInnerHTML={{
+                    __html: e.question,
+                  }}
+                ></div>
+
+                <h4>CODE</h4>
+                <div className="q_content">
+                  <CodeMirror value={e.code} editable={false} />
+                </div>
               </div>
 
               {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
-              {"답변"}
+              <div className="whoAns">
+                <h4>Answer</h4>
+              </div>
+
               {e.answers.map((ans) => {
                 return <Answer info={ans} />;
               })}
@@ -110,9 +117,36 @@ const Question = ({ resource }) => {
 };
 
 const Answer = ({ info }) => {
+  const [isGood, setIsGood] = useState(0);
+
+  const Good = () => {
+    alert("답변이 채택되었습니다.");
+    setIsGood(1);
+  };
+
   return (
     <div className="ans">
+      <div className="ansTop">
+        <div className="nameAnddate">
+          <p>name</p>
+          <p>2023-09-08 17:30</p>
+        </div>
+
+        {isGood === 0 ? (
+          <div className="itGood" onClick={() => Good()}>
+            <AiOutlineLike size={20} />
+            <p>채택하기</p>
+          </div>
+        ) : (
+          <div className="itGood" onClick={() => Good()}>
+            <AiFillLike size={20} color="blue" />
+            <p style={{ color: "blue" }}>채택된 답변</p>
+          </div>
+        )}
+      </div>
+
       <div
+        className="AnswerContent"
         dangerouslySetInnerHTML={{
           __html: info.answer,
         }}
@@ -164,6 +198,7 @@ const MakeAnswer = ({ room_id, q_id }) => {
 
   return (
     <div className="makeAns">
+      <h5>답변 등록하기</h5>
       <ReactQuill
         id="quill"
         theme="bubble"

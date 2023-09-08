@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Footer } from "../Home/Footer";
 import { Header } from "../Home/Header";
@@ -21,9 +21,11 @@ import {
   BsSlashCircle,
   BsCheckCircle,
   BsBoxArrowInRight,
+  BsX,
 } from "react-icons/bs";
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineManageSearch } from "react-icons/md";
+import { BiRightArrowAlt } from "react-icons/bi";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -49,6 +51,7 @@ export const Result = (code) => {
 };
 
 const ResultBox = ({ resource, info }) => {
+  const [wpc, setWpc] = useState(0);
   const whatResult = (e) => {
     if (e === 3) {
       return <RiEmotionLaughLine size={40} color="#6666ff" />;
@@ -131,9 +134,30 @@ const ResultBox = ({ resource, info }) => {
 
   const numberedData = dataArray
     .map((item, index) => {
-      return `${index + 1}. ${item}`;
+      return `${index + 1}@${item}`;
     })
-    .join("<br>");
+    .join("\n");
+
+  function makeLine(arr, line, start, end) {
+    const strings = arr.split("\n").map((str) => {
+      const [num, val] = str.split("@");
+      return (
+        <div>
+          {num}.{" "}
+          {line == num ? (
+            <n>
+              <u style={{ color: "red" }}>{val.slice(start, end + 1)}</u>
+              {val.slice(end + 1)}
+            </n>
+          ) : (
+            <n>{val}</n>
+          )}
+        </div>
+      );
+    });
+
+    return strings;
+  }
 
   return (
     <div className="Res">
@@ -188,19 +212,46 @@ const ResultBox = ({ resource, info }) => {
             <p>내 제출 코드</p>
           </div>
 
-          <pre id="R-Code">{numberedData}</pre>
+          <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
         </div>
         {problemList["status"] === 3 ? (
-          <div className="afterCorrect">
+          <div className="afterCorrect" onClick={() => setWpc(0)}>
             <p>다른 로직 코드 보러가기</p>
             <BsBoxArrowInRight size={23} />
           </div>
         ) : (
-          <div className="afterWrong">
-            {/* 이름은 나중에 바꾸는걸로... */}
-            <p>WPC 확인하기</p>
-            <BsBoxArrowInRight size={23} />
+          <>
+            {wpc === 1 ? (
+              <div className="afterWrong" onClick={() => setWpc(2)}>
+                {/* 이름은 나중에 바꾸는걸로... */}
+                <p>닫기</p>
+                <BsX size={25} color="red" />
+              </div>
+            ) : (
+              <div className="afterWrong" onClick={() => setWpc(1)}>
+                {/* 이름은 나중에 바꾸는걸로... */}
+                <p>WPC 확인하기</p>
+                <BsBoxArrowInRight size={23} />
+              </div>
+            )}
+          </>
+        )}
+
+        {wpc === 1 ? (
+          <div className="wpcBox">
+            <div className="wpcItem">
+              <p>내 제출 코드</p>
+              <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
+            </div>
+            <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} />
+            <div className="wpcItem">
+              <p>AI 분석 후 코드</p>
+              <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
+              {/* <WPC /> */}
+            </div>
           </div>
+        ) : (
+          <></>
         )}
 
         <div className="pylint">
@@ -215,5 +266,13 @@ const ResultBox = ({ resource, info }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const WPC = () => {
+  return (
+    <>
+      <p>태그</p>
+    </>
   );
 };

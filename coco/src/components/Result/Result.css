@@ -109,8 +109,8 @@
 }
 
 .myCode {
-  padding: 1.3rem 1vw 1.3rem 1vw;
-
+  padding: 1.3rem;
+  width: 100%;
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1.1em;
@@ -120,9 +120,10 @@
 
 .myCode p {
   margin: 0 !important;
+  padding-left: 5px;
 }
 
-.myCode #R-Code {
+.R-Code {
   padding: 1em 2vw;
   font-size: 1em;
   font-weight: 500;
@@ -130,7 +131,7 @@
   border-radius: 15px;
   cursor: text;
   background-color: rgb(245, 245, 245);
-  margin: 10px 1vw !important;
+  margin: 15px 1vw !important;
   white-space: pre-line;
 }
 
@@ -144,6 +145,7 @@
   width: fit-content;
   float: right;
   color: rgb(104, 104, 104);
+  position: relative;
 }
 
 .afterCorrect:hover {
@@ -168,6 +170,7 @@
   width: fit-content;
   float: right;
   color: rgb(104, 104, 104);
+  position: relative;
 }
 
 .afterWrong:hover {
@@ -206,4 +209,38 @@
   list-style-type: circle;
   padding-bottom: 8px;
   color: rgb(95, 95, 95);
+}
+
+.wpcBox {
+  display: grid;
+  grid-template-columns: 1fr 0.1fr 1fr;
+  column-gap: 1vw;
+  margin-top: 35px;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+  justify-items: center;
+  position: relative;
+  align-items: center;
+
+  border-bottom: 1px solid lightgray;
+}
+
+.wpcBox .wpcItem {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: center;
+}
+
+.wpcItem p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.wpcItem .R-Code {
+  width: 100%;
+  margin: 15px 0 !important;
+  background-color: rgb(247, 247, 247);
 }

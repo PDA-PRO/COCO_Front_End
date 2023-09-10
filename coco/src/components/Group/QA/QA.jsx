@@ -72,16 +72,26 @@ const Question = ({ resource }) => {
                 <BsDashCircle size={25} color="grey" />
               </div> */}
               <div className="check">
-            {e.check ? (
-              <BsCheckCircle size={25} color="skyblue" />
-            ) : (
-              <BsDashCircle size={25} color="grey" />
-            )}
-          </div>
+                {e.check ? (
+                  <BsCheckCircle size={25} color="skyblue" />
+                ) : (
+                  <BsDashCircle size={25} color="grey" />
+                )}
+              </div>
             </div>
 
             <Accordion.Body className="contentBody">
-              <h4>Q.</h4>
+              <div className="whoQue">
+                <p>
+                  작성자 :{" "}
+                  <b>
+                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv 2.</span>{" "}
+                    name
+                  </b>
+                </p>
+                <p>23-09-10 19:30</p>
+              </div>
+
               <div className="oneQuestion">
                 <div
                   className="q_content"
@@ -102,7 +112,7 @@ const Question = ({ resource }) => {
               </div>
 
               {e.answers.map((ans) => {
-                return <Answer info={ans} room_id={path.at(-1)}/>;
+                return <Answer info={ans} room_id={path.at(-1)} />;
               })}
               <MakeAnswer room_id={path.at(-1)} q_id={e.id} />
             </Accordion.Body>
@@ -113,7 +123,7 @@ const Question = ({ resource }) => {
   );
 };
 
-const Answer = ({ info, room_id}) => {
+const Answer = ({ info, room_id }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(info.check);
 
@@ -122,35 +132,36 @@ const Answer = ({ info, room_id}) => {
   });
 
   const Good = () => {
-    if(userInfo.id === info.ans_writer){
+    if (userInfo.id === info.ans_writer) {
       if (isGood) {
-        if (window.confirm("이미 채택된 답변입니다.\n채택을 취소하시겠습니까?")) {
+        if (
+          window.confirm("이미 채택된 답변입니다.\n채택을 취소하시겠습니까?")
+        ) {
           axios
-          .put(API.SELECTANSWER, {
-            room_id: room_id,
-            a_id: info.a_id,
-            select: 0
-          })
-          .then((res) => {
-            if (res.data === true) {
-              setIsGood(0);
-              alert("채택이 취소되었습니다.");
-              // window.location.replace(`/room/${room_id}`);
-            } else {
-              alert("ERROR - SERVER COMMUNICATION FAILED");
-            }
-          })
-          .catch(() => {
-            alert("인증실패");
-          });
-
+            .put(API.SELECTANSWER, {
+              room_id: room_id,
+              a_id: info.a_id,
+              select: 0,
+            })
+            .then((res) => {
+              if (res.data === true) {
+                setIsGood(0);
+                alert("채택이 취소되었습니다.");
+                // window.location.replace(`/room/${room_id}`);
+              } else {
+                alert("ERROR - SERVER COMMUNICATION FAILED");
+              }
+            })
+            .catch(() => {
+              alert("인증실패");
+            });
         }
       } else {
         axios
           .put(API.SELECTANSWER, {
             room_id: room_id,
             a_id: info.a_id,
-            select: 1
+            select: 1,
           })
           .then((res) => {
             if (res.data === true) {
@@ -165,16 +176,15 @@ const Answer = ({ info, room_id}) => {
             alert("인증실패");
           });
       }
-    }else{
-      alert('질문 작성자가 아닙니다.')
+    } else {
+      alert("질문 작성자가 아닙니다.");
     }
-
   };
 
   const getTime = (time) => {
     time = time.split("T");
-    return time[0]+" "+time[1];
-  }
+    return time[0] + " " + time[1];
+  };
 
   return (
     <div className="ans">

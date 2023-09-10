@@ -35,6 +35,8 @@ export const Group = () => {
     navigate("/makeroom");
   };
 
+  console.log(userInfo);
+
   return (
     <>
       <Header />

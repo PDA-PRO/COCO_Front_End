@@ -76,6 +76,18 @@
   padding-left: 20px;
 }
 
+.contentBody .whoQue {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px 10px;
+}
+
+.whoQue p:nth-child(2) {
+  color: gray;
+}
+
 .contentBody .cm-content {
   background-color: rgb(245, 245, 245);
 }
@@ -103,8 +115,10 @@
 
 .whoAns {
   display: grid;
-  border-bottom: 2px solid lightgray;
-  margin-bottom: 10px;
+  border-bottom: 2px solid rgb(169, 255, 162);
+  margin-bottom: 15px;
+  margin-top: 3rem;
+  color: rgb(52, 199, 39);
 }
 
 .nameAnddate {

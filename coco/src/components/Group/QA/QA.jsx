@@ -21,7 +21,7 @@ export const QA = () => {
     ["qa", path.at(-1), page],
     () => {
       return axios.get(API.ROOMQUESTION + path.at(-1), {
-        params: { size: 1, page: page },
+        params: { size: 2, page: page },
       });
     },
     {
@@ -58,6 +58,7 @@ const Question = ({ resource }) => {
   return (
     <>
       {info.map((e) => {
+        console.log(e)
         return (
           <Accordion.Item eventKey={e.id}>
             <div className="Head-Ac">
@@ -85,11 +86,11 @@ const Question = ({ resource }) => {
                 <p>
                   작성자 :{" "}
                   <b>
-                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv 2.</span>{" "}
-                    name
+                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv {e.level}.</span>{" "}
+                    {e.writer}
                   </b>
                 </p>
-                <p>23-09-10 19:30</p>
+                <p>{getTime(e.time)}</p>
               </div>
 
               <div className="oneQuestion">
@@ -179,11 +180,6 @@ const Answer = ({ info, room_id }) => {
     } else {
       alert("질문 작성자가 아닙니다.");
     }
-  };
-
-  const getTime = (time) => {
-    time = time.split("T");
-    return time[0] + " " + time[1];
   };
 
   return (
@@ -286,4 +282,10 @@ const MakeAnswer = ({ room_id, q_id }) => {
       </Button>
     </div>
   );
+};
+
+
+const getTime = (time) => {
+  time = time.split("T");
+  return time[0] + " " + time[1];
 };

@@ -41,4 +41,5 @@ export const API = {
   TUTORREQUEST: `${BASE_URL}/room/tutor-request`,
   VIEWTUTORREQUEST: `${BASE_URL}/manage/tutor-request`,
   TUTOR: `${BASE_URL}/manage/tutor`,
+  SELECTANSWER: `${BASE_URL}/room/select-answer`
 };

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Pagination from "@mui/material/Pagination";
 import "./QA.css";
@@ -10,7 +10,7 @@ import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
-import { BsDashCircle } from "react-icons/bs";
+import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 
 export const QA = () => {
@@ -55,9 +55,6 @@ const Question = ({ resource }) => {
   const info = resource;
   var path = window.location.pathname;
   path = path.split("/");
-
-  console.log(info);
-
   return (
     <>
       {info.map((e) => {
@@ -71,16 +68,16 @@ const Question = ({ resource }) => {
                 <div style={{ fontWeight: "600" }}>{e.title}</div>
               </Accordion.Header>
               {/* {Todo : 질문 채택 및 표시} */}
-              <div className="check">
-                <BsDashCircle size={25} color="grey" />
-              </div>
               {/* <div className="check">
-            {info.check ? (
+                <BsDashCircle size={25} color="grey" />
+              </div> */}
+              <div className="check">
+            {e.check ? (
               <BsCheckCircle size={25} color="skyblue" />
             ) : (
               <BsDashCircle size={25} color="grey" />
             )}
-          </div> */}
+          </div>
             </div>
 
             <Accordion.Body className="contentBody">
@@ -105,7 +102,7 @@ const Question = ({ resource }) => {
               </div>
 
               {e.answers.map((ans) => {
-                return <Answer info={ans} />;
+                return <Answer info={ans} room_id={path.at(-1)}/>;
               })}
               <MakeAnswer room_id={path.at(-1)} q_id={e.id} />
             </Accordion.Body>
@@ -116,20 +113,75 @@ const Question = ({ resource }) => {
   );
 };
 
-const Answer = ({ info }) => {
-  const [isGood, setIsGood] = useState(0);
+const Answer = ({ info, room_id}) => {
+  const userInfo = useAppSelector((state) => state.loginState);
+  const [isGood, setIsGood] = useState(info.check);
+
+  useEffect(() => {
+    setIsGood(info.check);
+  });
 
   const Good = () => {
-    alert("답변이 채택되었습니다.");
-    setIsGood(1);
+    if(userInfo.id === info.ans_writer){
+      if (isGood) {
+        if (window.confirm("이미 채택된 답변입니다.\n채택을 취소하시겠습니까?")) {
+          axios
+          .put(API.SELECTANSWER, {
+            room_id: room_id,
+            a_id: info.a_id,
+            select: 0
+          })
+          .then((res) => {
+            if (res.data === true) {
+              setIsGood(0);
+              alert("채택이 취소되었습니다.");
+              // window.location.replace(`/room/${room_id}`);
+            } else {
+              alert("ERROR - SERVER COMMUNICATION FAILED");
+            }
+          })
+          .catch(() => {
+            alert("인증실패");
+          });
+
+        }
+      } else {
+        axios
+          .put(API.SELECTANSWER, {
+            room_id: room_id,
+            a_id: info.a_id,
+            select: 1
+          })
+          .then((res) => {
+            if (res.data === true) {
+              setIsGood(1);
+              alert("답변이 채택되었습니다.");
+              // window.location.replace(`/room/${room_id}`);
+            } else {
+              alert("ERROR - SERVER COMMUNICATION FAILED");
+            }
+          })
+          .catch(() => {
+            alert("인증실패");
+          });
+      }
+    }else{
+      alert('질문 작성자가 아닙니다.')
+    }
+
   };
+
+  const getTime = (time) => {
+    time = time.split("T");
+    return time[0]+" "+time[1];
+  }
 
   return (
     <div className="ans">
       <div className="ansTop">
         <div className="nameAnddate">
-          <p>name</p>
-          <p>2023-09-08 17:30</p>
+          <p>{info.ans_writer}</p>
+          <p>{getTime(info.time)}</p>
         </div>
 
         {isGood === 0 ? (

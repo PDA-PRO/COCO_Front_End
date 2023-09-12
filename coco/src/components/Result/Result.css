@@ -244,3 +244,92 @@
   margin: 15px 0 !important;
   background-color: rgb(247, 247, 247);
 }
+
+/*-------------------------------다른 로직 코드 확인하기 CSS ---------------------------------*/
+
+.OC {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+}
+
+.OC .OCtop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.OCtop h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+.OCtop p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.OCtop .un {
+  cursor: pointer;
+  color: gray;
+}
+
+.OCtop .un:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+.OCcontent {
+  display: flex;
+  flex-flow: column nowrap;
+
+  justify-content: start;
+  gap: 10px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 15px;
+  padding: 15px 1vw;
+}
+
+.OCcontent .OC-Code {
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(238, 238, 238);
+  padding: 15px 1vw;
+  margin-bottom: 10px;
+}
+
+.OCcontent .OC-opi {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 1vw;
+}
+
+.OCcontent .OC-txt {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 7px;
+}
+
+.OC-opi p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.OC-opi .OC-liked {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}

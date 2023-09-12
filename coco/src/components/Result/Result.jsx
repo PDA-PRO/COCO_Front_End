@@ -26,6 +26,7 @@ import {
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { BiRightArrowAlt } from "react-icons/bi";
+import { OtherLogic } from "./OtherLogic";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -52,6 +53,7 @@ export const Result = (code) => {
 
 const ResultBox = ({ resource, info }) => {
   const [wpc, setWpc] = useState(0);
+  const [otherLogic, setOtherLogic] = useState(false);
   const whatResult = (e) => {
     if (e === 3) {
       return <RiEmotionLaughLine size={40} color="#6666ff" />;
@@ -159,6 +161,12 @@ const ResultBox = ({ resource, info }) => {
     return strings;
   }
 
+  console.log("문열어", otherLogic);
+
+  const changeLogic = () => {
+    setOtherLogic(!otherLogic);
+  };
+
   return (
     <div className="Res">
       <div className="res-body">
@@ -181,89 +189,101 @@ const ResultBox = ({ resource, info }) => {
           </div>
         </div>
 
-        <div className="my_submit">
-          <div className="fBox">
-            <p className="taskNo2">SUBMIT ID : No.{info.sub_id}</p>
-            <div className="box">
-              <div className="un2">
-                <p>제출 언어 : </p>
-                {setLang(info.lang)}
-              </div>
-            </div>
-          </div>
-
-          <div className="fBox">
-            <div className="scoring">
-              <div className="un">
-                <p>채점 결과 : </p>
-                {isCorrect(problemList["status"])}
-              </div>
-              <p className="message">{problemList["message"]}</p>
-            </div>
-            <div className="un">
-              <p className="time">제출 시간 : {formattedDate}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="myCode">
-          <div className="un">
-            <VscListFlat size={30} color="darkgray" />
-            <p>내 제출 코드</p>
-          </div>
-
-          <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
-        </div>
-        {problemList["status"] === 3 ? (
-          <div className="afterCorrect" onClick={() => setWpc(0)}>
-            <p>다른 로직 코드 보러가기</p>
-            <BsBoxArrowInRight size={23} />
-          </div>
-        ) : (
+        {otherLogic === false ? (
           <>
-            {wpc === 1 ? (
-              <div className="afterWrong" onClick={() => setWpc(2)}>
-                {/* 이름은 나중에 바꾸는걸로... */}
-                <p>닫기</p>
-                <BsX size={25} color="red" />
+            <div className="my_submit">
+              <div className="fBox">
+                <p className="taskNo2">SUBMIT ID : No.{info.sub_id}</p>
+                <div className="box">
+                  <div className="un2">
+                    <p>제출 언어 : </p>
+                    {setLang(info.lang)}
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="afterWrong" onClick={() => setWpc(1)}>
-                {/* 이름은 나중에 바꾸는걸로... */}
-                <p>WPC 확인하기</p>
+
+              <div className="fBox">
+                <div className="scoring">
+                  <div className="un">
+                    <p>채점 결과 : </p>
+                    {isCorrect(problemList["status"])}
+                  </div>
+                  <p className="message">{problemList["message"]}</p>
+                </div>
+                <div className="un">
+                  <p className="time">제출 시간 : {formattedDate}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="myCode">
+              <div className="un">
+                <VscListFlat size={30} color="darkgray" />
+                <p>내 제출 코드</p>
+              </div>
+
+              <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
+            </div>
+            {problemList["status"] === 3 ? (
+              <div className="afterCorrect" onClick={() => changeLogic()}>
+                <p>다른 로직 코드 보러가기</p>
                 <BsBoxArrowInRight size={23} />
               </div>
+            ) : (
+              <>
+                {wpc === 1 ? (
+                  <div className="afterWrong" onClick={() => setWpc(2)}>
+                    {/* 이름은 나중에 바꾸는걸로... */}
+                    <p>닫기</p>
+                    <BsX size={25} color="red" />
+                  </div>
+                ) : (
+                  <div className="afterWrong" onClick={() => setWpc(1)}>
+                    {/* 이름은 나중에 바꾸는걸로... */}
+                    <p>WPC 확인하기</p>
+                    <BsBoxArrowInRight size={23} />
+                  </div>
+                )}
+              </>
             )}
+
+            {wpc === 1 ? (
+              <div className="wpcBox">
+                <div className="wpcItem">
+                  <p>내 제출 코드</p>
+                  <pre className="R-Code">
+                    {makeLine(numberedData, 1, 0, 4)}
+                  </pre>
+                </div>
+                <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} />
+                <div className="wpcItem">
+                  <p>AI 분석 후 코드</p>
+                  <pre className="R-Code">
+                    {makeLine(numberedData, 1, 0, 4)}
+                  </pre>
+                  {/* <WPC /> */}
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+
+            <div className="pylint">
+              <div className="un">
+                <MdOutlineManageSearch size={30} color="lightgreen" />
+                <p>채점결과 세부사항</p>
+              </div>
+              <div className="detail">
+                <li>오류 타입 : 'error'</li>
+                <li>오류 메세지 : " Undefined variable 'dddddd' "</li>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <OtherLogic changeLogic={changeLogic} />
           </>
         )}
-
-        {wpc === 1 ? (
-          <div className="wpcBox">
-            <div className="wpcItem">
-              <p>내 제출 코드</p>
-              <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
-            </div>
-            <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} />
-            <div className="wpcItem">
-              <p>AI 분석 후 코드</p>
-              <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
-              {/* <WPC /> */}
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
-
-        <div className="pylint">
-          <div className="un">
-            <MdOutlineManageSearch size={30} color="lightgreen" />
-            <p>채점결과 세부사항</p>
-          </div>
-          <div className="detail">
-            <li>오류 타입 : 'error'</li>
-            <li>오류 메세지 : " Undefined variable 'dddddd' "</li>
-          </div>
-        </div>
       </div>
     </div>
   );

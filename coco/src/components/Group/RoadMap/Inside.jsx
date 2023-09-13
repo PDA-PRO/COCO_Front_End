@@ -64,6 +64,9 @@ const Content = ({ resource }) => {
   var ids = Object.keys(members);
 
   const check = (e) => {
+    if (!Object.hasOwn(data.solved_list, e)) {
+      return 0;
+    }
     var mySolved = data.problem_list.filter((problem) =>
       data.solved_list[`${e}`].includes(problem.id)
     );
@@ -77,6 +80,9 @@ const Content = ({ resource }) => {
   };
 
   const compare = (e) => {
+    if (!Object.hasOwn(data.solved_list, e)) {
+      return 0;
+    }
     var idx = data.solved_list[`${userID}`].findIndex(
       (problem) => problem === e
     );

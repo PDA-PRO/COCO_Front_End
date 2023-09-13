@@ -250,7 +250,7 @@ const GetDetail = ({ resource }) => {
           variant="outline-secondary"
           id="submit_btn"
           onClick={() => {
-            navigate(`/problems`);
+            navigate(-1);
           }}
         >
           문제목록

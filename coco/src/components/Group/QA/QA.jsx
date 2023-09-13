@@ -21,7 +21,7 @@ export const QA = () => {
     ["qa", path.at(-1), page],
     () => {
       return axios.get(API.ROOMQUESTION + path.at(-1), {
-        params: { size: 2, page: page },
+        params: { size: 1, page: page },
       });
     },
     {
@@ -33,7 +33,7 @@ export const QA = () => {
       <div className="questions-body">
         <div className="qContents">
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Question resource={data.data.question_list} />
+            <Question resource={data.data.question_list} key={data.data.question_list[0].id}/>
           </Accordion>
         </div>
       </div>
@@ -55,6 +55,7 @@ const Question = ({ resource }) => {
   const info = resource;
   var path = window.location.pathname;
   path = path.split("/");
+  console.log(info);
   return (
     <>
       {info.map((e) => {
@@ -112,8 +113,8 @@ const Question = ({ resource }) => {
                 <h4>Answer</h4>
               </div>
 
-              {e.answers.map((ans) => {
-                return <Answer info={ans} room_id={path.at(-1)} />;
+              {e.answers.map((ans, index) => {
+                return <Answer info={ans} room_id={path.at(-1)} writer={e.writer} key={index}/>;
               })}
               <MakeAnswer room_id={path.at(-1)} q_id={e.id} />
             </Accordion.Body>
@@ -124,39 +125,36 @@ const Question = ({ resource }) => {
   );
 };
 
-const Answer = ({ info, room_id }) => {
+const Answer = ({ info, room_id, writer }) => {
+  console.log(info);
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(info.check);
 
   useEffect(() => {
-    setIsGood(info.check);
-  });
+  }, [isGood]);
+
 
   const Good = () => {
-    if (userInfo.id === info.ans_writer) {
+    if (userInfo.id === writer) {
       if (isGood) {
-        if (
-          window.confirm("이미 채택된 답변입니다.\n채택을 취소하시겠습니까?")
-        ) {
-          axios
-            .put(API.SELECTANSWER, {
-              room_id: room_id,
-              a_id: info.a_id,
-              select: 0,
-            })
-            .then((res) => {
-              if (res.data === true) {
-                setIsGood(0);
-                alert("채택이 취소되었습니다.");
-                // window.location.replace(`/room/${room_id}`);
-              } else {
-                alert("ERROR - SERVER COMMUNICATION FAILED");
-              }
-            })
-            .catch(() => {
-              alert("인증실패");
-            });
-        }
+        axios
+        .put(API.SELECTANSWER, {
+          room_id: room_id,
+          a_id: info.a_id,
+          select: 0,
+        })
+        .then((res) => {
+          if (res.data === true) {
+            setIsGood(0);
+            alert("채택이 취소되었습니다.");
+            // window.location.replace(`/room/${room_id}`);
+          } else {
+            alert("ERROR - SERVER COMMUNICATION FAILED");
+          }
+        })
+        .catch(() => {
+          alert("인증실패");
+        });
       } else {
         axios
           .put(API.SELECTANSWER, {

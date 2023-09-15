@@ -93,6 +93,7 @@ import { MakeRoadMap } from "./components/Group/RoadMap/MakeRoadMap";
 import { ModifyRoadMap } from "./components/Group/RoadMap/ModifyRoadMap";
 import { Inside } from "./components/Group/RoadMap/Inside";
 import { Tutor } from "components/Group/Tutor/Tutor";
+import { Alarm } from "components/Alarm/Alarm";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
@@ -128,6 +129,7 @@ function App() {
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />
+          <Route path="/alarm/:id" element={<Alarm />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/manage/modify/:id" element={<TaskModify />} />
           <Route

@@ -121,8 +121,15 @@
   border: 2px solid rgb(218, 218, 218);
   padding: 10px 20px;
   border-radius: 15px;
+  position: relative;
 }
 
+.hidingMenu .login #alarm {
+  position: absolute;
+  top: 3px;
+  left: 75px;
+  color: rgb(226, 98, 98);
+}
 .hidingMenu .login:hover {
   background-color: rgb(234, 249, 255);
   border-color: skyblue;
@@ -202,6 +209,14 @@
   display: flex;
   flex-flow: row nowrap;
   gap: 15px;
+  position: relative;
+}
+
+.login #alarm {
+  position: absolute;
+  top: -3px;
+  left: 30px;
+  color: rgb(226, 98, 98);
 }
 
 .login > h3 {
@@ -214,6 +229,14 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.bodyOverlay #toLogout {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  cursor: pointer;
 }
 
 .bodyOverlay h3 {

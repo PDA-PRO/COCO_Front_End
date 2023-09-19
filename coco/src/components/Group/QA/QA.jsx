@@ -21,7 +21,7 @@ export const QA = () => {
     ["qa", path.at(-1), page],
     () => {
       return axios.get(API.ROOMQUESTION + path.at(-1), {
-        params: { size: 1, page: page },
+        params: { size: 5, page: page },
       });
     },
     {

@@ -24,7 +24,7 @@ const GetList = ({ resource }) => {
   const BoardList = resource.read();
   return (
     <>
-      {BoardList.map((e) => {
+      {BoardList.boardlist.map((e) => {
         return <Guel props={e} key={e.id} />;
       })}
     </>

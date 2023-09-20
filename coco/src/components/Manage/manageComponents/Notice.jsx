@@ -114,13 +114,20 @@ const GetNotice = ({ resource }) => {
 
   const onSubmitHandler = () => {
     axios
-      .put(API.NOTICE, {
-        html: quillValue,
-      })
+      .put(
+        API.NOTICE,
+        {
+          content: quillValue,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then(function (res) {
         alert("공지 업데이트를 성공했습니다.");
       })
-      .catch(() => {
+      .catch((res) => {
+        console.log(res);
         alert("인증실패");
       });
   };

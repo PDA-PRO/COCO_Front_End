@@ -54,7 +54,7 @@ export const MakeGroup = () => {
 
   useEffect(() => {
     axios
-      .get(API.ROOMSEARCHUSER, {
+      .get(API.USER, {
         params: { keyword: query, size: 5, page: page },
       })
       .then((res) => {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAppSelector } from "../../../app/store";
 
 export const TutorApp = () => {
   const { data: tutorRequest, isFetching: isFetching1 } = useQuery({
@@ -12,7 +13,7 @@ export const TutorApp = () => {
   });
   const { data: tutorlist, isFetching: isFetching2 } = useQuery({
     queryKey: ["tutorlist"],
-    queryFn: () => axios.get(API.TUTOR),
+    queryFn: () => axios.get(API.USER, { params: { tutor: 1 } }),
   });
   if (isFetching1 || isFetching2) {
     return <></>;
@@ -39,7 +40,7 @@ export const TutorApp = () => {
               <p>ID</p>
               <p>권한 제거</p>
             </div>
-            {tutorlist.data.map((e) => (
+            {tutorlist.data.userlist.map((e) => (
               <TMem info={e} />
             ))}
           </div>
@@ -50,14 +51,17 @@ export const TutorApp = () => {
 };
 
 const Applier = ({ info }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const updateMutation = useMutation(
     () =>
       axios.patch(
-        API.TUTOR,
-        {},
-        { params: { user_id: info.user_id, value: 1 } }
+        API.PERMISSION,
+        { id: info.user_id, tutor: 1 },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
       ),
     {
       onSuccess: () => {
@@ -92,11 +96,18 @@ const Applier = ({ info }) => {
 };
 
 const TMem = ({ info }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const updateMutation = useMutation(
     () =>
-      axios.patch(API.TUTOR, {}, { params: { user_id: info.id, value: 0 } }),
+      axios.patch(
+        API.PERMISSION,
+        { id: info.id, tutor: 0 },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      ),
     {
       onSuccess: () => {
         // 요청이 성공한 경우

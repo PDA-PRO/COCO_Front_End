@@ -15,7 +15,7 @@ export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const dispatch = useAppDispatch();
   const path = window.location.pathname.split("/");
-
+  console.log(props);
   var me = userInfo.id;
   var now = path.at(-1);
 
@@ -88,19 +88,15 @@ export const FirstBox = (props) => {
       alert("온전한 이메일을 입력해주세요.");
     } else {
       axios
-        .post(
-          API.EMAILUPDATE,
-          {},
+        .patch(
+          API.USER,
+          { email: email },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
-            params: {
-              id: props.props.id,
-              email: email,
-            },
           }
         )
         .then(function (response) {
-          if (response.data === 1) {
+          if (response.data.code === 1) {
             alert("이메일이 변경되었습니다.");
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
@@ -125,20 +121,22 @@ export const FirstBox = (props) => {
         alert("변경하려는 비밀번호 확인이 틀렸습니다.");
       } else {
         axios
-          .post(
-            API.PWUPDATE,
-            {},
+          .patch(
+            API.USER,
+            { pw: inputNew, cur_pw: inputNow },
             {
               headers: { Authorization: "Bearer " + userInfo.access_token },
-              params: { id: props.props.id, pw: inputNew },
             }
           )
           .then(function (response) {
-            if (response.data === 1) {
+            if (response.data.code === 1) {
               alert("비밀번호가 변경되었습니다.");
             } else {
               alert("ERROR - SERVER COMMUNICATION FAILED");
             }
+          })
+          .catch(function (res) {
+            alert("비밀번호 업데이트 실패");
           });
       }
     }

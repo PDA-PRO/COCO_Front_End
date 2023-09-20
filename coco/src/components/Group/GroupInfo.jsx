@@ -209,8 +209,8 @@ const InviteNewMember = (props) => {
 
   const onSubmitHandler = (e) => {
     axios
-      .get(API.ROOMSEARCHUSER, {
-        params: { keyword: search, size: 100, page: 1 },
+      .get(API.USER, {
+        params: { keyword: search },
       })
       .then(({ data }) => {
         setUserList([...data.userlist]);

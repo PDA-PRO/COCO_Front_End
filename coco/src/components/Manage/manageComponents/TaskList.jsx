@@ -18,7 +18,7 @@ export const TaskList = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
-      .get(API.MANAGETASK, {
+      .get(API.TASK, {
         params: {
           size: 10,
           page: page,

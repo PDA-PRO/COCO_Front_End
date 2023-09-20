@@ -233,7 +233,7 @@ const FindEmailModal = (props) => {
     if (pwRef.current.value == pw2Ref.current.value) {
       axios
         .patch(
-          API.PWUPDATE,
+          API.USER,
           {},
           {
             params: {

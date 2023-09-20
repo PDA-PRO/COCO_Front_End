@@ -118,7 +118,7 @@ export const MyPage = () => {
 
 const GetFirst = ({ resource }) => {
   const res = resource.read();
-  return <>{<FirstBox props={res} key={res.id} />}</>;
+  return <>{<FirstBox props={res[0]} key={res.id} />}</>;
 };
 
 const GetSecond = ({ resource }) => {

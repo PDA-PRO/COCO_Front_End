@@ -155,6 +155,8 @@ const Answer = ({ info, room_id, writer }) => {
             room_id: room_id,
             a_id: info.a_id,
             select: 0,
+            ans_writer: info.ans_writer,
+            q_writer: writer
           })
           .then((res) => {
             if (res.data === true) {
@@ -174,6 +176,8 @@ const Answer = ({ info, room_id, writer }) => {
             room_id: room_id,
             a_id: info.a_id,
             select: 1,
+            ans_writer: info.ans_writer,
+            q_writer: writer
           })
           .then((res) => {
             if (res.data === true) {

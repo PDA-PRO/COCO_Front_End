@@ -132,7 +132,7 @@
   cursor: text;
   background-color: rgb(245, 245, 245);
   margin: 15px 1vw !important;
-  white-space: pre-line;
+  white-space: pre-wrap;
 }
 
 .afterCorrect {

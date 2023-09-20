@@ -273,7 +273,9 @@ const ResultBox = ({ resource, info }) => {
               <></>
             ) : (
               <Suspense>
-                <Lint resource={(fetchData(API.LINT), { sub_id: num })} />
+                <Lint
+                  resource={fetchData(API.LINT, { params: { sub_id: num } })}
+                />
               </Suspense>
             )}
           </>

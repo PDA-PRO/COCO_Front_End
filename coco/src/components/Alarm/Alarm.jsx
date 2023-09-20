@@ -7,6 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
 import { LuMailPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export const Alarm = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -14,6 +15,8 @@ export const Alarm = () => {
 
   var me = userInfo.id;
   var now = path.at(-1);
+
+  // const {data} = useQuery()
 
   return (
     <>
@@ -26,7 +29,7 @@ export const Alarm = () => {
           </div>
 
           <hr />
-
+          {/* useQuery써서 API 호출 */}
           <AlarmContent />
         </div>
       </div>

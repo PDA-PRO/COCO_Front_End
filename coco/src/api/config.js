@@ -43,4 +43,5 @@ export const API = {
   TUTOR: `${BASE_URL}/manage/tutor`,
   SELECTANSWER: `${BASE_URL}/room/select-answer`,
   LINT: `${BASE_URL}/lint`,
+  ALARM: `${BASE_URL}/alaram`,
 };

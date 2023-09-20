@@ -93,9 +93,7 @@ const Question = ({ resource }) => {
                 <p>
                   작성자 :{" "}
                   <b>
-                    <span style={{ color: "rgb(39, 148, 199)" }}>
-                      Lv {e.level}.
-                    </span>{" "}
+                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv .</span>{" "}
                     {e.writer}
                   </b>
                 </p>
@@ -156,7 +154,7 @@ const Answer = ({ info, room_id, writer }) => {
             a_id: info.a_id,
             select: 0,
             ans_writer: info.ans_writer,
-            q_writer: writer
+            q_writer: writer,
           })
           .then((res) => {
             if (res.data === true) {
@@ -177,7 +175,7 @@ const Answer = ({ info, room_id, writer }) => {
             a_id: info.a_id,
             select: 1,
             ans_writer: info.ans_writer,
-            q_writer: writer
+            q_writer: writer,
           })
           .then((res) => {
             if (res.data === true) {

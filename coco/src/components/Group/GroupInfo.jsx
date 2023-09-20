@@ -272,7 +272,6 @@ const InviteNewMember = (props) => {
                   <p>{e.id}</p>
                   <p>{e.name}</p>
                   <p>{e.exp}</p>
-                  <p>Lv.{e.level}</p>
                   <p onClick={() => onInviteHanlder(e.id)}>
                     <RiUserAddLine size={20} style={{ marginRight: "5px" }} />
                     초대

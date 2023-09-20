@@ -52,8 +52,11 @@ export const Result = (code) => {
 };
 
 const ResultBox = ({ resource, info }) => {
+  const { id } = useParams();
   const [wpc, setWpc] = useState(0);
   const [otherLogic, setOtherLogic] = useState(false);
+
+  const num = parseInt(id);
   const whatResult = (e) => {
     if (e === 3) {
       return <RiEmotionLaughLine size={40} color="#6666ff" />;
@@ -161,8 +164,6 @@ const ResultBox = ({ resource, info }) => {
     return strings;
   }
 
-  console.log("문열어", otherLogic);
-
   const changeLogic = () => {
     setOtherLogic(!otherLogic);
   };
@@ -268,16 +269,13 @@ const ResultBox = ({ resource, info }) => {
               <></>
             )}
 
-            <div className="pylint">
-              <div className="un">
-                <MdOutlineManageSearch size={30} color="lightgreen" />
-                <p>채점결과 세부사항</p>
-              </div>
-              <div className="detail">
-                <li>오류 타입 : 'error'</li>
-                <li>오류 메세지 : " Undefined variable 'dddddd' "</li>
-              </div>
-            </div>
+            {problemList["status"] === 3 ? (
+              <></>
+            ) : (
+              <Suspense>
+                <Lint resource={(fetchData(API.LINT), { sub_id: num })} />
+              </Suspense>
+            )}
           </>
         ) : (
           <>
@@ -294,5 +292,23 @@ const WPC = () => {
     <>
       <p>태그</p>
     </>
+  );
+};
+
+const Lint = ({ resource }) => {
+  const info = resource.read();
+  console.log(info);
+
+  return (
+    <div className="pylint">
+      <div className="un">
+        <MdOutlineManageSearch size={30} color="lightgreen" />
+        <p>채점결과 세부사항</p>
+      </div>
+      <div className="detail">
+        <li>오류 타입 : 'error'</li>
+        <li>오류 메세지 : " Undefined variable 'dddddd' "</li>
+      </div>
+    </div>
   );
 };

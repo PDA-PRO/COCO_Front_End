@@ -21,7 +21,7 @@ export const QA = () => {
     ["qa", path.at(-1), page],
     () => {
       return axios.get(API.ROOMQUESTION + path.at(-1), {
-        params: { size: 1, page: page },
+        params: { size: 5, page: page },
       });
     },
     {
@@ -33,7 +33,14 @@ export const QA = () => {
       <div className="questions-body">
         <div className="qContents">
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Question resource={data.data.question_list} key={data.data.question_list[0].id}/>
+            <Question
+              resource={data.data.question_list}
+              key={
+                data.data.question_list.length > 0
+                  ? data.data.question_list[0].id
+                  : ""
+              }
+            />
           </Accordion>
         </div>
       </div>
@@ -59,7 +66,6 @@ const Question = ({ resource }) => {
   return (
     <>
       {info.map((e) => {
-        console.log(e)
         return (
           <Accordion.Item eventKey={e.id}>
             <div className="Head-Ac">
@@ -87,7 +93,9 @@ const Question = ({ resource }) => {
                 <p>
                   작성자 :{" "}
                   <b>
-                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv {e.level}.</span>{" "}
+                    <span style={{ color: "rgb(39, 148, 199)" }}>
+                      Lv {e.level}.
+                    </span>{" "}
                     {e.writer}
                   </b>
                 </p>
@@ -114,7 +122,14 @@ const Question = ({ resource }) => {
               </div>
 
               {e.answers.map((ans, index) => {
-                return <Answer info={ans} room_id={path.at(-1)} writer={e.writer} key={index}/>;
+                return (
+                  <Answer
+                    info={ans}
+                    room_id={path.at(-1)}
+                    writer={e.writer}
+                    key={index}
+                  />
+                );
               })}
               <MakeAnswer room_id={path.at(-1)} q_id={e.id} />
             </Accordion.Body>
@@ -130,31 +145,29 @@ const Answer = ({ info, room_id, writer }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(info.check);
 
-  useEffect(() => {
-  }, [isGood]);
-
+  useEffect(() => {}, [isGood]);
 
   const Good = () => {
     if (userInfo.id === writer) {
       if (isGood) {
         axios
-        .put(API.SELECTANSWER, {
-          room_id: room_id,
-          a_id: info.a_id,
-          select: 0,
-        })
-        .then((res) => {
-          if (res.data === true) {
-            setIsGood(0);
-            alert("채택이 취소되었습니다.");
-            // window.location.replace(`/room/${room_id}`);
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
-        })
-        .catch(() => {
-          alert("인증실패");
-        });
+          .put(API.SELECTANSWER, {
+            room_id: room_id,
+            a_id: info.a_id,
+            select: 0,
+          })
+          .then((res) => {
+            if (res.data === true) {
+              setIsGood(0);
+              alert("채택이 취소되었습니다.");
+              // window.location.replace(`/room/${room_id}`);
+            } else {
+              alert("ERROR - SERVER COMMUNICATION FAILED");
+            }
+          })
+          .catch(() => {
+            alert("인증실패");
+          });
       } else {
         axios
           .put(API.SELECTANSWER, {
@@ -281,7 +294,6 @@ const MakeAnswer = ({ room_id, q_id }) => {
     </div>
   );
 };
-
 
 const getTime = (time) => {
   time = time.split("T");

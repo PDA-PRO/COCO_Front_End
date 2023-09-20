@@ -1,0 +1,69 @@
+.alarm {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 0 0 5rem 0;
+}
+
+.alarmBody {
+  width: clamp(750px, 90%, 1200px);
+}
+
+.alarmBody h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.6em;
+  color: rgb(107, 107, 107);
+  margin: 0 !important;
+}
+
+.alarmBody .alarmTop {
+  padding-left: 1vw;
+  margin-top: 15px;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 15px;
+  padding-left: 1vw;
+  align-items: center;
+  justify-content: start;
+}
+
+.alarmContent {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  padding: 0.5em 0;
+}
+
+.alarmContent .alr {
+  display: flex;
+  border-bottom: 1px solid lightgray;
+  margin: 0 1vw;
+  padding: 0 10px 10px 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.alr p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+
+  margin: 0 !important;
+}
+
+.alr #time {
+  color: gray;
+}
+
+.alr #context {
+  cursor: pointer;
+}
+
+.alr #context:hover {
+  text-decoration: underline;
+  color: rgb(150, 150, 255);
+}

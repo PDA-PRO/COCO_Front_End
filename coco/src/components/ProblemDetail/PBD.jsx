@@ -56,7 +56,6 @@ const GetDetail = ({ resource }) => {
           API.SUBMISSION,
           {
             taskid: detail.id,
-            userid: userInfo.id,
             sourcecode: code,
             callbackurl: "string",
             lang: codeLang,

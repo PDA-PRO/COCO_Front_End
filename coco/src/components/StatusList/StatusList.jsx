@@ -72,7 +72,8 @@ export const StatusList = () => {
                 params: {
                   task_id: filter.task_id,
                   lang: filter.lang,
-                  user_id: filter.onlyme ? userInfo.user_id : null,
+                  user_id: userInfo.id === "" ? null : userInfo.id,
+                  onlyme: filter.onlyme,
                   answer: filter.answer,
                   size: 10,
                   page: page,

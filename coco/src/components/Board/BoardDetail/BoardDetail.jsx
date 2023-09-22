@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
 import "./BD.css";
@@ -11,7 +11,6 @@ import {
 } from "react-icons/bs";
 import { SlPencil } from "react-icons/sl";
 import { VscCommentDiscussion } from "react-icons/vsc";
-import fetchData from "../../../api/fetchTask";
 import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
@@ -23,43 +22,61 @@ import { useNavigate } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import CodeMirror from "@uiw/react-codemirror";
 import { API } from "api/config";
+import { useQuery } from "@tanstack/react-query";
 
 export const BoardDetail = () => {
-  const userInfo = useAppSelector((state) => state.loginState);
-  var path = window.location.pathname;
-  path = path.split("/");
-
   return (
     <>
       <Header />
-      <Suspense fallback={<Loader />}>
-        <GetBoardDetail
-          resource={fetchData(API.BOARD + path.at(-1), {
-            params: { user_id: userInfo.id },
-          })}
-          userInfo={userInfo}
-          key={path.at(-1)}
-        />
-      </Suspense>
+      <GetBoardDetail />
       <Footer />
     </>
   );
 };
 
-const GetBoardDetail = ({ resource, userInfo }) => {
-  const detail = resource.read(); //api fetch 결과
+const GetBoardDetail = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
+  const board_id = window.location.pathname.split("/").at(-1);
   const navigate = useNavigate();
   const [write, setWrite] = useState(false);
-  const [like, setLike] = useState(detail.is_board_liked);
-  const [likeNum, setLikeNum] = useState(detail.likes);
+  const [like, setLike] = useState(false);
+  const [likeNum, setLikeNum] = useState(0);
   const [isMe, setIsMe] = useState(false);
 
+  //게시글 상세 정보 및 댓글 리스트 요청
+  const { isFetching, data: boardData } = useQuery(
+    ["boardlist", board_id],
+    () =>
+      axios.get(API.BOARD + board_id, {
+        params: { user_id: userInfo.id },
+      })
+  );
+  const { isFetching: commentFetching, data: commentList } = useQuery(
+    ["commentList", Number.parseInt(board_id)],
+    () =>
+      axios.get(API.COMMENT, {
+        params: { user_id: userInfo.id, board_id: board_id },
+      })
+  );
+
+  //게시글 상세 정보 조회 성공시 필요한 상태 변환
   useEffect(() => {
-    if (detail.user_id === userInfo.id || userInfo.ismanage === true) {
-      setIsMe(true);
+    if (!isFetching) {
+      if (
+        boardData.data.user_id === userInfo.id ||
+        userInfo.ismanage === true
+      ) {
+        setIsMe(true);
+      }
+      setLike(boardData.data.is_board_liked);
+      setLikeNum(boardData.data.likes);
     }
-    // likedBoard();
-  }, [isMe]);
+  }, [isFetching]);
+
+  //상세 정보 조회 중 로딩화면 출력
+  if (isFetching) {
+    return <Loader />;
+  }
 
   const commentShoot = (e) => {
     if (e == 1) {
@@ -95,25 +112,26 @@ const GetBoardDetail = ({ resource, userInfo }) => {
   }
 
   const onLikesHandler = () => {
-    if (!like) {
-      setLikeNum(likeNum + 1);
-      setLike(true);
-    } else {
-      setLikeNum(likeNum - 1);
-      setLike(false);
-    }
     axios
       .patch(
         API.BAORDLIKE,
         {
-          user_id: userInfo.id,
-          board_id: detail.id,
+          board_id: boardData.data.id,
           type: like,
         },
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
         }
       )
+      .then(() => {
+        if (!like) {
+          setLikeNum(likeNum + 1);
+          setLike(true);
+        } else {
+          setLikeNum(likeNum - 1);
+          setLike(false);
+        }
+      })
       .catch(() => {
         alert("인증실패");
       });
@@ -127,13 +145,12 @@ const GetBoardDetail = ({ resource, userInfo }) => {
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
           params: {
-            board_id: detail.id,
+            board_id: boardData.data.id,
           },
         }
       )
       .then((res) => {
         if (res.data.code === 1) {
-          alert("게시글이 삭제되었습니다");
           navigate(`/board`);
         }
       })
@@ -143,7 +160,7 @@ const GetBoardDetail = ({ resource, userInfo }) => {
   };
 
   const CodeHere = () => {
-    const code = detail.code;
+    const code = boardData.data.code;
     return (
       <div className="BDCode">
         <div className="BD_codeTop">
@@ -165,10 +182,10 @@ const GetBoardDetail = ({ resource, userInfo }) => {
       <div className="boardDetail">
         <div className="BDBody">
           <div className="BDtitle">
-            <h2>{detail.title}</h2>
+            <h2>{boardData.data.title}</h2>
             <div className="BD_idAndTime">
-              <h3>작성자 : {detail.user_id}</h3>
-              <h3>{timeForToday(detail.time)}</h3>
+              <h3>작성자 : {boardData.data.user_id}</h3>
+              <h3>{timeForToday(boardData.data.time)}</h3>
             </div>
           </div>
 
@@ -176,12 +193,12 @@ const GetBoardDetail = ({ resource, userInfo }) => {
             <div id="bun1">
               <div className="BDun">
                 <BsFillEyeFill size={23} color="gray" />
-                <p>{detail.views}</p>
+                <p>{boardData.data.views}</p>
               </div>
 
               <div className="BDun">
                 <BsFillChatSquareDotsFill size={20} color="gray" />
-                <p>{detail.comments}</p>
+                <p>{boardData.data.comments}</p>
               </div>
 
               {isMe ? (
@@ -198,14 +215,18 @@ const GetBoardDetail = ({ resource, userInfo }) => {
             </div>
 
             <div id="bun2">
-              <div
-                className="BDun"
-                onClick={onLikesHandler}
-                style={{ color: like === true ? "red" : "gray" }}
-              >
-                <BsFillHeartFill size={23} />
-                <p>{likeNum}</p>
-              </div>
+              {userInfo.id === "" ? (
+                <></>
+              ) : (
+                <div
+                  className="BDun"
+                  onClick={onLikesHandler}
+                  style={{ color: like === true ? "red" : "gray" }}
+                >
+                  <BsFillHeartFill size={23} />
+                  <p>{likeNum}</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -213,12 +234,12 @@ const GetBoardDetail = ({ resource, userInfo }) => {
             <div className="BDTxt">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: detail.context,
+                  __html: boardData.data.context,
                 }}
               />
             </div>
 
-            {detail.category === 2 ? <CodeHere /> : <></>}
+            {boardData.data.category === 2 ? <CodeHere /> : <></>}
           </div>
           <div className="comments">
             <div className="cHead">
@@ -226,11 +247,19 @@ const GetBoardDetail = ({ resource, userInfo }) => {
                 <VscCommentDiscussion size={35} color="#6BE52E" />
                 <h2>댓글</h2>
               </div>
-
               <div
                 className="cWrite"
                 onClick={() => {
-                  commentShoot(1);
+                  if (userInfo.id === "") {
+                    let check = window.confirm(
+                      "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
+                    );
+                    if (check === true) {
+                      navigate("/login");
+                    }
+                  } else {
+                    commentShoot(1);
+                  }
                 }}
               >
                 <SlPencil size={20} />
@@ -244,10 +273,15 @@ const GetBoardDetail = ({ resource, userInfo }) => {
               ) : (
                 <div id="closeState"></div>
               )}
-
-              {detail.comments_datail.map((e) => {
-                return <Comments props={e} key={e.id} />;
-              })}
+              {commentFetching ? (
+                <Loader />
+              ) : (
+                commentList.data.map((commentData) => {
+                  return (
+                    <Comments commentData={commentData} key={commentData.id} />
+                  );
+                })
+              )}
             </div>
           </div>
         </div>

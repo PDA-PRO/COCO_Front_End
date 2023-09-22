@@ -4,13 +4,41 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import axios from "axios";
 import { useAppSelector } from "../../../../app/store";
-import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const WriteComment = ({ commentShoot }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [context, setContext] = useState("");
-  const navigate = useNavigate();
+  const board_id = window.location.pathname.split("/").at(-1);
+  const queryClient = useQueryClient();
+  const addCommentHandler = useMutation(
+    () =>
+      axios.post(
+        API.COMMENT,
+        {
+          context: context,
+          board_id: board_id,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      ),
+    {
+      onSuccess: (res) => {
+        // 요청이 성공한 경우
+        commentShoot(2);
+        queryClient.setQueryData(
+          ["commentList", Number.parseInt(board_id)],
+          (oldData) => {
+            let newData = { ...oldData };
+            newData.data = [res.data, ...newData.data];
+            return newData;
+          }
+        );
+      },
+    }
+  );
   const onContextHandler = (e) => {
     setContext(e.currentTarget.value);
   };
@@ -19,40 +47,6 @@ export const WriteComment = ({ commentShoot }) => {
     commentShoot(2);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (context == "") {
-      return alert("내용을 입력해주세요.");
-    } else {
-      var path = window.location.pathname;
-      path = path.split("/");
-      axios
-        .post(
-          API.COMMENT,
-          {
-            user_id: userInfo.id,
-            context: context,
-            board_id: path.at(-1),
-          },
-          {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          }
-        )
-        .then(function (response) {
-          if (response.data.code === 1) {
-            alert(`댓글 작성 완료`);
-            commentShoot(2);
-            // navigate(0);
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
-        })
-        .catch(() => {
-          alert("인증실패");
-        });
-    }
-  };
   return (
     <div className="writeComment">
       <Form.Control
@@ -74,7 +68,11 @@ export const WriteComment = ({ commentShoot }) => {
           Cancel
         </Button>
 
-        <Button variant="outline-info" id="commentSubmit" onClick={onSubmit}>
+        <Button
+          variant="outline-info"
+          id="commentSubmit"
+          onClick={addCommentHandler.mutate}
+        >
           Submit
         </Button>
       </div>

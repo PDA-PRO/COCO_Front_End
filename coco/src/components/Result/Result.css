@@ -140,7 +140,7 @@
 
 .R-Code .codeLine {
   display: grid;
-  grid-template-columns: 5% 95%;
+  grid-template-columns: 3% 95%;
   column-gap: 13px;
 }
 

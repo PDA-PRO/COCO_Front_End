@@ -117,6 +117,57 @@
   color: gray;
 }
 
+.notme {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 3vw;
+  padding: 35px 3vw;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 35px;
+}
+
+.notme p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+.notme .picBox {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.notme .picBox img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+
+.levelShow {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: start;
+  font-family: "Pretendard-Regular";
+}
+
+.levelShow h4 {
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.levelShow p {
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0 !important;
+  color: gray;
+}
+
 /* ------------------------------------------ 1st box 반응형 ------------------------------------- */
 
 @media screen and (max-width: 992px) {

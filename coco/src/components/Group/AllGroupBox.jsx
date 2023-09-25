@@ -1,6 +1,6 @@
 import React from "react";
 import "./Group.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const AllGroupBox = (info) => {
   const navigate = useNavigate();

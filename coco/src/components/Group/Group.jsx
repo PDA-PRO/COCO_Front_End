@@ -35,8 +35,6 @@ export const Group = () => {
     navigate("/makeroom");
   };
 
-  console.log(userInfo);
-
   return (
     <>
       <Header />
@@ -141,7 +139,11 @@ export const Group = () => {
                   ) : (
                     <Suspense fallback={<Spinner />}>
                       <GetMyGroups
-                        resource={fetchData(API.ROOMMYROOM + userInfo.id)}
+                        resource={fetchData(API.ROOMMYROOM, {
+                          headers: {
+                            Authorization: "Bearer " + userInfo.access_token,
+                          },
+                        })}
                       />
                     </Suspense>
                   )}

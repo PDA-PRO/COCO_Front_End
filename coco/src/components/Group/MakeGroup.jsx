@@ -5,13 +5,13 @@ import { Footer } from "../Home/Footer";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { GoSearch } from "react-icons/go";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Pagination } from "@mui/material";
 import { HiUserPlus, HiUserMinus, HiUserGroup } from "react-icons/hi2";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
-import { useAppDispatch, useAppSelector } from "../../app/store";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../app/store";
+import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import Spinner from "react-bootstrap/Spinner";
 
@@ -24,6 +24,7 @@ export const MakeGroup = () => {
   const [query, setQuery] = useState(null);
   const seachbar = useRef();
   const navigate = useNavigate();
+  const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -38,16 +39,18 @@ export const MakeGroup = () => {
       alert("스터디룸명과 스터디룸 설명을 모두 작성해주세요");
     } else {
       axios
-        .post(API.ROOM, {
-          name: name,
-          desc: desc,
-          leader: members[0],
-          members: members,
-        })
+        .post(
+          API.ROOM,
+          {
+            name: name,
+            desc: desc,
+            members: members,
+          },
+          { headers: { Authorization: "Bearer " + userInfo.access_token } }
+        )
         .then((res) => {
-          console.log(res);
           alert("스터디룸을 생성하였습니다");
-          navigate(`/room/${res.data}`);
+          navigate(`/room/${res.data.code}`);
         });
     }
   };

@@ -49,29 +49,38 @@ const GetDetail = ({ resource }) => {
   };
   //코드 submit
   const submitCode = () => {
-    console.log(code);
-    Promise.resolve().then(
-      axios
-        .post(
-          API.SUBMISSION,
-          {
-            taskid: detail.id,
-            sourcecode: code,
-            callbackurl: "string",
-            lang: codeLang,
-          },
-          {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          }
-        )
-        .then(function (response) {
-          alert(`${userInfo.id}님 ${detail.id} 제출완료`);
-          goToResult(userInfo.id, { state: { userid: userInfo.id } });
-        })
-        .catch(() => {
-          alert("인증실패");
-        })
-    );
+    if (userInfo.id === "") {
+      const check = window.confirm(
+        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
+      );
+      if (check === true) {
+        navigate("/login");
+      }
+    } else {
+      Promise.resolve().then(
+        axios
+          .post(
+            API.SUBMISSION,
+            {
+              taskid: detail.id,
+              sourcecode: code,
+              callbackurl: "string",
+              lang: codeLang,
+            },
+            {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+            }
+          )
+          .then(function (response) {
+            alert(`${userInfo.id}님 ${detail.id} 제출완료`);
+            goToResult(userInfo.id, { state: { userid: userInfo.id } });
+          })
+          .catch(() => {
+            alert("인증실패");
+          })
+      );
+      return;
+    }
   };
 
   const setMyTask = (task_id) => {
@@ -83,7 +92,6 @@ const GetDetail = ({ resource }) => {
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
           params: {
-            user_id: userInfo.id,
             task_id: task_id,
           },
         }
@@ -134,11 +142,14 @@ const GetDetail = ({ resource }) => {
             </span>
             {detail.rate}%
           </div>
-
-          <div id="pbd-pick" onClick={() => setMyTask(detail.id)}>
-            <IoMdPaperPlane size={25} />
-            <p>Homework</p>
-          </div>
+          {userInfo.id === "" ? (
+            <></>
+          ) : (
+            <div id="pbd-pick" onClick={() => setMyTask(detail.id)}>
+              <IoMdPaperPlane size={25} />
+              <p>Homework</p>
+            </div>
+          )}
         </div>
       </div>
 

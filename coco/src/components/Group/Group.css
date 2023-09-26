@@ -232,7 +232,7 @@
   text-align: start !important;
 }
 
-.allGroupList:hover {
+.allGroupListHover:hover {
   background-color: rgb(246, 246, 246);
   cursor: pointer;
   border: 2px solid rgb(41, 174, 226);

@@ -4,13 +4,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
+import { useAppSelector } from "../../../app/store";
 
 export const RoadMap = ({ userID, path }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const { data } = useQuery(
     ["roadmaps"],
     () => {
       return axios.get(API.ROOMROADMAP + path, {
-        params: { user_id: userID },
+        headers: { Authorization: "Bearer " + userInfo.access_token },
       });
     },
     {

@@ -47,7 +47,10 @@ export const ModifyRoadMap = () => {
 
   const { data, isFetching } = useQuery(
     ["roadmap", path.at(-2), path.at(-1)],
-    () => axios.get(`${API.ROOMROADMAP}${path.at(-2)}/${path.at(-1)}`)
+    () =>
+      axios.get(`${API.ROOMROADMAP}${path.at(-2)}/${path.at(-1)}`, {
+        headers: { Authorization: "Bearer " + userInfo.access_token },
+      })
   );
 
   useEffect(() => {
@@ -69,9 +72,9 @@ export const ModifyRoadMap = () => {
     } else {
       axios
         .put(
-          API.ROOMROADMAP,
+          API.ROOMROADMAP + path.at(-2),
           {
-            id: path.at(-2),
+            id: path.at(-1),
             name: nameRef.current.value,
             desc: quillRef.current.value,
             tasks: tasks,
@@ -79,9 +82,6 @@ export const ModifyRoadMap = () => {
           {
             headers: {
               Authorization: "Bearer " + userInfo.access_token,
-            },
-            params: {
-              roadmap_id: path.at(-1),
             },
           }
         )
@@ -232,7 +232,7 @@ export const ModifyRoadMap = () => {
               </div>
               <Suspense fallback={<Spinner />}>
                 <GetProblems
-                  resource={fetchData("http://127.0.0.1:8000/task/", {
+                  resource={fetchData(API.TASK, {
                     params: {
                       keyword: filter.keyword,
                       diff: filter.diff,
@@ -259,7 +259,7 @@ export const ModifyRoadMap = () => {
               </div>
               <Suspense fallback={<Spinner />}>
                 <MyTasksList
-                  resource={fetchData("http://127.0.0.1:8000/task/", {
+                  resource={fetchData(API.TASK, {
                     params: {
                       size: 10,
                       page: page,
@@ -295,7 +295,7 @@ const TasksList = ({ setFilter }) => {
   const asyncRef = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/task/category").then((value) => {
+    axios.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });

@@ -98,7 +98,7 @@ export const MyPage = () => {
               </h2>
               <Suspense fallback={<Spinner />}>
                 <GetMyTasks
-                  resource={fetchData(API.MYTASK + path.at(-1), {
+                  resource={fetchData(API.MYTASK, {
                     headers: {
                       Authorization: "Bearer " + userInfo.access_token,
                     },

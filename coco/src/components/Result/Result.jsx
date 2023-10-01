@@ -57,14 +57,9 @@ const ResultBox = ({ resource, info }) => {
   const [otherLogic, setOtherLogic] = useState(false);
 
   const num = parseInt(id);
-  const whatResult = (e) => {
-    if (e === 3) {
-      return <RiEmotionLaughLine size={40} color="#6666ff" />;
-    } else {
-      return <RiEmotionSadLine size={40} color="red" />;
-    }
-  };
+
   const problemList = resource.read();
+  console.log("오류here", problemList);
 
   const setLang = (e) => {
     switch (e) {
@@ -147,16 +142,31 @@ const ResultBox = ({ resource, info }) => {
     const strings = arr.split("\n").map((str) => {
       const [num, val] = str.split("@");
       return (
-        <div>
-          {num}.{" "}
+        <div className="codeLine">
+          <n className="codeNum">{num}.</n>
+
           {line == num ? (
-            <n>
+            <n className="codeTxt">
               <u style={{ color: "red" }}>{val.slice(start, end + 1)}</u>
               {val.slice(end + 1)}
             </n>
           ) : (
-            <n>{val}</n>
+            <n className="codeTxt">{val}</n>
           )}
+        </div>
+      );
+    });
+
+    return strings;
+  }
+
+  function makeNoLine(arr) {
+    const strings = arr.split("\n").map((str) => {
+      const [num, val] = str.split("@");
+      return (
+        <div className="codeLine">
+          <n className="codeNum">{num}.</n>
+          <n className="codeTxt">{val}</n>
         </div>
       );
     });
@@ -222,8 +232,11 @@ const ResultBox = ({ resource, info }) => {
                 <VscListFlat size={30} color="darkgray" />
                 <p>내 제출 코드</p>
               </div>
-
-              <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
+              {problemList["status"] === 3 ? (
+                <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+              ) : (
+                <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
+              )}
             </div>
             {problemList["status"] === 3 ? (
               <div className="afterCorrect" onClick={() => changeLogic()}>
@@ -273,9 +286,9 @@ const ResultBox = ({ resource, info }) => {
               <></>
             ) : (
               <Suspense>
-                <Lint
+                {/* <Lint
                   resource={fetchData(API.LINT, { params: { sub_id: num } })}
-                />
+                /> */}
               </Suspense>
             )}
           </>

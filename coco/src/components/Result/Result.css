@@ -133,6 +133,26 @@
   background-color: rgb(245, 245, 245);
   margin: 15px 1vw !important;
   white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 3% 95%;
+  column-gap: 13px;
+}
+
+.codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.codeLine .codeTxt {
+  grid-column: 2/3;
 }
 
 .afterCorrect {
@@ -243,6 +263,26 @@
   width: 100%;
   margin: 15px 0 !important;
   background-color: rgb(247, 247, 247);
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.wpcItem .R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 5% 95%;
+  column-gap: 10px;
+}
+
+.wpcItem .codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.wpcItem .codeLine .codeTxt {
+  grid-column: 2/3;
 }
 
 /*-------------------------------다른 로직 코드 확인하기 CSS ---------------------------------*/

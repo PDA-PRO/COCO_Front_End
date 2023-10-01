@@ -92,7 +92,7 @@
   border-radius: 15px;
   background-color: rgb(245, 252, 255);
   padding: 10px;
-  border: 2px solid rgb(98, 148, 255);
+  border: 1px solid rgb(98, 148, 255);
 }
 
 .searchBar #goSearch {
@@ -104,7 +104,7 @@
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 0.9em;
-  color: rgb(148, 157, 177);
+  color: rgb(75, 79, 87);
   border-top: none;
   border-left: none;
   border-right: none;
@@ -122,17 +122,17 @@
   margin-top: 20px;
   max-height: 1200px;
   border-radius: 15px;
-  border: 2px solid rgb(179, 196, 211);
-  padding: 0 1.5rem;
+  /* border: 2px solid rgb(179, 196, 211); */
+  /* padding: 0 1.5rem; */
 }
 
 .allGroups .l-top {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
   padding: 5px 0;
-  border-bottom: 2px solid lightgray;
+  border-bottom: 1px solid lightgray;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .l-top p {
@@ -188,8 +188,8 @@
 .myGroups .myGroupsTop {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
-  border-top: 2px solid skyblue;
-  border-bottom: 2px solid skyblue;
+  border-top: 1px solid skyblue;
+  border-bottom: 1px solid skyblue;
   padding: 3px 0;
 }
 .myGroupsTop p {
@@ -209,33 +209,35 @@
 .allGroupList {
   display: flex;
   flex-flow: column nowrap;
-  border: 2px solid skyblue;
-  padding: 5px 0;
+  /* border: 2px solid skyblue; */
+  background-color: rgb(246, 251, 255);
+  padding: 10px 0;
   border-radius: 10px;
-  margin: 5px 0;
+  margin: 7px 0;
 }
 
 .allGroupList .groupListTop {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 0.7fr 1fr 0.6fr;
-  padding-bottom: 3px;
+  padding-bottom: 5px;
 }
 
 .allGroupList .groupListBottom {
-  padding-top: 3px;
+  padding-top: 5px;
   margin: 0 15px;
   border-top: 1px solid lightgray;
-  padding: 3px 10px 0 10px;
+  padding: 5px 10px 0 10px;
 }
 
 .groupListBottom p {
   text-align: start !important;
 }
 
-.allGroupListHover:hover {
-  background-color: rgb(246, 246, 246);
+
+.allGroupList:hover {
+  background-color: rgb(226, 248, 255);
+
   cursor: pointer;
-  border: 2px solid rgb(41, 174, 226);
 }
 
 .allGroupList p {

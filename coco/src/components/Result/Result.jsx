@@ -27,6 +27,7 @@ import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { OtherLogic } from "./OtherLogic";
+import ReactDiffViewer from "react-diff-viewer";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -265,18 +266,23 @@ const ResultBox = ({ resource, info }) => {
               <div className="wpcBox">
                 <div className="wpcItem">
                   <p>내 제출 코드</p>
-                  <pre className="R-Code">
-                    {makeLine(numberedData, 1, 0, 4)}
-                  </pre>
                 </div>
-                <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} />
+
                 <div className="wpcItem">
                   <p>AI 분석 후 코드</p>
-                  <pre className="R-Code">
-                    {makeLine(numberedData, 1, 0, 4)}
-                  </pre>
-                  {/* <WPC /> */}
                 </div>
+                <div className="differ">
+                  <ReactDiffViewer
+                    oldValue={problemList["code"]}
+                    newValue={problemList["code"]}
+                    splitView={true}
+                    // hideLineNumbers={true}
+                    showDiffOnly={false}
+                    // codeFoldMessageRenderer={3}
+                  />
+                </div>
+
+                {/* <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} /> */}
               </div>
             ) : (
               <></>

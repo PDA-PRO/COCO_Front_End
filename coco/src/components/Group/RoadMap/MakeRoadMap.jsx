@@ -58,7 +58,7 @@ export const MakeRoadMap = () => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/room/roadmap",
+          API.ROOMROADMAP,
           {
             id: path.at(-1),
             name: updateName,
@@ -225,7 +225,7 @@ export const MakeRoadMap = () => {
               </div>
               <Suspense fallback={<Spinner />}>
                 <GetProblems
-                  resource={fetchData("http://127.0.0.1:8000/task/", {
+                  resource={fetchData(API.TASK, {
                     params: {
                       keyword: filter.keyword,
                       diff: filter.diff,
@@ -253,7 +253,7 @@ export const MakeRoadMap = () => {
               </div>
               <Suspense fallback={<Spinner />}>
                 <MyTasksList
-                  resource={fetchData("http://127.0.0.1:8000/task/", {
+                  resource={fetchData(API.TASK, {
                     params: {
                       size: 10,
                       page: page,
@@ -289,7 +289,7 @@ const TasksList = ({ setFilter }) => {
   const asyncRef = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/task/category").then((value) => {
+    axios.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });

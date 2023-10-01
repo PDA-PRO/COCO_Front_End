@@ -233,8 +233,10 @@
   text-align: start !important;
 }
 
+
 .allGroupList:hover {
   background-color: rgb(226, 248, 255);
+
   cursor: pointer;
 }
 

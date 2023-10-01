@@ -26,15 +26,18 @@ import { useQuery } from "@tanstack/react-query";
 
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["roominfo"],
-    queryFn: () => axios.get(API.ROOM + path.at(-1)),
-  });
   const userInfo = useAppSelector((state) => state.loginState);
   const userID = userInfo.id;
-
   const [page, setPage] = useState(1);
-
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["roominfo"],
+    queryFn: () =>
+      axios.get(API.ROOM + path.at(-1), {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token,
+        },
+      }),
+  });
   const moveWorkbook = () => {
     setPage(2);
   };
@@ -190,6 +193,7 @@ const MemberList = ({ resource }) => {
             show={modalShow}
             onHide={() => setModalShow(false)}
             group_id={path.at(-1)}
+            userInfo={userInfo}
           />
         </>
       ) : (
@@ -222,10 +226,18 @@ const InviteNewMember = (props) => {
 
   const onInviteHanlder = (id) => {
     axios
-      .put(API.ROOMMEMBER, {
-        room_id: props.group_id,
-        user_id: [id],
-      })
+      .put(
+        API.ROOMMEMBER,
+        {
+          room_id: props.group_id,
+          user_id: id,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + props.userInfo.access_token,
+          },
+        }
+      )
       .then(() => {
         alert(`${id}님을 초대하였습니다`);
       })
@@ -307,11 +319,13 @@ const Member = ({ info, props }) => {
   return (
     <div
       className="oneMember"
-      style={info[0] === props ? { display: "none" } : {}}
+      style={info.user_id === props ? { display: "none" } : {}}
     >
-      <p>{info[0] === props ? <TbCrown size={25} color="orange" /> : ""}</p>
-      <p onClick={() => GoInfo(info[0])}>{info[0]}</p>
-      <p>{info[1]}</p>
+      <p>
+        {info.user_id === props ? <TbCrown size={25} color="orange" /> : ""}
+      </p>
+      <p onClick={() => GoInfo(info.user_id)}>{info.user_id}</p>
+      <p>{info.exp}</p>
     </div>
   );
 };
@@ -334,14 +348,13 @@ const LeaveOrDelete = ({ resource }) => {
           params: {
             room_id: group_id,
           },
+          headers: { Authorization: "Bearer " + userInfo.access_token },
         })
         .then((res) => {
-          console.log(res.data);
-          if (res.data === false) {
-            alert("이미 삭제된 스터디룸입니다");
-          } else if (res.data === true) {
+          console.log(res.data.code);
+          if (res.data.code) {
             alert(`스터디룸을 삭제하였습니다`);
-            navigate("/group");
+            navigate("/room");
           }
         })
         .catch(() => {

@@ -175,7 +175,7 @@ export const TaskUpload = () => {
           },
         })
         .then(function (response) {
-          if (response.data.result === 1) {
+          if (response.data.code === 1) {
             alert(`${titleRef.current.value} 업로드 성공`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");

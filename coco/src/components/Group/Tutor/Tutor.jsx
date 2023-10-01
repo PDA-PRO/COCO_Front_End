@@ -17,10 +17,11 @@ export const Tutor = () => {
   const onSubmitHandler = () => {
     axios
       .post(
-        API.TUTORREQUEST,
+        API.REQUESTTUTOR,
         {},
         {
           params: { user_id: userID, reason: reason },
+          headers: { Authorization: "Bearer " + userInfo.access_token },
         }
       )
       .then(() => alert("신청성공"))

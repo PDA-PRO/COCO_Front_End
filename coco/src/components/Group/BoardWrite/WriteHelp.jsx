@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./WriteGuel.css";
 import Button from "react-bootstrap/Button";
 import { Editor } from "react-draft-wysiwyg";
@@ -17,6 +18,7 @@ export const WriteHelp = ({ title, room_id }) => {
   const [htmlString, setHtmlString] = useState("");
   const [code, setCode] = useState(""); //작성한 코드
   const userInfo = useAppSelector((state) => state.loginState);
+  const navigate = useNavigate();
 
   const updateTextDescription = async (state) => {
     await setEditorState(state);
@@ -29,9 +31,6 @@ export const WriteHelp = ({ title, room_id }) => {
   };
 
   const onSubmitHandler = () => {
-    console.log(code);
-    console.log(htmlString);
-    console.log(room_id);
     if (title === "" || htmlString === "") {
       return alert("완전히 입력해주세요");
     } else {
@@ -43,16 +42,15 @@ export const WriteHelp = ({ title, room_id }) => {
             title: title,
             question: htmlString,
             code: code,
-            writer: userInfo.id,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
           }
         )
         .then(function (response) {
-          if (response.data === true) {
+          if (response.data.code) {
             alert(`${title} 업로드 성공`);
-            window.location.replace(`/room/${room_id}`);
+            navigate(`/room/${room_id}`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }

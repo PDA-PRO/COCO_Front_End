@@ -12,8 +12,10 @@ import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export const QA = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
   const [page, setPage] = useState(1);
@@ -22,6 +24,9 @@ export const QA = () => {
     () => {
       return axios.get(API.ROOMQUESTION + path.at(-1), {
         params: { size: 5, page: page },
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token,
+        },
       });
     },
     {
@@ -139,7 +144,6 @@ const Question = ({ resource }) => {
 };
 
 const Answer = ({ info, room_id, writer }) => {
-  console.log(info);
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(info.check);
 
@@ -149,15 +153,17 @@ const Answer = ({ info, room_id, writer }) => {
     if (userInfo.id === writer) {
       if (isGood) {
         axios
-          .put(API.SELECTANSWER, {
-            room_id: room_id,
-            a_id: info.a_id,
-            select: 0,
-            ans_writer: info.ans_writer,
-            q_writer: writer,
-          })
+          .put(
+            API.SELECTANSWER,
+            {
+              room_id: room_id,
+              a_id: info.a_id,
+              select: 0,
+            },
+            { headers: { Authorization: "Bearer " + userInfo.access_token } }
+          )
           .then((res) => {
-            if (res.data === true) {
+            if (res.data.code) {
               setIsGood(0);
               alert("채택이 취소되었습니다.");
               // window.location.replace(`/room/${room_id}`);
@@ -170,15 +176,17 @@ const Answer = ({ info, room_id, writer }) => {
           });
       } else {
         axios
-          .put(API.SELECTANSWER, {
-            room_id: room_id,
-            a_id: info.a_id,
-            select: 1,
-            ans_writer: info.ans_writer,
-            q_writer: writer,
-          })
+          .put(
+            API.SELECTANSWER,
+            {
+              room_id: room_id,
+              a_id: info.a_id,
+              select: 1,
+            },
+            { headers: { Authorization: "Bearer " + userInfo.access_token } }
+          )
           .then((res) => {
-            if (res.data === true) {
+            if (res.data.code) {
               setIsGood(1);
               alert("답변이 채택되었습니다.");
               // window.location.replace(`/room/${room_id}`);
@@ -231,6 +239,7 @@ const MakeAnswer = ({ room_id, q_id }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const [code, setCode] = useState("");
+  const navigate = useNavigate();
 
   const quill_module = useMemo(() => {
     return {
@@ -239,7 +248,6 @@ const MakeAnswer = ({ room_id, q_id }) => {
   }, []);
 
   const uploadAnswer = () => {
-    console.log(q_id);
     axios
       .post(
         API.ROOMANSWER,
@@ -248,16 +256,15 @@ const MakeAnswer = ({ room_id, q_id }) => {
           q_id: q_id,
           answer: quillValue,
           code: code,
-          ans_writer: userInfo.id,
         },
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
         }
       )
       .then(function (response) {
-        if (response.data === true) {
+        if (response.data.code) {
           alert(`답변 업로드 성공`);
-          window.location.replace(`/room/${room_id}`);
+          navigate(`/room/${room_id}`);
         } else {
           alert("ERROR - SERVER COMMUNICATION FAILED");
         }

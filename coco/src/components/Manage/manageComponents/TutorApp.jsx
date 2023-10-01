@@ -7,9 +7,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
 
 export const TutorApp = () => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const { data: tutorRequest, isFetching: isFetching1 } = useQuery({
     queryKey: ["tutorrequestlist"],
-    queryFn: () => axios.get(API.VIEWTUTORREQUEST),
+    queryFn: () =>
+      axios.get(API.REQUESTTUTOR, {
+        headers: { Authorization: "Bearer " + userInfo.access_token },
+      }),
   });
   const { data: tutorlist, isFetching: isFetching2 } = useQuery({
     queryKey: ["tutorlist"],

@@ -2,7 +2,7 @@ import React from "react";
 import "./Group.css";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 import { GroupBox } from "./GroupBox";
 import { Pagination } from "@mui/material";
@@ -10,20 +10,29 @@ import { useState } from "react";
 import { Suspense } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useAppSelector } from "../../app/store";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { AllGroupBox } from "./AllGroupBox";
 import { TbCrown } from "react-icons/tb";
+import { API } from "api/config";
+import { IoSchoolOutline } from "react-icons/io5";
+import { Tutor } from "./Tutor/Tutor";
+import { HiArrowUturnLeft } from "react-icons/hi2";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const Group = () => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
+  const [query, setQuery] = useState();
+  const [tutor, setTutor] = useState(0);
+
   const reload = () => {
     navigate(0);
   };
 
   const movePage = () => {
-    navigate("/makegroup");
+    navigate("/makeroom");
   };
 
   return (
@@ -41,82 +50,110 @@ export const Group = () => {
                 style={{ cursor: "pointer" }}
               />
               <h4 onClick={() => reload()} style={{ cursor: "pointer" }}>
-                COCO GROUP
+                COCO STUDY ROOM
               </h4>
             </div>
-
-            <div
-              className="makeGroup"
-              onClick={() => {
-                movePage();
-              }}
-            >
-              <AiOutlineUsergroupAdd size={30} />
-              <h3>그룹 만들기</h3>
-            </div>
-          </div>
-
-          <div className="group-bottom">
-            <div className="group-left">
-              <div className="group-search">
-                <SearchBar />
+            {userInfo.id === "" ? (
+              <></>
+            ) : userInfo.tutor === 1 ? (
+              <div
+                className="makeGroup"
+                onClick={() => {
+                  movePage();
+                }}
+              >
+                <AiOutlineUsergroupAdd size={30} />
+                <h3>STUDY 개설</h3>
               </div>
-
-              <div className="allGroups">
-                <div className="l-top">
-                  <p style={{ color: "red" }}>순위</p>
-                  <p>그룹 명</p>
-                  <p>구성원 수</p>
-                  <p>
-                    <TbCrown size={25} color="orange" />
-                  </p>
-                  <p>그룹 pt</p>
-                </div>
-
-                <Suspense fallback={<Spinner />}>
-                  <GetGroups
-                    resource={fetchData(
-                      `http://127.0.0.1:8000/group/all_groups`
-                    )}
-                  />
-                </Suspense>
-              </div>
-            </div>
-
-            {/* 왼족 : 전체 그룹, 오른쪽 : 내 그룹*/}
-
-            <div className="group-right">
-              <div className="r-top">
-                <h2>My Groups</h2>
-              </div>
-
-              <div className="myGroups">
-                <div className="myGroupsTop">
-                  <p>순위</p>
-                  <p>그룹 명</p>
-                  <p>구성원 수</p>
-                  <p>
-                    <TbCrown size={25} color="orange" />
-                  </p>
-                  <p>그룹 pt</p>
-                </div>
-
-                {userInfo.id === "" ? (
-                  <p style={{ textAlign: "center", padding: "10px 0" }}>
-                    로그인 필요 서비스입니다.
-                  </p>
+            ) : (
+              <>
+                {tutor === 0 ? (
+                  <div
+                    className="makeGroup"
+                    onClick={() => {
+                      setTutor(1);
+                    }}
+                  >
+                    <IoSchoolOutline size={30} />
+                    <h3>튜터 신청</h3>
+                  </div>
                 ) : (
-                  <Suspense fallback={<Spinner />}>
-                    <GetMyGroups
-                      resource={fetchData(
-                        `http://127.0.0.1:8000/group/mygroup/${userInfo.id}`
-                      )}
-                    />
-                  </Suspense>
+                  <div
+                    className="makeGroup"
+                    onClick={() => {
+                      setTutor(0);
+                    }}
+                  >
+                    <h3>돌아가기</h3>
+                    <HiArrowUturnLeft size={25} />
+                  </div>
                 )}
+              </>
+            )}
+            {/* 튜터 조건 맞으면 버튼 보여줘야됨 role === 1 이면 스터디 개설 0 이면 튜터 신청 */}
+          </div>
+
+          {tutor === 0 ? (
+            <div className="group-bottom">
+              <div className="group-left">
+                <div className="group-search">
+                  <SearchBar setQuery={setQuery} />
+                </div>
+
+                <div className="allGroups">
+                  <div className="l-top">
+                    <p style={{ color: "red" }}>순위</p>
+                    <p>스터디룸</p>
+                    <p>멤버 수</p>
+                    <p>
+                      <TbCrown size={25} color="orange" />
+                    </p>
+                    <p>STUDY pt</p>
+                  </div>
+
+                  <Suspense fallback={<Spinner />}>
+                    <GetGroups query={query} />
+                  </Suspense>
+                </div>
+              </div>
+
+              <div className="group-right">
+                <div className="r-top">
+                  <h2>My Study</h2>
+                </div>
+
+                <div className="myGroups">
+                  <div className="myGroupsTop">
+                    <p>순위</p>
+                    <p>스터디룸</p>
+                    <p>멤버 수</p>
+                    <p>
+                      <TbCrown size={25} color="orange" />
+                    </p>
+                    <p>STUDY pt</p>
+                  </div>
+
+                  {userInfo.id === "" ? (
+                    <p style={{ textAlign: "center", padding: "10px 0" }}>
+                      로그인 필요 서비스입니다.
+                    </p>
+                  ) : (
+                    <Suspense fallback={<Spinner />}>
+                      <GetMyGroups
+                        resource={fetchData(API.ROOMMYROOM, {
+                          headers: {
+                            Authorization: "Bearer " + userInfo.access_token,
+                          },
+                        })}
+                      />
+                    </Suspense>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <Tutor />
+          )}
         </div>
       </div>
       <Footer />
@@ -124,16 +161,14 @@ export const Group = () => {
   );
 };
 
-const SearchBar = ({ search }) => {
+const SearchBar = ({ setQuery }) => {
   const onSearchHandler = (e) => {
-    var info = document.getElementById("SV").value;
-    search(info);
-    console.log(info);
+    setQuery(document.getElementById("SV").value);
   };
 
   return (
     <div className="searchBar">
-      <input type="text" placeholder="그룹명 검색" id="SV" />
+      <input type="text" placeholder="스터디룸 이름 검색" id="SV" />
       <GoSearch
         size={23}
         color="rgb(98, 148, 255)"
@@ -143,39 +178,34 @@ const SearchBar = ({ search }) => {
     </div>
   );
 };
-
-const GetGroups = ({ resource }) => {
-  const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 6);
+const GetGroups = ({ query }) => {
   const [page, setPage] = useState(1);
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
 
+  const { data: GroupList } = useQuery(
+    ["roomlist", page, query],
+    () =>
+      axios.get(API.ROOM, {
+        params: {
+          size: 5,
+          page: page,
+          query: query,
+        },
+      }),
+    { suspense: true }
+  );
   return (
     <>
-      {GroupList.slice(5 * (page - 1), 5 * (page - 1) + 5).map((e) => {
+      {GroupList.data.room_list.map((e) => {
         return <AllGroupBox info={e} key={e.id} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>
         <Pagination
-          count={maxPage}
+          count={Math.ceil(GroupList.data.total / GroupList.data.size)}
           variant="outlined"
           shape="rounded"
           defaultPage={1}
-          onChange={(e) => handlePage(e)}
+          page={page}
+          onChange={(e, value) => setPage(value)}
         />
       </div>
     </>
@@ -184,38 +214,12 @@ const GetGroups = ({ resource }) => {
 
 const GetMyGroups = ({ resource }) => {
   const GroupList = resource.read();
-  const maxPage = Math.ceil(GroupList.length / 10);
-  const [page, setPage] = useState(1);
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
 
   return (
     <>
-      {GroupList.slice(10 * (page - 1), 10 * (page - 1) + 10).map((e) => {
+      {GroupList.map((e) => {
         return <GroupBox info={e} key={e.id} />;
       })}
-      <div className="leftBottom" style={{ marginTop: "20px" }}>
-        <Pagination
-          count={maxPage}
-          variant="outlined"
-          shape="rounded"
-          defaultPage={1}
-          onChange={(e) => handlePage(e)}
-        />
-      </div>
     </>
   );
 };

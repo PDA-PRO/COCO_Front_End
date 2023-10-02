@@ -1,0 +1,12 @@
+version: "3.2"
+services:
+  frontend:
+    restart: always
+    command : npm start
+    container_name: con_front
+    build:
+      context: ./coco/
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    stdin_open: true

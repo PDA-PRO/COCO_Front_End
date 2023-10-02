@@ -1,83 +1,375 @@
 .Res {
   display: flex;
-  flex-flow: column;
-  padding-left: 18vw;
-  padding-right: 18vw;
-  padding-top: 2rem;
-  padding-bottom: 8rem;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 0 0 5rem 0;
 }
 
-.Res-Body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 3vw;
-  padding-top: 3rem;
+.res-body {
+  width: clamp(750px, 90%, 1200px);
 }
 
-.Res-Body .Res-yourCode {
-  grid-column: 1/2;
-}
-
-.Res-Body .Res-yourCode .Res-code {
-  margin-top: 2rem;
-  width: 100%;
-  height: 800px;
-  border: 2px solid rgb(202, 202, 202);
-  border-radius: 25px;
-  background-color: rgb(255, 255, 240);
-}
-
-.Res-Body .Res-yourCode .Res-code #R-Code {
-  padding: 1.5rem;
-  font-family: "Pretendard-Regular";
-  font-size: 1.2em;
-  white-space: pre-wrap;
-}
-
-.Res-pbTitle {
+.res-top {
   display: flex;
   flex-flow: row nowrap;
-  border-bottom: 2px solid lightgray;
-  gap: 20px;
-  align-items: flex-start;
-  font-size: 1em;
-  font-family: "GmarketSansMedium";
-  padding-bottom: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+  border-bottom: 1px solid lightgray;
 }
 
-.Res-pbTitle h2 {
+.res-top p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
   margin: 0 !important;
-  padding-top: 0.3rem;
 }
 
-.Res-Body .Res-others {
-  grid-column: 2/3;
+.taskNo {
+  color: red;
+}
+
+.taskNo2 {
+  color: rgb(255, 166, 0);
+}
+
+.res-top .box {
   display: flex;
-  flex-flow: column;
+  flex-flow: column nowrap;
+  gap: 10px;
+  justify-content: start;
+  align-items: start;
+}
+.un {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+  align-items: center;
 }
 
-.Res-Body .Res-others #Res-out {
-  font-family: "Pretendard-Regular";
-  text-decoration: underline;
-  font-size: 1.3em;
-  color: gray;
-  text-align: right;
-  margin-top: 5rem;
-  cursor: pointer;
+.box .un2 {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
 }
 
-.Res-Body .Res-others .Res-code {
-  margin-top: 2rem;
+.box .un p {
+  padding-top: 4px;
+}
+
+.my_submit {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+  border-bottom: 1px solid lightgray;
+}
+
+.my_submit .fBox {
   width: 100%;
-  height: 800px;
-  border: 2px solid rgb(202, 202, 202);
-  border-radius: 25px;
-  background-color: rgb(255, 255, 240);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 15px;
 }
 
-.Res-Body .Res-others .Res-code #R-Code {
-  padding: 1.5rem;
+.my_submit p {
   font-family: "Pretendard-Regular";
-  font-size: 1.2em;
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+.fBox .box {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  justify-content: start;
+  align-items: start;
+}
+
+.my_submit .scoring {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.my_submit .time {
+  color: rgb(94, 94, 94);
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.scoring .message {
+  font-size: 1em;
+  font-weight: 500;
+  color: gray;
+  padding-top: 10px;
+}
+
+.myCode {
+  padding: 1.3rem;
+  width: 100%;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.myCode p {
+  margin: 0 !important;
+  padding-left: 5px;
+}
+
+.R-Code {
+  padding: 1em 2vw;
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 15px;
+  cursor: text;
+  background-color: rgb(245, 245, 245);
+  margin: 15px 1vw !important;
   white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 3% 95%;
+  column-gap: 13px;
+}
+
+.codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.codeLine .codeTxt {
+  grid-column: 2/3;
+}
+
+.afterCorrect {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+  cursor: pointer;
+  width: fit-content;
+  float: right;
+  color: rgb(104, 104, 104);
+  position: relative;
+}
+
+.afterCorrect:hover {
+  color: rgb(98, 148, 255);
+}
+
+.afterCorrect p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-top: 2px;
+}
+
+.afterWrong {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+  cursor: pointer;
+  width: fit-content;
+  float: right;
+  color: rgb(104, 104, 104);
+  position: relative;
+}
+
+.afterWrong:hover {
+  color: rgb(98, 148, 255);
+}
+
+.afterWrong p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  padding-top: 2px;
+}
+.pylint {
+  padding: 1.3rem 1vw 1.3rem 1vw;
+
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 20px;
+}
+
+.pylint p {
+  margin: 0 !important;
+}
+
+.pylint .detail {
+  padding: 1em 2vw;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.detail li {
+  list-style-type: circle;
+  padding-bottom: 8px;
+  color: rgb(95, 95, 95);
+}
+
+.wpcBox {
+  display: grid;
+  grid-template-columns: 1fr 0.1fr 1fr;
+  column-gap: 1vw;
+  margin-top: 35px;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+  justify-items: center;
+  position: relative;
+  align-items: center;
+
+  border-bottom: 1px solid lightgray;
+}
+
+.wpcBox .wpcItem {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: center;
+}
+
+.wpcItem p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.wpcItem .R-Code {
+  width: 100%;
+  margin: 15px 0 !important;
+  background-color: rgb(247, 247, 247);
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.wpcItem .R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 5% 95%;
+  column-gap: 10px;
+}
+
+.wpcItem .codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.wpcItem .codeLine .codeTxt {
+  grid-column: 2/3;
+}
+
+/*-------------------------------다른 로직 코드 확인하기 CSS ---------------------------------*/
+
+.OC {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1.3rem 1vw 1.3rem 1vw;
+}
+
+.OC .OCtop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.OCtop h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1.1em;
+  margin: 0 !important;
+}
+
+.OCtop p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.OCtop .un {
+  cursor: pointer;
+  color: gray;
+}
+
+.OCtop .un:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+.OCcontent {
+  display: flex;
+  flex-flow: column nowrap;
+
+  justify-content: start;
+  gap: 10px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 15px;
+  padding: 15px 1vw;
+}
+
+.OCcontent .OC-Code {
+  width: 100%;
+  border-radius: 15px;
+  background-color: rgb(238, 238, 238);
+  padding: 15px 1vw;
+  margin-bottom: 10px;
+}
+
+.OCcontent .OC-opi {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 1vw;
+}
+
+.OCcontent .OC-txt {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 7px;
+}
+
+.OC-opi p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.OC-opi .OC-liked {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
 }

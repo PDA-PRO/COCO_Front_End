@@ -14,13 +14,16 @@ import {
   BiPause,
   BiDotsHorizontalRounded,
 } from "react-icons/bi";
+import { useAppSelector } from "../../app/store";
 
 export const StatusListBox = (info) => {
   const navigate = useNavigate();
-
-  console.log("status", info.info);
+  const userInfo = useAppSelector((state) => state.loginState);
+  const canHover =
+    ((info.info.is_solved && userInfo.id !== "") ||
+      info.info.user_id === userInfo.id) &&
+    info.info.status > 2;
   const goDetail = (e) => {
-    console.log(e);
     navigate(`/result/${e}`, { state: { info: info.info } });
   };
 
@@ -122,9 +125,9 @@ export const StatusListBox = (info) => {
 
   return (
     <div
-      className="statusListBox"
+      className={"statusListBox" + (canHover ? " statusListBoxHover" : "")}
       onClick={
-        info.info.status > 2
+        canHover
           ? () => {
               goDetail(info.info.sub_id);
             }

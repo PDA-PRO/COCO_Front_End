@@ -11,14 +11,45 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
+import { API } from "api/config";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import _ from "lodash";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
   const userInfo = useAppSelector((state) => state.loginState);
   const Large = useMediaQuery({ minWidth: 1250 });
   const navigate = useNavigate();
-
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
+  const queryClient = useQueryClient();
+  const addHandler = useMutation(
+    () =>
+      axios.post(
+        API.BOARD,
+        {
+          title: title,
+          context: quillValue,
+          category: 3,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      ),
+    {
+      onSuccess: (res) => {
+        // 요청이 성공한 경우
+        queryClient.setQueryData(
+          ["boardlist"],
+          (oldData) => {
+            let newData = _.cloneDeep(oldData);
+            newData.data.boardlist = [res.data, ...oldData.data.boardlist];
+            return newData;
+          },
+          { exact: true }
+        );
+      },
+    }
+  );
 
   const onTitleHandler = (e) => {
     setTitle(e.currentTarget.value);
@@ -30,38 +61,6 @@ export const FastWrite = () => {
     };
   }, []);
 
-  const submitConfirm = () => {
-    if (title == "" || quillValue == "") {
-      return alert("완전히 입력해주세요.");
-    } else {
-      axios
-        .post(
-          "http://127.0.0.1:8000/write_board/",
-          {
-            user_id: userInfo.id,
-            title: title,
-            context: quillValue,
-            category: 3,
-            group_id: 0,
-          },
-          {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          }
-        )
-        .then(function (response) {
-          if (response.data.code === 1) {
-            alert(`${title} 업로드 성공`);
-            window.location.replace("/board");
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
-        })
-        .catch(() => {
-          alert("인증실패");
-        });
-    }
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (userInfo.id === "") {
@@ -72,7 +71,7 @@ export const FastWrite = () => {
         navigate("/login");
       }
     } else {
-      submitConfirm();
+      addHandler.mutate();
     }
   };
 

@@ -1,6 +1,6 @@
 import "../Manage.css";
 import React from "react";
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import {
@@ -17,29 +17,32 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
+import CreatableSelect from "react-select/creatable";
+import JSZip from "jszip";
+import { API } from "api/config";
 
 Quill.register("modules/imageResize", ImageResize);
 
 export const TaskUpload = () => {
-  const [title, setTitle] = useState(""); // 제목 State !필수
+  const titleRef = useRef();
 
-  const [diff, setDiff] = useState(""); // 난이도 State !필수
-  const [time, setTime] = useState(""); // 시간제한 State !필수
-  const [mem, setMem] = useState(""); // 메모리제한 State !필수
+  const diffRef = useRef();
+  const timeRef = useRef();
+  const memRef = useRef();
 
-  const [inputDesc, setInputDesc] = useState(""); // 입력 설명 State !필수
-  const [inputEx1, setInputEx1] = useState(""); // 입력 예시 State !필수
-  const [inputEx2, setInputEx2] = useState("");
+  const inputDescRef = useRef();
+  const inputEx1Ref = useRef();
+  const inputEx2Ref = useRef();
 
-  const [outputDesc, setOutputDesc] = useState(""); // 출력 설명 State !필수
-  const [outputEx1, setOutputEx1] = useState(""); // 출력 예시 State !필수
-  const [outputEx2, setOutputEx2] = useState("");
+  const outputDescRef = useRef();
+  const outputEx1Ref = useRef();
+  const outputEx2Ref = useRef();
 
-  const [py, setPy] = useState(false); // 설정 언어 State !필수
-  const [cLan, setCLan] = useState(false); // 설정 언어 State !필수
+  const categoryRef = useRef();
+
   const [testCase, setTestCase] = useState(null); // 테스트 케이스 State !필수
+  const [TCCheck, setTCCheck] = useState([false, ""]);
 
-  const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
@@ -62,7 +65,7 @@ export const TaskUpload = () => {
       const range = editor.getSelection();
       axios
         .post(
-          "http://localhost:8000/image/upload-temp",
+          API.IMAGEUPLOAD,
           {
             file: file, // 파일
           },
@@ -123,99 +126,102 @@ export const TaskUpload = () => {
     };
   }, []);
 
-  // --------------------------- 문제 업로드에 필요한 값들의 state 업데이트 ----------------------
-
-  const onTitleHandler = (e) => {
-    setTitle(e.currentTarget.value);
-  };
-
-  const onDiffHandler = (e) => {
-    setDiff(e.currentTarget.value);
-  };
-
-  const onTimeHandler = (e) => {
-    setTime(e.currentTarget.value);
-  };
-
-  const onMemHandler = (e) => {
-    setMem(e.currentTarget.value);
-  };
-
-  const onInputDescHandler = (e) => {
-    setInputDesc(e.currentTarget.value);
-  };
-
-  const onInputEx1Handler = (e) => {
-    setInputEx1(e.currentTarget.value);
-  };
-
-  const onInputEx2Handler = (e) => {
-    setInputEx2(e.currentTarget.value);
-  };
-
-  const onOutputDescHandler = (e) => {
-    setOutputDesc(e.currentTarget.value);
-  };
-
-  const onOutputEx1Handler = (e) => {
-    setOutputEx1(e.currentTarget.value);
-  };
-
-  const onOutputEx2Handler = (e) => {
-    setOutputEx2(e.currentTarget.value);
-  };
-
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (
-      title == "" ||
-      diff == "" ||
-      time == "" ||
-      mem == "" ||
-      inputDesc == "" ||
-      inputEx1 == "" ||
-      outputDesc == "" ||
-      outputEx1 == ""
+      titleRef.current.value == "" ||
+      diffRef.current.value == "" ||
+      timeRef.current.value == "" ||
+      memRef.current.value == "" ||
+      inputDescRef.current.value == "" ||
+      inputEx1Ref.current.value == "" ||
+      outputDescRef.current.value == "" ||
+      outputEx1Ref.current.value == "" ||
+      quillRef.current.value == "" ||
+      !TCCheck[0] ||
+      categoryRef.current.getValue().length == 0
     ) {
       return alert("정보 입력 부족");
     } else {
-      console.log(testCase);
       const formData = new FormData();
       //File 추가
       formData.append("testCase", testCase);
 
       //quill editor에 의해 생성된 메인 설명의 html을 form-data에 삽입
-      formData.append("description", quillValue);
+      formData.append("description", quillRef.current.value);
 
       axios
-        .post("http://127.0.0.1:8000/manage/", formData, {
+        .post(API.TASK, formData, {
           headers: {
             "Content-Type": `multipart/form-data; `,
             Authorization: "Bearer " + userInfo.access_token,
           },
           params: {
-            title: title,
-            diff: diff,
-            timeLimit: time,
-            memLimit: mem,
-            inputDescription: inputDesc,
-            inputEx1: inputEx1,
-            inputEx2: inputEx2,
-            outputDescription: outputDesc,
-            outputEx1: outputEx1,
-            outputEx2: outputEx2,
-            python: py,
-            C_Lan: cLan,
+            title: titleRef.current.value,
+            inputDescription: inputDescRef.current.value,
+            inputEx1: inputEx1Ref.current.value,
+            inputEx2: inputEx2Ref.current.value,
+            outputDescription: outputDescRef.current.value,
+            outputEx1: outputEx1Ref.current.value,
+            outputEx2: outputEx2Ref.current.value,
+            diff: diffRef.current.value,
+            timeLimit: timeRef.current.value,
+            memLimit: memRef.current.value,
+            category: categoryRef.current
+              .getValue()
+              .map((e) => e.value)
+              .join(","),
           },
         })
         .then(function (response) {
-          if (response.data.result === 1) {
-            alert(`${title} 업로드 성공`);
+          if (response.data.code === 1) {
+            alert(`${titleRef.current.value} 업로드 성공`);
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
           }
         });
+    }
+  };
+
+  const fileMeta = (zipfile) => {
+    const zip = new JSZip();
+    if (zipfile) {
+      zip.loadAsync(zipfile).then((zip) => {
+        let inputContent = [];
+        let outputContent = [];
+        try {
+          zip.forEach((relativePath, zipEntry) => {
+            let data = zipEntry.name.split("/");
+            if (data[0].toLowerCase() == "input") {
+              inputContent.push(data[1]);
+            } else if (data[0].toLowerCase() == "output") {
+              outputContent.push(data[1]);
+            } else {
+              throw new Error("잘못된 디렉토리 형식");
+            }
+          });
+        } catch (error) {
+          setTCCheck([false, "디렉터리 형식이 올바르지 않습니다."]);
+          return;
+        }
+
+        if (inputContent.length != outputContent.length) {
+          setTCCheck([false, "입력값과 출력값의 개수가 다릅니다."]);
+          return;
+        } else {
+          inputContent.sort();
+          outputContent.sort();
+          for (let index = 0; index < inputContent.length; index++) {
+            if (inputContent[index] != outputContent[index]) {
+              setTCCheck([false, "입력값과 출력값의 이름, 형식이 다릅니다."]);
+              return;
+            }
+          }
+          setTCCheck([true, inputContent.join(" | ")]);
+          setTestCase(zipfile);
+        }
+      });
     }
   };
   return (
@@ -227,17 +233,15 @@ export const TaskUpload = () => {
             Title
           </InputGroup.Text>
           <Form.Control
+            ref={titleRef}
             placeholder="문제 제목을 입력해주세요. (문제 제목은 40자 이내)"
-            onChange={onTitleHandler}
           />
         </InputGroup>
         <div className="m-upload-context">
           <div className="m-desc">
             <ReactQuill
               theme="snow"
-              value={quillValue}
               modules={quill_module}
-              onChange={setquillValue}
               ref={quillRef}
               placeholder={"문제의 메인 설명 입력"}
               style={{ minHeight: "550px" }}
@@ -245,7 +249,7 @@ export const TaskUpload = () => {
             {/* 문제에 대한 난이도 선정 */}
             <div className="m-diff">
               <FloatingLabel controlId="floatingSelect" label="난이도">
-                <Form.Select aria-label="F" onChange={onDiffHandler}>
+                <Form.Select ref={diffRef} aria-label="F">
                   <option>문제에 대한 난이도 선택</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -259,14 +263,14 @@ export const TaskUpload = () => {
             {/* 문제에 대한 시간제한 선정 */}
             <InputGroup id="m-timeLimit">
               <InputGroup.Text>Time Limit</InputGroup.Text>
-              <Form.Control onChange={onTimeHandler} />
+              <Form.Control ref={timeRef} />
               <InputGroup.Text>SEC</InputGroup.Text>
             </InputGroup>
             {/* 문제에 대한 시간제한 선정 */}
             {/* 문제에 대한 메모리 제한 선정 */}
             <InputGroup id="m-memLimit">
               <InputGroup.Text>Memory Limit</InputGroup.Text>
-              <Form.Control onChange={onMemHandler} />
+              <Form.Control ref={memRef} />
               <InputGroup.Text>MB</InputGroup.Text>
             </InputGroup>
             {/* 문제에 대한 메모리 제한 선정 */}
@@ -279,7 +283,7 @@ export const TaskUpload = () => {
                 <BsArrowDownRight size={30} />
               </InputGroup.Text>
               <Form.Control
-                onChange={onInputDescHandler}
+                ref={inputDescRef}
                 placeholder="문제 입력에 대한 설명 입력."
                 as="textarea"
                 style={{ minHeight: "120px" }}
@@ -294,7 +298,7 @@ export const TaskUpload = () => {
               <Form.Control
                 as="textarea"
                 placeholder="입력 예시"
-                onChange={onInputEx1Handler}
+                ref={inputEx1Ref}
               />
             </FloatingLabel>
 
@@ -306,7 +310,7 @@ export const TaskUpload = () => {
               <Form.Control
                 as="textarea"
                 placeholder="입력 예시"
-                onChange={onInputEx2Handler}
+                ref={inputEx2Ref}
               />
             </FloatingLabel>
 
@@ -322,7 +326,7 @@ export const TaskUpload = () => {
                 placeholder="문제 출력에 대한 설명 입력."
                 as="textarea"
                 style={{ minHeight: "120px" }}
-                onChange={onOutputDescHandler}
+                ref={outputDescRef}
               />
             </InputGroup>
 
@@ -334,7 +338,7 @@ export const TaskUpload = () => {
               <Form.Control
                 as="textarea"
                 placeholder="출력 예시"
-                onChange={onOutputEx1Handler}
+                ref={outputEx1Ref}
               />
             </FloatingLabel>
 
@@ -346,44 +350,22 @@ export const TaskUpload = () => {
               <Form.Control
                 as="textarea"
                 placeholder="출력 예시"
-                onChange={onOutputEx2Handler}
+                ref={outputEx2Ref}
               />
             </FloatingLabel>
 
             {/* 문제 출력에 대한 설명 */}
 
             {/* 문제 풀이 가능 언어 선택 */}
-            <Form className="m-choLen">
+            <div className="m-choLen">
               <p style={{ margin: "0 !important" }}>
                 <span>
                   <BsUiChecksGrid size={20} style={{ marginRight: "20px" }} />
                 </span>
-                문제 풀이 가능 언어
+                카테고리
               </p>
-              {["checkbox"].map((type) => (
-                <div key={`inline-${type}`} className="m-lan">
-                  <Form.Check
-                    inline
-                    label="Python3"
-                    type={type}
-                    id="m-lan-py"
-                    style={{ marginRight: "80px" }}
-                    onChange={() => {
-                      setPy(true);
-                    }}
-                  />
-                  <Form.Check
-                    inline
-                    label="C언어"
-                    type={type}
-                    id="m-lan-c"
-                    onChange={() => {
-                      setCLan(true);
-                    }}
-                  />
-                </div>
-              ))}
-            </Form>
+              <CheckCategory categoryRef={categoryRef} userInfo={userInfo} />
+            </div>
 
             {/* 문제 풀이 가능 언어 선택 */}
 
@@ -397,9 +379,10 @@ export const TaskUpload = () => {
               <Form.Control
                 type="file"
                 onChange={(e) => {
-                  setTestCase(e.target.files[0]);
+                  fileMeta(e.target.files[0]);
                 }}
               />
+              <Form.Label>{TCCheck[1]}</Form.Label>
             </Form.Group>
 
             {/* 입출력 테스트 케이스 zip파일 */}
@@ -415,5 +398,55 @@ export const TaskUpload = () => {
         </Button>
       </div>
     </>
+  );
+};
+
+const CheckCategory = ({ userInfo, categoryRef }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    axios.get(API.CATEGORY).then((value) => {
+      var option = [];
+      for (let i = 0; i < value.data.length; i++) {
+        option.push({ value: value.data[i], label: value.data[i] });
+      }
+      setIsLoading(false);
+      return setOptions(option);
+    });
+  }, []);
+
+  const handleCreate = (inputValue) => {
+    setIsLoading(true);
+    axios
+      .post(
+        API.CATEGORY,
+        {},
+        {
+          headers: {
+            "Content-Type": `multipart/form-data; `,
+            Authorization: "Bearer " + userInfo.access_token,
+          },
+          params: {
+            category: inputValue,
+          },
+        }
+      )
+      .then((value) => {
+        setOptions([...options, { value: inputValue, label: inputValue }]);
+        setIsLoading(false);
+      });
+  };
+
+  return (
+    <CreatableSelect
+      ref={categoryRef}
+      isClearable
+      isDisabled={isLoading}
+      isLoading={isLoading}
+      isMulti
+      onCreateOption={handleCreate}
+      options={options}
+    />
   );
 };

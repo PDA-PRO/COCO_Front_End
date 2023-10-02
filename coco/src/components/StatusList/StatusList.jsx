@@ -1,82 +1,39 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import "./StatusList.css";
 import { StatusListBox } from "./StatusListBox";
 import Spinner from "react-bootstrap/Spinner";
 import fetchData from "../../api/fetchTask";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import { GoSearch } from "react-icons/go";
-import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
+import { API } from "api/config";
 
 export const StatusList = () => {
   const userInfo = useAppSelector((state) => state.loginState);
-  const [option, setOption] = useState([false, -1, false]);
-  const [taskStatus, setTaskStatus] = useState([]);
-  const Large = useMediaQuery({ minWidth: 1135 });
+  const [filter, setFilter] = useState({
+    answer: false,
+    task_id: null,
+    onlyme: false,
+    lang: null,
+  });
+  const [page, setPage] = useState(1);
+
   const navigate = useNavigate();
 
   const reload = (e) => {
     navigate(0);
   };
 
-  const onlyMyHandler = () => {
-    option[0] = !option[0];
-    setOption([...option]);
-  };
-  const onlyLangHandler = (value) => {
-    //c가 1, py가 0
-    if (option[1] === value) {
-      option[1] = -1;
-    } else {
-      option[1] = value;
-    }
-    setOption([...option]);
-  };
-
-  const onlyAnswerHandler = () => {
-    option[2] = !option[2];
-    setOption([...option]);
-  };
-
   useEffect(() => {
-    console.log(option);
-  }, [option]);
-
-  const onSearchHandler = (value) => {
-    axios
-      .post("http://127.0.0.1:8000/task_status/", {
-        user_id: userInfo.id,
-        option: option,
-        task_info: value,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setTaskStatus(res.data);
-      });
-  };
-
-  const taskOption = () => {
-    if (option[0] === false && option[1] === -1 && option[2] === false) {
-      console.log("init");
-      return fetchData(
-        `http://127.0.0.1:8000/status?lang=${option[1]}&result=${option[2]}`
-      );
-    } else {
-      if (option[0] === true) {
-        return fetchData(`http://127.0.0.1:8000/status?user_id=${userInfo.id}
-        &lang=${option[1]}&result=${option[2]}`);
-      } else {
-        return fetchData(`http://127.0.0.1:8000/status?user_id
-        &lang=${option[1]}&result=${option[2]}`);
-      }
-    }
-  };
+    console.log(filter);
+    console.log(userInfo);
+  }, [filter]);
 
   return (
     <div>
@@ -95,46 +52,11 @@ export const StatusList = () => {
               COCO SCORE BOARD
             </h4>
           </div>
-          <div className={Large ? "statusSort" : "elseStatus"}>
-            <div className="sortBox">
-              <p>내 문제만 보기</p>
-              <Form.Check type="checkbox" onChange={() => onlyMyHandler()} />
-            </div>
-
-            <div className="sortBox">
-              <p>
-                <span style={{ color: "#8b00ff" }}>C언어</span> 제출만 보기
-              </p>
-              <Form.Check
-                type="checkbox"
-                onChange={() => onlyLangHandler(1)}
-                style={{ marginRight: "20px" }}
-                checked={option[1] === 1 ? true : false}
-              />
-              <p>
-                <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
-              </p>
-              <Form.Check
-                type="checkbox"
-                checked={option[1] === 0 ? true : false}
-                onChange={() => onlyLangHandler(0)}
-              />
-            </div>
-
-            <div className="sortBox">
-              <p>
-                <span style={{ color: "rgb(98, 148, 255)" }}>정답</span>만 보기
-              </p>
-              <Form.Check
-                type="checkbox"
-                onChange={() => onlyAnswerHandler()}
-              />
-            </div>
-
-            <div className="sortBox">
-              <SearchBar search={onSearchHandler} />
-            </div>
-          </div>
+          <OptionBox
+            setFilter={setFilter}
+            filter={filter}
+            isLogin={userInfo.id == "" ? true : false}
+          />
           <div className="statusListBox" id="SLBtop">
             <h4>Submit No.</h4>
             <h4>User ID</h4>
@@ -145,7 +67,21 @@ export const StatusList = () => {
             <h4>제출 시간</h4>
           </div>
           <Suspense fallback={<Spinner />}>
-            <Getsubmits resource={taskOption()} taskStatus={taskStatus} />
+            <Getsubmits
+              resource={fetchData(API.STATUS, {
+                params: {
+                  task_id: filter.task_id,
+                  lang: filter.lang,
+                  user_id: userInfo.id === "" ? null : userInfo.id,
+                  onlyme: filter.onlyme,
+                  answer: filter.answer,
+                  size: 10,
+                  page: page,
+                },
+              })}
+              setPage={setPage}
+              page={page}
+            />
           </Suspense>
         </div>
       </div>
@@ -154,60 +90,103 @@ export const StatusList = () => {
   );
 };
 
-const SearchBar = ({ search }) => {
-  const onSearchHandler = (e) => {
-    const value = document.getElementById("SV").value;
-    search(value);
-  };
-
-  return (
-    <div className="searchBar">
-      <input type="text" placeholder="문제 번호 or 제목" id="SV" />
-      <GoSearch
-        size={23}
-        color="rgb(97, 127, 192)"
-        id="goSearch"
-        onClick={() => onSearchHandler()}
-      />
-    </div>
-  );
-};
-
-const Getsubmits = ({ resource, taskStatus }) => {
-  const problemList = taskStatus.length === 0 ? resource.read() : taskStatus;
-  const maxPage = Math.ceil(problemList.length / 15);
-  const [page, setPage] = useState(1);
-
-  const handlePage = (event) => {
-    if (
-      event.target.innerHTML ===
-      '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>'
-    ) {
-      setPage(page - 1);
-    } else if (
-      event.target.innerHTML ===
-      '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>'
-    ) {
-      setPage(page + 1);
-    } else {
-      setPage(parseInt(event.target.outerText));
-    }
-  };
+const Getsubmits = ({ resource, page, setPage }) => {
+  const statusList = resource.read();
 
   return (
     <>
-      {problemList.slice(15 * (page - 1), 15 * (page - 1) + 15).map((e) => {
+      {statusList.statuslist.map((e) => {
         return <StatusListBox info={e} key={e.sub_id} />;
       })}
       <div className="pageController">
         <Pagination
-          count={maxPage}
+          count={Math.ceil(statusList.total / statusList.size)}
           variant="outlined"
           shape="rounded"
           defaultPage={1}
-          onChange={(e) => handlePage(e)}
+          page={page}
+          onChange={(e, value) => setPage(value)}
         />
       </div>
     </>
+  );
+};
+
+const OptionBox = ({ filter, setFilter, isLogin }) => {
+  const Large = useMediaQuery({ minWidth: 1135 });
+  const taskInputRef = useRef();
+  return (
+    <div className={Large ? "statusSort" : "elseStatus"}>
+      <div className="sortBox">
+        <p>내 문제만 보기</p>
+        <Form.Check
+          type="checkbox"
+          disabled={isLogin}
+          onChange={() => {
+            filter.onlyme = !filter.onlyme;
+            setFilter({ ...filter });
+          }}
+        />
+      </div>
+
+      <div className="sortBox">
+        <p>
+          <span style={{ color: "#8b00ff" }}>C언어</span> 제출만 보기
+        </p>
+        <Form.Check
+          type="radio"
+          name="group1"
+          onChange={() => {
+            filter.lang = 1;
+            setFilter({ ...filter });
+          }}
+          style={{ marginRight: "20px" }}
+        />
+        <p>
+          <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
+        </p>
+        <Form.Check
+          type="radio"
+          name="group1"
+          onChange={() => {
+            filter.lang = 0;
+            setFilter({ ...filter });
+          }}
+        />
+      </div>
+
+      <div className="sortBox">
+        <p>
+          <span style={{ color: "rgb(98, 148, 255)" }}>정답</span>만 보기
+        </p>
+        <Form.Check
+          type="checkbox"
+          onChange={() => {
+            filter.answer = !filter.answer;
+            setFilter({ ...filter });
+          }}
+        />
+      </div>
+
+      <div className="sortBox">
+        <div className="searchBar">
+          <input
+            ref={taskInputRef}
+            type="text"
+            placeholder="문제 번호"
+            id="SV"
+          />
+          <GoSearch
+            size={23}
+            color="rgb(97, 127, 192)"
+            id="goSearch"
+            onClick={() => {
+              filter.task_id = taskInputRef.current.value;
+              setFilter({ ...filter });
+            }}
+          />
+        </div>
+      </div>
+    </div>
   );
 };

@@ -3,10 +3,16 @@ import "./Home.css";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
-import { AiOutlineMenu, AiOutlineArrowDown } from "react-icons/ai";
-import { IoIosArrowDown } from "react-icons/io";
+import {
+  AiOutlineMenu,
+  AiOutlineArrowDown,
+  AiFillExclamationCircle,
+} from "react-icons/ai";
+import { IoIosArrowDown, IoMdLogOut } from "react-icons/io";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
+import { API } from "api/config";
+import { TbMessageCircle2Filled } from "react-icons/tb";
 
 export const Header = (props) => {
   const navigate = useNavigate();
@@ -49,10 +55,13 @@ export const Header = (props) => {
         navigate(`/mypage/${id}`);
         break;
       case 7:
-        navigate(`/group`);
+        navigate(`/room`);
         break;
       case 8:
         navigate(`/manage`);
+        break;
+      case 9:
+        navigate(`/alarm`);
         break;
     }
   };
@@ -95,7 +104,7 @@ export const Header = (props) => {
               <h3 onClick={() => movdPage(2)}>문제</h3>
               <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
               <h3 onClick={() => movdPage(4)}>채점상황</h3>
-              <h3 onClick={() => movdPage(7)}>그룹</h3>
+              <h3 onClick={() => movdPage(7)}>스터디룸</h3>
             </div>
           </div>
 
@@ -105,9 +114,11 @@ export const Header = (props) => {
             ) : (
               <div ref={ref} onClick={handleClick}>
                 <div style={{ cursor: "pointer" }} className="login">
+                  <TbMessageCircle2Filled size={20} id="alarm" />
                   <img
                     src={
-                      "http://localhost:8000/image/download/4/" +
+                      API.IMAGEDOWNLOAD +
+                      "4/" +
                       userInfo.id +
                       ".jpg?time=" +
                       userInfo.imagetoken
@@ -133,7 +144,8 @@ export const Header = (props) => {
                       <div className="bodyOverlay">
                         <img
                           src={
-                            "http://localhost:8000/image/download/4/" +
+                            API.IMAGEDOWNLOAD +
+                            "4/" +
                             userInfo.id +
                             ".jpg?time=" +
                             userInfo.imagetoken
@@ -142,6 +154,15 @@ export const Header = (props) => {
                           width="100px"
                           height="100px"
                           style={{ borderRadius: "50%" }}
+                        />
+                        <IoMdLogOut
+                          size={25}
+                          color="red"
+                          id="toLogout"
+                          title="로그아웃"
+                          onClick={() => {
+                            logoutHandler();
+                          }}
                         />
                         <h3>{userInfo.id}</h3>
                         <div className="footerOverlay">
@@ -154,10 +175,10 @@ export const Header = (props) => {
                           </h4>
                           <h4
                             onClick={() => {
-                              logoutHandler();
+                              movdPage(9, userInfo.id);
                             }}
                           >
-                            LogOut
+                            Alarm
                           </h4>
                         </div>
                         {userInfo.role === 1 ? (
@@ -207,6 +228,7 @@ export const Header = (props) => {
                 <h3 onClick={() => movdPage(2)}>문제</h3>
                 <h3 onClick={() => movdPage(3)}>커뮤니티</h3>
                 <h3 onClick={() => movdPage(4)}>채점상황</h3>
+                <h3 onClick={() => movdPage(7)}>스터디룸</h3>
               </div>
               <div>
                 {userInfo.id === "" ? (
@@ -214,9 +236,11 @@ export const Header = (props) => {
                 ) : (
                   <div ref={ref} onClick={handleClick}>
                     <div style={{ cursor: "pointer" }} className="login">
+                      <TbMessageCircle2Filled size={20} id="alarm" />
                       <img
                         src={
-                          "http://localhost:8000/image/download/4/" +
+                          API.IMAGEDOWNLOAD +
+                          "4/" +
                           userInfo.id +
                           ".jpg?time=" +
                           userInfo.imagetoken
@@ -241,6 +265,15 @@ export const Header = (props) => {
                         <Popover.Body>
                           <div className="bodyOverlay">
                             <img src="/image/user.png" alt="" width="80px" />
+                            <IoMdLogOut
+                              size={25}
+                              color="red"
+                              id="toLogout"
+                              title="로그아웃"
+                              onClick={() => {
+                                logoutHandler();
+                              }}
+                            />
                             <h3>{userInfo.id}</h3>
                             <div className="footerOverlay">
                               <h4
@@ -252,10 +285,10 @@ export const Header = (props) => {
                               </h4>
                               <h4
                                 onClick={() => {
-                                  logoutHandler();
+                                  movdPage(9, userInfo.id);
                                 }}
                               >
-                                LogOut
+                                Alarm
                               </h4>
                             </div>
                             {userInfo.role === 1 ? (

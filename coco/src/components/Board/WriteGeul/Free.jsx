@@ -1,4 +1,5 @@
 import React, { useState, useRef, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import "./WriteGuel.css";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
@@ -7,6 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
+import { API } from "api/config";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -14,7 +16,7 @@ export const Free = ({ title, cate }) => {
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
-
+  const navigate = useNavigate();
   // --------------------------- quill editor 관련 함수 ----------------------
   const imageHandler = () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
@@ -34,7 +36,7 @@ export const Free = ({ title, cate }) => {
       const range = editor.getSelection();
       axios
         .post(
-          "http://localhost:8000/image/upload-temp",
+          API.IMAGEUPLOAD,
           {
             file: file, // 파일
           },
@@ -101,25 +103,18 @@ export const Free = ({ title, cate }) => {
     } else {
       axios
         .post(
-          "http://127.0.0.1:8000/write_board/",
+          API.BOARD,
           {
-            user_id: userInfo.id,
             title: title,
             context: quillValue,
             category: cate,
-            group_id: 0,
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
           }
         )
         .then(function (response) {
-          if (response.data.code === 1) {
-            alert(`${title} 업로드 성공`);
-            window.location.replace("/board");
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
+          navigate(`/board/${response.data.id}`);
         })
         .catch(() => {
           alert("인증실패");

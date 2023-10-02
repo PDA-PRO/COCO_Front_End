@@ -4,10 +4,7 @@ import { Footer } from "../Home/Footer";
 import "./MyPage.css";
 import fetchData from "../../api/fetchTask";
 import { SecondBox } from "./SecondBox";
-import {
-  IoInformationCircleOutline,
-  IoClipboardOutline,
-} from "react-icons/io5";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { BsGraphUp } from "react-icons/bs";
 import { ThirdBox } from "./ThirdBox";
 import { FirstBox } from "./FirstBox";
@@ -15,10 +12,14 @@ import { MyTasks } from "./MyTasks";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
 import { GiBlackBook, GiNotebook } from "react-icons/gi";
+import { API } from "api/config";
 
 export const MyPage = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const path = window.location.pathname.split("/");
+
+  var me = userInfo.id;
+  var now = path.at(-1);
 
   return (
     <>
@@ -37,12 +38,11 @@ export const MyPage = () => {
           </h2>
           <Suspense fallback={<Spinner />}>
             <GetFirst
-              resource={fetchData(
-                `http://127.0.0.1:8000/myPageOne/${path.at(-1)}/`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
+              resource={fetchData(API.ONE + path.at(-1), {
+                headers: {
+                  Authorization: "Bearer " + userInfo.access_token,
+                },
+              })}
             />
           </Suspense>
           <h2>
@@ -53,58 +53,62 @@ export const MyPage = () => {
                 style={{ paddingBottom: "3px", marginRight: "13px" }}
               />
             </span>
-            내 역량
+            {me === now ? "내 역량" : `${now}님 역량`}
           </h2>
           <Suspense fallback={<Spinner />}>
             <GetSecond
-              resource={fetchData(
-                `http://127.0.0.1:8000/myPageTwo/${path.at(-1)}/`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
+              resource={fetchData(API.TWO + path.at(-1), {
+                headers: {
+                  Authorization: "Bearer " + userInfo.access_token,
+                },
+              })}
             />
           </Suspense>
-          <h2>
-            <span>
-              <GiNotebook
-                size={29}
-                color="green"
-                style={{ paddingBottom: "3px", marginRight: "13px" }}
-              />
-            </span>
-            내 게시글
-          </h2>
-          <Suspense fallback={<Spinner />}>
-            <GetThird
-              resource={fetchData(
-                `http://127.0.0.1:8000/myPageThree/${path.at(-1)}/`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
-            />
-          </Suspense>
-          <h2>
-            <span>
-              <GiBlackBook
-                size={29}
-                color="green"
-                style={{ paddingBottom: "3px", marginRight: "13px" }}
-              />
-            </span>
-            내 문제집
-          </h2>
-          <Suspense fallback={<Spinner />}>
-            <GetMyTasks
-              resource={fetchData(
-                `http://127.0.0.1:8000/mytasks/${path.at(-1)}/`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
-            />
-          </Suspense>
+          {me === now ? (
+            <>
+              <h2>
+                <span>
+                  <GiNotebook
+                    size={29}
+                    color="green"
+                    style={{ paddingBottom: "3px", marginRight: "13px" }}
+                  />
+                </span>
+                내 게시글
+              </h2>
+              <Suspense fallback={<Spinner />}>
+                <GetThird
+                  resource={fetchData(API.THREE + path.at(-1), {
+                    headers: {
+                      Authorization: "Bearer " + userInfo.access_token,
+                    },
+                  })}
+                  userinfo={userInfo}
+                />
+              </Suspense>
+              <h2>
+                <span>
+                  <GiBlackBook
+                    size={29}
+                    color="green"
+                    style={{ paddingBottom: "3px", marginRight: "13px" }}
+                  />
+                </span>
+                내 문제집
+              </h2>
+              <Suspense fallback={<Spinner />}>
+                <GetMyTasks
+                  resource={fetchData(API.MYTASK, {
+                    headers: {
+                      Authorization: "Bearer " + userInfo.access_token,
+                    },
+                  })}
+                />
+              </Suspense>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <Footer />
@@ -114,7 +118,7 @@ export const MyPage = () => {
 
 const GetFirst = ({ resource }) => {
   const res = resource.read();
-  return <>{<FirstBox props={res} key={res.id} />}</>;
+  return <>{<FirstBox props={res[0]} key={res.id} />}</>;
 };
 
 const GetSecond = ({ resource }) => {
@@ -122,9 +126,9 @@ const GetSecond = ({ resource }) => {
   return <>{<SecondBox props={res} key={res.id} />}</>;
 };
 
-const GetThird = ({ resource }) => {
+const GetThird = ({ resource, userinfo }) => {
   const res = resource.read();
-  return <>{<ThirdBox props={res} key={res.id} />}</>;
+  return <>{<ThirdBox props={res} key={res.id} userinfo={userinfo} />}</>;
 };
 
 const GetMyTasks = ({ resource }) => {

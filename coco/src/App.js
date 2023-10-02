@@ -88,6 +88,12 @@ import { Group } from "./components/Group/Group";
 import { MakeGroup } from "./components/Group/MakeGroup";
 import { GroupInfo } from "./components/Group/GroupInfo";
 import { GroupBoard } from "./components/Group/BoardWrite/GroupBoard";
+import { TaskModify } from "./components/Manage/manageComponents/TaskModify";
+import { MakeRoadMap } from "./components/Group/RoadMap/MakeRoadMap";
+import { ModifyRoadMap } from "./components/Group/RoadMap/ModifyRoadMap";
+import { Inside } from "./components/Group/RoadMap/Inside";
+import { Tutor } from "components/Group/Tutor/Tutor";
+import { Alarm } from "components/Alarm/Alarm";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
@@ -105,31 +111,34 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="/group/:id" element={<GroupInfo />} />
-          <Route path="/makegroup" element={<MakeGroup />} />
+          <Route path="/room" element={<Group />} />
+          <Route path="/room/:id" element={<GroupInfo />} />
+          <Route path="/tutor" element={<Tutor />} />
+          <Route path="/makeroom" element={<MakeGroup />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/problems/:id" element={<PBD />} />
-          <Route
-            path="/result/:id"
-            element={
-              <AuthRouter role={0}>
-                <Result />
-              </AuthRouter>
-            }
-          />
+          <Route path="/result/:id" element={<Result />} />
           <Route path="/board" element={<Board />} />
-          <Route path="/group/board/write" element={<GroupBoard />} />
+          <Route path="/room/qa/write" element={<GroupBoard />} />
+          <Route path="/room/roadmap/:room_id/:id" element={<Inside />} />
+          <Route path="/room/createRoadmap/:id" element={<MakeRoadMap />} />
+          <Route
+            path="/room/modifyRoadmap/:room_id/:id"
+            element={<ModifyRoadMap />}
+          />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />
+          <Route path="/alarm" element={<Alarm />} />
           <Route path="/manage" element={<Manage />} />
+          <Route path="/manage/modify/:id" element={<TaskModify />} />
           <Route
             path="/write"
             element={
-              <AuthRouter role={0}>
-                <WriteGeul />
-              </AuthRouter>
+              <WriteGeul />
+              // <AuthRouter role={0}>
+              //   <WriteGeul />
+              // </AuthRouter>
             }
           />
           <Route path="/status" element={<StatusList />} />

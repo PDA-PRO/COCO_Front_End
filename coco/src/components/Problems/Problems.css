@@ -59,7 +59,7 @@
 
 .BodyLeft .leftTop {
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
   align-items: center;
   border: 2px solid rgb(98, 148, 255);
   border-radius: 15px 15px 0 0;
@@ -103,17 +103,16 @@
 }
 
 .problemsBox {
-  border-bottom: 2px solid rgb(98, 148, 255);
+  border-bottom: 1px solid rgb(167, 195, 255);
   display: grid;
-  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
   align-items: center;
   padding: 11px 15px;
   cursor: pointer;
-  background-color: rgb(248, 252, 255);
 }
 
 .problemsBox:hover {
-  background-color: rgb(217, 238, 255);
+  background-color: rgb(243, 250, 255);
 }
 
 .problemsBox h4 {
@@ -128,6 +127,92 @@
   width: 70px;
   color: red;
   font-weight: 600 !important;
+}
+
+.problemsBox_type1 {
+  border-bottom: 2px solid rgb(98, 148, 255);
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 11px 5px;
+  cursor: pointer;
+  background-color: rgb(248, 252, 255);
+}
+
+.problemsBox_type1:hover {
+  background-color: rgb(217, 238, 255);
+}
+
+.problemsBox_type1 h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.problemsBox_type1 h4:nth-child(1) {
+  width: 70px;
+  color: red;
+  font-weight: 600 !important;
+}
+
+.problemsBox_type2 {
+  border-bottom: 2px solid rgb(98, 255, 137);
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 11px 5px;
+  cursor: pointer;
+  /* background-color: rgb(248, 252, 255); */
+}
+
+.problemsBox_type2:hover {
+  background-color: rgb(238, 255, 242);
+}
+
+.problemsBox_type2 h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.problemsBox_type2 h4:nth-child(1) {
+  width: 70px;
+  color: red;
+  font-weight: 600 !important;
+}
+
+.problemsBox_type3 {
+  border-bottom: 1px solid lightgray;
+  display: grid;
+  grid-template-columns: 0.5fr 2.3fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 11px 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  /* background-color: rgb(248, 252, 255); */
+}
+
+.problemsBox_type3:hover {
+  background-color: rgb(248, 248, 248);
+}
+
+.problemsBox_type3 h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.problemsBox_type3 h4:nth-child(1) {
+  width: 70px;
+  color: red;
+  font-weight: 600 !important;
+  padding-left: 15px;
 }
 
 .parentPC .proBody .BodyRight {
@@ -150,10 +235,6 @@
   border-radius: 15px;
   background-color: rgb(245, 252, 255);
   padding: 10px;
-}
-
-.searchBar #goSearch {
-  cursor: pointer;
 }
 
 .searchBar input {
@@ -221,7 +302,7 @@
   height: 0px;
   overflow: hidden;
   text-align: center;
-  transition: height 0.4s ease;
+  transition: height 0.2s ease;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -255,6 +336,11 @@
   justify-content: space-between;
   padding: 0 5px;
   margin: 3px 0;
+}
+
+.slide .category {
+  width: 270px;
+  z-index: 1;
 }
 
 .chose4 {
@@ -308,6 +394,16 @@
   margin-top: 10px;
 }
 
+#touch0 {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch0:checked + .slide {
+  height: 70px;
+}
+
 #touch {
   position: absolute;
   opacity: 0;
@@ -325,7 +421,9 @@
 }
 
 #touch2:checked + .slide {
-  height: 140px;
+  height: 70px;
+  opacity: 1;
+  overflow: visible;
 }
 
 #touch3 {
@@ -401,7 +499,6 @@
   align-items: center;
   margin: 0 !important;
 }
-
 
 .groupProblem {
   border-bottom: 2px solid rgb(98, 148, 255);

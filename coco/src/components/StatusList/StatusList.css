@@ -107,11 +107,11 @@
   padding: 8px 20px;
   margin-left: 10px;
   margin-right: 10px;
-  cursor: pointer;
 }
 
-.statusListBox:hover {
+.statusListBoxHover:hover {
   background-color: rgb(233, 244, 253);
+  cursor: pointer;
 }
 
 #SLBtop {

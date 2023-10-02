@@ -61,7 +61,7 @@ export const Header = (props) => {
         navigate(`/manage`);
         break;
       case 9:
-        navigate(`/alarm/${id}`);
+        navigate(`/alarm`);
         break;
     }
   };

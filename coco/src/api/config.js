@@ -37,5 +37,5 @@ export const API = {
   TUTORREQUEST: `${BASE_URL}/room/tutor-request`,
   SELECTANSWER: `${BASE_URL}/room/select-answer`,
   LINT: `${BASE_URL}/lint`,
-  ALARM: `${BASE_URL}/alaram`,
+  ALARM: `${BASE_URL}/user/alarm`,
 };

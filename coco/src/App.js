@@ -129,7 +129,7 @@ function App() {
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board_modify/:id" element={<ModifyBoard />} />
           <Route path="/mypage/:id" element={<MyPage />} />
-          <Route path="/alarm/:id" element={<Alarm />} />
+          <Route path="/alarm" element={<Alarm />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/manage/modify/:id" element={<TaskModify />} />
           <Route

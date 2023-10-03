@@ -27,7 +27,7 @@ export const Alarm = () => {
           <Suspense fallback={<Spinner />}>
             <AlarmContent
               resource={fetchData(API.ALARM, {
-                params: { user_id: user_id },
+                headers: { Authorization: "Bearer " + userInfo.access_token },
               })}
             />
           </Suspense>

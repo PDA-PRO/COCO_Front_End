@@ -114,7 +114,11 @@ export const Header = (props) => {
             ) : (
               <div ref={ref} onClick={handleClick}>
                 <div style={{ cursor: "pointer" }} className="login">
-                  <TbMessageCircle2Filled size={20} id="alarm" />
+                  {userInfo.alarm > 0 ? (
+                    <TbMessageCircle2Filled size={20} id="alarm" />
+                  ) : (
+                    <div />
+                  )}
                   <img
                     src={
                       API.IMAGEDOWNLOAD +
@@ -236,7 +240,12 @@ export const Header = (props) => {
                 ) : (
                   <div ref={ref} onClick={handleClick}>
                     <div style={{ cursor: "pointer" }} className="login">
-                      <TbMessageCircle2Filled size={20} id="alarm" />
+                      {userInfo.alarm > 0 ? (
+                        <TbMessageCircle2Filled size={20} id="alarm" />
+                      ) : (
+                        <div />
+                      )}
+
                       <img
                         src={
                           API.IMAGEDOWNLOAD +

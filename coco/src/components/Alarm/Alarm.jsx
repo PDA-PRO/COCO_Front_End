@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Suspense } from "react";
 import "./Alarm.css";
 import { Header } from "components/Home/Header";
 import { Footer } from "components/Home/Footer";
 import Spinner from "react-bootstrap/Spinner";
-import { useAppSelector } from "../../app/store";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 import { LuMailPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import fetchData from "../../api/fetchTask";
+import axios from "axios";
 
 export const Alarm = () => {
+  const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
   var user_id = userInfo.id;
+
+  useEffect(() => {
+    axios
+      .patch(API.ALARM+`/${user_id}`, {
+        user_id: user_id,
+      })
+      .then((res) => {
+        if(res.data === true){
+          dispatch({
+            type: "loginSlice/alarm",
+            alarm: 0,
+          });
+        }
+      });
+  }, []);
+
   return (
     <>
       <Header />
@@ -40,6 +58,7 @@ export const Alarm = () => {
 /* API 받아주고 */
 const AlarmContent = ({ resource }) => {
   const data = resource.read();
+  console.log(data);
   return (
     <div className="alarmContent">
       {data.map((item) => {

@@ -220,7 +220,7 @@
 }
 
 .pylint .detail {
-  padding: 1em 2vw;
+  padding: 0.5em 2vw;
   font-size: 1em;
   font-weight: 500;
 }

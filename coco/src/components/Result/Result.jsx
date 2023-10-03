@@ -57,10 +57,7 @@ const ResultBox = ({ resource, info }) => {
   const [wpc, setWpc] = useState(0);
   const [otherLogic, setOtherLogic] = useState(false);
 
-  const num = parseInt(id);
-
   const problemList = resource.read();
-  console.log("오류here", problemList);
 
   const setLang = (e) => {
     switch (e) {
@@ -116,7 +113,9 @@ const ResultBox = ({ resource, info }) => {
     }
   };
 
-  const dateString = problemList["time"];
+  // ---------------- 날짜 표시 위한 변수 선언 및 함수
+
+  const dateString = problemList.subDetail["time"];
   const dateObject = new Date(dateString);
 
   const year = dateObject.getFullYear();
@@ -131,7 +130,11 @@ const ResultBox = ({ resource, info }) => {
     year - 2000
   }년 ${month}월 ${day}일 ${hours}시${minutes}분`;
 
-  const dataArray = problemList["code"].split("\n");
+  // ---------------- 날짜 표시 위한 변수 선언 및 함수
+
+  // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
+
+  const dataArray = problemList.subDetail["code"].split("\n");
 
   const numberedData = dataArray
     .map((item, index) => {
@@ -139,26 +142,73 @@ const ResultBox = ({ resource, info }) => {
     })
     .join("\n");
 
+  var wrongLines = [];
+  var wrongStart = [];
+  var wrongEnd = [];
+  for (let i = 0; i < problemList.lint.length; i++) {
+    wrongLines.push(problemList.lint[i].line);
+    wrongStart.push(problemList.lint[i].column);
+    wrongEnd.push(problemList.lint[i].endColumn);
+  }
+
+  console.log("lint", problemList.lint);
+
   function makeLine(arr, line, start, end) {
-    const strings = arr.split("\n").map((str) => {
-      const [num, val] = str.split("@");
-      return (
-        <div className="codeLine">
-          <n className="codeNum">{num}.</n>
+    console.log(line, start, end);
+    function isRight(line, start, end) {
+      line.shift();
+      start.shift();
+      end.shift();
+    }
 
-          {line == num ? (
-            <n className="codeTxt">
-              <u style={{ color: "red" }}>{val.slice(start, end + 1)}</u>
-              {val.slice(end + 1)}
-            </n>
-          ) : (
-            <n className="codeTxt">{val}</n>
-          )}
-        </div>
-      );
-    });
+    if (end[0] === null) {
+      console.log("여기 들어오긴 함?");
+      const strings = arr.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <div className="codeNum">{num}.</div>
 
-    return strings;
+            {line[0] == num ? (
+              <div className="codeTxt">
+                {val.slice(0, start[0] - 1)}
+                <u style={{ color: "red", fontWeight: "600" }}>
+                  {val.slice(start[0] - 1)}
+                </u>
+                {isRight(line, start, end)}
+              </div>
+            ) : (
+              <div className="codeTxt">{val}</div>
+            )}
+          </div>
+        );
+      });
+      return strings;
+    } else {
+      console.log("일로 들어옴");
+      const strings = arr.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <div className="codeNum">{num}.</div>
+
+            {line[0] == num ? (
+              <div className="codeTxt">
+                {val.slice(0, start[0])}
+                <u style={{ color: "red", fontWeight: "600" }}>
+                  {val.slice(start[0], end[0])}
+                </u>
+                {val.slice(end[0])}
+                {isRight(line, start, end)}
+              </div>
+            ) : (
+              <div className="codeTxt">{val}</div>
+            )}
+          </div>
+        );
+      });
+      return strings;
+    }
   }
 
   function makeNoLine(arr) {
@@ -174,6 +224,8 @@ const ResultBox = ({ resource, info }) => {
 
     return strings;
   }
+
+  // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
 
   const changeLogic = () => {
     setOtherLogic(!otherLogic);
@@ -218,9 +270,9 @@ const ResultBox = ({ resource, info }) => {
                 <div className="scoring">
                   <div className="un">
                     <p>채점 결과 : </p>
-                    {isCorrect(problemList["status"])}
+                    {isCorrect(problemList.subDetail["status"])}
                   </div>
-                  <p className="message">{problemList["message"]}</p>
+                  <p className="message">{problemList.subDetail["message"]}</p>
                 </div>
                 <div className="un">
                   <p className="time">제출 시간 : {formattedDate}</p>
@@ -233,13 +285,15 @@ const ResultBox = ({ resource, info }) => {
                 <VscListFlat size={30} color="darkgray" />
                 <p>내 제출 코드</p>
               </div>
-              {problemList["status"] === 3 ? (
+              {problemList.subDetail["status"] === 3 ? (
                 <pre className="R-Code">{makeNoLine(numberedData)}</pre>
               ) : (
-                <pre className="R-Code">{makeLine(numberedData, 1, 0, 4)}</pre>
+                <pre className="R-Code">
+                  {makeLine(numberedData, wrongLines, wrongStart, wrongEnd)}
+                </pre>
               )}
             </div>
-            {problemList["status"] === 3 ? (
+            {problemList.subDetail["status"] === 3 ? (
               <div className="afterCorrect" onClick={() => changeLogic()}>
                 <p>다른 로직 코드 보러가기</p>
                 <BsBoxArrowInRight size={23} />
@@ -273,8 +327,8 @@ const ResultBox = ({ resource, info }) => {
                 </div>
                 <div className="differ">
                   <ReactDiffViewer
-                    oldValue={problemList["code"]}
-                    newValue={problemList["code"]}
+                    oldValue={problemList.subDetail["code"]}
+                    newValue={problemList.subDetail["code"]} // 여기에 WPC 받아온 code
                     splitView={true}
                     // hideLineNumbers={true}
                     showDiffOnly={false}
@@ -288,14 +342,10 @@ const ResultBox = ({ resource, info }) => {
               <></>
             )}
 
-            {problemList["status"] === 3 ? (
+            {problemList.subDetail["status"] === 3 ? (
               <></>
             ) : (
-              <Suspense>
-                {/* <Lint
-                  resource={fetchData(API.LINT, { params: { sub_id: num } })}
-                /> */}
-              </Suspense>
+              <Lint props={problemList.lint} />
             )}
           </>
         ) : (
@@ -308,28 +358,38 @@ const ResultBox = ({ resource, info }) => {
   );
 };
 
-const WPC = () => {
-  return (
-    <>
-      <p>태그</p>
-    </>
-  );
-};
+// const WPC = () => {
+//   return (
+//     <>
+//       <p>태그</p>
+//     </>
+//   );
+// };
 
-const Lint = ({ resource }) => {
-  const info = resource.read();
-  console.log(info);
+const Lint = ({ props }) => {
+  console.log(props.length);
 
   return (
     <div className="pylint">
-      <div className="un">
+      <div className="un" style={{ marginBottom: "1em" }}>
         <MdOutlineManageSearch size={30} color="lightgreen" />
         <p>채점결과 세부사항</p>
       </div>
-      <div className="detail">
-        <li>오류 타입 : 'error'</li>
-        <li>오류 메세지 : " Undefined variable 'dddddd' "</li>
-      </div>
+      {props.map((e) => {
+        return <LintDetail info={e} />;
+      })}
+    </div>
+  );
+};
+
+const LintDetail = (info) => {
+  return (
+    <div className="detail">
+      <li>
+        Line : <u style={{ color: "red" }}>No. {info.info.line}</u>
+      </li>
+      <li>오류 타입 : "{info.info.type}"</li>
+      <li>오류 메세지 : "{info.info.message}"</li>
     </div>
   );
 };

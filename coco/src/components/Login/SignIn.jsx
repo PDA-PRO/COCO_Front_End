@@ -74,6 +74,7 @@ export const SignIn = () => {
               exp: jwt_exp,
               imagetoken: new Date().getTime(),
               tutor: jwt_tutor,
+              alarm: response.data.alarm
             });
             navigateToHome();
           }

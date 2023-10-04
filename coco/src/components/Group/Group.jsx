@@ -53,9 +53,9 @@ export const Group = () => {
                 COCO STUDY ROOM
               </h4>
             </div>
-
-            {/* 튜터 조건 맞으면 버튼 보여줘야됨 role === 1 이면 스터디 개설 0 이면 튜터 신청 */}
-            {userInfo.role === 1 ? (
+            {userInfo.id === "" ? (
+              <></>
+            ) : userInfo.tutor === 1 ? (
               <div
                 className="makeGroup"
                 onClick={() => {
@@ -90,6 +90,7 @@ export const Group = () => {
                 )}
               </>
             )}
+            {/* 튜터 조건 맞으면 버튼 보여줘야됨 role === 1 이면 스터디 개설 0 이면 튜터 신청 */}
           </div>
 
           {tutor === 0 ? (
@@ -139,7 +140,11 @@ export const Group = () => {
                   ) : (
                     <Suspense fallback={<Spinner />}>
                       <GetMyGroups
-                        resource={fetchData(API.ROOMMYROOM + userInfo.id)}
+                        resource={fetchData(API.ROOMMYROOM, {
+                          headers: {
+                            Authorization: "Bearer " + userInfo.access_token,
+                          },
+                        })}
                       />
                     </Suspense>
                   )}

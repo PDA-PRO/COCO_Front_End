@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./WriteGuel.css";
 import Button from "react-bootstrap/Button";
 import ReactQuill from "react-quill";
@@ -19,6 +20,7 @@ export const Help = ({ title }) => {
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
+  const navigate = useNavigate();
 
   // --------------------------- quill editor 관련 함수 ----------------------
   const imageHandler = () => {
@@ -108,7 +110,6 @@ export const Help = ({ title }) => {
         .post(
           API.BOARD,
           {
-            user_id: userInfo.id,
             title: title,
             context: quillValue,
             category: 2,
@@ -119,12 +120,8 @@ export const Help = ({ title }) => {
           }
         )
         .then(function (response) {
-          if (response.data.code === 1) {
-            alert(`${title} 업로드 성공`);
-            window.location.replace("/board");
-          } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
-          }
+          alert(`${title} 업로드 성공`);
+          navigate(`/board/${response.data.id}`);
         })
         .catch(() => {
           alert("인증실패");
@@ -135,7 +132,7 @@ export const Help = ({ title }) => {
   return (
     <div className="freeWrite">
       <div className="helpWrite">
-        <div>
+        <div className="helpContent">
           <ReactQuill
             theme="snow"
             value={quillValue}
@@ -143,15 +140,10 @@ export const Help = ({ title }) => {
             onChange={setquillValue}
             ref={quillRef}
             placeholder={"내용을 작성해주세요"}
-            style={{
-              height: "480px",
-              marginBottom: "50px",
-            }}
           />
         </div>
-        <div style={{ border: "2px solid lightgray" }}>
+        <div className="helpCode">
           <CodeMirror
-            width="27vw"
             value="print('hello')"
             extensions={[python(), cpp()]}
             onChange={(value) => {

@@ -3,11 +3,16 @@ import "./Home.css";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
-import { AiOutlineMenu, AiOutlineArrowDown } from "react-icons/ai";
-import { IoIosArrowDown } from "react-icons/io";
+import {
+  AiOutlineMenu,
+  AiOutlineArrowDown,
+  AiFillExclamationCircle,
+} from "react-icons/ai";
+import { IoIosArrowDown, IoMdLogOut } from "react-icons/io";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
 import { API } from "api/config";
+import { TbMessageCircle2Filled } from "react-icons/tb";
 
 export const Header = (props) => {
   const navigate = useNavigate();
@@ -54,6 +59,9 @@ export const Header = (props) => {
         break;
       case 8:
         navigate(`/manage`);
+        break;
+      case 9:
+        navigate(`/alarm`);
         break;
     }
   };
@@ -106,6 +114,11 @@ export const Header = (props) => {
             ) : (
               <div ref={ref} onClick={handleClick}>
                 <div style={{ cursor: "pointer" }} className="login">
+                  {userInfo.alarm > 0 ? (
+                    <TbMessageCircle2Filled size={20} id="alarm" />
+                  ) : (
+                    <div />
+                  )}
                   <img
                     src={
                       API.IMAGEDOWNLOAD +
@@ -146,6 +159,15 @@ export const Header = (props) => {
                           height="100px"
                           style={{ borderRadius: "50%" }}
                         />
+                        <IoMdLogOut
+                          size={25}
+                          color="red"
+                          id="toLogout"
+                          title="로그아웃"
+                          onClick={() => {
+                            logoutHandler();
+                          }}
+                        />
                         <h3>{userInfo.id}</h3>
                         <div className="footerOverlay">
                           <h4
@@ -157,10 +179,10 @@ export const Header = (props) => {
                           </h4>
                           <h4
                             onClick={() => {
-                              logoutHandler();
+                              movdPage(9, userInfo.id);
                             }}
                           >
-                            LogOut
+                            Alarm
                           </h4>
                         </div>
                         {userInfo.role === 1 ? (
@@ -218,6 +240,12 @@ export const Header = (props) => {
                 ) : (
                   <div ref={ref} onClick={handleClick}>
                     <div style={{ cursor: "pointer" }} className="login">
+                      {userInfo.alarm > 0 ? (
+                        <TbMessageCircle2Filled size={20} id="alarm" />
+                      ) : (
+                        <div />
+                      )}
+
                       <img
                         src={
                           API.IMAGEDOWNLOAD +
@@ -246,6 +274,15 @@ export const Header = (props) => {
                         <Popover.Body>
                           <div className="bodyOverlay">
                             <img src="/image/user.png" alt="" width="80px" />
+                            <IoMdLogOut
+                              size={25}
+                              color="red"
+                              id="toLogout"
+                              title="로그아웃"
+                              onClick={() => {
+                                logoutHandler();
+                              }}
+                            />
                             <h3>{userInfo.id}</h3>
                             <div className="footerOverlay">
                               <h4
@@ -257,10 +294,10 @@ export const Header = (props) => {
                               </h4>
                               <h4
                                 onClick={() => {
-                                  logoutHandler();
+                                  movdPage(9, userInfo.id);
                                 }}
                               >
-                                LogOut
+                                Alarm
                               </h4>
                             </div>
                             {userInfo.role === 1 ? (

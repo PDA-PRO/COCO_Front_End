@@ -15,7 +15,7 @@ export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const dispatch = useAppDispatch();
   const path = window.location.pathname.split("/");
-
+  console.log(props);
   var me = userInfo.id;
   var now = path.at(-1);
 
@@ -88,19 +88,15 @@ export const FirstBox = (props) => {
       alert("온전한 이메일을 입력해주세요.");
     } else {
       axios
-        .post(
-          API.EMAILUPDATE,
-          {},
+        .patch(
+          API.USER,
+          { email: email },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
-            params: {
-              id: props.props.id,
-              email: email,
-            },
           }
         )
         .then(function (response) {
-          if (response.data === 1) {
+          if (response.data.code === 1) {
             alert("이메일이 변경되었습니다.");
           } else {
             alert("ERROR - SERVER COMMUNICATION FAILED");
@@ -125,136 +121,159 @@ export const FirstBox = (props) => {
         alert("변경하려는 비밀번호 확인이 틀렸습니다.");
       } else {
         axios
-          .post(
-            API.PWUPDATE,
-            {},
+          .patch(
+            API.USER,
+            { pw: inputNew, cur_pw: inputNow },
             {
               headers: { Authorization: "Bearer " + userInfo.access_token },
-              params: { id: props.props.id, pw: inputNew },
             }
           )
           .then(function (response) {
-            if (response.data === 1) {
+            if (response.data.code === 1) {
               alert("비밀번호가 변경되었습니다.");
             } else {
               alert("ERROR - SERVER COMMUNICATION FAILED");
             }
+          })
+          .catch(function (res) {
+            alert("비밀번호 업데이트 실패");
           });
       }
     }
   };
 
   return (
-    <div className="mp-infoBox">
-      <div className="picBox">
-        <>
-          <img
-            onError={onErrorImg}
-            src={
-              API.IMAGEDOWNLOAD + "4/" + userInfo.id + ".jpg?time=" + fileImage
-            }
-            className="userImg"
-          />
-        </>
-        {me === now ? (
-          <div className="picSelect">
-            <label htmlFor="imgUpload">프로필 사진 변경</label>
-            <input
-              id="imgUpload"
-              name="imgUpload"
-              type="file"
-              accept="image/*"
-              onChange={saveFileImage}
-              style={{
-                display: "none",
-              }}
-            />
-
-            <label onClick={() => deleteFileImage()}>기본 이미지로 설정</label>
-          </div>
-        ) : (
-          <>
-            <h2 style={{ paddingTop: 10, paddingLeft: 0 }}>{now}</h2>
-          </>
-        )}
-      </div>
-
-      <div className="levelField">
-        <h3>Level 3</h3>
-        <p>다음 레벨까지 100pts</p>
-      </div>
-
+    <>
       {me === now ? (
-        <div className="txtInputBox">
-          <h3>
-            <span>
-              <IoMailOutline
-                size={23}
-                color="green"
-                style={{ marginRight: "10px" }}
+        <div className="mp-infoBox">
+          <div className="picBox">
+            <>
+              <img
+                onError={onErrorImg}
+                src={
+                  API.IMAGEDOWNLOAD +
+                  "4/" +
+                  userInfo.id +
+                  ".jpg?time=" +
+                  fileImage
+                }
+                className="userImg"
               />
-            </span>
-            이메일 변경
-          </h3>
-          <InputGroup className="mb-3">
-            <Form.Control placeholder={`${props.props.email}`} ref={refEmail} />
+            </>
+
+            <div className="picSelect">
+              <label htmlFor="imgUpload">프로필 사진 변경</label>
+              <input
+                id="imgUpload"
+                name="imgUpload"
+                type="file"
+                accept="image/*"
+                onChange={saveFileImage}
+                style={{
+                  display: "none",
+                }}
+              />
+
+              <label onClick={() => deleteFileImage()}>
+                기본 이미지로 설정
+              </label>
+            </div>
+          </div>
+
+          <div className="levelField">
+            <h3>Level 3</h3>
+            <p>다음 레벨까지 100pts</p>
+          </div>
+
+          <div className="txtInputBox">
+            <h3>
+              <span>
+                <IoMailOutline
+                  size={23}
+                  color="green"
+                  style={{ marginRight: "10px" }}
+                />
+              </span>
+              이메일 변경
+            </h3>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder={`${props.props.email}`}
+                ref={refEmail}
+              />
+              <Button
+                variant="outline-success"
+                id="button-addon2"
+                onClick={() => changeEmail()}
+              >
+                변경
+              </Button>
+            </InputGroup>
+
+            <h3 style={{ marginTop: "12px" }}>
+              <span>
+                <RiLockPasswordLine
+                  size={22}
+                  color="green"
+                  style={{ marginRight: "10px" }}
+                />
+              </span>
+              비밀번호 변경
+            </h3>
+
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="현재 비밀번호"
+                type="password"
+                ref={refNowPW}
+              />
+            </InputGroup>
+
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="새 비밀번호 입력"
+                type="password"
+                ref={refNewPW}
+              />
+            </InputGroup>
+
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="새 비밀번호 확인"
+                type="password"
+                ref={refconfirmNewPW}
+              />
+            </InputGroup>
+
             <Button
               variant="outline-success"
-              id="button-addon2"
-              onClick={() => changeEmail()}
+              id="pwBtn"
+              onClick={() => changePW()}
             >
-              변경
+              change
             </Button>
-          </InputGroup>
-
-          <h3 style={{ marginTop: "12px" }}>
-            <span>
-              <RiLockPasswordLine
-                size={22}
-                color="green"
-                style={{ marginRight: "10px" }}
-              />
-            </span>
-            비밀번호 변경
-          </h3>
-
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="현재 비밀번호"
-              type="password"
-              ref={refNowPW}
-            />
-          </InputGroup>
-
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="새 비밀번호 입력"
-              type="password"
-              ref={refNewPW}
-            />
-          </InputGroup>
-
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="새 비밀번호 확인"
-              type="password"
-              ref={refconfirmNewPW}
-            />
-          </InputGroup>
-
-          <Button
-            variant="outline-success"
-            id="pwBtn"
-            onClick={() => changePW()}
-          >
-            change
-          </Button>
+          </div>
         </div>
       ) : (
-        <>
-          <p> </p>
-        </>
+        <div className="notme">
+          <div className="picBox">
+            <>
+              <img
+                onError={onErrorImg}
+                src={API.IMAGEDOWNLOAD + "4/" + now + ".jpg?time=" + fileImage}
+                className="userImg"
+              />
+            </>
+
+            <p>{now}</p>
+          </div>
+
+          <div className="levelShow">
+            <h4>Level 2</h4>
+            <p>다음 레벨까지 100pt</p>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 };

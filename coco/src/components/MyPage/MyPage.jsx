@@ -98,7 +98,7 @@ export const MyPage = () => {
               </h2>
               <Suspense fallback={<Spinner />}>
                 <GetMyTasks
-                  resource={fetchData(API.MYTASK + path.at(-1), {
+                  resource={fetchData(API.MYTASK, {
                     headers: {
                       Authorization: "Bearer " + userInfo.access_token,
                     },
@@ -118,7 +118,7 @@ export const MyPage = () => {
 
 const GetFirst = ({ resource }) => {
   const res = resource.read();
-  return <>{<FirstBox props={res} key={res.id} />}</>;
+  return <>{<FirstBox props={res[0]} key={res.id} />}</>;
 };
 
 const GetSecond = ({ resource }) => {

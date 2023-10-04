@@ -25,7 +25,7 @@ export const PostList = () => {
 
   useEffect(() => {
     axios
-      .get(API.MANAGEPOST, {
+      .get(API.BOARD, {
         params: {
           size: 10,
           page: page,

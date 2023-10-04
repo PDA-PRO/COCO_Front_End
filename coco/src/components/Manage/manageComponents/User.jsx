@@ -13,13 +13,12 @@ export const User = () => {
   const [userList, setUserList] = useState(null);
   const [managerList, setManagerList] = useState(null);
   const [loading, setLoading] = useState(true);
-  const userInfo = useAppSelector((state) => state.loginState);
 
   const keywordRef = useRef();
 
   useEffect(() => {
     Promise.all([
-      axios.get(API.MANAGEUSER, {
+      axios.get(API.USER, {
         params: {
           size: 10,
           page: page,
@@ -27,10 +26,14 @@ export const User = () => {
           role: 0,
         },
       }),
-      axios.get(API.MANAGEMANAGER),
+      axios.get(API.USER, {
+        params: {
+          role: 1,
+        },
+      }),
     ]).then((value) => {
       let userData = value[0].data;
-      let managerData = value[1].data;
+      let managerData = value[1].data.userlist;
       setUserList(userData);
       setManagerList(managerData);
       setLoading(false);
@@ -96,12 +99,19 @@ export const User = () => {
 };
 
 const UserList = ({ userList, page, setPage, setReload, setLoading }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const addMananger = (user_id) => {
     axios
-      .patch(API.MANAGEROLE, {
-        id: user_id,
-        role: 1,
-      })
+      .patch(
+        API.PERMISSION,
+        {
+          id: user_id,
+          role: 1,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then((res) => {
         if (res.data == true) {
           alert(`${user_id}님을 관리자에 추가하였습니다`);
@@ -153,12 +163,19 @@ const UserList = ({ userList, page, setPage, setReload, setLoading }) => {
 
 const Managers = ({ managerList, setReload, setLoading }) => {
   const managers = managerList;
+  const userInfo = useAppSelector((state) => state.loginState);
   const minusMananger = (user_id) => {
     axios
-      .patch(API.MANAGEROLE, {
-        id: user_id,
-        role: 0,
-      })
+      .patch(
+        API.PERMISSION,
+        {
+          id: user_id,
+          role: 0,
+        },
+        {
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      )
       .then((res) => {
         if (res.data == true) {
           alert(`${user_id}님을 관리자에서 삭제하였습니다`);

@@ -63,7 +63,7 @@ export const SignIn = () => {
             let jwt_id = jwtdecode(response.data.access_token).sub;
             let jwt_name = jwtdecode(response.data.access_token).name;
             let jwt_exp = jwtdecode(response.data.access_token).user_exp;
-            let jwt_level = jwtdecode(response.data.access_token).level;
+            let jwt_tutor = jwtdecode(response.data.access_token).tutor;
             dispatch({
               type: "loginSlice/login",
               access_token: response.data.access_token,
@@ -72,8 +72,9 @@ export const SignIn = () => {
               name: jwt_name,
               role: jwt_role,
               exp: jwt_exp,
-              level: jwt_level,
               imagetoken: new Date().getTime(),
+              tutor: jwt_tutor,
+              alarm: response.data.alarm
             });
             navigateToHome();
           }
@@ -231,7 +232,7 @@ const FindEmailModal = (props) => {
     if (pwRef.current.value == pw2Ref.current.value) {
       axios
         .patch(
-          API.PWUPDATE,
+          API.USER,
           {},
           {
             params: {

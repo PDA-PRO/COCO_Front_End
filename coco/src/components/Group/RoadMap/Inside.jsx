@@ -3,7 +3,7 @@ import "./Inside.css";
 import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
 import { useAppSelector } from "../../../app/store";
-import { BsTrash, BsPencil } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import { MdConstruction } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import fetchData from "../../../api/fetchTask";
@@ -12,10 +12,11 @@ import { ProblemBox } from "../../Problems/ProblemBox";
 import Pagination from "@mui/material/Pagination";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
+import { API } from "api/config";
 
 export const Inside = () => {
   const path = window.location.pathname.split("/");
-
+  const userInfo = useAppSelector((state) => state.loginState);
   return (
     <>
       <Header />
@@ -24,9 +25,10 @@ export const Inside = () => {
           <Suspense fallback={<Loader />}>
             <Content
               resource={fetchData(
-                `http://127.0.0.1:8000/room/roadmap/${path.at(-2)}/${path.at(
-                  -1
-                )}`
+                `${API.ROOMROADMAP}${path.at(-2)}/${path.at(-1)}`,
+                {
+                  headers: { Authorization: "Bearer " + userInfo.access_token },
+                }
               )}
             />
           </Suspense>
@@ -64,6 +66,9 @@ const Content = ({ resource }) => {
   var ids = Object.keys(members);
 
   const check = (e) => {
+    if (!Object.hasOwn(data.solved_list, e)) {
+      return 0;
+    }
     var mySolved = data.problem_list.filter((problem) =>
       data.solved_list[`${e}`].includes(problem.id)
     );
@@ -77,6 +82,9 @@ const Content = ({ resource }) => {
   };
 
   const compare = (e) => {
+    if (!Object.hasOwn(data.solved_list, e)) {
+      return 0;
+    }
     var idx = data.solved_list[`${userID}`].findIndex(
       (problem) => problem === e
     );
@@ -86,8 +94,9 @@ const Content = ({ resource }) => {
   const deleteRoadmap = (e) => {
     if (window.confirm("정말 ROADMAP을 삭제하시겠습니까?")) {
       axios
-        .delete(`http://127.0.0.1:8000/room/roadmap/${path.at(-2)}`, {
+        .delete(`${API.ROOMROADMAP}${path.at(-2)}`, {
           params: { roadmap_id: path.at(-1) },
+          headers: { Authorization: "Bearer " + userInfo.access_token },
         })
         .then(() => {
           alert(`ROADMAP이 삭제되었습니다.`);

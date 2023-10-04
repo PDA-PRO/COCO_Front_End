@@ -24,6 +24,7 @@ export const loginSlice = createSlice({
       state.exp = action.exp;
       state.imagetoken = action.imagetoken;
       state.tutor = action.tutor;
+      state.alarm = action.alarm;
     },
     logout: (state) => {
       state.access_token = "";
@@ -34,6 +35,7 @@ export const loginSlice = createSlice({
       state.exp = 0;
       state.imagetoken = -1;
       state.tutor = null;
+      state.alarm = 0;
     },
     initlogin: (state) => {
       state.access_token = initialState.access_token;
@@ -44,17 +46,22 @@ export const loginSlice = createSlice({
       state.exp = initialState.exp;
       state.imagetoken = initialState.imagetoken;
       state.tutor = initialState.tutor;
+      state.alarm = initialState.alarm;
     },
     changimage: (state, action) => {
       state = state;
       state.imagetoken = action.imagetoken;
     },
+    alarm: (state, action) => {
+      state = state;
+      state.alarm = action.alarm;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => initialState);
   },
 });
 
-export var { login, logout, initlogin, changimage } = loginSlice.actions;
+export var { login, logout, initlogin, changimage, alarm } = loginSlice.actions;
 
 export default loginSlice.reducer;

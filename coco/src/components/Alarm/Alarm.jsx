@@ -1,33 +1,37 @@
-import React, {useState} from "react";
+import React, { useEffect } from "react";
 import { Suspense } from "react";
 import "./Alarm.css";
 import { Header } from "components/Home/Header";
 import { Footer } from "components/Home/Footer";
 import Spinner from "react-bootstrap/Spinner";
-import { useAppSelector } from "../../app/store";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 import { LuMailPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { API } from "api/config";
+import fetchData from "../../api/fetchTask";
+import axios from "axios";
 
 export const Alarm = () => {
+  const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
-  const path = window.location.pathname.split("/");
   var user_id = userInfo.id;
 
-  const { data } = useQuery({
-    queryKey: ["alarm", user_id],
-    queryFn: () =>
-      axios.get(API.ALARM, {
-        params: { user_id: user_id },
-      }),
-    suspense: true,
-  })
+  useEffect(() => {
+    axios
+      .patch(API.ALARM+`/${user_id}`, {
+        user_id: user_id,
+      })
+      .then((res) => {
+        if(res.data === true){
+          dispatch({
+            type: "loginSlice/alarm",
+            alarm: 0,
+          });
+        }
+      });
+  }, []);
 
-
-
-   return data.status === 200 ? (
+  return (
     <>
       <Header />
       <div className="alarm">
@@ -38,19 +42,26 @@ export const Alarm = () => {
           </div>
 
           <hr />
-          <AlarmContent alarm={data.data} />
+          <Suspense fallback={<Spinner />}>
+            <AlarmContent
+              resource={fetchData(API.ALARM, {
+                headers: { Authorization: "Bearer " + userInfo.access_token },
+              })}
+            />
+          </Suspense>
         </div>
       </div>
       <Footer />
     </>
-  ) : <div/>
+  );
 };
 /* API 받아주고 */
-const AlarmContent = ({ alarm }) => {
-  console.log(alarm)
+const AlarmContent = ({ resource }) => {
+  const data = resource.read();
+  console.log(data);
   return (
     <div className="alarmContent">
-      {alarm.map((item) => {
+      {data.map((item) => {
         return <GetAlarm info={item} key={item.time} />;
       })}
     </div>
@@ -85,7 +96,7 @@ const GetAlarm = (props) => {
   };
 
   const render = (e) => {
-    const context = JSON.parse(e.context)
+    const context = JSON.parse(e.context);
     switch (e.category) {
       case 1: // make comment
         return (
@@ -222,6 +233,7 @@ const GetAlarm = (props) => {
         );
     }
   };
+
   return (
     <div className="alr">
       <p id="time">{getTime(props.info.time)}</p>

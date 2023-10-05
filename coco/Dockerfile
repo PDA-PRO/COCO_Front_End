@@ -1,7 +1,7 @@
 FROM node:18.16.1 AS build
 WORKDIR /COCO_Front_End
 COPY package.json package-lock.json ./
-RUN npm install 
+RUN npm install -f
 COPY . .
 
 ENV NODE_OPTIONS=--max-old-space-size=4096

@@ -1,11 +1,8 @@
 import React, { Suspense, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Footer } from "../Home/Footer";
 import { Header } from "../Home/Header";
-import { IoLogoPython } from "react-icons/io5";
 import "./Result.css";
-import { RiEmotionLaughLine, RiEmotionSadLine } from "react-icons/ri";
-import styled from "styled-components";
 import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
@@ -25,9 +22,10 @@ import {
 } from "react-icons/bs";
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineManageSearch } from "react-icons/md";
-import { BiRightArrowAlt } from "react-icons/bi";
 import { OtherLogic } from "./OtherLogic";
 import ReactDiffViewer from "react-diff-viewer";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -298,7 +296,7 @@ const ResultBox = ({ resource, info }) => {
                 <p>다른 로직 코드 보러가기</p>
                 <BsBoxArrowInRight size={23} />
               </div>
-            ) : (
+            ) : problemList.subDetail["message"] == "TC 실패" ? (
               <>
                 {wpc === 1 ? (
                   <div className="afterWrong" onClick={() => setWpc(2)}>
@@ -314,30 +312,14 @@ const ResultBox = ({ resource, info }) => {
                   </div>
                 )}
               </>
-            )}
+            ) : null}
 
             {wpc === 1 ? (
-              <div className="wpcBox">
-                <div className="wpcItem">
-                  <p>내 제출 코드</p>
-                </div>
-
-                <div className="wpcItem">
-                  <p>AI 분석 후 코드</p>
-                </div>
-                <div className="differ">
-                  <ReactDiffViewer
-                    oldValue={problemList.subDetail["code"]}
-                    newValue={problemList.subDetail["code"]} // 여기에 WPC 받아온 code
-                    splitView={true}
-                    // hideLineNumbers={true}
-                    showDiffOnly={false}
-                    // codeFoldMessageRenderer={3}
-                  />
-                </div>
-
-                {/* <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} /> */}
-              </div>
+              <WPC
+                sub_id={problemList.subDetail["id"]}
+                task_id={info.task_id}
+                raw_code={problemList.subDetail["code"]}
+              />
             ) : (
               <></>
             )}
@@ -358,17 +340,53 @@ const ResultBox = ({ resource, info }) => {
   );
 };
 
-// const WPC = () => {
-//   return (
-//     <>
-//       <p>태그</p>
-//     </>
-//   );
-// };
+const WPC = ({ sub_id, task_id, raw_code }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
+  const { isFetching, data, isError } = useQuery(
+    ["wpc1", sub_id],
+    () =>
+      axios.get(API.WPC, {
+        params: {
+          sub_id: sub_id,
+          task_id: task_id,
+        },
+        headers: { Authorization: "Bearer " + userInfo.access_token },
+      }),
+    { retry: false }
+  );
+  if (isFetching) {
+    return <Spinner />;
+  } else {
+    if (isError) {
+      return <div>확장 기능이 존재하지 않습니다.</div>;
+    }
+    if (data.data.status !== 1) {
+      return <div>WPC 분석이 불가합니다.</div>;
+    } else {
+      return (
+        <div className="wpcBox">
+          <div className="wpcItem">
+            <p>내 제출 코드</p>
+          </div>
+
+          <div className="wpcItem">
+            <p>AI 분석 후 코드</p>
+          </div>
+          <div className="differ">
+            <ReactDiffViewer
+              oldValue={raw_code}
+              newValue={data.data.wpc_result}
+              splitView={true}
+              showDiffOnly={false}
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+};
 
 const Lint = ({ props }) => {
-  console.log(props.length);
-
   return (
     <div className="pylint">
       <div className="un" style={{ marginBottom: "1em" }}>

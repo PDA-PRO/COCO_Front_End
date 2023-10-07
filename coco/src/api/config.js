@@ -38,4 +38,5 @@ export const API = {
   LINT: `${BASE_URL}/lint`,
   ALARM: `${BASE_URL}/user/alarm`,
   WPC: `${BASE_URL}/wpc`,
+  LEVEL: `${BASE_URL}/user/level`,
 };

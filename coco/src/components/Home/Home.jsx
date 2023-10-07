@@ -52,8 +52,13 @@ export const Home = () => {
             <div className={Large ? "homeGraph" : "else"}>
               <div className="levelGraph" onClick={() => goDetail(userInfo.id)}>
                 <h3>{userInfo.id}님 현재 레벨</h3>
-                <h2>Level 4</h2>
-                <p>전체 50등</p>
+                <Suspense fallback={<Spinner />}>
+                  <MyLevel
+                    resource={fetchData(API.LEVEL, {
+                      params: { user_id: userInfo.id },
+                    })}
+                  />
+                </Suspense>
               </div>
 
               <Suspense fallback={<Spinner />}>
@@ -82,11 +87,11 @@ export const Home = () => {
             />
           </div>
 
-          <div className="notice">
+          {/* <div className="notice">
             <Suspense fallback={<Loader />}>
               <GetNotice resource={fetchData(API.NOTICE)} />
             </Suspense>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />
@@ -121,6 +126,16 @@ const MyGraph = ({ resource }) => {
     <>
       <HomeGraph growth={detail.growth} />
       <DiffGraph diff={detail.diff} />
+    </>
+  );
+};
+
+const MyLevel = ({ resource }) => {
+  const data = resource.read();
+  return (
+    <>
+      <h2>Level {data.level}</h2>
+      <p>전체 {data.rank}등</p>
     </>
   );
 };

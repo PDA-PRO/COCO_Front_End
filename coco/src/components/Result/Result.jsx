@@ -140,27 +140,28 @@ const ResultBox = ({ resource, info }) => {
     })
     .join("\n");
 
+  console.log(problemList.lint);
   var wrongLines = [];
   var wrongStart = [];
   var wrongEnd = [];
+  var messages = [];
   for (let i = 0; i < problemList.lint.length; i++) {
     wrongLines.push(problemList.lint[i].line);
     wrongStart.push(problemList.lint[i].column);
     wrongEnd.push(problemList.lint[i].endColumn);
+    messages.push(problemList.lint[i].message);
   }
 
-  console.log("lint", problemList.lint);
-
-  function makeLine(arr, line, start, end) {
+  function makeLine(arr, line, start, end, message) {
     console.log(line, start, end);
-    function isRight(line, start, end) {
+    function isRight(line, start, end, message) {
       line.shift();
       start.shift();
       end.shift();
+      message.shift();
     }
 
     if (end[0] === null) {
-      console.log("여기 들어오긴 함?");
       const strings = arr.split("\n").map((str) => {
         const [num, val] = str.split("@");
         return (
@@ -170,10 +171,13 @@ const ResultBox = ({ resource, info }) => {
             {line[0] == num ? (
               <div className="codeTxt">
                 {val.slice(0, start[0] - 1)}
-                <u style={{ color: "red", fontWeight: "600" }}>
+                <u
+                  style={{ color: "red", fontWeight: "600", cursor: "pointer" }}
+                  title={message[0]}
+                >
                   {val.slice(start[0] - 1)}
                 </u>
-                {isRight(line, start, end)}
+                {isRight(line, start, end, message)}
               </div>
             ) : (
               <div className="codeTxt">{val}</div>
@@ -183,7 +187,6 @@ const ResultBox = ({ resource, info }) => {
       });
       return strings;
     } else {
-      console.log("일로 들어옴");
       const strings = arr.split("\n").map((str) => {
         const [num, val] = str.split("@");
         return (
@@ -193,11 +196,14 @@ const ResultBox = ({ resource, info }) => {
             {line[0] == num ? (
               <div className="codeTxt">
                 {val.slice(0, start[0])}
-                <u style={{ color: "red", fontWeight: "600" }}>
+                <u
+                  style={{ color: "red", fontWeight: "600", cursor: "pointer" }}
+                  title={message[0]}
+                >
                   {val.slice(start[0], end[0])}
                 </u>
                 {val.slice(end[0])}
-                {isRight(line, start, end)}
+                {isRight(line, start, end, message)}
               </div>
             ) : (
               <div className="codeTxt">{val}</div>
@@ -244,10 +250,10 @@ const ResultBox = ({ resource, info }) => {
               style={{ alignItems: "center", justifyContent: "center" }}
             >
               <p>난이도 : </p>
-              {setLevel(info.status)}
+              {setLevel(problemList.subDetail.diff)}
             </div>
 
-            <p>정답률 : 54.6%</p>
+            <p>정답률 : {problemList.subDetail.rate}%</p>
           </div>
         </div>
 
@@ -287,7 +293,13 @@ const ResultBox = ({ resource, info }) => {
                 <pre className="R-Code">{makeNoLine(numberedData)}</pre>
               ) : (
                 <pre className="R-Code">
-                  {makeLine(numberedData, wrongLines, wrongStart, wrongEnd)}
+                  {makeLine(
+                    numberedData,
+                    wrongLines,
+                    wrongStart,
+                    wrongEnd,
+                    messages
+                  )}
                 </pre>
               )}
             </div>

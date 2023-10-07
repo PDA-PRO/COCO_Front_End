@@ -123,9 +123,9 @@
   border-radius: 50px;
 }
 
-.BD_showCode .cm-content {
+/* .BD_showCode .cm-content {
   background-color: rgb(255, 255, 255);
-}
+} */
 
 .BD_showCodel .cm-gutter {
   background-color: rgb(247, 252, 255);
@@ -139,14 +139,14 @@
 }
 
 .BD_showCode .cm-line {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   font-family: "Pretendard-Regular";
   font-size: 1.1em;
   font-weight: 500;
 }
 
 .BD_showCode .cm-activeLine {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   font-family: "Pretendard-Regular";
   font-size: 1.1em;
   font-weight: 500;

@@ -110,30 +110,30 @@
   padding: 15px;
 }
 
-.helpCode .cm-content {
+/* .helpCode .cm-content {
   background-color: rgb(255, 255, 255);
-}
+} */
 
-.helpCode .cm-gutter {
+.helpWrite .cm-gutter {
   background-color: rgb(247, 252, 255);
 }
 
-.helpCode .cm-gutterElement {
+.helpWrite .cm-gutterElement {
   background-color: rgb(255, 255, 255);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;
 }
 
-.helpCode .cm-line {
-  background-color: rgb(255, 255, 255);
+.helpWrite .cm-line {
+  /*background-color: rgb(255, 255, 255); */
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;
 }
 
-.helpCode .cm-activeLine {
-  background-color: rgb(255, 255, 255);
+.helpWrite .cm-activeLine {
+  /*background-color: rgb(243, 243, 243);*/
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;

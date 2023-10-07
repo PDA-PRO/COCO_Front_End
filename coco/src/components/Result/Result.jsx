@@ -237,8 +237,6 @@ const ResultBox = ({ resource, info }) => {
     setOtherLogic(!otherLogic);
   };
 
-  console.log(info);
-  console.log(problemList.subDetail);
   return (
     <div className="Res">
       <div className="res-body">
@@ -257,7 +255,7 @@ const ResultBox = ({ resource, info }) => {
               {setLevel(problemList.subDetail.diff)}
             </div>
 
-            <p>정답률 : 54.6%</p>
+            <p>정답률 : {problemList.subDetail.rate}%</p>
           </div>
         </div>
 

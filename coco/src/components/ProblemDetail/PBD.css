@@ -260,7 +260,7 @@
 }
 
 .PBD-scroll .cm-content {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
 }
 
 .PBD-scroll .cm-gutter {
@@ -275,14 +275,12 @@
 }
 
 .PBD-scroll .cm-line {
-  background-color: rgb(255, 255, 255);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;
 }
 
 .PBD-scroll .cm-activeLine {
-  background-color: rgb(255, 255, 255);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;

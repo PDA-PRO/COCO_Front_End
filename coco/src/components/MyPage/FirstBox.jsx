@@ -1,8 +1,6 @@
-import React from "react";
+import React, { Suspense, useState, useRef } from "react";
 import "./MyPage.css";
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { useRef } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { IoMailOutline } from "react-icons/io5";
@@ -10,6 +8,8 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../../app/store";
 import { API } from "api/config";
+import fetchData from "../../api/fetchTask";
+import Spinner from "react-bootstrap/Spinner";
 
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -180,10 +180,13 @@ export const FirstBox = (props) => {
             </div>
           </div>
 
-          <div className="levelField">
-            <h3>Level 3</h3>
-            <p>다음 레벨까지 100pts</p>
-          </div>
+          <Suspense fallback={<Spinner />}>
+            <LevelField
+              resource={fetchData(API.LEVEL, {
+                params: { user_id: me },
+              })}
+            />
+          </Suspense>
 
           <div className="txtInputBox">
             <h3>
@@ -268,12 +271,37 @@ export const FirstBox = (props) => {
             <p>{now}</p>
           </div>
 
-          <div className="levelShow">
-            <h4>Level 2</h4>
-            <p>다음 레벨까지 100pt</p>
-          </div>
+          <Suspense fallback={<Spinner />}>
+            <LevelShow
+              resource={fetchData(API.LEVEL, {
+                params: { user_id: now },
+              })}
+            />
+          </Suspense>
         </div>
       )}
     </>
+  );
+};
+
+const LevelField = ({ resource }) => {
+  const data = resource.read();
+  console.log(data);
+  return (
+    <div className="levelField">
+      <h3>Level {data.level}</h3>
+      <p>다음 레벨까지 {data.points}pts</p>
+    </div>
+  );
+};
+
+const LevelShow = ({ resource }) => {
+  const data = resource.read();
+  console.log(data);
+  return (
+    <div className="levelField">
+      <h3>Level {data.level}</h3>
+      <p>다음 레벨까지 {data.points}pts</p>
+    </div>
   );
 };

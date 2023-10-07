@@ -37,4 +37,5 @@ export const API = {
   SELECTANSWER: `${BASE_URL}/room/select-answer`,
   LINT: `${BASE_URL}/lint`,
   ALARM: `${BASE_URL}/user/alarm`,
+  LEVEL: `${BASE_URL}/user/level`
 };

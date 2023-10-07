@@ -237,9 +237,10 @@ const SearchResult = (props) => {
 };
 
 const UserBox = (info) => {
+  console.log(info)
   return (
     <div className="userBox">
-      <p>Lv.</p>
+      <p>Lv.{info.info.level}</p>
       <p>{info.info.id}</p>
       <p>{info.info.name}</p>
       <p>{info.info.exp}</p>
@@ -253,7 +254,7 @@ const UserBox = (info) => {
 const NowMems = (info) => {
   return (
     <div className="mems">
-      <p>Lv.</p>
+      <p>Lv.{info.info.level}</p>
       <p>{info.info.id}</p>
       <p>{info.info.name}</p>
       <p>{info.info.exp}</p>

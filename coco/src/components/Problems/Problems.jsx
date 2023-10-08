@@ -145,137 +145,139 @@ const BodyRight = ({ setFilter }) => {
 
         <h4>문제 보기</h4>
 
-        <nav>
-          <label for="touch">
-            <h3>
-              난이도
-              <span>
-                <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-              </span>
-            </h3>
-          </label>
-          <input type="checkbox" id="touch" />
+        <>
+          <nav>
+            <label for="touch">
+              <h3>
+                난이도
+                <span>
+                  <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
+                </span>
+              </h3>
+            </label>
+            <input type="checkbox" id="touch" />
 
-          <div className="slide">
-            <div className="chose">
-              <Form.Check
-                type="checkbox"
-                checked={diff[0]}
-                value="1"
-                onChange={(e) => onDiffHanlder(e.target.value)}
-              />
-              <h5>Lv. 1</h5>
-              <TiBatteryLow size={35} color="rgb(98, 148, 255)" />
-            </div>
-            <div className="chose">
-              <Form.Check
-                type="checkbox"
-                checked={diff[1]}
-                value="2"
-                onChange={(e) => onDiffHanlder(e.target.value)}
-              />
-              <h5>Lv. 2</h5>
-              <TiBatteryMid size={35} color="#9DD84B" />
-            </div>
-            <div className="chose">
-              <Form.Check
-                type="checkbox"
-                checked={diff[2]}
-                value="3"
-                onChange={(e) => onDiffHanlder(e.target.value)}
-              />
-              <h5>Lv. 3</h5>
-              <TiBatteryHigh size={35} color="#ff7e00" />
-            </div>
+            <div className="slide">
+              <div className="chose">
+                <Form.Check
+                  type="checkbox"
+                  checked={diff[0]}
+                  value="1"
+                  onChange={(e) => onDiffHanlder(e.target.value)}
+                />
+                <h5>Lv. 1</h5>
+                <TiBatteryLow size={35} color="rgb(98, 148, 255)" />
+              </div>
+              <div className="chose">
+                <Form.Check
+                  type="checkbox"
+                  checked={diff[1]}
+                  value="2"
+                  onChange={(e) => onDiffHanlder(e.target.value)}
+                />
+                <h5>Lv. 2</h5>
+                <TiBatteryMid size={35} color="#9DD84B" />
+              </div>
+              <div className="chose">
+                <Form.Check
+                  type="checkbox"
+                  checked={diff[2]}
+                  value="3"
+                  onChange={(e) => onDiffHanlder(e.target.value)}
+                />
+                <h5>Lv. 3</h5>
+                <TiBatteryHigh size={35} color="#ff7e00" />
+              </div>
 
-            <div className="chose">
-              <Form.Check
-                type="checkbox"
-                checked={diff[3]}
-                value="4"
-                onChange={(e) => onDiffHanlder(e.target.value)}
-              />
-              <h5>Lv. 4</h5>
-              <TiBatteryFull size={35} color="red" />
-            </div>
+              <div className="chose">
+                <Form.Check
+                  type="checkbox"
+                  checked={diff[3]}
+                  value="4"
+                  onChange={(e) => onDiffHanlder(e.target.value)}
+                />
+                <h5>Lv. 4</h5>
+                <TiBatteryFull size={35} color="red" />
+              </div>
 
-            <div className="chose">
-              <Form.Check
-                type="checkbox"
-                checked={diff[4]}
-                value="5"
-                onChange={(e) => onDiffHanlder(e.target.value)}
-              />
-              <h5>Lv. 5</h5>
-              <TiBatteryCharge size={35} color="#7d1b7e" />
-            </div>
+              <div className="chose">
+                <Form.Check
+                  type="checkbox"
+                  checked={diff[4]}
+                  value="5"
+                  onChange={(e) => onDiffHanlder(e.target.value)}
+                />
+                <h5>Lv. 5</h5>
+                <TiBatteryCharge size={35} color="#7d1b7e" />
+              </div>
 
-            <p onClick={onDiffReset}>초기화</p>
-          </div>
-        </nav>
-
-        <nav>
-          <label for="touch2">
-            <h3>
-              카테고리
-              <span>
-                <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-              </span>
-            </h3>
-          </label>
-          <input type="checkbox" id="touch2" />
-
-          <div className="slide">
-            <div className="category">
-              <Select ref={asyncRef} isMulti options={option} />
+              <p onClick={onDiffReset}>초기화</p>
             </div>
-          </div>
-        </nav>
+          </nav>
 
-        <nav>
-          <label for="touch3">
-            <h3>
-              정답률
-              <span>
-                <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
-              </span>
-            </h3>
-          </label>
-          <input type="checkbox" id="touch3" />
+          <nav>
+            <label for="touch2">
+              <h3>
+                카테고리
+                <span>
+                  <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
+                </span>
+              </h3>
+            </label>
+            <input type="checkbox" id="touch2" />
 
-          <div className="slide">
-            <div className="chose3">
-              <Form.Check
-                type="radio"
-                name="group1"
-                value="1"
-                onChange={(e) => onRateHander(e.target.value)}
-              />
-              <h5>낮은 순</h5>
-              <BsArrowUpRight size={22} color="skyblue" />
+            <div className="slide">
+              <div className="category">
+                <Select ref={asyncRef} isMulti options={option} />
+              </div>
             </div>
-            <div className="chose3">
-              <Form.Check
-                type="radio"
-                name="group1"
-                value="2"
-                onChange={(e) => onRateHander(e.target.value)}
-              />
-              <h5>높은 순</h5>
-              <BsArrowDownRight size={22} color="red" />
+          </nav>
+
+          <nav>
+            <label for="touch3">
+              <h3>
+                정답률
+                <span>
+                  <IoIosArrowDown size={20} style={{ marginLeft: "5px" }} />
+                </span>
+              </h3>
+            </label>
+            <input type="checkbox" id="touch3" />
+
+            <div className="slide">
+              <div className="chose3">
+                <Form.Check
+                  type="radio"
+                  name="group1"
+                  value="1"
+                  onChange={(e) => onRateHander(e.target.value)}
+                />
+                <h5>낮은 순</h5>
+                <BsArrowUpRight size={22} color="skyblue" />
+              </div>
+              <div className="chose3">
+                <Form.Check
+                  type="radio"
+                  name="group1"
+                  value="2"
+                  onChange={(e) => onRateHander(e.target.value)}
+                />
+                <h5>높은 순</h5>
+                <BsArrowDownRight size={22} color="red" />
+              </div>
+              <div className="chose3">
+                <Form.Check
+                  type="radio"
+                  name="group1"
+                  value="0"
+                  onChange={(e) => onRateHander(e.target.value)}
+                />
+                <h5>기본</h5>
+                <BsArrowDownRight size={22} color="green" />
+              </div>
             </div>
-            <div className="chose3">
-              <Form.Check
-                type="radio"
-                name="group1"
-                value="0"
-                onChange={(e) => onRateHander(e.target.value)}
-              />
-              <h5>기본</h5>
-              <BsArrowDownRight size={22} color="green" />
-            </div>
-          </div>
-        </nav>
+          </nav>
+        </>
 
         <div className="chose4">
           <div className="subOne" onClick={onFilterHandler}>

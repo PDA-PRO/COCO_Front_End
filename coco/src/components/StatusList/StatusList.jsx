@@ -60,7 +60,7 @@ export const StatusList = () => {
           <div className="statusListBox" id="SLBtop">
             <h4>Submit No.</h4>
             <h4>User ID</h4>
-            <h4>No.</h4>
+            <h4>Task No.</h4>
             <h4>Title</h4>
             <h4>언어</h4>
             <h4>결과</h4>

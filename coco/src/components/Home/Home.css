@@ -515,7 +515,7 @@
 
 .boxTitle h2 {
   font-family: "Pretendard-Regular";
-  font-size: 1.8em;
+  font-size: 1.1em;
   font-weight: 600;
   margin: 0 !important;
 }
@@ -565,21 +565,22 @@
 
 .blockTop h3 {
   font-family: "Pretendard-Regular";
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-weight: 600;
   margin: 0 !important;
 }
 
 .blockTop h4 {
   font-family: "Pretendard-Regular";
-  font-size: 1.2em;
-  font-weight: 600;
+  font-size: 1em;
+  font-weight: 500;
   margin: 0 !important;
+  color: gray;
 }
 
 .blockTop2 h3 {
   font-family: "Pretendard-Regular";
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-weight: 600;
   margin: 0 !important;
 }
@@ -597,13 +598,13 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
 .blockSec #blockCat {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1em;
+  font-weight: 500;
   color: #494949;
   margin: 0 !important;
 }
@@ -631,15 +632,15 @@
 
 .block_un p {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1em;
+  font-weight: 500;
   margin: 0 !important;
 }
 
 .block_un2 p {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1em;
+  font-weight: 500;
   margin: 0 !important;
 }
 
@@ -652,14 +653,14 @@
 
 .blockSec p {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1em;
+  font-weight: 500;
   margin: 0 !important;
 }
 
 .blockSec2 p {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
   margin: 0 !important;
 }
@@ -669,30 +670,29 @@
   flex-flow: row nowrap;
   align-items: center;
 
-  margin-top: 25px;
+  margin-top: 30px;
   justify-content: space-between;
 }
 
 .blockBox .blockThird p {
   font-family: "Pretendard-Regular";
-  font-size: 1em;
-  font-weight: 600;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: gray;
   margin: 0 !important;
 }
 
 .blockBody p {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 0.9em;
+  color: gray;
+  font-weight: 500;
   margin: 0 !important;
 }
 
 .blockTop2 .redBox {
-  border: 2px solid red;
-  border-radius: 10px;
   color: red;
   width: fit-content;
-  padding: 2px 15px 0px 15px;
 }
 
 .home-body .ad-box {
@@ -704,7 +704,7 @@
 .home .notice {
   display: flex;
   flex-flow: column;
-  background-color: #e7e7e7;
+  background-color: #f7f7f7;
   border-radius: 20px;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -726,7 +726,7 @@
 .title-notice h2 {
   margin: 0 !important;
   font-family: "Pretendard-Regular";
-  font-size: 2em;
+  font-size: 1.2em;
   font-weight: 600;
   padding-left: 1rem;
 }
@@ -739,7 +739,7 @@
 }
 .body-notice {
   font-family: "Pretendard-Regular";
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
 }
 

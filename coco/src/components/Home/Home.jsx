@@ -73,9 +73,9 @@ export const Home = () => {
             </div>
           )}
 
-          {/* <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader />}>
             <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
-          </Suspense> */}
+          </Suspense>
 
           <div className="ad-box">
             <img
@@ -87,11 +87,11 @@ export const Home = () => {
             />
           </div>
 
-          {/* <div className="notice">
+          <div className="notice">
             <Suspense fallback={<Loader />}>
               <GetNotice resource={fetchData(API.NOTICE)} />
             </Suspense>
-          </div> */}
+          </div>
         </div>
       </div>
       <Footer />

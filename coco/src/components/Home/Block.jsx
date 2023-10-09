@@ -36,13 +36,13 @@ export const Block = (props) => {
   useEffect(() => {
     const chCate = (e) => {
       if (e === 1) {
-        setCategory("'공지'");
+        setCategory("공지");
         setBgColor("rgb(231, 255, 211)");
       } else if (e === 2) {
-        setCategory("'Help'");
+        setCategory("Help");
         setBgColor("rgb(255, 248, 211)");
       } else if (e === 3) {
-        setCategory("'자유'");
+        setCategory("자유");
         setBgColor("rgb(237, 251, 255)");
       }
     };
@@ -84,8 +84,8 @@ export const Block = (props) => {
     >
       <div className="box1">
         <div className="boxTitle">
-          <FaHotjar size={28} color="red" />
-          <h2>Hot 게시글</h2>
+          {/* <FaHotjar size={28} color="red" /> */}
+          <h2>인기 게시글</h2>
         </div>
 
         <div
@@ -107,7 +107,7 @@ export const Block = (props) => {
                 <div className="unOne">
                   <BsFillEyeFill
                     color="rgb(112, 112, 112)"
-                    size={22}
+                    size={18}
                     style={{ marginBottom: "3px" }}
                   />
                   <p>{props.info.views}</p>
@@ -115,14 +115,14 @@ export const Block = (props) => {
                 <div className="unOne">
                   <BsChatSquareTextFill
                     color="rgb(112, 112, 112)"
-                    size={22}
+                    size={18}
                     style={{ marginLeft: "10px" }}
                   />
                   <p>{props.info.comments}</p>
                 </div>
 
                 <div className="unOne">
-                  <BsHeartFill color="red" size={22} />
+                  <BsHeartFill color="red" size={18} />
                   <p style={{ color: "red" }}>{props.info.likes}</p>
                 </div>
               </div>
@@ -136,8 +136,8 @@ export const Block = (props) => {
       </div>
       <div className="box2">
         <div className="boxTitle">
-          <FaHotjar size={28} color="red" />
-          <h2>Hot 문제</h2>
+          {/* <FaHotjar size={28} color="red" /> */}
+          <h2>많이 푸는 문제</h2>
         </div>
 
         <div
@@ -145,7 +145,7 @@ export const Block = (props) => {
           onClick={() => {
             moveTask(props.info.problem_id);
           }}
-          style={{ backgroundColor: "#f5f5f5" }}
+          style={{ backgroundColor: "#f7f7f7" }}
         >
           <div className="blockContent">
             <div className="blockTop2">

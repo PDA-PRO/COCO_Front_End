@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { BiInfoSquare } from "react-icons/bi";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -67,6 +68,32 @@ const Question = ({ resource }) => {
   const info = resource;
   var path = window.location.pathname;
   path = path.split("/");
+
+  function makeNoLine(arr) {
+    if (arr.length == 0) {
+      return "";
+    } else {
+      var dataArray = arr.split("\n");
+
+      var numberedData = dataArray
+        .map((item, index) => {
+          return `${index + 1}@${item}`;
+        })
+        .join("\n");
+
+      const strings = numberedData.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <n className="codeNum">{num}.</n>
+            <n className="codeTxt">{val}</n>
+          </div>
+        );
+      });
+      return strings;
+    }
+  }
+
   console.log(info);
   return (
     <>
@@ -111,12 +138,21 @@ const Question = ({ resource }) => {
                   dangerouslySetInnerHTML={{
                     __html: e.question,
                   }}
+                  style={
+                    e.code.length == 0
+                      ? {}
+                      : { borderBottom: "1px solid lightgray" }
+                  }
                 ></div>
 
-                <h4>CODE</h4>
-                <div className="q_content">
-                  <CodeMirror value={e.code} editable={false} />
-                </div>
+                {e.code.length == 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    <h4>CODE</h4>
+                    <pre className="R-Code">{makeNoLine(e.code)}</pre>
+                  </>
+                )}
               </div>
 
               {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
@@ -148,6 +184,31 @@ const Answer = ({ info, room_id, writer }) => {
   const [isGood, setIsGood] = useState(info.check);
 
   useEffect(() => {}, [isGood]);
+
+  function makeNoLine(arr) {
+    if (arr.length == 0) {
+      return "";
+    } else {
+      var dataArray = arr.split("\n");
+
+      var numberedData = dataArray
+        .map((item, index) => {
+          return `${index + 1}@${item}`;
+        })
+        .join("\n");
+
+      const strings = numberedData.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <n className="codeNum">{num}.</n>
+            <n className="codeTxt">{val}</n>
+          </div>
+        );
+      });
+      return strings;
+    }
+  }
 
   const Good = () => {
     if (userInfo.id === writer) {
@@ -230,7 +291,14 @@ const Answer = ({ info, room_id, writer }) => {
           __html: info.answer,
         }}
       ></div>
-      <CodeMirror width="100%" value={info.code} readOnly={true} />
+      {info.code.length == 0 ? (
+        <></>
+      ) : (
+        <>
+          <h4>CODE</h4>
+          <pre className="R-Code">{makeNoLine(info.code)}</pre>
+        </>
+      )}
     </div>
   );
 };

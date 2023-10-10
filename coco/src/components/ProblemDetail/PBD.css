@@ -1,4 +1,5 @@
 .PBD {
+  min-width: 958px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;

@@ -100,8 +100,8 @@ export const Home = () => {
 };
 
 const GetHot = ({ resource }) => {
-  const HOT = resource.read();
-  return <>{<Block info={HOT} key={HOT.id} />}</>;
+  const hot = resource.read();
+  return <>{<Block info={hot} key={hot.id} />}</>;
 };
 
 const GetNotice = ({ resource }) => {

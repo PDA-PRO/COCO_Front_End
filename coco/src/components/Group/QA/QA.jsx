@@ -15,7 +15,6 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BiInfoSquare } from "react-icons/bi";
 import Lottie from "react-lottie";
-import animationData from "../../../lotties/chat";
 import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
 

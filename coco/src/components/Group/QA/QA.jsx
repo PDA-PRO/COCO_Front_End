@@ -14,6 +14,10 @@ import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BiInfoSquare } from "react-icons/bi";
+import Lottie from "react-lottie";
+import animationData from "../../../lotties/chat";
+import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -69,6 +73,15 @@ const Question = ({ resource }) => {
   var path = window.location.pathname;
   path = path.split("/");
 
+  // const defaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: require("../../../lotties/chat"),
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
+
   function makeNoLine(arr) {
     if (arr.length == 0) {
       return "";
@@ -94,7 +107,35 @@ const Question = ({ resource }) => {
     }
   }
 
-  console.log(info);
+  const QforAI = (content, code) => {
+    console.log(content);
+    Swal.fire({
+      icon: "question",
+      title: content + `<pre class="swalCode">${code}</pre>` + "\n",
+
+      showCancelButton: true,
+      confirmButtonText: "TRY",
+      footer: "시간이 다소 소요될 수 있습니다.",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //여기에 axios 호출
+        axios
+          .post("", {
+            content: content,
+            code: code,
+          })
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "AI로부터 답변이 등록되었습니다.",
+              timer: 1000,
+              showConfirmButton: false,
+            });
+          });
+      }
+    });
+  };
+
   return (
     <>
       {info.map((e) => {
@@ -108,9 +149,7 @@ const Question = ({ resource }) => {
                 <div style={{ fontWeight: "600" }}>{e.title}</div>
               </Accordion.Header>
               {/* {Todo : 질문 채택 및 표시} */}
-              {/* <div className="check">
-                <BsDashCircle size={25} color="grey" />
-              </div> */}
+
               <div className="check">
                 {e.check ? (
                   <BsCheckCircle size={25} color="skyblue" />
@@ -118,9 +157,11 @@ const Question = ({ resource }) => {
                   <BsDashCircle size={25} color="grey" />
                 )}
               </div>
+              {/* {Todo : 질문 채택 및 표시} */}
             </div>
 
             <Accordion.Body className="contentBody">
+              {/* 질문 작성자, 레벨, 시간 출력 */}
               <div className="whoQue">
                 <p>
                   작성자 :{" "}
@@ -132,6 +173,7 @@ const Question = ({ resource }) => {
                 <p>{getTime(e.time)}</p>
               </div>
 
+              {/* 질문에 코드가 있으면 코드 출력 */}
               <div className="oneQuestion">
                 <div
                   className="q_content"
@@ -153,6 +195,19 @@ const Question = ({ resource }) => {
                     <pre className="R-Code">{makeNoLine(e.code)}</pre>
                   </>
                 )}
+              </div>
+              {/* 질문에 코드가 있으면 코드 출력 */}
+
+              {/* AI에게 질문하기 */}
+
+              <div
+                className="qForAI"
+                onClick={() => QforAI(e.question, e.code)}
+              >
+                {/* <Lottie options={defaultOptions} height={20} width={20} /> */}
+
+                <p>AI에게 질문하기</p>
+                <AiOutlineQuestionCircle size={23} />
               </div>
 
               {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
@@ -332,7 +387,7 @@ const MakeAnswer = ({ room_id, q_id }) => {
       .then(function (response) {
         if (response.data.code) {
           alert(`답변 업로드 성공`);
-          navigate(`/room/${room_id}`);
+          window.location.reload();
         } else {
           alert("ERROR - SERVER COMMUNICATION FAILED");
         }

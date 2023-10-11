@@ -15,6 +15,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
+import {
+  TiBatteryCharge,
+  TiBatteryLow,
+  TiBatteryMid,
+  TiBatteryHigh,
+  TiBatteryFull,
+} from "react-icons/ti";
 
 export const Block = (props) => {
   const navigate = useNavigate();
@@ -35,6 +42,51 @@ export const Block = (props) => {
   const [category, setCategory] = useState("");
   const [bgColor, setBgColor] = useState("white");
   const [date, setDate] = useState("");
+
+  const setLevel = (e) => {
+    switch (e) {
+      case 1:
+        return (
+          <TiBatteryLow
+            size={34}
+            color="rgb(98, 148, 255)"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 2:
+        return (
+          <TiBatteryMid
+            size={34}
+            color="#9DD84B"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 3:
+        return (
+          <TiBatteryHigh
+            size={34}
+            color="#ff7e00"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 4:
+        return (
+          <TiBatteryFull
+            size={34}
+            color="red"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 5:
+        return (
+          <TiBatteryCharge
+            size={34}
+            color="#7d1b7e"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+    }
+  };
 
   useEffect(() => {
     const chCate = (e) => {
@@ -111,7 +163,7 @@ export const Block = (props) => {
                   <div className="unOne">
                     <BsFillEyeFill
                       color="rgb(112, 112, 112)"
-                      size={18}
+                      size={15}
                       style={{ marginBottom: "3px" }}
                     />
                     <p>{board.views}</p>
@@ -119,14 +171,14 @@ export const Block = (props) => {
                   <div className="unOne">
                     <BsChatSquareTextFill
                       color="rgb(112, 112, 112)"
-                      size={18}
-                      style={{ marginLeft: "10px" }}
+                      size={15}
+                      style={{ marginLeft: "7px" }}
                     />
                     <p>{board.comments}</p>
                   </div>
 
                   <div className="unOne">
-                    <BsHeartFill color="red" size={18} />
+                    <BsHeartFill color="red" size={15} />
                     <p style={{ color: "red" }}>{board.likes}</p>
                   </div>
                 </div>
@@ -146,7 +198,7 @@ export const Block = (props) => {
         <div className="box2">
           <div className="boxTitle">
             {/* <FaHotjar size={28} color="red" /> */}
-            <h2>많이 푸는 문제</h2>
+            <h2>관심도 높은 문제</h2>
           </div>
 
           <div
@@ -166,7 +218,11 @@ export const Block = (props) => {
               </div>
 
               <div className="blockSec2">
-                {Rating(`${problem.problem_diff}`)}
+                <div className="un">
+                  <p>난이도 : </p>
+                  {setLevel(problem.problem_diff)}
+                </div>
+
                 <p>
                   정답률 :{" "}
                   <span
@@ -176,9 +232,8 @@ export const Block = (props) => {
                         : { color: "red" }
                     }
                   >
-                    {problem.problem_rate}
+                    {problem.problem_rate}%
                   </span>
-                  %
                 </p>
               </div>
 

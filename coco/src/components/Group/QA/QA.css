@@ -117,6 +117,19 @@
   color: gray;
 }
 
+.contentBody .qForAI {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  float: right;
+  padding: 10px 10px 0 0;
+  cursor: pointer;
+}
+
+.contentBody .qForAI:hover {
+  color: rgb(71, 183, 228);
+}
+
 /* .contentBody .cm-content {
   background-color: rgb(245, 245, 245);
 } */
@@ -309,4 +322,51 @@
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500 !important;
+}
+
+.swal2-title {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 500 !important;
+  line-height: 70%;
+}
+
+.swal2-title h2 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 500 !important;
+}
+
+.swal2-title p {
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+.swal2-title br {
+  height: 10px !important;
+}
+
+.swal2-footer {
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500 !important;
+  color: rgb(173, 173, 173) !important;
+}
+
+.swal2-actions button {
+  font-family: "Pretendard-Regular";
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+}
+
+.swalCode {
+  margin: 0 auto;
+  text-align: left !important;
+  white-space: pre-wrap;
+  width: max-content;
+  line-height: 120% !important;
+  max-height: 500px;
+  border-top: 1px solid lightgray;
+  padding-top: 10px;
 }

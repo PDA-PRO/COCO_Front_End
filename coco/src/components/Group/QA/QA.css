@@ -170,20 +170,32 @@
   padding: 5px;
 }
 
+.nameAnddate .fromAI {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.fromAI h4 {
+  color: rgb(0, 22, 119) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .nameAnddate p:nth-child(1) {
   font-weight: 600 !important;
 }
 
 .nameAnddate p:nth-child(2) {
   color: gray;
-  font-weight: 500 !important;
-  font-size: 0.8em !important;
 }
 
 .ans {
   display: flex;
   flex-flow: column nowrap;
-  background-color: rgb(247, 252, 255);
   padding: 10px;
   border-radius: 15px;
   margin-bottom: 15px;

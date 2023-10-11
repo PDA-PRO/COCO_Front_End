@@ -319,10 +319,27 @@ const Answer = ({ info, room_id, writer }) => {
   };
 
   return (
-    <div className="ans">
+    <div
+      className="ans"
+      style={
+        info.ans_writer != "ai"
+          ? { backgroundColor: "rgb(247, 252, 255)" }
+          : { backgroundColor: "rgb(254, 244, 255)" }
+      }
+    >
       <div className="ansTop">
         <div className="nameAnddate">
-          <p>{info.ans_writer}</p>
+          {info.ans_writer === "ai" ? (
+            <div className="fromAI">
+              <img src="/image/chatbot.png" width="30px"></img>
+              <h4 style={{ fontSize: "0.9em", fontWeight: "600" }}>
+                AI가 작성한 답변입니다.
+              </h4>
+            </div>
+          ) : (
+            <p>{info.ans_writer}</p>
+          )}
+
           <p>{getTime(info.time)}</p>
         </div>
 

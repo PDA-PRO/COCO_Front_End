@@ -17,6 +17,8 @@ import { BiInfoSquare } from "react-icons/bi";
 import Lottie from "react-lottie";
 import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
+import fetchData from "../../../api/fetchTask";
+import Spinner from "react-bootstrap/Spinner";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -69,8 +71,10 @@ export const QA = () => {
 
 const Question = ({ resource }) => {
   const info = resource;
+  const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
+  console.log(info)
 
   // const defaultOptions = {
   //   loop: true,
@@ -106,8 +110,8 @@ const Question = ({ resource }) => {
     }
   }
 
-  const QforAI = (content, code) => {
-    console.log(content);
+  const QforAI = (content, code, q_id) => {
+    console.log(content, code);
     Swal.fire({
       icon: "question",
       title: content + `<pre class="swalCode">${code}</pre>` + "\n",
@@ -119,20 +123,27 @@ const Question = ({ resource }) => {
       if (result.isConfirmed) {
         //여기에 axios 호출
         axios
-          .post("", {
+          .post(API.CHATGPT, {
             content: content,
             code: code,
+            room_id: path.at(-1),
+            q_id: q_id
           })
           .then((res) => {
-            Swal.fire({
-              icon: "success",
-              title: "AI로부터 답변이 등록되었습니다.",
-              timer: 1000,
-              showConfirmButton: false,
-            }).then((res) => {
-              window.location.reload();
-            });
-          });
+            if(res.data === true)
+            {
+              Swal.fire({
+                icon: "success",
+                title: "AI로부터 답변이 등록되었습니다.",
+                timer: 1000,
+                showConfirmButton: false,
+              }).then((res) => {
+                window.location.reload();
+              });
+            }
+          }).catch(() => {
+            alert("Error!");
+          })
       }
     });
   };
@@ -167,7 +178,7 @@ const Question = ({ resource }) => {
                 <p>
                   작성자 :{" "}
                   <b>
-                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv .</span>{" "}
+                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv .{e.q_writer_level}</span>{" "}
                     {e.writer}
                   </b>
                 </p>
@@ -203,7 +214,7 @@ const Question = ({ resource }) => {
 
               <div
                 className="qForAI"
-                onClick={() => QforAI(e.question, e.code)}
+                onClick={() => QforAI(e.question, e.code, e.id)}
               >
                 {/* <Lottie options={defaultOptions} height={20} width={20} /> */}
 

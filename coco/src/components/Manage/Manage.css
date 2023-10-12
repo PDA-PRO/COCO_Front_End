@@ -447,3 +447,32 @@
 .AskToAI #btn-ask:hover {
   color: rgb(88, 141, 221);
 }
+
+.m-upload-AI {
+  grid-column: 1/3;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 2rem;
+  font-family: "Pretendard-Regular";
+  width: 100%;
+}
+
+.btnDiv {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3vw;
+  height: 50px;
+  margin-top: 3rem !important;
+}
+
+#m-request_btn {
+}
+
+#m-submit_btn-AI {
+  border: 1px solid #00ff00;
+}
+
+#m-submit_btn-AI:hover {
+  border: 1px solid #00ff00;
+  background-color: #00ff00 !important;
+}

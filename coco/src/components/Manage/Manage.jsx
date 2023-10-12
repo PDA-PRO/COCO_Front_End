@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { HiMenu } from "react-icons/hi";
 import $ from "jquery";
 import { TutorApp } from "./manageComponents/TutorApp";
+import { AITask } from "./manageComponents/AITask";
 
 export const Manage = () => {
   // --------------------------- 페이지 전환 --------------------------------
@@ -43,6 +44,8 @@ export const Manage = () => {
         return <User />;
       case 6:
         return <TutorApp />;
+      case 7:
+        return <AITask />;
     }
   };
   return (
@@ -112,6 +115,7 @@ const Menu = (props) => {
         <h3 onClick={() => props.moveTo(4)}>- NOTICE</h3>
         <h3 onClick={() => props.moveTo(5)}>- USER MANAGEMENT</h3>
         <h3 onClick={() => props.moveTo(6)}>- TUTOR APPLICATION</h3>
+        <h3 onClick={() => props.moveTo(7)}>- TASK UPLOAD with AI</h3>
       </div>
     </div>
   );

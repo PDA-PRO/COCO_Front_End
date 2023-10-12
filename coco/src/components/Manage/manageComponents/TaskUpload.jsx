@@ -318,7 +318,7 @@ export const TaskUpload = () => {
 
             {/* 문제 출력에 대한 설명 */}
 
-            <InputGroup className="m-output" style={{ marginTop: "100px" }}>
+            <InputGroup className="m-output" style={{ marginTop: "62px" }}>
               <InputGroup.Text id="inputGroup-sizing-default">
                 <BsArrowUpLeft size={30} />
               </InputGroup.Text>

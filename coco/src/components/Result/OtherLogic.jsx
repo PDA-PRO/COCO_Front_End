@@ -29,16 +29,41 @@ export const OtherLogic = (changeLogic) => {
 };
 
 const OCcontent = () => {
+  function makeNoLine(arr) {
+    if (arr.length == 0) {
+      return "";
+    } else {
+      var dataArray = arr.split("\n");
+
+      var numberedData = dataArray
+        .map((item, index) => {
+          return `${index + 1}@${item}`;
+        })
+        .join("\n");
+
+      const strings = numberedData.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <n className="codeNum">{num}.</n>
+            <n className="codeTxt">{val}</n>
+          </div>
+        );
+      });
+      return strings;
+    }
+  }
+
   const [like, setLiked] = useState(0);
 
   return (
     <div className="OCcontent">
       <div className="OC-Code">
-        <p>print("HI")</p>
+        <pre className="R-Code">{makeNoLine("print(hello)")}</pre>
       </div>
       <div className="OC-opi">
         <div className="OC-txt">
-          <p>작성자 : Lv.2 name</p>
+          <p>작성자 : name</p>
           <p>소요시간 : 5ms</p>
         </div>
         {like === 0 ? (

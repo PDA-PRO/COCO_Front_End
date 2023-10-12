@@ -74,7 +74,7 @@ const Question = ({ resource }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
-  console.log(info)
+  console.log(info);
 
   // const defaultOptions = {
   //   loop: true,
@@ -111,7 +111,6 @@ const Question = ({ resource }) => {
   }
 
   const QforAI = (content, code, q_id) => {
-    console.log(content, code);
     Swal.fire({
       icon: "question",
       title: content + `<pre class="swalCode">${code}</pre>` + "\n",
@@ -127,11 +126,10 @@ const Question = ({ resource }) => {
             content: content,
             code: code,
             room_id: path.at(-1),
-            q_id: q_id
+            q_id: q_id,
           })
           .then((res) => {
-            if(res.data === true)
-            {
+            if (res.data === true) {
               Swal.fire({
                 icon: "success",
                 title: "AI로부터 답변이 등록되었습니다.",
@@ -141,9 +139,13 @@ const Question = ({ resource }) => {
                 window.location.reload();
               });
             }
-          }).catch(() => {
-            alert("Error!");
           })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "Server now in Error please try again",
+            });
+          });
       }
     });
   };
@@ -178,7 +180,9 @@ const Question = ({ resource }) => {
                 <p>
                   작성자 :{" "}
                   <b>
-                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv .{e.q_writer_level}</span>{" "}
+                    <span style={{ color: "rgb(39, 148, 199)" }}>
+                      Lv .{e.q_writer_level}
+                    </span>{" "}
                     {e.writer}
                   </b>
                 </p>

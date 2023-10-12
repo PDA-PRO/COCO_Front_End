@@ -36,11 +36,11 @@ export const AITask = () => {
       axios
         .post(API.CHATGPT + "/create_task", {
           content: e,
-          is_final: 0,
+          is_final: false,
         })
         .then((res) => {
-          if (res.data == true) {
-            console.log(res.data);
+          if (res.data.data == true) {
+            console.log(res.data.result);
             Swal.fire({
               icon: "success",
               title:

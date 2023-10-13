@@ -304,7 +304,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
     <div className="m-upload-AI">
       <InputGroup className="m-title">
         <InputGroup.Text id="inputGroup-sizing-default">Title</InputGroup.Text>
-        <Form.Control ref={titleRef} value={json.problem.title} />
+        <Form.Control ref={titleRef} defaultValue={json.problem.title} />
       </InputGroup>
       <div className="m-upload-context">
         <div className="m-desc">
@@ -313,7 +313,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             modules={quill_module}
             ref={quillRef}
             style={{ minHeight: "550px" }}
-            value={json.problem.description}
+            defaultValue={json.problem.description}
           />
           {/* 문제에 대한 난이도 선정 */}
           <div className="m-diff">
@@ -334,7 +334,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <InputGroup.Text>Time Limit</InputGroup.Text>
             <Form.Control
               ref={timeRef}
-              value={extractSecondsFromString(json.constraints.time)}
+              defaultValue={extractSecondsFromString(json.constraints.time)}
             />
             <InputGroup.Text>SEC</InputGroup.Text>
           </InputGroup>
@@ -344,7 +344,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <InputGroup.Text>Memory Limit</InputGroup.Text>
             <Form.Control
               ref={memRef}
-              value={extractSecondsFromString(json.constraints.memory)}
+              defaultValue={extractSecondsFromString(json.constraints.memory)}
             />
             <InputGroup.Text>MB</InputGroup.Text>
           </InputGroup>
@@ -360,7 +360,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               ref={inputDescRef}
               as="textarea"
-              value={json.problem.input.description}
+              defaultValue={json.problem.input.description}
               style={{ minHeight: "120px" }}
             />
           </InputGroup>
@@ -373,7 +373,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               as="textarea"
               ref={inputEx1Ref}
-              value={json.problem.examples[0].input}
+              defaultValue={json.problem.examples[0].input}
             />
           </FloatingLabel>
 
@@ -385,7 +385,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               as="textarea"
               ref={inputEx2Ref}
-              value={json.problem.examples[1].input}
+              defaultValue={json.problem.examples[1].input}
             />
           </FloatingLabel>
 
@@ -399,7 +399,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             </InputGroup.Text>
             <Form.Control
               as="textarea"
-              value={json.problem.output.description}
+              defaultValue={json.problem.output.description}
               style={{ minHeight: "120px" }}
               ref={outputDescRef}
             />
@@ -413,7 +413,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               as="textarea"
               ref={outputEx1Ref}
-              value={json.problem.examples[0].output}
+              defaultValue={json.problem.examples[0].output}
             />
           </FloatingLabel>
 
@@ -425,7 +425,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               as="textarea"
               ref={outputEx2Ref}
-              value={json.problem.examples[1].output}
+              defaultValue={json.problem.examples[1].output}
             />
           </FloatingLabel>
 

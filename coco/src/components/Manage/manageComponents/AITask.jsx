@@ -22,41 +22,53 @@ import JSZip from "jszip";
 import { API } from "api/config";
 import { SiAskubuntu } from "react-icons/si";
 import Swal from "sweetalert2";
+import { Suspense } from "react";
 
 export const AITask = () => {
+  const [sendAsk, setSendAsk] = useState("");
+  const [json, setJson] = useState({});
+  const [isAI, setIsAI] = useState(false);
   const ASKContent = useRef();
   const Ask = (e) => {
-    console.log(e);
     if (e === "") {
       Swal.fire({
         icon: "error",
         title: "질문의 내용을 입력해주세요",
       });
     } else {
-      axios
-        .post(API.CHATGPT + "/create_task", {
-          content: e,
-          is_final: false,
-        })
-        .then((res) => {
-          if (res.data.data == true) {
-            console.log(res.data.result);
-            Swal.fire({
-              icon: "success",
-              title:
-                "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
-              timer: 2000,
-              showConfirmButton: false,
+      setSendAsk(e);
+      Swal.fire({
+        icon: "question",
+        title: "AI가 문제를 생성중입니다.",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          axios
+            .post(API.CHATGPT + "/create_task", {
+              content: e,
+              is_final: false,
+            })
+            .then((res) => {
+              if (res.data.data == true) {
+                setIsAI(true);
+                setJson(res.data.result);
+                Swal.fire({
+                  icon: "success",
+                  title:
+                    "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
+                });
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: "SERVER ERROR",
+                  timer: 1000,
+                  showConfirmButton: false,
+                });
+              }
             });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "SERVER ERROR",
-              timer: 1000,
-              showConfirmButton: false,
-            });
-          }
-        });
+        },
+      });
     }
   };
 
@@ -100,15 +112,18 @@ export const AITask = () => {
               onClick={() => Ask(ASKContent.current.value)}
             />
           </div>
-
-          <TaskReturn />
+          {isAI === true ? (
+            <TaskReturn reAsk={Ask} askContent={sendAsk} json={json} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>
   );
 };
 
-const TaskReturn = () => {
+const TaskReturn = ({ reAsk, askContent, json }) => {
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
   const titleRef = useRef();
 
@@ -127,6 +142,8 @@ const TaskReturn = () => {
   const categoryRef = useRef();
 
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
+
+  console.log(json);
 
   // --------------------------- quill editor 관련 함수 ----------------------
   const imageHandler = () => {
@@ -208,6 +225,13 @@ const TaskReturn = () => {
     };
   }, []);
 
+  function extractSecondsFromString(str) {
+    // 숫자가 아닌 문자는 모두 제거하고, 나머지를 정수로 변환
+    const seconds = parseInt(str.replace(/\D/g, ""), 10);
+
+    return isNaN(seconds) ? 0 : seconds;
+  }
+
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -241,20 +265,23 @@ const TaskReturn = () => {
             Authorization: "Bearer " + userInfo.access_token,
           },
           params: {
-            title: titleRef.current.value,
-            inputDescription: inputDescRef.current.value,
-            inputEx1: inputEx1Ref.current.value,
-            inputEx2: inputEx2Ref.current.value,
-            outputDescription: outputDescRef.current.value,
-            outputEx1: outputEx1Ref.current.value,
-            outputEx2: outputEx2Ref.current.value,
-            diff: diffRef.current.value,
-            timeLimit: timeRef.current.value,
-            memLimit: memRef.current.value,
-            category: categoryRef.current
-              .getValue()
-              .map((e) => e.value)
-              .join(","),
+            json: {
+              title: titleRef.current.value,
+              inputDescription: inputDescRef.current.value,
+              inputEx1: inputEx1Ref.current.value,
+              inputEx2: inputEx2Ref.current.value,
+              outputDescription: outputDescRef.current.value,
+              outputEx1: outputEx1Ref.current.value,
+              outputEx2: outputEx2Ref.current.value,
+              diff: diffRef.current.value,
+              timeLimit: timeRef.current.value,
+              memLimit: memRef.current.value,
+              category: categoryRef.current
+                .getValue()
+                .map((e) => e.value)
+                .join(","),
+              is_final: true,
+            },
           },
         })
         .then(function (response) {
@@ -277,10 +304,7 @@ const TaskReturn = () => {
     <div className="m-upload-AI">
       <InputGroup className="m-title">
         <InputGroup.Text id="inputGroup-sizing-default">Title</InputGroup.Text>
-        <Form.Control
-          ref={titleRef}
-          placeholder="문제 제목을 입력해주세요. (문제 제목은 40자 이내)"
-        />
+        <Form.Control ref={titleRef} value={json.problem.title} />
       </InputGroup>
       <div className="m-upload-context">
         <div className="m-desc">
@@ -288,8 +312,8 @@ const TaskReturn = () => {
             theme="snow"
             modules={quill_module}
             ref={quillRef}
-            placeholder={"문제의 메인 설명 입력"}
             style={{ minHeight: "550px" }}
+            value={json.problem.description}
           />
           {/* 문제에 대한 난이도 선정 */}
           <div className="m-diff">
@@ -308,14 +332,20 @@ const TaskReturn = () => {
           {/* 문제에 대한 시간제한 선정 */}
           <InputGroup id="m-timeLimit">
             <InputGroup.Text>Time Limit</InputGroup.Text>
-            <Form.Control ref={timeRef} />
+            <Form.Control
+              ref={timeRef}
+              value={extractSecondsFromString(json.constraints.time)}
+            />
             <InputGroup.Text>SEC</InputGroup.Text>
           </InputGroup>
           {/* 문제에 대한 시간제한 선정 */}
           {/* 문제에 대한 메모리 제한 선정 */}
           <InputGroup id="m-memLimit">
             <InputGroup.Text>Memory Limit</InputGroup.Text>
-            <Form.Control ref={memRef} />
+            <Form.Control
+              ref={memRef}
+              value={extractSecondsFromString(json.constraints.memory)}
+            />
             <InputGroup.Text>MB</InputGroup.Text>
           </InputGroup>
           {/* 문제에 대한 메모리 제한 선정 */}
@@ -329,8 +359,8 @@ const TaskReturn = () => {
             </InputGroup.Text>
             <Form.Control
               ref={inputDescRef}
-              placeholder="문제 입력에 대한 설명 입력."
               as="textarea"
+              value={json.problem.input.description}
               style={{ minHeight: "120px" }}
             />
           </InputGroup>
@@ -342,8 +372,8 @@ const TaskReturn = () => {
           >
             <Form.Control
               as="textarea"
-              placeholder="입력 예시"
               ref={inputEx1Ref}
+              value={json.problem.examples[0].input}
             />
           </FloatingLabel>
 
@@ -354,8 +384,8 @@ const TaskReturn = () => {
           >
             <Form.Control
               as="textarea"
-              placeholder="입력 예시"
               ref={inputEx2Ref}
+              value={json.problem.examples[1].input}
             />
           </FloatingLabel>
 
@@ -368,8 +398,8 @@ const TaskReturn = () => {
               <BsArrowUpLeft size={30} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="문제 출력에 대한 설명 입력."
               as="textarea"
+              value={json.problem.output.description}
               style={{ minHeight: "120px" }}
               ref={outputDescRef}
             />
@@ -382,8 +412,8 @@ const TaskReturn = () => {
           >
             <Form.Control
               as="textarea"
-              placeholder="출력 예시"
               ref={outputEx1Ref}
+              value={json.problem.examples[0].output}
             />
           </FloatingLabel>
 
@@ -394,8 +424,8 @@ const TaskReturn = () => {
           >
             <Form.Control
               as="textarea"
-              placeholder="출력 예시"
               ref={outputEx2Ref}
+              value={json.problem.examples[1].output}
             />
           </FloatingLabel>
 
@@ -420,7 +450,7 @@ const TaskReturn = () => {
         <Button
           variant="outline-primary"
           id="m-request_btn"
-          // onClick={onSubmitHandler}
+          onClick={() => reAsk(askContent)}
         >
           다시 요청하기
         </Button>

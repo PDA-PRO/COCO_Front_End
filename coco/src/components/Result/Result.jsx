@@ -53,6 +53,7 @@ export const Result = (code) => {
 };
 
 const ResultBox = ({ resource, info }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const { id } = useParams();
   const [wpc, setWpc] = useState(0);
   const [otherLogic, setOtherLogic] = useState(false);
@@ -234,6 +235,8 @@ const ResultBox = ({ resource, info }) => {
   // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
 
   const changeLogic = () => {
+    const code = problemList.subDetail["code"]
+    console.log(code)
     if (otherLogic === false) {
       Swal.fire({
         icon: "info",
@@ -246,7 +249,23 @@ const ResultBox = ({ resource, info }) => {
         didOpen: () => {
           Swal.showLoading();
           //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
-          setOtherLogic(!otherLogic);
+          axios.post(API.CHATGPT+"/ai-code", 
+            {
+              code: code,
+              task_id: info.task_id,
+              sub_id: info.sub_id,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + userInfo.access_token,
+              },
+            }
+          ).then((res) => {
+            if(res.data === true){
+              setOtherLogic(!otherLogic);
+            }
+          });
+
         },
       });
     } else {

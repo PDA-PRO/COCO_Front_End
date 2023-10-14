@@ -348,14 +348,14 @@ const Answer = ({ info, room_id, writer }) => {
     <div
       className="ans"
       style={
-        info.ans_writer != "ai"
+        info.ans_writer != null
           ? { backgroundColor: "rgb(247, 252, 255)" }
           : { backgroundColor: "rgb(254, 244, 255)" }
       }
     >
       <div className="ansTop">
         <div className="nameAnddate">
-          {info.ans_writer === "ai" ? (
+          {info.ans_writer === null ? (
             <div className="fromAI">
               <img src="/image/chatbot.png" width="30px"></img>
               <h4 style={{ fontSize: "0.9em", fontWeight: "600" }}>

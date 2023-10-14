@@ -45,7 +45,7 @@ export const AITask = () => {
         didOpen: () => {
           Swal.showLoading();
           axios
-            .post(API.CHATGPT + "/create_task", {
+            .post(API.CHATGPT + "/create-task", {
               content: e,
               is_final: false,
             })
@@ -259,13 +259,12 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post(API.TASK, formData, {
-          headers: {
-            "Content-Type": `multipart/form-data; `,
-            Authorization: "Bearer " + userInfo.access_token,
-          },
+        .post(API.CHATGPT+"/upload-task", formData, {
+          // headers: {
+          //   "Content-Type": `multipart/form-data; `,
+          //   Authorization: "Bearer " + userInfo.access_token,
+          // },
           params: {
-            json: {
               title: titleRef.current.value,
               inputDescription: inputDescRef.current.value,
               inputEx1: inputEx1Ref.current.value,
@@ -280,8 +279,6 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
                 .getValue()
                 .map((e) => e.value)
                 .join(","),
-              is_final: true,
-            },
           },
         })
         .then(function (response) {

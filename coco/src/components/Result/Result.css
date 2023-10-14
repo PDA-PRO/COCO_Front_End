@@ -123,7 +123,7 @@
   padding-left: 5px;
 }
 
-.R-Code {
+.myCode .R-Code {
   padding: 1em 2vw;
   font-size: 1em;
   font-weight: 500;
@@ -136,12 +136,13 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 3px;
+  width: 98%;
 }
 
 .R-Code .codeLine {
   display: grid;
   grid-template-columns: 3% 95%;
-  column-gap: 13px;
+  column-gap: 20px;
 }
 
 .codeLine .codeNum {
@@ -153,6 +154,34 @@
 
 .codeLine .codeTxt {
   grid-column: 2/3;
+}
+
+.ifCorrect {
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+  align-items: start;
+  gap: 10px;
+}
+
+.ifCorrect .timeAndMemory {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 50px;
+  align-items: center;
+  padding-left: 1vw;
+}
+
+.c-un {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 2px;
+}
+.timeAndMemory p {
+  font-weight: 500;
+  font-size: 0.9em;
+  color: gray;
 }
 
 .afterCorrect {
@@ -266,38 +295,12 @@
   margin-bottom: 15px;
 }
 
-/* .wpcItem .R-Code {
-  width: 100%;
-  margin: 15px 0 !important;
-  background-color: rgb(247, 247, 247);
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 3px;
-}
-
-.wpcItem .R-Code .codeLine {
-  display: grid;
-  grid-template-columns: 5% 95%;
-  column-gap: 10px;
-}
-
-.wpcItem .codeLine .codeNum {
-  grid-column: 1/2;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: end;
-}
-
-.wpcItem .codeLine .codeTxt {
-  grid-column: 2/3;
-} */
-
 /*-------------------------------다른 로직 코드 확인하기 CSS ---------------------------------*/
 
 .OC {
   display: flex;
   flex-flow: column nowrap;
-  padding: 1.3rem 1vw 1.3rem 1vw;
+  padding: 1.3rem 1vw;
 }
 
 .OC .OCtop {
@@ -305,14 +308,31 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .OCtop h2 {
   font-family: "Pretendard-Regular";
   font-weight: 600;
-  font-size: 1.1em;
+  font-size: 1em;
   margin: 0 !important;
+  color: navy !important;
+}
+.OC .OCmiddle {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.OCmiddle h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  color: navy !important;
 }
 
 .OCtop p {
@@ -360,7 +380,18 @@
 .OCcontent .OC-txt {
   display: flex;
   flex-flow: column nowrap;
-  gap: 7px;
+  gap: 10px;
+}
+.OC-txt p {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: gray;
+}
+.OC-txt .c-un {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 5px;
 }
 
 .OC-opi p {

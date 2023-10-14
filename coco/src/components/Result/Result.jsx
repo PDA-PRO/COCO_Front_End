@@ -26,6 +26,8 @@ import { OtherLogic } from "./OtherLogic";
 import ReactDiffViewer from "react-diff-viewer";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -232,7 +234,24 @@ const ResultBox = ({ resource, info }) => {
   // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
 
   const changeLogic = () => {
-    setOtherLogic(!otherLogic);
+    if (otherLogic === false) {
+      Swal.fire({
+        icon: "info",
+        title:
+          "AI가 좋은 효율의 코드를 만들고 있습니다.\n\n 다른 로직의 코드를 찾고 있습니다.",
+        footer: "시간이 다소 소요될 수 있습니다.",
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
+          setOtherLogic(!otherLogic);
+        },
+      });
+    } else {
+      setOtherLogic(!otherLogic);
+    }
   };
 
   return (
@@ -290,7 +309,19 @@ const ResultBox = ({ resource, info }) => {
                 <p>내 제출 코드</p>
               </div>
               {problemList.subDetail["status"] === 3 ? (
-                <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+                <div className="ifCorrect">
+                  <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+                  <div className="timeAndMemory">
+                    <div className="c-un">
+                      <BiTimeFive color="gray" size={22} />
+                      <p>소요 시간 : 2ms</p>
+                    </div>
+                    <div className="c-un">
+                      <BiMemoryCard color="gray" size={22} />
+                      <p>소요 메모리 : 15mb</p>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <pre className="R-Code">
                   {makeLine(

@@ -266,7 +266,6 @@
   color: rgb(111, 86, 224);
 }
 .ans .R-Code {
-  padding: 0 0 1em 0;
   font-size: 1em;
   font-weight: 500;
   color: rgb(78, 78, 78);
@@ -340,7 +339,7 @@
   font-family: "Pretendard-Regular";
   font-size: 1.2em;
   font-weight: 500 !important;
-  line-height: 90%;
+  line-height: 100%;
 }
 
 .swal2-title h2 {

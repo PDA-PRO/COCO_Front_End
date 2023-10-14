@@ -121,31 +121,40 @@ const Question = ({ resource }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         //여기에 axios 호출
-        axios
-          .post(API.CHATGPT, {
-            content: content,
-            code: code,
-            room_id: path.at(-1),
-            q_id: q_id,
-          })
-          .then((res) => {
-            if (res.data === true) {
-              Swal.fire({
-                icon: "success",
-                title: "AI로부터 답변이 등록되었습니다.",
-                timer: 1000,
-                showConfirmButton: false,
-              }).then((res) => {
-                window.location.reload();
+        Swal.fire({
+          icon: "info",
+          title: "AI가 답변을 생성하고 있습니다.",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            axios
+              .post(API.CHATGPT, {
+                content: content,
+                code: code,
+                room_id: path.at(-1),
+                q_id: q_id,
+              })
+              .then((res) => {
+                if (res.data === true) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "AI로부터 답변이 등록되었습니다.",
+                    timer: 1000,
+                    showConfirmButton: false,
+                  }).then((res) => {
+                    window.location.reload();
+                  });
+                }
+              })
+              .catch(() => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Server now in Error please try again",
+                });
               });
-            }
-          })
-          .catch(() => {
-            Swal.fire({
-              icon: "error",
-              title: "Server now in Error please try again",
-            });
-          });
+          },
+        });
       }
     });
   };

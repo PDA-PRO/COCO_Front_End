@@ -297,8 +297,6 @@ const BodyRight = ({ setFilter }) => {
 const GetProblems = ({ resource, page, setPage }) => {
   const problemList = resource.read();
 
-  console.log("PL", problemList);
-
   const compare = (e) => {
     if (problemList.solved_list) {
       if (problemList.solved_list.includes(e)) {

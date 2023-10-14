@@ -20,6 +20,7 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 import CreatableSelect from "react-select/creatable";
 import JSZip from "jszip";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -142,7 +143,7 @@ export const TaskUpload = () => {
       !TCCheck[0] ||
       categoryRef.current.getValue().length == 0
     ) {
-      return alert("정보 입력 부족");
+      return Swal.fire({ icon: "error", title: "정보 입력 부족" });
     } else {
       const formData = new FormData();
       //File 추가
@@ -176,9 +177,15 @@ export const TaskUpload = () => {
         })
         .then(function (response) {
           if (response.data.code === 1) {
-            alert(`${titleRef.current.value} 업로드 성공`);
+            Swal.fire({
+              icon: "success",
+              title: `${titleRef.current.value} 업로드 성공`,
+            });
           } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - SERVER COMMUNICATION FAILED",
+            });
           }
         });
     }
@@ -224,6 +231,7 @@ export const TaskUpload = () => {
       });
     }
   };
+
   return (
     <>
       <h2 className="mTi">TASK UPLOAD</h2>
@@ -318,7 +326,7 @@ export const TaskUpload = () => {
 
             {/* 문제 출력에 대한 설명 */}
 
-            <InputGroup className="m-output" style={{ marginTop: "100px" }}>
+            <InputGroup className="m-output" style={{ marginTop: "62px" }}>
               <InputGroup.Text id="inputGroup-sizing-default">
                 <BsArrowUpLeft size={30} />
               </InputGroup.Text>

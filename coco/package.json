@@ -37,6 +37,7 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-icons": "^4.10.1",
+    "react-lottie": "^1.2.3",
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-responsive": "^9.0.0",
@@ -47,6 +48,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
+    "sweetalert2": "^11.7.32",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

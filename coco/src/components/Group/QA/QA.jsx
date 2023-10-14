@@ -14,6 +14,11 @@ import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BiInfoSquare } from "react-icons/bi";
+import Lottie from "react-lottie";
+import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
+import Swal from "sweetalert2";
+import fetchData from "../../../api/fetchTask";
+import Spinner from "react-bootstrap/Spinner";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -66,8 +71,19 @@ export const QA = () => {
 
 const Question = ({ resource }) => {
   const info = resource;
+  const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
+  console.log(info);
+
+  // const defaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: require("../../../lotties/chat"),
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
   function makeNoLine(arr) {
     if (arr.length == 0) {
@@ -94,7 +110,55 @@ const Question = ({ resource }) => {
     }
   }
 
-  console.log(info);
+  const QforAI = (content, code, q_id) => {
+    Swal.fire({
+      icon: "question",
+      title: content + `<pre class="swalCode">${code}</pre>` + "\n",
+
+      showCancelButton: true,
+      confirmButtonText: "TRY",
+      footer: "시간이 다소 소요될 수 있습니다.",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //여기에 axios 호출
+        Swal.fire({
+          icon: "info",
+          title: "AI가 답변을 생성하고 있습니다.",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            axios
+              .post(API.CHATGPT, {
+                content: content,
+                code: code,
+                room_id: path.at(-1),
+                q_id: q_id,
+              })
+              .then((res) => {
+                if (res.data === true) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "AI로부터 답변이 등록되었습니다.",
+                    timer: 1000,
+                    showConfirmButton: false,
+                  }).then((res) => {
+                    window.location.reload();
+                  });
+                }
+              })
+              .catch(() => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Server now in Error please try again",
+                });
+              });
+          },
+        });
+      }
+    });
+  };
+
   return (
     <>
       {info.map((e) => {
@@ -108,9 +172,7 @@ const Question = ({ resource }) => {
                 <div style={{ fontWeight: "600" }}>{e.title}</div>
               </Accordion.Header>
               {/* {Todo : 질문 채택 및 표시} */}
-              {/* <div className="check">
-                <BsDashCircle size={25} color="grey" />
-              </div> */}
+
               <div className="check">
                 {e.check ? (
                   <BsCheckCircle size={25} color="skyblue" />
@@ -118,20 +180,25 @@ const Question = ({ resource }) => {
                   <BsDashCircle size={25} color="grey" />
                 )}
               </div>
+              {/* {Todo : 질문 채택 및 표시} */}
             </div>
 
             <Accordion.Body className="contentBody">
+              {/* 질문 작성자, 레벨, 시간 출력 */}
               <div className="whoQue">
                 <p>
                   작성자 :{" "}
                   <b>
-                    <span style={{ color: "rgb(39, 148, 199)" }}>Lv .</span>{" "}
+                    <span style={{ color: "rgb(39, 148, 199)" }}>
+                      Lv .{e.q_writer_level}
+                    </span>{" "}
                     {e.writer}
                   </b>
                 </p>
                 <p>{getTime(e.time)}</p>
               </div>
 
+              {/* 질문에 코드가 있으면 코드 출력 */}
               <div className="oneQuestion">
                 <div
                   className="q_content"
@@ -153,6 +220,19 @@ const Question = ({ resource }) => {
                     <pre className="R-Code">{makeNoLine(e.code)}</pre>
                   </>
                 )}
+              </div>
+              {/* 질문에 코드가 있으면 코드 출력 */}
+
+              {/* AI에게 질문하기 */}
+
+              <div
+                className="qForAI"
+                onClick={() => QforAI(e.question, e.code, e.id)}
+              >
+                {/* <Lottie options={defaultOptions} height={20} width={20} /> */}
+
+                <p>AI에게 질문하기</p>
+                <AiOutlineQuestionCircle size={23} />
               </div>
 
               {/* info에 들어있는 answer 배열로 넘겨줘서 map으로 answer 띄워주면 될듯*/}
@@ -265,10 +345,27 @@ const Answer = ({ info, room_id, writer }) => {
   };
 
   return (
-    <div className="ans">
+    <div
+      className="ans"
+      style={
+        info.ans_writer != "ai"
+          ? { backgroundColor: "rgb(247, 252, 255)" }
+          : { backgroundColor: "rgb(254, 244, 255)" }
+      }
+    >
       <div className="ansTop">
         <div className="nameAnddate">
-          <p>{info.ans_writer}</p>
+          {info.ans_writer === "ai" ? (
+            <div className="fromAI">
+              <img src="/image/chatbot.png" width="30px"></img>
+              <h4 style={{ fontSize: "0.9em", fontWeight: "600" }}>
+                AI가 작성한 답변입니다.
+              </h4>
+            </div>
+          ) : (
+            <p>{info.ans_writer}</p>
+          )}
+
           <p>{getTime(info.time)}</p>
         </div>
 
@@ -332,7 +429,7 @@ const MakeAnswer = ({ room_id, q_id }) => {
       .then(function (response) {
         if (response.data.code) {
           alert(`답변 업로드 성공`);
-          navigate(`/room/${room_id}`);
+          window.location.reload();
         } else {
           alert("ERROR - SERVER COMMUNICATION FAILED");
         }

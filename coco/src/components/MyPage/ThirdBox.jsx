@@ -98,6 +98,7 @@ export const ThirdBox = (props) => {
         })
         .then((res) => {
           alert("게시글을 삭제하였습니다");
+          window.location.reload();
         })
         .catch(() => {
           alert("게시글 삭제에 실패하였습니다");

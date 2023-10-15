@@ -231,6 +231,16 @@ const GetAlarm = (props) => {
             {e.receiver}님이 관리자 권한을 부여받았습니다.
           </p>
         );
+      case 14: // To manager
+        return (
+          <p
+            id="context"
+            title="해당 페이지로 이동"
+            onClick={() => movepage(14, context)}
+          >
+            {e.receiver}님이 튜터 권한을 부여받았습니다.
+          </p>
+        );
     }
   };
 

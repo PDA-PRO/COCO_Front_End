@@ -150,6 +150,13 @@ const Question = ({ resource }) => {
                   }).then((res) => {
                     window.location.reload();
                   });
+                }else{
+                  Swal.fire({
+                    icon: "success",
+                    title: "AI로부터 등록된 답변이 존재합니다.",
+                    timer: 1000,
+                    showConfirmButton: false,
+                  })
                 }
               })
               .catch(() => {

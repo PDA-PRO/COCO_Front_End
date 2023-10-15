@@ -261,7 +261,8 @@ const ResultBox = ({ resource, info }) => {
               },
             }
           ).then((res) => {
-            if(res.data === true){
+            if(res.data.data === true){
+              console.log(res.data)
               setOtherLogic(!otherLogic);
             }
           });

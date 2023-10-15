@@ -81,10 +81,12 @@ const Content = ({ resource }) => {
     return res;
   };
 
+  console.log("푼 문제 번호", data.solved_list[`${userID}`]);
+
   const compare = (e) => {
-    if (!Object.hasOwn(data.solved_list, e)) {
-      return 0;
-    }
+    // if (!Object.hasOwn(data.solved_list, e)) {
+    //   return 0;
+    // }
     var idx = data.solved_list[`${userID}`].findIndex(
       (problem) => problem === e
     );

@@ -249,7 +249,7 @@ const ResultBox = ({ resource, info }) => {
         didOpen: () => {
           Swal.showLoading();
           //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
-          axios.post(API.CHATGPT+"/ai-code", 
+          axios.post(API.AI+"/ai-code", 
             {
               code: code,
               task_id: info.task_id,

@@ -129,11 +129,16 @@ const Question = ({ resource }) => {
           didOpen: () => {
             Swal.showLoading();
             axios
-              .post(API.CHATGPT, {
+              .post(API.AI+"/ai-answer", {
                 content: content,
                 code: code,
                 room_id: path.at(-1),
                 q_id: q_id,
+              },
+              {
+                headers: {
+                  Authorization: "Bearer " + userInfo.access_token,
+                },
               })
               .then((res) => {
                 if (res.data === true) {

@@ -39,5 +39,5 @@ export const API = {
   ALARM: `${BASE_URL}/user/alarm`,
   WPC: `${BASE_URL}/wpc`,
   LEVEL: `${BASE_URL}/user/level`,
-  CHATGPT: `${BASE_URL}/chatgpt`
+  AI: `${BASE_URL}/ai`
 };

@@ -45,7 +45,7 @@ export const AITask = () => {
         didOpen: () => {
           Swal.showLoading();
           axios
-            .post(API.CHATGPT + "/create-task", {
+            .post(API.AI + "/create-task", {
               content: e,
               is_final: false,
             })
@@ -259,7 +259,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post(API.CHATGPT+"/upload-task", formData, {
+        .post(API.AI+"/upload-task", formData, {
           // headers: {
           //   "Content-Type": `multipart/form-data; `,
           //   Authorization: "Bearer " + userInfo.access_token,

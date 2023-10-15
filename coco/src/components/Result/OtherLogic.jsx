@@ -16,31 +16,32 @@ import {
 } from "react-icons/pi";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 
-export const OtherLogic = (changeLogic) => {
+export const OtherLogic = ({ changeLogic, impCode, impCmt }) => {
+  console.log("one", impCode, impCmt);
   return (
     <div className="OC">
       <div className="OCtop">
         <div className="un">
           <PiNumberCircleOneLight color="blue" size={23} />
-          <h2>AI가 작성한 효율성높은 코드</h2>
+          <h2>AI가 작성한 개선된 코드</h2>
         </div>
 
-        <div className="un" onClick={() => changeLogic.changeLogic()}>
+        <div className="un" onClick={() => changeLogic()}>
           {/* 이름은 나중에 바꾸는걸로... */}
           <p>닫기</p>
           <BsX size={28} color="red" />
         </div>
       </div>
 
-      <AI_code />
+      <AI_code func={1} code={impCode} cmt={impCmt} />
 
       <div className="OCmiddle">
         <div className="un">
           <PiNumberCircleTwoLight color="blue" size={23} />
-          <h2>AI가 작성한 유사 로직의 코드</h2>
+          <h2>AI가 찾은 유사 로직의 코드</h2>
         </div>
       </div>
-      <AI_code />
+      {/* <AI_code func={2} /> */}
 
       <div className="OCmiddle">
         <div className="un">
@@ -53,8 +54,10 @@ export const OtherLogic = (changeLogic) => {
   );
 };
 
-const AI_code = () => {
+const AI_code = ({ func, code, cmt }) => {
   const [like, setLiked] = useState(0);
+
+  console.log("two", code, cmt);
 
   function makeNoLine(arr) {
     if (arr.length == 0) {
@@ -84,18 +87,29 @@ const AI_code = () => {
   return (
     <div className="OCcontent">
       <div className="OC-Code">
-        <pre className="R-Code">{makeNoLine("print(hello)")}</pre>
+        <pre className="R-Code">{makeNoLine(code)}</pre>
       </div>
       <div className="OC-opi">
         <div className="OC-txt">
-          <div className="c-un">
+          {func === 1 ? (
+            <div className="aiComment">
+              <div className="cmtTop">
+                <img src="/image/chatbot.png" width="30px"></img>
+                <p style={{ color: "rgb(44, 179, 233)" }}>AI Comment</p>
+              </div>
+              <p style={{ paddingLeft: "1em" }}>{cmt}</p>
+            </div>
+          ) : (
+            <></>
+          )}
+          {/* <div className="c-un">
             <BiTimeFive color="gray" size={20} />
             <p>소요 시간 : 5ms</p>
           </div>
           <div className="c-un">
             <BiMemoryCard color="gray" size={20} />
             <p>소요 메모리 : 200mb</p>
-          </div>
+          </div> */}
         </div>
 
         {like === 0 ? (
@@ -150,14 +164,14 @@ const OCcontent = () => {
       <div className="OC-opi">
         <div className="OC-txt">
           <p>작성자 : name</p>
-          <div className="c-un">
+          {/* <div className="c-un">
             <BiTimeFive color="gray" size={20} />
             <p>소요 시간 : 5ms</p>
           </div>
           <div className="c-un">
             <BiMemoryCard color="gray" size={20} />
             <p>소요 메모리 : 200mb</p>
-          </div>
+          </div> */}
         </div>
         {like === 0 ? (
           <div className="OC-liked" onClick={() => setLiked(1)}>

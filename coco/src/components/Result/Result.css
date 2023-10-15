@@ -233,9 +233,9 @@
   margin: 0 !important;
   padding-top: 2px;
 }
+
 .pylint {
   padding: 1.3rem 1vw 1.3rem 1vw;
-
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1.1em;
@@ -342,12 +342,12 @@
   margin: 0 !important;
 }
 
-.OCtop .un {
+.OCtop .un:nth-child(2) {
   cursor: pointer;
   color: gray;
 }
 
-.OCtop .un:hover {
+.OCtop .un:nth-child(2):hover {
   color: red;
   text-decoration: underline;
 }
@@ -368,6 +368,22 @@
   margin-bottom: 7px;
 }
 
+.OC-Code .R-Code {
+  padding: 1em 2vw;
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 15px;
+  cursor: text;
+  background-color: rgb(245, 245, 245);
+  margin: 15px 1vw !important;
+  white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+  width: 98%;
+}
+
 .OCcontent .OC-opi {
   display: flex;
   flex-flow: row nowrap;
@@ -381,17 +397,6 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 10px;
-}
-.OC-txt p {
-  font-size: 0.9em;
-  font-weight: 500;
-  color: gray;
-}
-.OC-txt .c-un {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  gap: 5px;
 }
 
 .OC-opi p {
@@ -408,4 +413,17 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
+}
+
+.aiComment {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 12px;
+}
+
+.aiComment .cmtTop {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  align-items: center;
 }

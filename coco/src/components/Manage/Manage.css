@@ -465,9 +465,6 @@
   margin-top: 3rem !important;
 }
 
-#m-request_btn {
-}
-
 #m-submit_btn-AI {
   border: 1px solid #00ff00;
 }
@@ -475,4 +472,57 @@
 #m-submit_btn-AI:hover {
   border: 1px solid #00ff00;
   background-color: #00ff00 !important;
+}
+
+/*--------------------- AI 플러그인 관리 ---------------------*/
+
+.contentName {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contentName p {
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 600;
+  color: navy;
+}
+
+.pluginBody {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: rgb(249, 249, 295);
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin: 0 25px 40px 25px;
+}
+
+.pluginBody .top {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.pluginBody .top p {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.explain {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.explain p {
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0 !important;
 }

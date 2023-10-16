@@ -208,7 +208,7 @@ const GetDetail = ({ resource }) => {
                     <BsQuestionLg size={25} color="red" />
                     <h2>입력 예시</h2>
                   </div>
-                  <p className="PBD-txt">{detail.inputEx1}</p>
+                  <p className="PBD-txt">{detail.inputEx2}</p>
                 </div>
 
                 <div>
@@ -217,7 +217,7 @@ const GetDetail = ({ resource }) => {
                     <h2>출력 예시</h2>
                   </div>
 
-                  <p className="PBD-txt">{detail.outputEx1}</p>
+                  <p className="PBD-txt">{detail.outputEx2}</p>
                 </div>
               </div>
             ) : (

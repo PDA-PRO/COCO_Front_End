@@ -15,8 +15,11 @@ import {
   PiNumberCircleThreeLight,
 } from "react-icons/pi";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
+import axios from "axios";
+import { API } from "api/config";
+import { useAppSelector } from "../../app/store";
 
-export const OtherLogic = ({ changeLogic, impCode, impCmt }) => {
+export const OtherLogic = ({ changeLogic, impCode, impCmt, task_id, sub_id }) => {
   console.log("one", impCode, impCmt);
   return (
     <div className="OC">
@@ -33,7 +36,7 @@ export const OtherLogic = ({ changeLogic, impCode, impCmt }) => {
         </div>
       </div>
 
-      <AI_code func={1} code={impCode} cmt={impCmt} />
+      <AI_code func={1} code={impCode} cmt={impCmt} task_id={task_id} sub_id={sub_id} />
 
       <div className="OCmiddle">
         <div className="un">
@@ -54,10 +57,10 @@ export const OtherLogic = ({ changeLogic, impCode, impCmt }) => {
   );
 };
 
-const AI_code = ({ func, code, cmt }) => {
+const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const [like, setLiked] = useState(0);
-
-  console.log("two", code, cmt);
+;
 
   function makeNoLine(arr) {
     if (arr.length == 0) {
@@ -83,6 +86,43 @@ const AI_code = ({ func, code, cmt }) => {
       return strings;
     }
   }
+
+  const selectCode = (type) => {
+    //개선 코드
+    if (type === 1) {
+      if (like) {
+        axios
+          .put(
+            API.AI + "/code-select",
+            {
+              task_id: task_id,
+              sub_id: sub_id,
+              check: 0,
+            },
+            { headers: { Authorization: "Bearer " + userInfo.access_token } }
+          )
+          .then((res) => {
+            console.log(res.data);
+            setLiked(0);
+          });
+      } else {
+        axios
+          .put(
+            API.AI + "/code-select",
+            {
+              task_id: task_id,
+              sub_id: sub_id,
+              check: 0,
+            },
+            { headers: { Authorization: "Bearer " + userInfo.access_token } }
+          )
+          .then((res) => {
+            console.log(res.data);
+            setLiked(1);
+          });
+      }
+    }
+  };
 
   return (
     <div className="OCcontent">
@@ -113,14 +153,14 @@ const AI_code = ({ func, code, cmt }) => {
         </div>
 
         {like === 0 ? (
-          <div className="OC-liked" onClick={() => setLiked(1)}>
+          <div className="OC-liked" onClick={() => selectCode(func)}>
             <AiOutlineLike size={24} />
             <p>도움됐어요!</p>
           </div>
         ) : (
-          <div className="OC-liked" onClick={() => setLiked(1)}>
+          <div className="OC-liked" onClick={() => selectCode(func)}>
             <AiFillLike size={24} color="skyblue" />
-            <p style={{ color: "skyblue" }}>도움됐어요!</p>
+            <p style={{ color: "skyblue" }}>도움됐어요?</p>
           </div>
         )}
       </div>

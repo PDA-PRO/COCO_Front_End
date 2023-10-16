@@ -74,16 +74,7 @@ const Question = ({ resource }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
-  console.log(info);
 
-  // const defaultOptions = {
-  //   loop: true,
-  //   autoplay: true,
-  //   animationData: require("../../../lotties/chat"),
-  //   rendererSettings: {
-  //     preserveAspectRatio: "xMidYMid slice",
-  //   },
-  // };
 
   function makeNoLine(arr) {
     if (arr.length == 0) {
@@ -274,7 +265,6 @@ const Question = ({ resource }) => {
 const Answer = ({ info, room_id, writer }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(info.check);
-
   useEffect(() => {}, [isGood]);
 
   function makeNoLine(arr) {
@@ -312,6 +302,7 @@ const Answer = ({ info, room_id, writer }) => {
               room_id: room_id,
               a_id: info.a_id,
               select: 0,
+              ans_writer: info.ans_writer
             },
             { headers: { Authorization: "Bearer " + userInfo.access_token } }
           )
@@ -335,6 +326,7 @@ const Answer = ({ info, room_id, writer }) => {
               room_id: room_id,
               a_id: info.a_id,
               select: 1,
+              ans_writer: info.ans_writer
             },
             { headers: { Authorization: "Bearer " + userInfo.access_token } }
           )

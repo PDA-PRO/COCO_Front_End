@@ -410,6 +410,8 @@ const ResultBox = ({ resource, info }) => {
               changeLogic={changeLogic}
               impCode={improveCode}
               impCmt={improveComment}
+              task_id={info.task_id}
+              sub_id={problemList.subDetail["id"]}
             />
           </>
         )}

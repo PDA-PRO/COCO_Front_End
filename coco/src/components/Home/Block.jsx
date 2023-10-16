@@ -32,6 +32,9 @@ export const Block = (props) => {
   const board = props.info.board;
   const problem = props.info.problem;
 
+  console.log(board)
+  console.log(problem.length)
+
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
   };
@@ -137,7 +140,7 @@ export const Block = (props) => {
       className="Block"
       style={{ marginTop: userInfo.id === "" ? "10rem" : "5rem" }}
     >
-      {board !== undefined ? (
+      {board !== false ? (
         <div className="box1">
           <div className="boxTitle">
             {/* <FaHotjar size={28} color="red" /> */}
@@ -191,10 +194,19 @@ export const Block = (props) => {
           </div>
         </div>
       ) : (
-        <div className="box1Board shadow-drop-2-center">게시글 쓰러가기</div>
+        <div>
+          <div className="boxTitle">
+            {/* <FaHotjar size={28} color="red" /> */}
+            <h2/>
+          </div>
+          <div
+            className="box1Board shadow-drop-2-center"
+            onClick={() => navigate(`/board`)}
+          >게시글 쓰러가기</div>
+        </div>
       )}
 
-      {problem !== undefined ? (
+      {problem !== false ? (
         <div className="box2">
           <div className="boxTitle">
             {/* <FaHotjar size={28} color="red" /> */}
@@ -246,7 +258,20 @@ export const Block = (props) => {
           </div>
         </div>
       ) : (
-        <div className="box2Problem shadow-drop-2-center">문제 풀러가기</div>
+
+        <div>
+        <div className="boxTitle">
+          {/* <FaHotjar size={28} color="red" /> */}
+          <h2/>
+        </div>
+        <div
+          className="box2Problem shadow-drop-2-center"
+          onClick={() => navigate(`/problems`)}
+        >
+          문제 풀러가기
+        </div>
+      </div>
+
       )}
     </div>
   );

@@ -8,6 +8,10 @@ import {
   PiNumberCircleFiveLight,
 } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import Switch from "@mui/material/Switch";
+import { useState } from "react";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export const Plugins = () => {
   return (
@@ -64,6 +68,21 @@ export const Plugins = () => {
 };
 
 const AIcontent = ({ func }) => {
+  const [checked, setChecked] = useState(true);
+  const [nowOn, setNowOn] = useState("Plugin ON");
+  const [nowState, setNowState] = useState(1);
+
+  const handleChange = (e) => {
+    setChecked(e.target.checked);
+    if (checked === true) {
+      setNowOn("Plugin OFF");
+      setNowState(0);
+    } else {
+      setNowOn("Plugin ON");
+      setNowState(1);
+    }
+  };
+
   const Able = (e) => {
     if (e === 1) {
       // 현재 사용 가능
@@ -111,12 +130,34 @@ const AIcontent = ({ func }) => {
     }
   };
 
+  const isOn = (e) => {
+    if (e === 1) {
+      return <span style={{ color: "rgb(0, 201, 0)" }}>사용 가능</span>;
+    } else {
+      return <span style={{ color: "red" }}>사용 불가능</span>;
+    }
+  };
+
+  console.log(checked);
+
   return (
     <div className="pluginBody">
-      <div className="top">{Able(1)}</div>
+      <div className="top">
+        {Able(nowState)}
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch defaultChecked />}
+            label={nowOn}
+            checked={checked}
+            onChange={handleChange}
+          />
+        </FormGroup>
+      </div>
       <div className="explain">
         <p>기능 설명 : {explanation(func)}</p>
         <p>현재 사용 API(Model) : {nowApi(func)}</p>
+        <p>Front-End : {checked === false ? isOn(0) : isOn(1)} </p>
+        <p>Back-End : {checked === false ? isOn(0) : isOn(1)}</p>
       </div>
     </div>
   );

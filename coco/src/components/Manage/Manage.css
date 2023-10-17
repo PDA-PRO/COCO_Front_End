@@ -504,7 +504,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-
+  align-items: center;
   border-bottom: 1px solid lightgray;
   margin-bottom: 10px;
   padding-bottom: 10px;
@@ -525,4 +525,8 @@
   font-size: 1em;
   font-weight: 500;
   margin: 0 !important;
+}
+
+.MuiTypography-root {
+  font-family: "Pretendard-Regular" !important;
 }

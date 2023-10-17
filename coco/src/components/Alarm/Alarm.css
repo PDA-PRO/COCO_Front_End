@@ -55,6 +55,13 @@
   margin: 0 !important;
 }
 
+.alr .timestamp {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  gap: 30px;
+}
+
 .alr #time {
   color: gray;
 }

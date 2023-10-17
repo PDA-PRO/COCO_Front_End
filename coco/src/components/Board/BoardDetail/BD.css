@@ -128,11 +128,11 @@
 } */
 
 .BD_showCodel .cm-gutter {
-  background-color: rgb(247, 252, 255);
+  background-color: rgb(255, 255, 255);
 }
 
 .BD_showCode .cm-gutterElement {
-  background-color: rgb(255, 255, 255);
+  background-color: transparent;
   font-family: "Pretendard-Regular";
   font-size: 1.1em;
   font-weight: 500;

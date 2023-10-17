@@ -15,7 +15,7 @@ export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const dispatch = useAppDispatch();
   const path = window.location.pathname.split("/");
-  console.log(props);
+
   var me = userInfo.id;
   var now = path.at(-1);
 
@@ -299,7 +299,7 @@ const LevelShow = ({ resource }) => {
   const data = resource.read();
   console.log(data);
   return (
-    <div className="levelField">
+    <div className="levelShow">
       <h3>Level {data.level}</h3>
       <p>다음 레벨까지 {data.points}pts</p>
     </div>

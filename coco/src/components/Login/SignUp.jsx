@@ -8,6 +8,7 @@ import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
 
@@ -42,7 +43,7 @@ export const SignUp = () => {
 
   const checkIDs = (e) => {
     if (id === "") {
-      return alert("아이디를 입력하세요");
+      return Swal.fire({ icon: "error", title: "아이디를 입력하세요" });
     } else {
       axios
         .get(API.CHECKID, {
@@ -53,10 +54,16 @@ export const SignUp = () => {
         .then(function (response) {
           if (response.data.code === 1) {
             setCheckId(true);
-            return alert(`사용할 수 있는 아이디입니다.`);
+            return Swal.fire({
+              icon: "success",
+              title: "사용 가능한 ID입니다.",
+            });
           } else {
             setCheckId(false);
-            return alert("사용할 수 없는 아이디입니다.");
+            return Swal.fire({
+              icon: "error",
+              title: "사용 불가능한 ID입니다.",
+            });
           }
         });
     }
@@ -94,14 +101,26 @@ export const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (name === "" || id === "" || pw === "" || email === "") {
-      return alert("필수정보를 입력해주세요");
+      return Swal.fire({
+        icon: "error",
+        title: "필수 정보를 전부 입력해주세요",
+      });
     } else {
       if (!confirm[0]) {
-        return alert("이메일 형식이 올바르지 않습니다.");
+        return Swal.fire({
+          icon: "error",
+          title: "이메일 형식이 올바르지 않습니다.",
+        });
       } else if (!confirm[1]) {
-        return alert("비밀번호 형식이 올바르지 않습니다.");
+        return Swal.fire({
+          icon: "error",
+          title: "비밀번호 형식이 올바르지 않습니다.",
+        });
       } else if (!confirm[2]) {
-        return alert("비밀번호가 일치하지 않습니다.");
+        return Swal.fire({
+          icon: "error",
+          title: "비밀번호가 일치하지 않습니다.",
+        });
       } else {
         axios
           .post(API.SIGNUP, {
@@ -113,10 +132,16 @@ export const SignUp = () => {
           })
           .then(function (response) {
             if (response.data.code === 1) {
-              alert(`${id}님 환영합니다. 로그인을 해주세요`);
+              Swal.fire({
+                icon: "success",
+                title: `${id}님 환영합니다. 로그인을 해주세요`,
+              });
               navigateToLogin();
             } else {
-              alert("다시 진행해주세요");
+              Swal.fire({
+                icon: "error",
+                title: "회원가입을 다시 진행해주세요.",
+              });
             }
           });
       }

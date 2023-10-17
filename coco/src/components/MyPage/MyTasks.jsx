@@ -13,6 +13,7 @@ import { BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 export const MyTasks = ({ props }) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -72,14 +73,24 @@ export const MyTasksBox = (info) => {
       })
       .then((res) => {
         if (res.data === false) {
-          alert("내 문제집에서 삭제하지 못했습니다");
+          Swal.fire({
+            icon: "error",
+            title: "내 문제집에서 삭제하지 못했습니다",
+          });
         } else {
-          alert("내 문제집에서 삭제하였습니다");
+          Swal.fire({
+            icon: "success",
+            title: "내 문제집에서 삭제하였습니다",
+          });
+
           navigate(0);
         }
       })
       .catch(() => {
-        alert("내 문제집에서 삭제하지 못했습니다");
+        Swal.fire({
+          icon: "error",
+          title: "내 문제집에서 삭제하지 못했습니다",
+        });
       });
   };
 

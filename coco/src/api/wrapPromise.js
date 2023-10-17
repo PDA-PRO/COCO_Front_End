@@ -1,4 +1,4 @@
-function wrapPromise(promise) {
+function wrapPromise(flag, promise) {
     let status = 'pending';
     let response;
   
@@ -24,6 +24,9 @@ function wrapPromise(promise) {
     };
   
     const read = () => {
+      if(flag!==0){
+        return flag
+      }
       const result = handler[status] ? handler[status]() : handler.default();
       return result;
     };

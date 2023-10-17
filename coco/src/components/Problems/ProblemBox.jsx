@@ -30,8 +30,6 @@ export const ProblemBox = ({
     navigate(`/problems/${e}`);
   };
 
-  console.log(check);
-
   const nothing = () => {};
 
   const setLevel = (e) => {

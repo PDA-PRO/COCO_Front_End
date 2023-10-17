@@ -33,20 +33,22 @@ export const Result = (code) => {
   const { id } = useParams();
   const locate = useLocation();
   const userInfo = useAppSelector((state) => state.loginState);
-
   const num = parseInt(id);
 
   return (
     <>
       <Header />
-      <Suspense fallback={<Spinner />}>
+      {
+        locate.state !== null ? <Suspense fallback={<Spinner />}>
         <ResultBox
           resource={fetchData(API.RESULT + num, {
             headers: { Authorization: "Bearer " + userInfo.access_token },
           })}
           info={locate.state.info}
         />
-      </Suspense>
+      </Suspense> : <div className="Res"><div>404 not found</div></div>
+      }
+      
       <Footer />
     </>
   );
@@ -59,6 +61,7 @@ const ResultBox = ({ resource, info }) => {
   const [otherLogic, setOtherLogic] = useState(false);
 
   const problemList = resource.read();
+
 
   const setLang = (e) => {
     switch (e) {
@@ -143,7 +146,7 @@ const ResultBox = ({ resource, info }) => {
     })
     .join("\n");
 
-  console.log(problemList.lint);
+
   var wrongLines = [];
   var wrongStart = [];
   var wrongEnd = [];

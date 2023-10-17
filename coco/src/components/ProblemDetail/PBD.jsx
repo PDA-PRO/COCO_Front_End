@@ -108,7 +108,7 @@ const GetDetail = ({ resource }) => {
       });
   };
 
-  return (
+  return detail !== undefined ? (
     <div className="PBD">
       <div className="PBD-title">
         <div className="problemsName-pbd">
@@ -274,5 +274,5 @@ const GetDetail = ({ resource }) => {
         </Button>
       </div>
     </div>
-  );
+  ) :<div>404 not found</div>
 };

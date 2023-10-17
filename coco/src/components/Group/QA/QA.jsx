@@ -153,7 +153,7 @@ const Question = ({ resource }) => {
               .catch(() => {
                 Swal.fire({
                   icon: "error",
-                  title: "Server now in Error please try again",
+                  title: "답변 생성 ai를 사용할 수 없습니다.",
                 });
               });
           },

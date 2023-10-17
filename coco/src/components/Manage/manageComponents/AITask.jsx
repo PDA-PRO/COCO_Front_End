@@ -60,14 +60,16 @@ export const AITask = () => {
                     "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
                 });
               } else {
-                Swal.fire({
-                  icon: "error",
-                  title: "SERVER ERROR",
-                  timer: 1000,
-                  showConfirmButton: false,
-                });
+     
               }
-            });
+            }).catch(() => {
+              Swal.fire({
+                icon: "error",
+                title: "문제 생성 AI를 사용할 수 없습니다.\nAI 플러그인을 확인하세요.",
+                timer: 1000,
+                showConfirmButton: false,
+              });
+            })
         },
       });
     }

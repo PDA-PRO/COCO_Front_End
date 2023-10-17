@@ -49,7 +49,7 @@ const Content = ({ resource }) => {
   const data = resource.read();
 
   if(data === undefined){
-    return (<div>로드맵이 존재하지 않습니다</div>);
+    return (<div>404 not found</div>);
   }
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import "../Manage.css";
 import {
   PiNumberCircleOneLight,
@@ -9,9 +9,12 @@ import {
 } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
-import { useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { API } from "api/config";
+import axios from "axios";
+import fetchData from "../../../api/fetchTask";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 export const Plugins = () => {
   return (
@@ -30,56 +33,88 @@ export const Plugins = () => {
 
         <hr />
 
-        <div className="contentName">
-          <PiNumberCircleOneLight color="blue" size={23} />
-          <p>WPC : Wrong Part of Code</p>
-        </div>
-
-        <AIcontent func={1} />
-
-        <div className="contentName">
-          <PiNumberCircleTwoLight color="blue" size={23} />
-          <p>Q&A-AI</p>
-        </div>
-
-        <AIcontent func={2} />
-
-        <div className="contentName">
-          <PiNumberCircleThreeLight color="blue" size={23} />
-          <p>Make own Task AI</p>
-        </div>
-        <AIcontent func={3} />
-
-        <div className="contentName">
-          <PiNumberCircleFourLight color="blue" size={23} />
-          <p>Create more Efficient Code</p>
-        </div>
-        <AIcontent func={4} />
-
-        <div className="contentName">
-          <PiNumberCircleFiveLight color="blue" size={23} />
-          <p>Find Similar Logic Code</p>
-        </div>
-
-        <AIcontent func={5} />
+        <Suspense fallback={<Spinner />}>
+          <Status resource={fetchData(API.AI + "/status")} />
+        </Suspense>
       </div>
     </>
   );
 };
 
-const AIcontent = ({ func }) => {
-  const [checked, setChecked] = useState(true);
+const Status = ({ resource }) => {
+  const status = resource.read();
+  return (
+    <>
+      <div className="contentName">
+        <PiNumberCircleOneLight color="blue" size={23} />
+        <p>WPC : Wrong Part of Code</p>
+      </div>
+      <AIcontent func={1} plugin={"wpc"} status={status.wpc}/>
+
+      <div className="contentName">
+        <PiNumberCircleTwoLight color="blue" size={23} />
+        <p>Q&A-AI</p>
+      </div>
+      <AIcontent func={2} plugin={"qa"} status={status.qa}/>
+      
+      <div className="contentName">
+        <PiNumberCircleThreeLight color="blue" size={23} />
+        <p>Make own Task AI</p>
+      </div>
+      <AIcontent func={3} plugin={"task"} status={status.task}/>
+
+      <div className="contentName">
+        <PiNumberCircleFourLight color="blue" size={23} />
+        <p>Create more Efficient Code</p>
+      </div>
+      <AIcontent func={4} plugin={"efficient"} status={status.efficient}/>
+
+      <div className="contentName">
+        <PiNumberCircleFiveLight color="blue" size={23} />
+        <p>Find Similar Logic Code</p>
+      </div>
+      <AIcontent func={5} plugin={"similar"} status={status.similar}/>
+    </>
+  );
+};
+
+const AIcontent = ({ func, plugin, status }) => {
+  const [checked, setChecked] = useState(status);
   const [nowOn, setNowOn] = useState("Plugin ON");
   const [nowState, setNowState] = useState(1);
 
+  useEffect(() => {
+    console.log(status);
+  }, [])
+
+
   const handleChange = (e) => {
+    console.log(func, plugin);
     setChecked(e.target.checked);
     if (checked === true) {
-      setNowOn("Plugin OFF");
-      setNowState(0);
+      axios
+        .put(API.AI + "/status", {
+          plugin: plugin,
+          status: 0,
+        })
+        .then((res) => {
+          if (res.data === true) {
+            setNowOn("Plugin OFF");
+            setNowState(0);
+          }
+        });
     } else {
-      setNowOn("Plugin ON");
-      setNowState(1);
+      axios
+        .put(API.AI + "/status", {
+          plugin: plugin,
+          status: 1,
+        })
+        .then((res) => {
+          if (res.data === true) {
+            setNowOn("Plugin ON");
+            setNowState(1);
+          }
+        });
     }
   };
 

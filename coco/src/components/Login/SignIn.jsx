@@ -13,6 +13,7 @@ import qs from "qs";
 import jwtdecode from "../../app/jwtdecode";
 import Form from "react-bootstrap/Form";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,10 @@ export const SignIn = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (id === "" || pw === "") {
-      return alert("아이디 또는 비밀번호를 입력해주세요");
+      return Swal.fire({
+        icon: "error",
+        title: "아이디 또는 비밀번호를 입력해주세요",
+      });
     } else {
       axios
         .post(
@@ -74,12 +78,17 @@ export const SignIn = () => {
               exp: jwt_exp,
               imagetoken: new Date().getTime(),
               tutor: jwt_tutor,
-              alarm: response.data.alarm
+              alarm: response.data.alarm,
             });
             navigateToHome();
           }
         })
-        .catch(() => alert("아이디 또는 비밀번호가 일치하지 않습니다"));
+        .catch(() =>
+          Swal.fire({
+            icon: "error",
+            title: "아이디 또는 비밀번호가 일치하지 않습니다",
+          })
+        );
     }
   };
 

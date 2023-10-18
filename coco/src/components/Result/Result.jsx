@@ -26,36 +26,42 @@ import { OtherLogic } from "./OtherLogic";
 import ReactDiffViewer from "react-diff-viewer";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 
 export const Result = (code) => {
   const { id } = useParams();
   const locate = useLocation();
   const userInfo = useAppSelector((state) => state.loginState);
-
   const num = parseInt(id);
 
   return (
     <>
       <Header />
-      <Suspense fallback={<Spinner />}>
+      {
+        locate.state !== null ? <Suspense fallback={<Spinner />}>
         <ResultBox
           resource={fetchData(API.RESULT + num, {
             headers: { Authorization: "Bearer " + userInfo.access_token },
           })}
           info={locate.state.info}
         />
-      </Suspense>
+      </Suspense> : <div className="Res"><div>404 not found</div></div>
+      }
+      
       <Footer />
     </>
   );
 };
 
 const ResultBox = ({ resource, info }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const { id } = useParams();
   const [wpc, setWpc] = useState(0);
   const [otherLogic, setOtherLogic] = useState(false);
 
   const problemList = resource.read();
+
 
   const setLang = (e) => {
     switch (e) {
@@ -140,7 +146,7 @@ const ResultBox = ({ resource, info }) => {
     })
     .join("\n");
 
-  console.log(problemList.lint);
+
   var wrongLines = [];
   var wrongStart = [];
   var wrongEnd = [];
@@ -232,8 +238,55 @@ const ResultBox = ({ resource, info }) => {
   // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
 
   const changeLogic = () => {
-    setOtherLogic(!otherLogic);
+    const code = problemList.subDetail["code"];
+
+    if (otherLogic === false) {
+      Swal.fire({
+        icon: "info",
+        title:
+          "AI가 코드의 개선점을 찾아 수정하고 있습니다.\n\n 다른 로직의 코드를 찾고 있습니다.",
+        footer: "시간이 다소 소요될 수 있습니다.",
+
+        showConfirmButton: false,
+
+        didOpen: () => {
+          Swal.showLoading();
+          //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
+          axios
+            .post(
+              API.AI + "/ai-code",
+              {
+                code: code,
+                task_id: info.task_id,
+                sub_id: info.sub_id,
+              },
+              {
+                headers: {
+                  Authorization: "Bearer " + userInfo.access_token,
+                },
+              }
+            )
+            .then((res) => {
+              if (res.data.data === true) {
+                console.log(res.data.data);
+                setOtherLogic(!otherLogic);
+                setImproveCode(res.data.code);
+                setImproveComment(res.data.desc);
+                setTimeout(function () {
+                  Swal.close();
+                }, 1500);
+              }
+            });
+        },
+      });
+    } else {
+      setOtherLogic(!otherLogic);
+    }
   };
+
+  // AI가 주는 개선된 코드, 개선내역 comment
+  const [improveCode, setImproveCode] = useState("");
+  const [improveComment, setImproveComment] = useState("");
 
   return (
     <div className="Res">
@@ -290,7 +343,19 @@ const ResultBox = ({ resource, info }) => {
                 <p>내 제출 코드</p>
               </div>
               {problemList.subDetail["status"] === 3 ? (
-                <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+                <div className="ifCorrect">
+                  <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+                  <div className="timeAndMemory">
+                    <div className="c-un">
+                      <BiTimeFive color="gray" size={22} />
+                      <p>소요 시간 : 2ms</p>
+                    </div>
+                    <div className="c-un">
+                      <BiMemoryCard color="gray" size={22} />
+                      <p>소요 메모리 : 15mb</p>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <pre className="R-Code">
                   {makeLine(
@@ -344,7 +409,13 @@ const ResultBox = ({ resource, info }) => {
           </>
         ) : (
           <>
-            <OtherLogic changeLogic={changeLogic} />
+            <OtherLogic
+              changeLogic={changeLogic}
+              impCode={improveCode}
+              impCmt={improveComment}
+              task_id={info.task_id}
+              sub_id={problemList.subDetail["id"]}
+            />
           </>
         )}
       </div>

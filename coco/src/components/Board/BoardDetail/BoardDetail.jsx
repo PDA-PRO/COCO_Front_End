@@ -28,7 +28,7 @@ export const BoardDetail = () => {
   return (
     <>
       <Header />
-      <GetBoardDetail />
+        <GetBoardDetail />
       <Footer />
     </>
   );
@@ -51,6 +51,8 @@ const GetBoardDetail = () => {
         params: { user_id: userInfo.id },
       })
   );
+
+
   const { isFetching: commentFetching, data: commentList } = useQuery(
     ["commentList", Number.parseInt(board_id)],
     () =>
@@ -61,22 +63,34 @@ const GetBoardDetail = () => {
 
   //게시글 상세 정보 조회 성공시 필요한 상태 변환
   useEffect(() => {
-    if (!isFetching) {
-      if (
-        boardData.data.user_id === userInfo.id ||
-        userInfo.ismanage === true
-      ) {
-        setIsMe(true);
+    if(boardData !== undefined){
+      if (!isFetching) {
+        if (
+          boardData.data.user_id === userInfo.id ||
+          userInfo.ismanage === true
+        ) {
+          setIsMe(true);
+        }
+        setLike(boardData.data.is_board_liked);
+        setLikeNum(boardData.data.likes);
       }
-      setLike(boardData.data.is_board_liked);
-      setLikeNum(boardData.data.likes);
     }
+
   }, [isFetching]);
 
   //상세 정보 조회 중 로딩화면 출력
   if (isFetching) {
     return <Loader />;
   }
+
+  if(boardData === undefined){
+    return (
+      <div className="boardDetail">
+        <div>404 not found</div>
+      </div>
+    )
+  }
+
 
   const commentShoot = (e) => {
     if (e == 1) {
@@ -267,22 +281,29 @@ const GetBoardDetail = () => {
               </div>
             </div>
 
-            <div className="cBody">
-              {write ? (
-                <WriteComment commentShoot={commentShoot} />
-              ) : (
-                <div id="closeState"></div>
-              )}
-              {commentFetching ? (
-                <Loader />
-              ) : (
-                commentList.data.map((commentData) => {
-                  return (
-                    <Comments commentData={commentData} key={commentData.id} />
-                  );
-                })
-              )}
-            </div>
+            {boardData !== undefined ? (
+              <div className="cBody">
+                {write ? (
+                  <WriteComment commentShoot={commentShoot} />
+                ) : (
+                  <div id="closeState"></div>
+                )}
+                {commentFetching ? (
+                  <Loader />
+                ) : (
+                  commentList.data.map((commentData) => {
+                    return (
+                      <Comments
+                        commentData={commentData}
+                        key={commentData.id}
+                      />
+                    );
+                  })
+                )}
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
         </div>
       </div>

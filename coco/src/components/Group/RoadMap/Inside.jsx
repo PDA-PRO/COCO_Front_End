@@ -40,15 +40,18 @@ export const Inside = () => {
 };
 
 const Content = ({ resource }) => {
+  const Phone = useMediaQuery({ maxWidth: 810 });
+  const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const userID = userInfo.id;
   const [page, setPage] = useState(1);
-
+  const path = window.location.pathname.split("/");
   const data = resource.read();
 
-  const navigate = useNavigate();
+  if(data === undefined){
+    return (<div>404 not found</div>);
+  }
 
-  const path = window.location.pathname.split("/");
 
   const goMypage = (e) => {
     navigate(`/mypage/${e}`);
@@ -57,7 +60,7 @@ const Content = ({ resource }) => {
     navigate(`/room/modifyRoadmap/${path.at(-2)}/${path.at(-1)}`);
   };
 
-  const Phone = useMediaQuery({ maxWidth: 810 });
+
 
   var date = data.roadmap.last_modify;
   var slicedDate = date.substring(0, 10);
@@ -81,10 +84,12 @@ const Content = ({ resource }) => {
     return res;
   };
 
+  console.log("푼 문제 번호", data.solved_list[`${userID}`]);
+
   const compare = (e) => {
-    if (!Object.hasOwn(data.solved_list, e)) {
-      return 0;
-    }
+    // if (!Object.hasOwn(data.solved_list, e)) {
+    //   return 0;
+    // }
     var idx = data.solved_list[`${userID}`].findIndex(
       (problem) => problem === e
     );
@@ -206,5 +211,5 @@ const Content = ({ resource }) => {
         </div>
       </div>
     </>
-  );
+  )
 };

@@ -18,11 +18,11 @@ export const Alarm = () => {
 
   useEffect(() => {
     axios
-      .patch(API.ALARM+`/${user_id}`, {
+      .patch(API.ALARM + `/${user_id}`, {
         user_id: user_id,
       })
       .then((res) => {
-        if(res.data === true){
+        if (res.data === true) {
           dispatch({
             type: "loginSlice/alarm",
             alarm: 0,
@@ -73,25 +73,36 @@ const GetAlarm = (props) => {
 
   const getTime = (time) => {
     time = time.split("T");
-    return time[0] + " " + time[1];
+
+    return (
+      <div className="timestamp">
+        <p id="time">{time[0]}</p>
+
+        <p id="time">{time[1]}</p>
+      </div>
+    );
   };
 
   const movepage = (e, context) => {
     switch (e) {
       case 1: // make comment, like post, like comment
         navigate(`/board/${context.board_id}`); //${id} 로 수정
+        break;
       case 2: // tutor certification
         navigate(`/room`);
+        break;
       case 3: // studyroom inviting, room closed, room Q&A update,
         navigate(`/room/${context.room_id}`); //${id} 로 수정
-
+        break;
       case 4: // room roadmap undate
         navigate(`/room/roadmap/${context.room_id}/${context.roadmap_id}`); //${room_id}/${roadmap_id} 로 수정
+        break;
       case 5: // code selection
         navigate(`/result/2`); //${id} 로 수정
-
+        break;
       case 6: // To manager
         navigate(`/manage`); //${id} 로 수정
+        break;
     }
   };
 
@@ -113,7 +124,7 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(2, context)}
+            onClick={() => movepage(1, context)}
           >
             {e.sender}님이 {e.receiver}님의 글을 좋아합니다.
           </p>
@@ -123,7 +134,7 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(3, context)}
+            onClick={() => movepage(1, context)}
           >
             {e.sender}님이 {e.receiver}님의 댓글을 좋아합니다.
           </p>
@@ -133,7 +144,7 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(4, context)}
+            onClick={() => movepage(2, context)}
           >
             {e.receiver} 님이 튜터 권한을 획득했습니다.
           </p>
@@ -143,9 +154,9 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(5, context)}
+            onClick={() => movepage(3, context)}
           >
-            {e.sender}님이 {e.receiver}님을 스터디룸 {context.room_name}에
+            {e.sender}님이 {e.receiver}님을 스터디룸 '{context.room_name}'에
             초대했습니다.
           </p>
         );
@@ -154,9 +165,9 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(6, context)}
+            onClick={() => movepage(3, context)}
           >
-            {e.receiver}님의 스터디룸 {context.room_name}이 삭제되었습니다.
+            {e.receiver}님의 스터디룸 '{context.room_name}'이 삭제되었습니다.
           </p>
         );
       case 7: // room Q&A update
@@ -164,7 +175,7 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(7, context)}
+            onClick={() => movepage(3, context)}
           >
             {e.sender}님이 {e.receiver}님의 질문에 답변을 남겼습니다.
           </p>
@@ -174,7 +185,7 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(8, context)}
+            onClick={() => movepage(3, context)}
           >
             {e.sender}님이 {e.receiver}님의 답변을 채택했습니다.
           </p>
@@ -184,9 +195,9 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(9, context)}
+            onClick={() => movepage(4, context)}
           >
-            스터디룸 {context.room_name}에 새로운 ROAD MAP이 등록되었습니다.
+            스터디룸 '{context.room_name}'에 새로운 ROAD MAP이 등록되었습니다.
           </p>
         );
       case 10: // room roadmap undate
@@ -194,9 +205,9 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(10, context)}
+            onClick={() => movepage(4, context)}
           >
-            스터디룸 {context.room_name}의 ROAD MAP이 업데이트 되었습니다.
+            스터디룸 '{context.room_name}'의 ROAD MAP이 업데이트 되었습니다.
           </p>
         );
       case 11: // if tutor -> new Question assigned
@@ -204,9 +215,9 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(11, context)}
+            onClick={() => movepage(3, context)}
           >
-            스터디룸 {context.room_name}에 {e.sender}님의 새로운 질문이
+            스터디룸'{context.room_name}'에 {e.sender}님의 새로운 질문이
             등록되었습니다.
           </p>
         );
@@ -215,7 +226,7 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(12, context)}
+            onClick={() => movepage(5, context)}
           >
             문제 task_name에 대한 {e.receiver}님의 풀이가 도움된 코드로
             채택되었습니다.
@@ -226,9 +237,19 @@ const GetAlarm = (props) => {
           <p
             id="context"
             title="해당 페이지로 이동"
-            onClick={() => movepage(13, context)}
+            onClick={() => movepage(6, context)}
           >
             {e.receiver}님이 관리자 권한을 부여받았습니다.
+          </p>
+        );
+      case 14: // To manager
+        return (
+          <p
+            id="context"
+            title="해당 페이지로 이동"
+            onClick={() => movepage(3, context)}
+          >
+            {e.receiver}님이 튜터 권한을 부여받았습니다.
           </p>
         );
     }
@@ -236,7 +257,7 @@ const GetAlarm = (props) => {
 
   return (
     <div className="alr">
-      <p id="time">{getTime(props.info.time)}</p>
+      {getTime(props.info.time)}
       {render(props.info)}
     </div>
   );

@@ -29,7 +29,8 @@ export const GroupInfo = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const userID = userInfo.id;
   const [page, setPage] = useState(1);
-  const { isLoading, isError, data, error } = useQuery({
+  const navigate = useNavigate();
+  const { isLoading, data } = useQuery({
     queryKey: ["roominfo"],
     queryFn: () =>
       axios.get(API.ROOM + path.at(-1), {
@@ -38,14 +39,13 @@ export const GroupInfo = () => {
         },
       }),
   });
+
   const moveWorkbook = () => {
     setPage(2);
   };
   const moveBoard = () => {
     setPage(1);
   };
-
-  const navigate = useNavigate();
 
   const moveWrite = (id) => {
     navigate(`/room/qa/write`, { state: id });
@@ -54,54 +54,64 @@ export const GroupInfo = () => {
   return (
     <>
       <Header />
-      <div className="groupInfo">
-        <div className="gi">
-          {isLoading ? <Spinner /> : <GiHeader info={data.data} />}
+      {data !== undefined ? (
+        <div className="groupInfo">
+          <div className="gi">
+            {isLoading ? <Spinner /> : <GiHeader info={data.data} />}
 
-          <div id="gi-B">
-            <div className="gi-GB">
-              <div className="gb-header">
-                {page === 1 ? (
-                  <div id="he1" onClick={() => moveWorkbook()}>
-                    <ImBooks size={25} color="green" />
-                    <p>학습 RoadMap 열기</p>
-                  </div>
+            <div id="gi-B">
+              <div className="gi-GB">
+                <div className="gb-header">
+                  {page === 1 ? (
+                    <div id="he1" onClick={() => moveWorkbook()}>
+                      <ImBooks size={25} color="green" />
+                      <p>학습 RoadMap 열기</p>
+                    </div>
+                  ) : (
+                    <div id="he1" onClick={() => moveBoard()}>
+                      <IoChatbubblesOutline size={25} color="green" />
+                      <p>Q & A 열기</p>
+                    </div>
+                  )}
+                  {page === 1 ? (
+                    <div id="he1" onClick={() => moveWrite(path.at(-1))}>
+                      <TfiPencil size={25} />
+                      <p>질문 작성</p>
+                    </div>
+                  ) : isLoading ? (
+                    <Spinner />
+                  ) : (
+                    <MakeRoadMap resource={data.data} />
+                  )}
+                </div>
+
+                {page == 1 ? (
+                  <Suspense fallback={<Spinner />}>
+                    <QA />
+                  </Suspense>
                 ) : (
-                  <div id="he1" onClick={() => moveBoard()}>
-                    <IoChatbubblesOutline size={25} color="green" />
-                    <p>Q & A 열기</p>
-                  </div>
-                )}
-                {page === 1 ? (
-                  <div id="he1" onClick={() => moveWrite(path.at(-1))}>
-                    <TfiPencil size={25} />
-                    <p>질문 작성</p>
-                  </div>
-                ) : isLoading ? (
-                  <Spinner />
-                ) : (
-                  <MakeRoadMap resource={data.data} />
+                  <Suspense fallback={<Spinner />}>
+                    <RoadMap userID={userID} path={path.at(-1)} />
+                  </Suspense>
                 )}
               </div>
 
-              {page == 1 ? (
-                <Suspense fallback={<Spinner />}>
-                  <QA />
-                </Suspense>
-              ) : (
-                <Suspense fallback={<Spinner />}>
-                  <RoadMap userID={userID} path={path.at(-1)} />
-                </Suspense>
-              )}
-            </div>
-
-            <div className="gi-ML">
-              {isLoading ? <Spinner /> : <MemberList resource={data.data} />}
-              {isLoading ? <Spinner /> : <LeaveOrDelete resource={data.data} />}
+              <div className="gi-ML">
+                {isLoading ? <Spinner /> : <MemberList resource={data.data} />}
+                {isLoading ? (
+                  <Spinner />
+                ) : (
+                  <LeaveOrDelete resource={data.data} />
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="groupInfo">
+          <div>404 not found</div>
+        </div>
+      )}
       <Footer />
     </>
   );

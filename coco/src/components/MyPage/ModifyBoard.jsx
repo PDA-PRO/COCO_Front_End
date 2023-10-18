@@ -12,6 +12,7 @@ import { GoPencil } from "react-icons/go";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useAppSelector } from "../../app/store";
+import Swal from "sweetalert2";
 import { API } from "api/config";
 
 export const ModifyBoard = () => {
@@ -87,7 +88,10 @@ const Update = ({ boardId, title, contents, category }) => {
   const onSubmitHandler = () => {
     console.log(category);
     if (newTitle === "" || htmlString === "<p></p>" || htmlString === "") {
-      return alert("완전히 입력해주세요.");
+      return Swal.fire({
+        icon: "error",
+        title: "입력이 완전하지 않습니다.",
+      });
     } else {
       axios
         .post(
@@ -105,14 +109,24 @@ const Update = ({ boardId, title, contents, category }) => {
         )
         .then(function (response) {
           if (response.data.code === 1) {
-            alert(`${newTitle} 업로드 성공`);
+            Swal.fire({
+              icon: "success",
+              title: `${newTitle}가 수정되어 업로드되었습니다.`,
+            });
+
             window.location.replace(`/mypage/${userInfo.id}`);
           } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - SERVER COMMUNICATION FAILED",
+            });
           }
         })
         .catch(() => {
-          alert("인증실패");
+          Swal.fire({
+            icon: "error",
+            title: "ERROR - SERVER COMMUNICATION FAILED",
+          });
         });
     }
   };

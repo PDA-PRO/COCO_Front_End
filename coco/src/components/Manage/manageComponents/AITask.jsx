@@ -30,6 +30,7 @@ export const AITask = () => {
   const [isAI, setIsAI] = useState(false);
   const ASKContent = useRef();
   const Ask = (e) => {
+    // setJson({});
     if (e === "") {
       Swal.fire({
         icon: "error",
@@ -45,28 +46,30 @@ export const AITask = () => {
         didOpen: () => {
           Swal.showLoading();
           axios
-            .post(API.CHATGPT + "/create_task", {
+            .post(API.AI + "/create-task", {
               content: e,
               is_final: false,
             })
             .then((res) => {
               if (res.data.data == true) {
                 setIsAI(true);
-                setJson(res.data.result);
+                setJson({ ...res.data.result });
                 Swal.fire({
                   icon: "success",
                   title:
                     "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
                 });
               } else {
-                Swal.fire({
-                  icon: "error",
-                  title: "SERVER ERROR",
-                  timer: 1000,
-                  showConfirmButton: false,
-                });
+     
               }
-            });
+            }).catch(() => {
+              Swal.fire({
+                icon: "error",
+                title: "문제 생성 AI를 사용할 수 없습니다.\nAI 플러그인을 확인하세요.",
+                timer: 1000,
+                showConfirmButton: false,
+              });
+            })
         },
       });
     }
@@ -125,6 +128,15 @@ export const AITask = () => {
 
 const TaskReturn = ({ reAsk, askContent, json }) => {
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
+  console.log("자식", json);
+
+  function extractSecondsFromString(str) {
+    // 숫자가 아닌 문자는 모두 제거하고, 나머지를 정수로 변환
+    const seconds = parseInt(str.replace(/\D/g, ""), 10);
+
+    return isNaN(seconds) ? 0 : seconds;
+  }
+
   const titleRef = useRef();
 
   const diffRef = useRef();
@@ -142,8 +154,6 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
   const categoryRef = useRef();
 
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
-
-  console.log(json);
 
   // --------------------------- quill editor 관련 함수 ----------------------
   const imageHandler = () => {
@@ -225,13 +235,6 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
     };
   }, []);
 
-  function extractSecondsFromString(str) {
-    // 숫자가 아닌 문자는 모두 제거하고, 나머지를 정수로 변환
-    const seconds = parseInt(str.replace(/\D/g, ""), 10);
-
-    return isNaN(seconds) ? 0 : seconds;
-  }
-
   // --------------------------- Submit 버튼으로 post ---------------------
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -259,29 +262,26 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post(API.TASK, formData, {
-          headers: {
-            "Content-Type": `multipart/form-data; `,
-            Authorization: "Bearer " + userInfo.access_token,
-          },
+        .post(API.AI + "/upload-task", formData, {
+          // headers: {
+          //   "Content-Type": `multipart/form-data; `,
+          //   Authorization: "Bearer " + userInfo.access_token,
+          // },
           params: {
-            json: {
-              title: titleRef.current.value,
-              inputDescription: inputDescRef.current.value,
-              inputEx1: inputEx1Ref.current.value,
-              inputEx2: inputEx2Ref.current.value,
-              outputDescription: outputDescRef.current.value,
-              outputEx1: outputEx1Ref.current.value,
-              outputEx2: outputEx2Ref.current.value,
-              diff: diffRef.current.value,
-              timeLimit: timeRef.current.value,
-              memLimit: memRef.current.value,
-              category: categoryRef.current
-                .getValue()
-                .map((e) => e.value)
-                .join(","),
-              is_final: true,
-            },
+            title: titleRef.current.value,
+            inputDescription: inputDescRef.current.value,
+            inputEx1: inputEx1Ref.current.value,
+            inputEx2: inputEx2Ref.current.value,
+            outputDescription: outputDescRef.current.value,
+            outputEx1: outputEx1Ref.current.value,
+            outputEx2: outputEx2Ref.current.value,
+            diff: diffRef.current.value,
+            timeLimit: timeRef.current.value,
+            memLimit: memRef.current.value,
+            category: categoryRef.current
+              .getValue()
+              .map((e) => e.value)
+              .join(","),
           },
         })
         .then(function (response) {

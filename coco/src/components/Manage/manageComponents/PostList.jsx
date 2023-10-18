@@ -149,7 +149,6 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
   };
 
   const loadlist = (e) => {
-    console.log(info.id);
     axios
       .delete(API.BOARD, {
         params: { board_id: info.id },
@@ -186,6 +185,8 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
+
+  console.log(info);
 
   return (
     <div className="postList">

@@ -74,16 +74,7 @@ const Question = ({ resource }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   var path = window.location.pathname;
   path = path.split("/");
-  console.log(info);
 
-  // const defaultOptions = {
-  //   loop: true,
-  //   autoplay: true,
-  //   animationData: require("../../../lotties/chat"),
-  //   rendererSettings: {
-  //     preserveAspectRatio: "xMidYMid slice",
-  //   },
-  // };
 
   function makeNoLine(arr) {
     if (arr.length == 0) {
@@ -129,11 +120,16 @@ const Question = ({ resource }) => {
           didOpen: () => {
             Swal.showLoading();
             axios
-              .post(API.CHATGPT, {
+              .post(API.AI+"/ai-answer", {
                 content: content,
                 code: code,
                 room_id: path.at(-1),
                 q_id: q_id,
+              },
+              {
+                headers: {
+                  Authorization: "Bearer " + userInfo.access_token,
+                },
               })
               .then((res) => {
                 if (res.data === true) {
@@ -145,12 +141,19 @@ const Question = ({ resource }) => {
                   }).then((res) => {
                     window.location.reload();
                   });
+                }else{
+                  Swal.fire({
+                    icon: "success",
+                    title: "AI로부터 등록된 답변이 존재합니다.",
+                    timer: 1000,
+                    showConfirmButton: false,
+                  })
                 }
               })
               .catch(() => {
                 Swal.fire({
                   icon: "error",
-                  title: "Server now in Error please try again",
+                  title: "답변 생성 ai를 사용할 수 없습니다.",
                 });
               });
           },
@@ -262,7 +265,6 @@ const Question = ({ resource }) => {
 const Answer = ({ info, room_id, writer }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(info.check);
-
   useEffect(() => {}, [isGood]);
 
   function makeNoLine(arr) {
@@ -300,6 +302,7 @@ const Answer = ({ info, room_id, writer }) => {
               room_id: room_id,
               a_id: info.a_id,
               select: 0,
+              ans_writer: info.ans_writer
             },
             { headers: { Authorization: "Bearer " + userInfo.access_token } }
           )
@@ -323,6 +326,7 @@ const Answer = ({ info, room_id, writer }) => {
               room_id: room_id,
               a_id: info.a_id,
               select: 1,
+              ans_writer: info.ans_writer
             },
             { headers: { Authorization: "Bearer " + userInfo.access_token } }
           )
@@ -348,14 +352,14 @@ const Answer = ({ info, room_id, writer }) => {
     <div
       className="ans"
       style={
-        info.ans_writer != "ai"
+        info.ans_writer != null
           ? { backgroundColor: "rgb(247, 252, 255)" }
           : { backgroundColor: "rgb(254, 244, 255)" }
       }
     >
       <div className="ansTop">
         <div className="nameAnddate">
-          {info.ans_writer === "ai" ? (
+          {info.ans_writer === null ? (
             <div className="fromAI">
               <img src="/image/chatbot.png" width="30px"></img>
               <h4 style={{ fontSize: "0.9em", fontWeight: "600" }}>

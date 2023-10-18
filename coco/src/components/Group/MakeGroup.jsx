@@ -237,7 +237,7 @@ const SearchResult = (props) => {
 };
 
 const UserBox = (info) => {
-  console.log(info)
+
   return (
     <div className="userBox">
       <p>Lv.{info.info.level}</p>

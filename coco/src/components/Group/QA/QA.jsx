@@ -14,11 +14,8 @@ import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BiInfoSquare } from "react-icons/bi";
-import Lottie from "react-lottie";
 import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
-import fetchData from "../../../api/fetchTask";
-import Spinner from "react-bootstrap/Spinner";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -75,7 +72,6 @@ const Question = ({ resource }) => {
   var path = window.location.pathname;
   path = path.split("/");
 
-
   function makeNoLine(arr) {
     if (arr.length == 0) {
       return "";
@@ -120,17 +116,20 @@ const Question = ({ resource }) => {
           didOpen: () => {
             Swal.showLoading();
             axios
-              .post(API.AI+"/ai-answer", {
-                content: content,
-                code: code,
-                room_id: path.at(-1),
-                q_id: q_id,
-              },
-              {
-                headers: {
-                  Authorization: "Bearer " + userInfo.access_token,
+              .post(
+                API.AI + "/ai-answer",
+                {
+                  content: content,
+                  code: code,
+                  room_id: path.at(-1),
+                  q_id: q_id,
                 },
-              })
+                {
+                  headers: {
+                    Authorization: "Bearer " + userInfo.access_token,
+                  },
+                }
+              )
               .then((res) => {
                 if (res.data === true) {
                   Swal.fire({
@@ -141,13 +140,13 @@ const Question = ({ resource }) => {
                   }).then((res) => {
                     window.location.reload();
                   });
-                }else{
+                } else {
                   Swal.fire({
                     icon: "success",
                     title: "AI로부터 등록된 답변이 존재합니다.",
                     timer: 1000,
                     showConfirmButton: false,
-                  })
+                  });
                 }
               })
               .catch(() => {
@@ -302,21 +301,28 @@ const Answer = ({ info, room_id, writer }) => {
               room_id: room_id,
               a_id: info.a_id,
               select: 0,
-              ans_writer: info.ans_writer
+              ans_writer: info.ans_writer,
             },
             { headers: { Authorization: "Bearer " + userInfo.access_token } }
           )
           .then((res) => {
             if (res.data.code) {
               setIsGood(0);
-              alert("채택이 취소되었습니다.");
+              Swal.fire({ icon: "info", title: "채택이 취소되었습니다." });
+
               // window.location.replace(`/room/${room_id}`);
             } else {
-              alert("ERROR - SERVER COMMUNICATION FAILED");
+              Swal.fire({
+                icon: "error",
+                title: "ERROR - SERVER COMMUNICATION FAILED",
+              });
             }
           })
           .catch(() => {
-            alert("인증실패");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - SERVER IDENTIFICATION FAILED",
+            });
           });
       } else {
         axios
@@ -326,25 +332,35 @@ const Answer = ({ info, room_id, writer }) => {
               room_id: room_id,
               a_id: info.a_id,
               select: 1,
-              ans_writer: info.ans_writer
+              ans_writer: info.ans_writer,
             },
             { headers: { Authorization: "Bearer " + userInfo.access_token } }
           )
           .then((res) => {
             if (res.data.code) {
               setIsGood(1);
-              alert("답변이 채택되었습니다.");
+              Swal.fire({
+                icon: "success",
+                title:
+                  "답변이 채택되었습니다.\n작성자에게 채택 알림이 발송됩니다.",
+              });
               // window.location.replace(`/room/${room_id}`);
             } else {
-              alert("ERROR - SERVER COMMUNICATION FAILED");
+              Swal.fire({
+                icon: "error",
+                title: "ERROR - SERVER COMMUNICATION FAILED",
+              });
             }
           })
           .catch(() => {
-            alert("인증실패");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - SERVER IDENTIFICATION FAILED",
+            });
           });
       }
     } else {
-      alert("질문 작성자가 아닙니다.");
+      Swal.fire({ icon: "warning", title: "질문 작성자가 아닙니다." });
     }
   };
 
@@ -432,14 +448,22 @@ const MakeAnswer = ({ room_id, q_id }) => {
       )
       .then(function (response) {
         if (response.data.code) {
-          alert(`답변 업로드 성공`);
-          window.location.reload();
+          Swal.fire({ icon: "success", title: "답변 업로드 성공" }).then(
+            (res) => {
+              if (res.isConfirmed) {
+                window.location.reload();
+              }
+            }
+          );
         } else {
-          alert("ERROR - SERVER COMMUNICATION FAILED");
+          Swal.fire({
+            icon: "error",
+            title: "ERROR - SERVER COMMUNICATION FAILED",
+          });
         }
       })
       .catch(() => {
-        alert("답변 등록 실패");
+        Swal.fire({ icon: "error", title: "답변 등록 실패" });
       });
   };
 

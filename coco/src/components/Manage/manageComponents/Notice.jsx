@@ -10,6 +10,7 @@ import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -124,11 +125,13 @@ const GetNotice = ({ resource }) => {
         }
       )
       .then(function (res) {
-        alert("공지 업데이트를 성공했습니다.");
+        Swal.fire({ icon: "success", title: "공지 업데이트를 성공했습니다." });
       })
       .catch((res) => {
-        console.log(res);
-        alert("인증실패");
+        Swal.fire({
+          icon: "error",
+          title: "Server Error - Identification Failed",
+        });
       });
   };
 

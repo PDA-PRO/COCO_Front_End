@@ -12,6 +12,7 @@ import { python } from "@codemirror/lang-python";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -104,7 +105,7 @@ export const Help = ({ title }) => {
 
   const onSubmitHandler = () => {
     if (title === "" || quillValue === "") {
-      return alert("완전히 입력해주세요");
+      return Swal.fire({ icon: "error", title: "완전히 입력해주세요." });
     } else {
       axios
         .post(
@@ -120,11 +121,19 @@ export const Help = ({ title }) => {
           }
         )
         .then(function (response) {
-          alert(`${title} 업로드 성공`);
-          navigate(`/board/${response.data.id}`);
+          Swal.fire({
+            icon: "success",
+            title: `${title} 업로드 성공`,
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          setTimeout(() => navigate(`/board/${response.data.id}`), 1000);
         })
         .catch(() => {
-          alert("인증실패");
+          Swal.fire({
+            icon: "error",
+            title: "Server Error - Identification Failed",
+          });
         });
     }
   };

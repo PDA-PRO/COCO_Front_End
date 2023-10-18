@@ -9,6 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -99,7 +100,7 @@ export const Free = ({ title, cate }) => {
 
   const onSubmit = () => {
     if (title === "" || quillValue === "") {
-      return alert("완전히 입력해주세요");
+      return Swal.fire({ icon: "error", title: "완전히 입력해주세요" });
     } else {
       axios
         .post(
@@ -117,7 +118,10 @@ export const Free = ({ title, cate }) => {
           navigate(`/board/${response.data.id}`);
         })
         .catch(() => {
-          alert("인증실패");
+          Swal.fire({
+            icon: "error",
+            title: "SERVER ERROR - Identification Failed",
+          });
         });
     }
   };

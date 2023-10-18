@@ -16,6 +16,7 @@ import {
 import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
@@ -157,7 +158,11 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
       .then(function (response) {
         setReload(response.data);
         setLoading(true);
-        alert(`id : ${info.id}, title : ${info.title} 게시글을 삭제했습니다.`);
+        Swal.fire({
+          icon: "success",
+          title: `id : ${info.id}, title : ${info.title} 게시글을 삭제했습니다.`,
+          timer: 1000,
+        });
       });
   };
 

@@ -23,6 +23,7 @@ import { QA } from "./QA/QA";
 import { RoadMap } from "./RoadMap/RoadMap";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");
@@ -230,7 +231,10 @@ const InviteNewMember = (props) => {
         setUserList([...data.userlist]);
       })
       .catch(() => {
-        alert("검색에 실패하였습니다");
+        Swal.fire({
+          icon: "error",
+          title: "검색에 실패하였습니다.",
+        });
       });
   };
 
@@ -249,13 +253,22 @@ const InviteNewMember = (props) => {
         }
       )
       .then(() => {
-        alert(`${id}님을 초대하였습니다`);
+        Swal.fire({
+          icon: "success",
+          title: `${id}님을 초대하였습니다`,
+        });
       })
       .catch(({ response }) => {
         if (response.status == 409) {
-          alert("이미 초대된 아이디입니다.");
+          Swal.fire({
+            icon: "warning",
+            title: `이미 초대된 아이디입니다.`,
+          });
         } else {
-          alert("알 수 없는 오류");
+          Swal.fire({
+            icon: "error",
+            title: `Server Error.`,
+          });
         }
       });
   };
@@ -363,12 +376,21 @@ const LeaveOrDelete = ({ resource }) => {
         .then((res) => {
           console.log(res.data.code);
           if (res.data.code) {
-            alert(`스터디룸을 삭제하였습니다`);
-            navigate("/room");
+            Swal.fire({
+              icon: "success",
+              title: `스터디룸을 삭제하였습니다`,
+            }).then((res) => {
+              if (res.isConfirmed) {
+                navigate("/room");
+              }
+            });
           }
         })
         .catch(() => {
-          alert("스터디룸 삭제에 실패하였습니다");
+          Swal.fire({
+            icon: "error",
+            title: "스터디룸 삭제에 실패하였습니다.",
+          });
         });
     } else {
     }

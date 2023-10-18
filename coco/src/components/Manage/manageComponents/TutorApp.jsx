@@ -5,6 +5,7 @@ import { API } from "api/config";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
+import Swal from "sweetalert2";
 
 export const TutorApp = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -77,7 +78,7 @@ const Applier = ({ info }) => {
   );
   const addTutor = () => {
     updateMutation.mutate();
-    alert("튜터에 추가되었습니다.");
+    Swal.fire({ icon: "success", title: "튜터에 추가되었습니다." });
   };
 
   return (
@@ -122,7 +123,7 @@ const TMem = ({ info }) => {
   );
   const delTutor = () => {
     updateMutation.mutate();
-    alert("튜터에서 제거되었습니다.");
+    Swal.fire({ icon: "success", title: "튜터에서 제거되었습니다." });
   };
 
   return (

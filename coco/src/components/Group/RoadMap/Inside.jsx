@@ -12,6 +12,7 @@ import { ProblemBox } from "../../Problems/ProblemBox";
 import Pagination from "@mui/material/Pagination";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { API } from "api/config";
 
 export const Inside = () => {
@@ -48,10 +49,9 @@ const Content = ({ resource }) => {
   const path = window.location.pathname.split("/");
   const data = resource.read();
 
-  if(data === undefined){
-    return (<div>404 not found</div>);
+  if (data === undefined) {
+    return <div>404 not found</div>;
   }
-
 
   const goMypage = (e) => {
     navigate(`/mypage/${e}`);
@@ -59,8 +59,6 @@ const Content = ({ resource }) => {
   const goModifyRoadMap = () => {
     navigate(`/room/modifyRoadmap/${path.at(-2)}/${path.at(-1)}`);
   };
-
-
 
   var date = data.roadmap.last_modify;
   var slicedDate = date.substring(0, 10);
@@ -104,8 +102,14 @@ const Content = ({ resource }) => {
           headers: { Authorization: "Bearer " + userInfo.access_token },
         })
         .then(() => {
-          alert(`ROADMAP이 삭제되었습니다.`);
-          navigate(`/room/${path.at(-2)}`);
+          Swal.fire({
+            icon: "success",
+            title: `ROADMAP이 삭제되었습니다.`,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              navigate(`/room/${path.at(-2)}`);
+            }
+          });
         });
     }
   };
@@ -211,5 +215,5 @@ const Content = ({ resource }) => {
         </div>
       </div>
     </>
-  )
+  );
 };

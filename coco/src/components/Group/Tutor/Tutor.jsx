@@ -6,6 +6,7 @@ import { BsSendPlus } from "react-icons/bs";
 import axios from "axios";
 import { API } from "api/config";
 import { useAppSelector } from "../../../app/store";
+import Swal from "sweetalert2";
 
 export const Tutor = () => {
   const [reason, setReason] = useState("");
@@ -24,8 +25,15 @@ export const Tutor = () => {
           headers: { Authorization: "Bearer " + userInfo.access_token },
         }
       )
-      .then(() => alert("신청성공"))
-      .catch(() => alert("이미 신청을 완료했습니다"));
+      .then(() =>
+        Swal.fire({
+          icon: "success",
+          title: "튜터 신청 완료\n승인되면 알람이 발송됩니다.",
+        })
+      )
+      .catch(() =>
+        Swal.fire({ icon: "warning", title: "이미 신청을 완료했습니다" })
+      );
   };
   return (
     <div className="tutor">

@@ -22,6 +22,7 @@ import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
 import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -50,12 +51,14 @@ const GetDetail = ({ resource }) => {
   //코드 submit
   const submitCode = () => {
     if (userInfo.id === "") {
-      const check = window.confirm(
-        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
-      );
-      if (check === true) {
-        navigate("/login");
-      }
+      Swal.fire({
+        icon: "warning",
+        title: "로그인이 필요한 서비스입니다\n로그인 하시겠습니까?",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       Promise.resolve().then(
         axios
@@ -72,11 +75,17 @@ const GetDetail = ({ resource }) => {
             }
           )
           .then(function (response) {
-            alert(`${userInfo.id}님 ${detail.id} 제출완료`);
+            Swal.fire({
+              icon: "success",
+              title: `${userInfo.id}님 \n ${detail.id} 제출완료`,
+            });
             goToResult(userInfo.id, { state: { userid: userInfo.id } });
           })
           .catch(() => {
-            alert("인증실패");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - Server Identification Failed",
+            });
           })
       );
       return;
@@ -84,7 +93,6 @@ const GetDetail = ({ resource }) => {
   };
 
   const setMyTask = (task_id) => {
-    console.log(task_id);
     axios
       .post(
         API.MYTASK,
@@ -98,13 +106,13 @@ const GetDetail = ({ resource }) => {
       )
       .then((res) => {
         if (res.data === false) {
-          alert("이미 추가된 문제입니다");
+          Swal.fire({ icon: "error", title: "이미 추가된 문제입니다." });
         } else {
-          alert("내 문제집에 추가하였습니다");
+          Swal.fire({ icon: "success", title: "내 문제집에 추가하였습니다" });
         }
       })
       .catch(() => {
-        alert("내 문제집에 추가하지 못했습니다");
+        Swal.fire({ icon: "error", title: "내 문제집에 추가하지 못했습니다" });
       });
   };
 
@@ -274,5 +282,7 @@ const GetDetail = ({ resource }) => {
         </Button>
       </div>
     </div>
-  ) :<div>404 not found</div>
+  ) : (
+    <div>404 not found</div>
+  );
 };

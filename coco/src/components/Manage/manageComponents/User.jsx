@@ -6,6 +6,7 @@ import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
+import Swal from "sweetalert2";
 
 export const User = () => {
   const [page, setPage] = useState(1);
@@ -114,13 +115,20 @@ const UserList = ({ userList, page, setPage, setReload, setLoading }) => {
       )
       .then((res) => {
         if (res.data == true) {
-          alert(`${user_id}님을 관리자에 추가하였습니다`);
+          Swal.fire({
+            icon: "success",
+            title: `${user_id}님을 관리자에 추가하였습니다`,
+          });
+
           setReload(`add${user_id}`);
           setLoading(true);
         }
       })
       .catch(() => {
-        alert("관리자 추가에 실패하였습니다.");
+        Swal.fire({
+          icon: "error",
+          title: "관리자 추가에 실패하였습니다.",
+        });
       });
   };
   const users = userList.userlist;
@@ -178,13 +186,19 @@ const Managers = ({ managerList, setReload, setLoading }) => {
       )
       .then((res) => {
         if (res.data == true) {
-          alert(`${user_id}님을 관리자에서 삭제하였습니다`);
+          Swal.fire({
+            icon: "success",
+            title: `${user_id}님을 관리자에서 삭제하였습니다`,
+          });
           setReload(`remove${user_id}`);
           setLoading(true);
         }
       })
       .catch(() => {
-        alert("관리자 삭제에 실패하였습니다.");
+        Swal.fire({
+          icon: "error",
+          title: "관리자 삭제에 실패하였습니다.",
+        });
       });
   };
 

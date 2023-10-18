@@ -14,6 +14,7 @@ import {
   AiOutlineMinusCircle,
   AiOutlineCloseCircle,
 } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 export const ProblemBox = ({
   info,

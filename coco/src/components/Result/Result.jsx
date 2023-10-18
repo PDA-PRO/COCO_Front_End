@@ -38,17 +38,21 @@ export const Result = (code) => {
   return (
     <>
       <Header />
-      {
-        locate.state !== null ? <Suspense fallback={<Spinner />}>
-        <ResultBox
-          resource={fetchData(API.RESULT + num, {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          })}
-          info={locate.state.info}
-        />
-      </Suspense> : <div className="Res"><div>404 not found</div></div>
-      }
-      
+      {locate.state !== null ? (
+        <Suspense fallback={<Spinner />}>
+          <ResultBox
+            resource={fetchData(API.RESULT + num, {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+            })}
+            info={locate.state.info}
+          />
+        </Suspense>
+      ) : (
+        <div className="Res">
+          <div>404 not found</div>
+        </div>
+      )}
+
       <Footer />
     </>
   );
@@ -61,7 +65,6 @@ const ResultBox = ({ resource, info }) => {
   const [otherLogic, setOtherLogic] = useState(false);
 
   const problemList = resource.read();
-
 
   const setLang = (e) => {
     switch (e) {
@@ -145,7 +148,6 @@ const ResultBox = ({ resource, info }) => {
       return `${index + 1}@${item}`;
     })
     .join("\n");
-
 
   var wrongLines = [];
   var wrongStart = [];
@@ -370,7 +372,7 @@ const ResultBox = ({ resource, info }) => {
             </div>
             {problemList.subDetail["status"] === 3 ? (
               <div className="afterCorrect" onClick={() => changeLogic()}>
-                <p>다른 로직 코드 보러가기</p>
+                <p>코드 개선 요청 및 다른 로직 코드 보러가기</p>
                 <BsBoxArrowInRight size={23} />
               </div>
             ) : problemList.subDetail["message"] == "TC 실패" ? (

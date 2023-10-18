@@ -33,9 +33,39 @@ export const Plugins = () => {
 
         <hr />
 
-        <Suspense fallback={<Spinner />}>
+        <div className="contentName">
+        <PiNumberCircleOneLight color="blue" size={23} />
+        <p>WPC : Wrong Part of Code</p>
+      </div>
+      <AIcontent func={1} plugin={"wpc"} />
+
+      <div className="contentName">
+        <PiNumberCircleTwoLight color="blue" size={23} />
+        <p>Q&A-AI</p>
+      </div>
+      <AIcontent func={2} plugin={"qa"} />
+      
+      <div className="contentName">
+        <PiNumberCircleThreeLight color="blue" size={23} />
+        <p>Make own Task AI</p>
+      </div>
+      <AIcontent func={3} plugin={"task"}/>
+
+      <div className="contentName">
+        <PiNumberCircleFourLight color="blue" size={23} />
+        <p>Create more Efficient Code</p>
+      </div>
+      <AIcontent func={4} plugin={"efficient"} />
+
+      <div className="contentName">
+        <PiNumberCircleFiveLight color="blue" size={23} />
+        <p>Find Similar Logic Code</p>
+      </div>
+      <AIcontent func={5} plugin={"similar"}/>
+
+        {/* <Suspense fallback={<Spinner />}>
           <Status resource={fetchData(API.AI + "/status")} />
-        </Suspense>
+        </Suspense> */}
       </div>
     </>
   );
@@ -78,14 +108,14 @@ const Status = ({ resource }) => {
   );
 };
 
-const AIcontent = ({ func, plugin, status }) => {
-  const [checked, setChecked] = useState(status);
+const AIcontent = ({ func, plugin }) => {
+  const [checked, setChecked] = useState(1);
   const [nowOn, setNowOn] = useState("Plugin ON");
   const [nowState, setNowState] = useState(1);
 
-  useEffect(() => {
-    console.log(status);
-  }, [])
+  // useEffect(() => {
+  //   console.log(status);
+  // }, [])
 
 
   const handleChange = (e) => {

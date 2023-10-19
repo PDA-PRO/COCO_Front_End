@@ -200,6 +200,13 @@ export const AITask = () => {
               label="Python3 코드 보기"
               style={{ width: "fit-content" }}
             />
+            <FormControlLabel
+              control={<Checkbox />}
+              onChange={handleCheckChange}
+              label="C언어 코드 보기"
+              style={{ width: "fit-content" }}
+              disabled={true}
+            />
           </FormGroup>
 
           <p id="caution">
@@ -427,6 +434,31 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
     }
   };
 
+  function makeNoLine(arr) {
+    if (arr.length == 0) {
+      return "";
+    } else {
+      var dataArray = arr.split("\n");
+
+      var numberedData = dataArray
+        .map((item, index) => {
+          return `${index + 1}@${item}`;
+        })
+        .join("\n");
+
+      const strings = numberedData.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <n className="codeNum">{num}.</n>
+            <n className="codeTxt">{val}</n>
+          </div>
+        );
+      });
+      return strings;
+    }
+  }
+
   return (
     <div className="m-upload-AI">
       <InputGroup className="m-title">
@@ -589,6 +621,18 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
           {/* 문제 풀이 가능 언어 선택 */}
         </div>
       </div>
+
+      {/* 코드 있으면 띄우기 */}
+      {info.code.length == 0 ? (
+        <></>
+      ) : (
+        <>
+          <h4>정답 예제 코드</h4>
+          <pre className="R-Code">{makeNoLine(info.code)}</pre>
+        </>
+      )}
+
+      {/* 코드 있으면 띄우기 */}
 
       <div className="btnDiv">
         <Button

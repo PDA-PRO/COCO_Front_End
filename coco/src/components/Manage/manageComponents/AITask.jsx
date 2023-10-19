@@ -29,6 +29,7 @@ export const AITask = () => {
   const [json, setJson] = useState({});
   const [isAI, setIsAI] = useState(false);
   const ASKContent = useRef();
+  const userInfo = useAppSelector((state) => state.loginState);
   const Ask = (e) => {
     // setJson({});
     if (e === "") {
@@ -38,6 +39,8 @@ export const AITask = () => {
       });
     } else {
       setSendAsk(e);
+      const formData = new FormData();
+      formData.append("description", '<p>tmp</p>');
       Swal.fire({
         icon: "question",
         title: "AI가 문제를 생성중입니다.",
@@ -46,10 +49,14 @@ export const AITask = () => {
         didOpen: () => {
           Swal.showLoading();
           axios
-            .post(API.AI + "/create-task", {
-              content: e,
-              is_final: false,
-            })
+            .post("http://localhost:8000/ai-task/main", 
+              {
+                content: e,
+                form_data: '<p>tmp</p>',
+                is_final: false,
+              },
+              // is_final: 0,
+            )
             .then((res) => {
               if (res.data.data == true) {
                 setIsAI(true);
@@ -116,7 +123,7 @@ export const AITask = () => {
             />
           </div>
           {isAI === true ? (
-            <TaskReturn reAsk={Ask} askContent={sendAsk} json={json} />
+            <TaskReturn reAsk={Ask} askContent={sendAsk} json={json} desc={ASKContent.current.value}/>
           ) : (
             <></>
           )}
@@ -126,7 +133,7 @@ export const AITask = () => {
   );
 };
 
-const TaskReturn = ({ reAsk, askContent, json }) => {
+const TaskReturn = ({ reAsk, askContent, json, desc }) => {
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
   console.log("자식", json);
 
@@ -262,27 +269,25 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post(API.AI + "/upload-task", formData, {
-          // headers: {
-          //   "Content-Type": `multipart/form-data; `,
-          //   Authorization: "Bearer " + userInfo.access_token,
-          // },
-          params: {
-            title: titleRef.current.value,
-            inputDescription: inputDescRef.current.value,
-            inputEx1: inputEx1Ref.current.value,
-            inputEx2: inputEx2Ref.current.value,
-            outputDescription: outputDescRef.current.value,
-            outputEx1: outputEx1Ref.current.value,
-            outputEx2: outputEx2Ref.current.value,
-            diff: diffRef.current.value,
-            timeLimit: timeRef.current.value,
-            memLimit: memRef.current.value,
-            category: categoryRef.current
-              .getValue()
-              .map((e) => e.value)
-              .join(","),
-          },
+        .post("http://localhost:8000/ai-task/main", {
+            form_data: quillRef.current.value
+            ,task_data: {
+              title: titleRef.current.value,
+              inputDescription: inputDescRef.current.value,
+              inputEx1: inputEx1Ref.current.value,
+              inputEx2: inputEx2Ref.current.value,
+              outputDescription: outputDescRef.current.value,
+              outputEx1: outputEx1Ref.current.value,
+              outputEx2: outputEx2Ref.current.value,
+              diff: diffRef.current.value,
+              timeLimit: timeRef.current.value,
+              memLimit: memRef.current.value,
+              category: categoryRef.current
+                .getValue()
+                .map((e) => e.value)
+                .join(","),
+            },
+            is_final: true
         })
         .then(function (response) {
           if (response.data.code === 1) {

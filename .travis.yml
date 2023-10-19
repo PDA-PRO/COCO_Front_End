@@ -7,7 +7,7 @@ cache:
     - coco\node_modules
 
 install:
-  - cd coco && npm install
+  - cd coco && npm install --force
 
 script:
-  - cd coco && npm test
+  - npm test

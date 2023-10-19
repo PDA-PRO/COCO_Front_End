@@ -51,7 +51,7 @@ export const Home = () => {
           {/* 기능 차별점 - AI 얘기 */}
           <div className="whatdiff">
             <h4>
-              당신의 코딩 실력의 향상을 위해,{" "}
+              당신의 코딩 실력 향상을 위해,{" "}
               <span style={{ color: "#00ff00" }}>C</span>O
               <span style={{ color: "#00ff00" }}>C</span>O가 준비했습니다.
             </h4>
@@ -67,7 +67,7 @@ export const Home = () => {
                 <p>AI Q&A 시스템</p>
               </div>
 
-              <div className="Box">
+              <div className="Box" id="review">
                 <p>내가 만든 코드에 개선점은 없을까?</p>
                 <p>AI를 통한 개선점 확인 시스템</p>
               </div>
@@ -77,7 +77,7 @@ export const Home = () => {
                 <p>AI를 통한 다른 로직 & 유사 로직 코드 확인 시스템</p>
               </div>
 
-              <div className="Box">
+              <div className="Box" id="genAI">
                 <p>AI가 만든 문제는 어떨까</p>
                 <p>생성형 AI가 만든 문제를 해결하기</p>
               </div>
@@ -89,7 +89,7 @@ export const Home = () => {
                     <p>그래프와 레벨을 비롯한 수치들을 통해 직관적으로 확인</p>
                   </div>
 
-                  <div className="Box">
+                  <div className="Box" id="srBanner">
                     <p>지속적인 코칭이 필요할 땐</p>
                     <p>튜터-튜티로 이루어진 스터디룸에서 어렵지 않게</p>
                   </div>

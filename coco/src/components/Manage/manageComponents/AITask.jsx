@@ -23,11 +23,59 @@ import { API } from "api/config";
 import { SiAskubuntu } from "react-icons/si";
 import Swal from "sweetalert2";
 import { Suspense } from "react";
+import FormGroup from "@mui/material/FormGroup";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormLabel from "@mui/material/FormLabel";
 
 export const AITask = () => {
+  const [template, setTemplate] = useState(
+    "문제에 입출력 예시, 테스트 케이스, 메모리 제한, 시간 제한이 있는 파이썬 알고리즘 문제 만들어줘"
+  );
+  const changePrompt = (e) => {
+    var string =
+      "문제에 입출력 예시, 테스트 케이스, 메모리 제한, 시간 제한이 있는 ";
+    switch (parseInt(e)) {
+      case 1:
+        return string + "반복문 알고리즘 문제 만들어줘";
+      case 2:
+        return string + "조건문 알고리즘 문제 만들어줘";
+      case 3:
+        return string + "수학 알고리즘 문제 만들어줘";
+
+      case 4:
+        return string + "입출력 알고리즘 문제 만들어줘";
+
+      case 5:
+        return string + "배열 및 리스트 알고리즘 문제 만들어줘";
+
+      case 6:
+        return string + "정렬 알고리즘 문제 만들어줘";
+
+      case 7:
+        return string + "스택 혹은 큐 알고리즘 문제 만들어줘";
+
+      case 8:
+        return string + "그래프(BFS 혹은 DFS) 알고리즘 문제 만들어줘";
+
+      case 9:
+        return string + "그리디 알고리즘 문제 만들어줘";
+
+      case 10:
+        return string + "DP 알고리즘 문제 만들어줘";
+
+      case 11:
+        return string + "직접 입력해주세요.";
+    }
+  };
+
   const [sendAsk, setSendAsk] = useState("");
   const [json, setJson] = useState({});
   const [isAI, setIsAI] = useState(false);
+  const [codeCheck, setCodeCheck] = useState(false);
   const ASKContent = useRef();
   const Ask = (e) => {
     // setJson({});
@@ -60,20 +108,31 @@ export const AITask = () => {
                     "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
                 });
               } else {
-     
               }
-            }).catch(() => {
+            })
+            .catch(() => {
               Swal.fire({
                 icon: "error",
-                title: "문제 생성 AI를 사용할 수 없습니다.\nAI 플러그인을 확인하세요.",
+                title:
+                  "문제 생성 AI를 사용할 수 없습니다.\nAI 플러그인을 확인하세요.",
                 timer: 1000,
                 showConfirmButton: false,
               });
-            })
+            });
         },
       });
     }
   };
+
+  const handleRadioChange = (event) => {
+    setTemplate(changePrompt(event.target.value));
+  };
+
+  const handleCheckChange = (e) => {
+    setCodeCheck(!codeCheck);
+  };
+
+  console.log(template);
 
   return (
     <>
@@ -90,6 +149,65 @@ export const AITask = () => {
           </p>
         </div>
 
+        <hr />
+
+        <div className="template">
+          <p>Template : AI 생성 빠르게 요청하기</p>
+
+          <FormControl>
+            <FormLabel id="demo-row-radio-buttons-group-label">
+              문제 유형 선택
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel value="1" control={<Radio />} label="반복문" />
+              <FormControlLabel value="2" control={<Radio />} label="조건문" />
+              <FormControlLabel value="3" control={<Radio />} label="수학" />
+              <FormControlLabel value="4" control={<Radio />} label="입출력" />
+              <FormControlLabel
+                value="5"
+                control={<Radio />}
+                label="배열 및 리스트"
+              />
+              <FormControlLabel value="6" control={<Radio />} label="정렬" />
+              <FormControlLabel
+                value="7"
+                control={<Radio />}
+                label="스택 및 큐"
+              />
+              <FormControlLabel
+                value="8"
+                control={<Radio />}
+                label="그래프(BFS, DFS)"
+              />
+              <FormControlLabel value="9" control={<Radio />} label="그리디" />
+              <FormControlLabel value="10" control={<Radio />} label="DP" />
+              <FormControlLabel value="11" control={<Radio />} label="etc" />
+            </RadioGroup>
+          </FormControl>
+
+          <FormGroup>
+            <FormLabel id="demo-row-radio-buttons-group-label">
+              Answer 예제 코드 확인
+            </FormLabel>
+            <FormControlLabel
+              control={<Checkbox />}
+              onChange={handleCheckChange}
+              label="Python3 코드 보기"
+              style={{ width: "fit-content" }}
+            />
+          </FormGroup>
+
+          <p id="caution">
+            ※ 주의 사항 : 시간 제한, 메모리 제한은 필수적으로 AI에게 요청해야
+            합니다. ※
+          </p>
+        </div>
+        <hr />
         <div className="AskToAI">
           <InputGroup className="m-input">
             <InputGroup.Text
@@ -101,9 +219,19 @@ export const AITask = () => {
             </InputGroup.Text>
             <Form.Control
               ref={ASKContent}
-              placeholder="ex) 문제에 입출력예시, 테스트 케이스(최소 20개), 메모리제한, 시간제한이 있는 조건문 알고리즘 문제 만들어줘"
+              // placeholder="ex) 문제에 입출력예시, 테스트 케이스(최소 20개), 메모리제한, 시간제한이 있는 조건문 알고리즘 문제 만들어줘"
               as="textarea"
-              style={{ minHeight: "120px" }}
+              style={{ minHeight: "100px" }}
+              defaultValue={
+                codeCheck === true
+                  ? template + " Python으로 예제 정답 코드도 같이 만들어줘"
+                  : template
+              }
+              key={
+                codeCheck === true
+                  ? template + " Python으로 예제 정답 코드도 같이 만들어줘"
+                  : template
+              }
             />
           </InputGroup>
 
@@ -128,7 +256,6 @@ export const AITask = () => {
 
 const TaskReturn = ({ reAsk, askContent, json }) => {
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
-  console.log("자식", json);
 
   function extractSecondsFromString(str) {
     // 숫자가 아닌 문자는 모두 제거하고, 나머지를 정수로 변환
@@ -304,7 +431,11 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
     <div className="m-upload-AI">
       <InputGroup className="m-title">
         <InputGroup.Text id="inputGroup-sizing-default">Title</InputGroup.Text>
-        <Form.Control ref={titleRef} defaultValue={json.problem.title} />
+        <Form.Control
+          ref={titleRef}
+          defaultValue={json.problem.title}
+          key={json.problem.title}
+        />
       </InputGroup>
       <div className="m-upload-context">
         <div className="m-desc">
@@ -314,6 +445,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             ref={quillRef}
             style={{ minHeight: "550px" }}
             defaultValue={json.problem.description}
+            key={json.problem.description}
           />
           {/* 문제에 대한 난이도 선정 */}
           <div className="m-diff">
@@ -335,6 +467,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               ref={timeRef}
               defaultValue={extractSecondsFromString(json.constraints.time)}
+              key={extractSecondsFromString(json.constraints.time)}
             />
             <InputGroup.Text>SEC</InputGroup.Text>
           </InputGroup>
@@ -345,6 +478,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
             <Form.Control
               ref={memRef}
               defaultValue={extractSecondsFromString(json.constraints.memory)}
+              key={extractSecondsFromString(json.constraints.memory)}
             />
             <InputGroup.Text>MB</InputGroup.Text>
           </InputGroup>
@@ -361,6 +495,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               ref={inputDescRef}
               as="textarea"
               defaultValue={json.problem.input.description}
+              key={json.problem.input.description}
               style={{ minHeight: "120px" }}
             />
           </InputGroup>
@@ -374,6 +509,8 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               as="textarea"
               ref={inputEx1Ref}
               defaultValue={json.problem.examples[0].input}
+              key={json.problem.examples[0].input}
+              style={{ minHeight: "100px" }}
             />
           </FloatingLabel>
 
@@ -386,6 +523,8 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               as="textarea"
               ref={inputEx2Ref}
               defaultValue={json.problem.examples[1].input}
+              key={json.problem.examples[1].input}
+              style={{ minHeight: "100px" }}
             />
           </FloatingLabel>
 
@@ -402,6 +541,7 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               defaultValue={json.problem.output.description}
               style={{ minHeight: "120px" }}
               ref={outputDescRef}
+              key={json.problem.output.description}
             />
           </InputGroup>
 
@@ -414,6 +554,8 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               as="textarea"
               ref={outputEx1Ref}
               defaultValue={json.problem.examples[0].output}
+              key={json.problem.examples[0].output}
+              style={{ minHeight: "100px" }}
             />
           </FloatingLabel>
 
@@ -426,6 +568,8 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               as="textarea"
               ref={outputEx2Ref}
               defaultValue={json.problem.examples[1].output}
+              key={json.problem.examples[1].output}
+              style={{ minHeight: "100px" }}
             />
           </FloatingLabel>
 

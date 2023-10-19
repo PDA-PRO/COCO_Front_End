@@ -10,4 +10,4 @@ install:
   - cd coco && npm install
 
 script:
-  - npm test
+  - cd coco && npm test

@@ -12,7 +12,7 @@ import { python } from "@codemirror/lang-python";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

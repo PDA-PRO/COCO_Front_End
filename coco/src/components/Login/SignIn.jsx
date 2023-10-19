@@ -13,7 +13,7 @@ import jwtdecode from "../../app/jwtdecode";
 import Form from "react-bootstrap/Form";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();

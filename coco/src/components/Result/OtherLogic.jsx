@@ -17,7 +17,7 @@ import {
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
-const axios = require("axios")
+import axios from "axios";
 
 export const OtherLogic = ({ changeLogic, impCode, impCmt, task_id, sub_id }) => {
   console.log("one", impCode, impCmt);

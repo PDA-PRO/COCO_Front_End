@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
-const axios = require("axios")
+import axios from "axios";
 
 export const RoadMap = ({ userID, path }) => {
   const userInfo = useAppSelector((state) => state.loginState);

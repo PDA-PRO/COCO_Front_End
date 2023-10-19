@@ -5,7 +5,7 @@ import { Login } from "../../components/Login/Login";
 import { useState } from "react";
 import { useAppDispatch } from "../../app/store";
 import { API } from "api/config";
-const axios = require("axios")
+import axios from "axios";
 
 export const AuthRouter = ({ role, children }) => {
   const userInfo = useAppSelector((state) => state.loginState);

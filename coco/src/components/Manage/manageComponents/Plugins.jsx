@@ -14,7 +14,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { API } from "api/config";
 import fetchData from "../../../api/fetchTask";
 import Spinner from "react-bootstrap/esm/Spinner";
-const axios = require("axios")
+import axios from "axios";
 
 export const Plugins = () => {
   return (

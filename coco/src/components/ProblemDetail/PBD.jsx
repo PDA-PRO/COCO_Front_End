@@ -22,7 +22,7 @@ import Form from "react-bootstrap/Form";
 import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const PBD = () => {
   var path = window.location.pathname;

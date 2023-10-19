@@ -23,7 +23,7 @@ import { RoadMap } from "./RoadMap/RoadMap";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 
 export const GroupInfo = () => {

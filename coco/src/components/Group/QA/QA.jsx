@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { BiInfoSquare } from "react-icons/bi";
 import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);

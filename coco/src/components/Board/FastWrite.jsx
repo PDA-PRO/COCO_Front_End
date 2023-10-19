@@ -13,7 +13,7 @@ import "react-quill/dist/quill.bubble.css";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
-const axios = require("axios")
+import axios from "axios";
 
 
 export const FastWrite = () => {

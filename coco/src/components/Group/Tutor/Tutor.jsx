@@ -6,7 +6,7 @@ import { BsSendPlus } from "react-icons/bs";
 import { API } from "api/config";
 import { useAppSelector } from "../../../app/store";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const Tutor = () => {
   const [reason, setReason] = useState("");

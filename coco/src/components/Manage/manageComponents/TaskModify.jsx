@@ -22,7 +22,7 @@ import fetchData from "../../../api/fetchTask";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
-const axios = require("axios")
+import axios from "axios";
 
 
 Quill.register("modules/imageResize", ImageResize);

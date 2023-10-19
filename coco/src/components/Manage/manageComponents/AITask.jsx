@@ -29,7 +29,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormLabel from "@mui/material/FormLabel";
-const axios = require("axios")
+import axios from "axios";
 
 export const AITask = () => {
   const [template, setTemplate] = useState(

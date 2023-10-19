@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAppSelector } from "../../../../app/store";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-const axios = require("axios")
+import axios from "axios";
 
 export const WriteComment = ({ commentShoot }) => {
   const userInfo = useAppSelector((state) => state.loginState);

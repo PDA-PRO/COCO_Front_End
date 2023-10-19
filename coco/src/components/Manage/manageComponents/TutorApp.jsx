@@ -5,7 +5,7 @@ import { API } from "api/config";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const TutorApp = () => {
   const userInfo = useAppSelector((state) => state.loginState);

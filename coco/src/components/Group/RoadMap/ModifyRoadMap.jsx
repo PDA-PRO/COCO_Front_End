@@ -30,7 +30,7 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

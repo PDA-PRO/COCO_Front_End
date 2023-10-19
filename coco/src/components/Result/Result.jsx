@@ -27,7 +27,7 @@ import ReactDiffViewer from "react-diff-viewer";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
-const axios = require("axios")
+import axios from "axios";
 
 export const Result = (code) => {
   const { id } = useParams();

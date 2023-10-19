@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../../app/store";
 import { useEffect } from "react";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-const axios = require("axios")
+import axios from "axios";
 
 export const Comments = ({ commentData }) => {
   //commentData: id, context, write_time, likes, user_id, board_id

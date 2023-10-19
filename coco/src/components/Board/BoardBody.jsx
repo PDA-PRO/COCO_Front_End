@@ -5,7 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { FastWrite } from "./FastWrite";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
-const axios = require("axios")
+import axios from "axios";
 
 export const BoardBody = () => {
   return (

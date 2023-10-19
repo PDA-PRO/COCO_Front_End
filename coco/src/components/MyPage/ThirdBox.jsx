@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const ThirdBox = (props) => {
   const navigate = useNavigate();

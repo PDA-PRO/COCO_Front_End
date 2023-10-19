@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");

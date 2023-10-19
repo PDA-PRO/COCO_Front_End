@@ -10,7 +10,7 @@ import { API } from "api/config";
 import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);

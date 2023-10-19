@@ -10,7 +10,7 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

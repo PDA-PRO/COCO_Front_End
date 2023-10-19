@@ -8,7 +8,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 axios.defaults.withCredentials = true;
 

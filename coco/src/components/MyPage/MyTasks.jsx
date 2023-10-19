@@ -13,7 +13,7 @@ import { BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-const axios = require("axios")
+import axios from "axios";
 
 export const MyTasks = ({ props }) => {
   const userInfo = useAppSelector((state) => state.loginState);

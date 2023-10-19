@@ -22,7 +22,7 @@ import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
-const axios = require("axios")
+import axios from "axios";
 
 export const Problems = () => {
   const Large = useMediaQuery({ minWidth: 1100 });

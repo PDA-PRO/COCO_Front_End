@@ -13,7 +13,7 @@ import Form from "react-bootstrap/Form";
 import { useAppSelector } from "../../app/store";
 import Swal from "sweetalert2";
 import { API } from "api/config";
-const axios = require("axios")
+import axios from "axios";
 
 export const ModifyBoard = () => {
   var path = window.location.pathname;

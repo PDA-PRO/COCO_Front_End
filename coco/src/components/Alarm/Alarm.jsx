@@ -9,7 +9,7 @@ import { LuMailPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import fetchData from "../../api/fetchTask";
-const axios = require("axios")
+import axios from "axios";
 
 export const Alarm = () => {
   const dispatch = useAppDispatch();

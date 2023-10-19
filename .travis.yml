@@ -3,9 +3,10 @@ node_js:
   - 14
 
 before_install:
+  - cd ./coco
   - npm update
   - npm install --force
-  - cd ./coco
+  
 
 script:
   - npm test

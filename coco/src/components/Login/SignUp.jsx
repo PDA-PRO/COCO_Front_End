@@ -2,13 +2,13 @@ import React from "react";
 import "./SignUp.css";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
-import axios from "axios";
 import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+const axios = require("axios")
 
 axios.defaults.withCredentials = true;
 

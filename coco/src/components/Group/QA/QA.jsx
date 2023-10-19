@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import CodeMirror from "@uiw/react-codemirror";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
@@ -16,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { BiInfoSquare } from "react-icons/bi";
 import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
+const axios = require("axios")
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);

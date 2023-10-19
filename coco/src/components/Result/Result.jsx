@@ -25,9 +25,9 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { OtherLogic } from "./OtherLogic";
 import ReactDiffViewer from "react-diff-viewer";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
+const axios = require("axios")
 
 export const Result = (code) => {
   const { id } = useParams();

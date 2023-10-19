@@ -19,7 +19,7 @@ import { IoSchoolOutline } from "react-icons/io5";
 import { Tutor } from "./Tutor/Tutor";
 import { HiArrowUturnLeft } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+const axios = require("axios")
 
 export const Group = () => {
   const navigate = useNavigate();

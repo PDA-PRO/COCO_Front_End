@@ -3,10 +3,10 @@ import Spinner from "react-bootstrap/Spinner";
 import { GoSearch } from "react-icons/go";
 import { HiUserPlus, HiUserMinus } from "react-icons/hi2";
 import Pagination from "@mui/material/Pagination";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+const axios = require("axios")
 
 export const User = () => {
   const [page, setPage] = useState(1);

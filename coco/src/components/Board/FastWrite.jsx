@@ -5,7 +5,6 @@ import {
 } from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,8 @@ import "react-quill/dist/quill.bubble.css";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
+const axios = require("axios")
+
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");

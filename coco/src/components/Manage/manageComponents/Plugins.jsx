@@ -12,9 +12,9 @@ import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { API } from "api/config";
-import axios from "axios";
 import fetchData from "../../../api/fetchTask";
 import Spinner from "react-bootstrap/esm/Spinner";
+const axios = require("axios")
 
 export const Plugins = () => {
   return (

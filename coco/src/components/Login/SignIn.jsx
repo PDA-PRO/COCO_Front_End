@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { CgPassword } from "react-icons/cg";
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import Modal from "react-bootstrap/Modal";
@@ -14,6 +13,7 @@ import jwtdecode from "../../app/jwtdecode";
 import Form from "react-bootstrap/Form";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+const axios = require("axios")
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();

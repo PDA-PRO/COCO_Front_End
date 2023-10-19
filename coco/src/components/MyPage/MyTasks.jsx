@@ -11,9 +11,9 @@ import {
 import { GoCheck, GoX, GoDash } from "react-icons/go";
 import { BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../app/store";
-import axios from "axios";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+const axios = require("axios")
 
 export const MyTasks = ({ props }) => {
   const userInfo = useAppSelector((state) => state.loginState);

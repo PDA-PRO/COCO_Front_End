@@ -1,8 +1,5 @@
-import "../Manage.css";
-
 import React, { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   BsFillEyeFill,
@@ -17,6 +14,9 @@ import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import "../Manage.css";
+const axios = require("axios")
+
 
 export const PostList = () => {
   const [page, setPage] = useState(1);

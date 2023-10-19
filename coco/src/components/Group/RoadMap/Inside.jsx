@@ -11,9 +11,9 @@ import { Loader } from "../../Loader/Loader";
 import { ProblemBox } from "../../Problems/ProblemBox";
 import Pagination from "@mui/material/Pagination";
 import { useMediaQuery } from "react-responsive";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { API } from "api/config";
+const axios = require("axios")
 
 export const Inside = () => {
   const path = window.location.pathname.split("/");

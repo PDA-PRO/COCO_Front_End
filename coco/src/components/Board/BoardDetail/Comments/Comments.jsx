@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "../BD.css";
 import { BsFillHeartFill, BsTrash } from "react-icons/bs";
 import { useAppSelector } from "../../../../app/store";
-import axios from "axios";
 import { useEffect } from "react";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+const axios = require("axios")
 
 export const Comments = ({ commentData }) => {
   //commentData: id, context, write_time, likes, user_id, board_id

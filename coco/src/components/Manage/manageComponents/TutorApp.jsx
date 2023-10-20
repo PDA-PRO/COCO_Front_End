@@ -2,10 +2,10 @@ import React from "react";
 import { BsPersonCheck, BsPersonX } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
-import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const TutorApp = () => {
   const userInfo = useAppSelector((state) => state.loginState);

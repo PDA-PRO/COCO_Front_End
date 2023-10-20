@@ -20,9 +20,9 @@ import {
 } from "react-icons/ti";
 import { AiOutlineCheck, AiOutlineReload } from "react-icons/ai";
 import Pagination from "@mui/material/Pagination";
-import axios from "axios";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
+import axios from "axios";
 
 export const Problems = () => {
   const Large = useMediaQuery({ minWidth: 1100 });

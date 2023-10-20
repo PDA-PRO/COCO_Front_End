@@ -1,5 +1,5 @@
-import axios from "axios";
 import wrapPromise from "./wrapPromise";
+import axios from "axios";
 
 function fetchTask(url, header = null) {
   let promise = null;

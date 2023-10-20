@@ -1,7 +1,6 @@
 import "../Manage.css";
 import React, { useState, useMemo, useRef, Suspense } from "react";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../../api/fetchTask";
@@ -11,6 +10,7 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

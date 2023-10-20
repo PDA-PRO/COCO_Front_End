@@ -1,4 +1,3 @@
-import axios from "axios";
 import { checkToken } from "../../app/authentication";
 import { useAppSelector } from "../../app/store";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +5,7 @@ import { Login } from "../../components/Login/Login";
 import { useState } from "react";
 import { useAppDispatch } from "../../app/store";
 import { API } from "api/config";
+import axios from "axios";
 
 export const AuthRouter = ({ role, children }) => {
   const userInfo = useAppSelector((state) => state.loginState);

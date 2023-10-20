@@ -9,10 +9,10 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

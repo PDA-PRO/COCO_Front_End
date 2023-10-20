@@ -6,7 +6,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { GoSearch } from "react-icons/go";
 import { Suspense } from "react";
-import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/esm/Spinner";
@@ -31,6 +30,7 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

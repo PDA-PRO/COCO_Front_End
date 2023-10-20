@@ -25,9 +25,9 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { OtherLogic } from "./OtherLogic";
 import ReactDiffViewer from "react-diff-viewer";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
+import axios from "axios";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -256,7 +256,7 @@ const ResultBox = ({ resource, info }) => {
           //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
           axios
             .post(
-              API.AI + "/ai-code",
+              "http://localhost:8000/ai-code/main",
               {
                 code: code,
                 task_id: info.task_id,

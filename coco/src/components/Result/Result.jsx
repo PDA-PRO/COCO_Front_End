@@ -350,11 +350,18 @@ const ResultBox = ({ resource, info }) => {
                   <div className="timeAndMemory">
                     <div className="c-un">
                       <BiTimeFive color="gray" size={22} />
-                      <p>소요 시간 : 2ms</p>
+                      <p>
+                        소요 시간 : {problemList.subDetail["used_time"] * 1000}
+                        ms
+                      </p>
                     </div>
                     <div className="c-un">
                       <BiMemoryCard color="gray" size={22} />
-                      <p>소요 메모리 : 15mb</p>
+                      <p>
+                        소요 메모리 :{" "}
+                        {Math.ceil(problemList.subDetail["used_memory"] / 1024)}
+                        MB
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -397,7 +404,6 @@ const ResultBox = ({ resource, info }) => {
               <WPC
                 sub_id={problemList.subDetail["id"]}
                 task_id={info.task_id}
-                raw_code={problemList.subDetail["code"]}
               />
             ) : (
               <></>
@@ -425,18 +431,22 @@ const ResultBox = ({ resource, info }) => {
   );
 };
 
-const WPC = ({ sub_id, task_id, raw_code }) => {
+const WPC = ({ sub_id, task_id }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const { isFetching, data, isError } = useQuery(
     ["wpc1", sub_id],
     () =>
-      axios.get(API.WPC, {
-        params: {
-          sub_id: sub_id,
-          task_id: task_id,
-        },
-        headers: { Authorization: "Bearer " + userInfo.access_token },
-      }),
+      axios.post(
+        API.WPC,
+        {},
+        {
+          params: {
+            sub_id: sub_id,
+            task_id: task_id,
+          },
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      ),
     { retry: false }
   );
   if (isFetching) {
@@ -459,7 +469,7 @@ const WPC = ({ sub_id, task_id, raw_code }) => {
           </div>
           <div className="differ">
             <ReactDiffViewer
-              oldValue={raw_code}
+              oldValue={data.data.bug_code}
               newValue={data.data.wpc_result}
               splitView={true}
               showDiffOnly={false}

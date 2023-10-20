@@ -80,6 +80,74 @@
   row-gap: 20px;
 }
 
+.fwAndQa {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+  width: 390px;
+}
+
+.aiQA {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid lightgray;
+  border-radius: 15px;
+  padding: 0.5em 0;
+}
+
+.aiQA img {
+  width: 55px;
+}
+
+.aiQA p {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.aiQA:hover {
+  background-color: rgb(222, 246, 255);
+  cursor: pointer;
+  color: navy;
+}
+
+.ReactModal__Content {
+  width: 650px !important;
+  height: 600px;
+  border-radius: 15px !important;
+  z-index: 3;
+  top: 100px !important;
+  left: 30% !important;
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: "Pretendard-Regular";
+}
+
+.ReactModal__Content h2 {
+  font-weight: 600;
+  font-size: 1.3em;
+  color: navy;
+  margin: 0 !important;
+}
+
+.ReactModal__Content p {
+  font-weight: 500;
+  font-size: 1em;
+  color: navy;
+  margin: 0 !important;
+}
+
+.modalTop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .FastWrite {
   display: flex;
   justify-self: center;
@@ -88,11 +156,10 @@
   border-radius: 20px;
   background-color: #f5f5f5;
   padding: 20px;
-  width: 350px;
+  width: 100%;
   overflow: auto;
   justify-content: stretch;
   position: sticky;
-  z-index: 2;
 }
 
 .FastWrite h2 {

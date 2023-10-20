@@ -130,6 +130,9 @@ const GetDetail = ({ resource }) => {
               <div className="PBD-memLimit">
                 메모리 제한 : {detail.memLimit}MB
               </div>
+              <div className="PBD-memLimit">
+                카테고리 : {detail.category.join(", ")}
+              </div>
             </div>
           </div>
         </div>

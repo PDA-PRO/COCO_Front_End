@@ -430,13 +430,35 @@
   color: rgb(87, 87, 87);
 }
 
+.template {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.template p {
+  font-size: 1.1em;
+  margin: 0 !important;
+  color: navy;
+}
+
+#demo-row-radio-buttons-group-label {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+}
+
+#caution {
+  color: gray;
+  font-size: 0.9em;
+  font-weight: 500;
+}
 .AskToAI {
-  margin: 30px 0;
   display: grid;
   grid-template-columns: 90% 10%;
   gap: 10px;
   justify-items: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .AskToAI #btn-ask {

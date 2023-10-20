@@ -5,6 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { FastWrite } from "./FastWrite";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
+import { AIqa } from "./AIqa";
 import axios from "axios";
 
 export const BoardBody = () => {
@@ -13,8 +14,10 @@ export const BoardBody = () => {
       <div className="Bone">
         <GetList />
       </div>
-
-      <FastWrite />
+      <div className="fwAndQa" id="modalParent">
+        <AIqa />
+        <FastWrite />
+      </div>
     </div>
   );
 };

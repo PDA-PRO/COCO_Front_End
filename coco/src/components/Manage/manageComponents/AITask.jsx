@@ -33,39 +33,39 @@ import axios from "axios";
 
 export const AITask = () => {
   const [template, setTemplate] = useState(
-    "입출력 예시, 메모리 제한, 시간 제한이 있는 파이썬 알고리즘를 문제 만들어줘"
+    "문제에 입출력 예시, 테스트 케이스, 메모리 제한, 시간 제한이 있는 파이썬 알고리즘 문제 만들어줘"
   );
   const changePrompt = (e) => {
     var string =
-      "입출력 예시, 메모리 제한, 시간 제한이 있는 ";
+      "문제에 입출력 예시, 테스트 케이스, 메모리 제한, 시간 제한이 있는 ";
     switch (parseInt(e)) {
       case 1:
-        return string + "반복문 알고리즘 문제를 만들어줘";
+        return string + "반복문 알고리즘 문제 만들어줘";
       case 2:
-        return string + "조건문 알고리즘 문제를 만들어줘";
+        return string + "조건문 알고리즘 문제 만들어줘";
       case 3:
-        return string + "수학 알고리즘 문제를 만들어줘";
+        return string + "수학 알고리즘 문제 만들어줘";
 
       case 4:
-        return string + "입출력 알고리즘 문제를 만들어줘";
+        return string + "입출력 알고리즘 문제 만들어줘";
 
       case 5:
-        return string + "배열 및 리스트 알고리즘 문제를 만들어줘";
+        return string + "배열 및 리스트 알고리즘 문제 만들어줘";
 
       case 6:
-        return string + "정렬 알고리즘 문제를 만들어줘";
+        return string + "정렬 알고리즘 문제 만들어줘";
 
       case 7:
-        return string + "스택 혹은 큐 알고리즘 문제를 만들어줘";
+        return string + "스택 혹은 큐 알고리즘 문제 만들어줘";
 
       case 8:
-        return string + "그래프(BFS 혹은 DFS) 알고리즘 문제를 만들어줘";
+        return string + "그래프(BFS 혹은 DFS) 알고리즘 문제 만들어줘";
 
       case 9:
         return string + "그리디 알고리즘 문제 만들어줘";
 
       case 10:
-        return string + "DP 알고리즘 문제를 만들어줘";
+        return string + "DP 알고리즘 문제 만들어줘";
 
       case 11:
         return string + "직접 입력해주세요.";
@@ -207,6 +207,14 @@ export const AITask = () => {
               label="Python3 코드 보기"
               style={{ width: "fit-content" }}
             />
+            <FormControlLabel
+              control={<Checkbox />}
+              onChange={handleCheckChange}
+              label="C언어 코드 보기"
+              style={{ width: "fit-content" }}
+              disabled={true}
+            />
+
           </FormGroup>
 
           <p id="caution">
@@ -431,6 +439,31 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
     }
   };
 
+  function makeNoLine(arr) {
+    if (arr.length == 0) {
+      return "";
+    } else {
+      var dataArray = arr.split("\n");
+
+      var numberedData = dataArray
+        .map((item, index) => {
+          return `${index + 1}@${item}`;
+        })
+        .join("\n");
+
+      const strings = numberedData.split("\n").map((str) => {
+        const [num, val] = str.split("@");
+        return (
+          <div className="codeLine">
+            <n className="codeNum">{num}.</n>
+            <n className="codeTxt">{val}</n>
+          </div>
+        );
+      });
+      return strings;
+    }
+  }
+
   return (
     <div className="m-upload-AI">
       <InputGroup className="m-title">
@@ -593,6 +626,18 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
           {/* 문제 풀이 가능 언어 선택 */}
         </div>
       </div>
+
+      {/* 코드 있으면 띄우기 */}
+      {info.code.length == 0 ? (
+        <></>
+      ) : (
+        <>
+          <h4>정답 예제 코드</h4>
+          <pre className="R-Code">{makeNoLine(info.code)}</pre>
+        </>
+      )}
+
+      {/* 코드 있으면 띄우기 */}
 
       <div className="btnDiv">
         <Button

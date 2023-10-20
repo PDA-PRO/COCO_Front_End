@@ -32,8 +32,6 @@ export const Block = (props) => {
   const board = props.info.board;
   const problem = props.info.problem;
 
-  console.log(board)
-  console.log(problem.length)
 
   const moveBoard = (e) => {
     navigate(`/board/${e}`);

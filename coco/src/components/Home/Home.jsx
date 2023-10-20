@@ -48,6 +48,9 @@ export const Home = () => {
               </span>
             </h2>
           </div>
+
+          
+
           {/* 기능 차별점 - AI 얘기 */}
           <div className="whatdiff">
             <h4>
@@ -104,7 +107,7 @@ export const Home = () => {
             </div>
           </div>
 
-          {userInfo.id === "" ? (
+          {userInfo.id === undefined || userInfo.id === "" ? ( 
             <></>
           ) : (
             <div className={Large ? "homeGraph" : "else"}>

@@ -116,7 +116,7 @@ export const Header = (props) => {
           </div>
 
           <div>
-            {userInfo.id === "" ? (
+            {userInfo.id === undefined || userInfo.id === "" ? (
               <h3 onClick={() => movdPage(5)}>LOGIN</h3>
             ) : (
               <div ref={ref} onClick={handleClick}>

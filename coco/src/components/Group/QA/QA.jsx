@@ -137,12 +137,12 @@ const Question = ({ resource }) => {
                     title: "AI로부터 답변이 등록되었습니다.",
                     timer: 1000,
                     showConfirmButton: false,
-                  }).then((res) => {
+                  }).then(() => {
                     window.location.reload();
                   });
                 } else {
                   Swal.fire({
-                    icon: "success",
+                    icon: "info",
                     title: "AI로부터 등록된 답변이 존재합니다.",
                     timer: 1000,
                     showConfirmButton: false,

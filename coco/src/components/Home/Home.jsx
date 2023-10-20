@@ -32,6 +32,8 @@ export const Home = () => {
   const Phone = useMediaQuery({ maxWidth: 767.99999 });
   const path = window.location.pathname.split("/");
 
+  console.log(userInfo.id);
+
   return (
     <div>
       <Header />
@@ -49,8 +51,6 @@ export const Home = () => {
             </h2>
           </div>
 
-          
-
           {/* 기능 차별점 - AI 얘기 */}
           <div className="whatdiff">
             <h4>
@@ -61,7 +61,10 @@ export const Home = () => {
             <div className="aiShow">
               <div className="Box" id="WPCbox">
                 <p>혼자 어디가 틀렸는지 고민하지 않게, AI가 필요하면 바로</p>
-                <p>WPC(Wrong Part of Code) AI 코칭 시스템</p>
+                <img src="./image/wpc.png" alt="wpc" width="70%" />
+                <p style={{ textAlign: "end", color: "gray" }}>
+                  WPC(Wrong Part of Code) AI 코칭 시스템
+                </p>
               </div>
 
               <div className="Box" id="QA">
@@ -107,7 +110,7 @@ export const Home = () => {
             </div>
           </div>
 
-          {userInfo.id === undefined || userInfo.id === "" ? ( 
+          {userInfo.id === "" ? (
             <></>
           ) : (
             <div className={Large ? "homeGraph" : "else"}>
@@ -180,6 +183,7 @@ const GetNotice = ({ resource }) => {
 
 const MyGraph = ({ resource }) => {
   const detail = resource.read();
+  console.log(detail);
   return (
     <>
       <HomeGraph growth={detail.growth} />

@@ -448,6 +448,25 @@
   color: gray;
 }
 
+/* #WPCbox {
+  background-image: url(../../../public/image/wpc.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  /* background-size: 80px 80px; */
+/* background-position: 50% 3px;
+} */
+
+#WPCbox {
+  position: relative;
+}
+
+#WPCbox img {
+  opacity: 0.8;
+  border-radius: 15px;
+  align-self: center;
+  margin: 5px 0;
+}
+
 #QA {
   background-image: url(../../../public/image/chat-app.png);
   background-repeat: no-repeat;

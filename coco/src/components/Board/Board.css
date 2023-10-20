@@ -115,26 +115,14 @@
   color: navy;
 }
 
-.ReactModal__Content {
-  width: 650px !important;
-  height: 600px;
-  border-radius: 15px !important;
-  z-index: 3;
-  top: 100px !important;
-  left: 30% !important;
-  display: flex;
-  flex-flow: column nowrap;
-  font-family: "Pretendard-Regular";
-}
-
-.ReactModal__Content h2 {
+.modal h2 {
   font-weight: 600;
-  font-size: 1.3em;
+  font-size: 1.1em;
   color: navy;
   margin: 0 !important;
 }
 
-.ReactModal__Content p {
+.modal p {
   font-weight: 500;
   font-size: 1em;
   color: navy;
@@ -146,6 +134,128 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
+}
+
+.modal {
+  position: relative;
+  background-color: #fff;
+  width: 700px !important;
+  height: 700px;
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 15px;
+  font-family: "Pretendard-Regular";
+
+  z-index: 2;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  padding: 20px;
+}
+
+.modal-wrapper {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(107, 114, 128, 0.5);
+  z-index: 9;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.modal .qTo {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5px;
+  align-items: center;
+  align-self: flex-end;
+  float: right;
+  justify-content: end;
+  width: fit-content;
+  cursor: pointer;
+}
+.modal .Aianswer {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.Aianswer h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  color: navy;
+  margin: 0 !important;
+}
+
+.Aianswer .AianswerContent {
+  padding: 8px;
+}
+
+.Aianswer .R-Code {
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 10px;
+  cursor: text;
+  background-color: rgb(245, 245, 245);
+
+  white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.Aianswer .R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 3% 95%;
+  column-gap: 13px;
+}
+
+.Aianswer .codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.Aianswer .codeLine .codeTxt {
+  grid-column: 2/3;
+}
+
+.modal .qTo :hover {
+  text-decoration: underline;
+}
+
+.modal .cm-gutter {
+  background-color: rgb(247, 252, 255);
+}
+
+.modal .cm-gutterElement {
+  background-color: rgb(255, 255, 255);
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.modal .cm-line {
+  /*background-color: rgb(255, 255, 255); */
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.modal .cm-activeLine {
+  /*background-color: rgb(243, 243, 243);*/
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500;
 }
 
 .FastWrite {

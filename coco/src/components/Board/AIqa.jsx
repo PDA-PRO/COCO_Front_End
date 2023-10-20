@@ -6,12 +6,11 @@ import Swal from "sweetalert2";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import CodeMirror from "@uiw/react-codemirror";
-import axios from "axios";
 import { API } from "api/config";
-
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import { FiArrowUpRight } from "react-icons/fi";
+import axios from "axios";
 // import Modal from "@mui/material/Modal";
 
 // Modal 여기있는데 Mui Modal로 변경
@@ -95,11 +94,10 @@ const Modal = ({ show, onCloseButtonClick }) => {
             Swal.showLoading();
             axios
               .post(
-                "http://localhost:8000/",
+                "http://localhost:8000/qa/main",
                 {
                   content: content,
                   code: code,
-                  id: id, // 작성자 id, 동시에 여러명 사용 시 구분 지을 필요
                 },
                 {
                   headers: {
@@ -108,16 +106,17 @@ const Modal = ({ show, onCloseButtonClick }) => {
                 }
               )
               .then((res) => {
-                if (res.data === true) {
+                console.log(res.data)
+                if (res.data.result === true) {
                   Swal.fire({
                     icon: "success",
                     title: "AI로부터 답변이 등록되었습니다.",
                     timer: 1000,
                     showConfirmButton: false,
-                  }).then((res) => {
+                  }).then(() => {
                     setAnswer(true);
-                    setAnswerContent(res.content);
-                    setAnswerCode(res.code);
+                    setAnswerContent(res.data.content);
+                    setAnswerCode(res.data.code);
                   });
                 }
               })

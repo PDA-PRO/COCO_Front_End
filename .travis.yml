@@ -2,11 +2,12 @@ language: node_js
 node_js:
   - 14
 
-before_install:
-  - cd ./coco
-  - npm update
-  - npm install --force
-  
+cache:
+  directories:
+    - coco\node_modules
+
+install:
+  - cd coco && npm install
 
 script:
   - npm test

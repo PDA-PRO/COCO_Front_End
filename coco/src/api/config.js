@@ -39,6 +39,6 @@ export const API = {
   ALARM: `${BASE_URL}/user/alarm`,
   WPC: `${BASE_URL}/wpc/main`,
   LEVEL: `${BASE_URL}/user/level`,
-  AI: `${BASE_URL}/ai`,
+  PLUGINSTATUS: `${BASE_URL}/plugin/status`,
   HOT: `${BASE_URL}/hot`,
 };

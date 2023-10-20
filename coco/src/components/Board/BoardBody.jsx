@@ -4,9 +4,9 @@ import { Guel } from "./Guel";
 import Spinner from "react-bootstrap/Spinner";
 import { FastWrite } from "./FastWrite";
 import { API } from "api/config";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { AIqa } from "./AIqa";
+import axios from "axios";
 
 export const BoardBody = () => {
   return (

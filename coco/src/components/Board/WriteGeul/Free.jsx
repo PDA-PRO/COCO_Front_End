@@ -2,7 +2,6 @@ import React, { useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "./WriteGuel.css";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -10,6 +9,7 @@ import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 

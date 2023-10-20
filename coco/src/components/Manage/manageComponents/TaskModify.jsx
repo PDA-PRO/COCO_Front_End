@@ -1,4 +1,3 @@
-import "../Manage.css";
 import React from "react";
 import { useState, useMemo, useRef, useEffect, Suspense } from "react";
 import Form from "react-bootstrap/Form";
@@ -11,7 +10,6 @@ import {
 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -23,6 +21,9 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../../api/fetchTask";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import "../Manage.css";
+import axios from "axios";
+
 
 Quill.register("modules/imageResize", ImageResize);
 

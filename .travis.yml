@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 14
+
+before_install:
+  - cd ./coco
+  - npm update
+  - npm install --force
+  
+
+script:
+  - npm test

@@ -15,7 +15,6 @@ import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
 import { useAppSelector } from "../../../app/store";
-import axios from "axios";
 import { useEffect } from "react";
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +23,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const BoardDetail = () => {
   return (

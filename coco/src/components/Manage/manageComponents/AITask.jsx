@@ -11,7 +11,6 @@ import {
 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -30,6 +29,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormLabel from "@mui/material/FormLabel";
+import axios from "axios";
 
 export const AITask = () => {
   const [template, setTemplate] = useState(
@@ -86,6 +86,8 @@ export const AITask = () => {
       });
     } else {
       setSendAsk(e);
+      const formData = new FormData();
+      formData.append("description", '<p>tmp</p>');
       Swal.fire({
         icon: "question",
         title: "AI가 문제를 생성중입니다.",
@@ -94,21 +96,26 @@ export const AITask = () => {
         didOpen: () => {
           Swal.showLoading();
           axios
-            .post(API.AI + "/create-task", {
+          .post("http://localhost:8000/ai-task/main", 
+            {
               content: e,
+              form_data: '<p>tmp</p>',
               is_final: false,
-            })
-            .then((res) => {
-              if (res.data.data == true) {
-                setIsAI(true);
-                setJson({ ...res.data.result });
-                Swal.fire({
-                  icon: "success",
-                  title:
-                    "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
-                });
-              } else {
-              }
+            },
+          )
+          .then((res) => {
+            if (res.data.data == true) {
+              console.log(res.data)
+              setIsAI(true);
+              setJson({ ...res.data.result });
+              Swal.fire({
+                icon: "success",
+                title:
+                  "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
+              });
+            } else {
+   
+            }
             })
             .catch(() => {
               Swal.fire({
@@ -207,6 +214,7 @@ export const AITask = () => {
               style={{ width: "fit-content" }}
               disabled={true}
             />
+
           </FormGroup>
 
           <p id="caution">
@@ -267,7 +275,6 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
   function extractSecondsFromString(str) {
     // 숫자가 아닌 문자는 모두 제거하고, 나머지를 정수로 변환
     const seconds = parseInt(str.replace(/\D/g, ""), 10);
-
     return isNaN(seconds) ? 0 : seconds;
   }
 
@@ -396,12 +403,9 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
       formData.append("description", quillRef.current.value);
 
       axios
-        .post(API.AI + "/upload-task", formData, {
-          // headers: {
-          //   "Content-Type": `multipart/form-data; `,
-          //   Authorization: "Bearer " + userInfo.access_token,
-          // },
-          params: {
+      .post("http://localhost:8000/ai-task/main", {
+          form_data: quillRef.current.value, 
+          task_data: {
             title: titleRef.current.value,
             inputDescription: inputDescRef.current.value,
             inputEx1: inputEx1Ref.current.value,
@@ -417,7 +421,8 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
               .map((e) => e.value)
               .join(","),
           },
-        })
+          is_final: true
+      })
         .then(function (response) {
           if (response.data.code === 1) {
             Swal.fire({

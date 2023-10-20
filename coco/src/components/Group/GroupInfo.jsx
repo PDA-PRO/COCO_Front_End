@@ -16,7 +16,6 @@ import { RiUserAddLine } from "react-icons/ri";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { MdClear } from "react-icons/md";
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import { QA } from "./QA/QA";
@@ -24,6 +23,8 @@ import { RoadMap } from "./RoadMap/RoadMap";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import axios from "axios";
+
 
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");

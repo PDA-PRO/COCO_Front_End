@@ -11,9 +11,9 @@ import {
   BsPencilSquare,
 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const ThirdBox = (props) => {
   const navigate = useNavigate();

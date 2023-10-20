@@ -12,7 +12,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import fetchData from "../../api/fetchTask";
-import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
@@ -23,6 +22,7 @@ import Form from "react-bootstrap/Form";
 import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const PBD = () => {
   var path = window.location.pathname;

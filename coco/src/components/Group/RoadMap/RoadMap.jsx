@@ -1,10 +1,10 @@
 import React from "react";
 import "./RoadMap.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
+import axios from "axios";
 
 export const RoadMap = ({ userID, path }) => {
   const userInfo = useAppSelector((state) => state.loginState);

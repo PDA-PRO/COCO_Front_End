@@ -135,7 +135,7 @@ const AIcontent = ({ pluginInfo }) => {
     <>
       <div className="contentName">
         <PiNumberCircleOneLight color="blue" size={23} />
-        <p>WPC : Wrong Part of Code</p>
+        <p>{pluginInfo.plugin}</p>
       </div>
       <div className="pluginBody">
         <div className="top">

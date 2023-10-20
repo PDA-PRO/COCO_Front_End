@@ -1,12 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import "../Manage.css";
-import {
-  PiNumberCircleOneLight,
-  PiNumberCircleTwoLight,
-  PiNumberCircleThreeLight,
-  PiNumberCircleFourLight,
-  PiNumberCircleFiveLight,
-} from "react-icons/pi";
+import { BsPlugin } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
@@ -134,8 +128,13 @@ const AIcontent = ({ pluginInfo }) => {
   return (
     <>
       <div className="contentName">
-        <PiNumberCircleOneLight color="blue" size={23} />
-        <p>{pluginInfo.plugin}</p>
+        {pluginInfo.front && pluginInfo.back ? (
+          <BsPlugin color="rgb(0, 201, 0)" size={23} />
+        ) : (
+          <BsPlugin color="red" size={23} />
+        )}
+
+        <p style={{ textTransform: "uppercase " }}>{pluginInfo.plugin}</p>
       </div>
       <div className="pluginBody">
         <div className="top">

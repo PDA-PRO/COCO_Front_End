@@ -38,6 +38,7 @@ export const PBD = () => {
 
 const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
+  console.log(detail.is_ai);
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(0);
@@ -118,7 +119,14 @@ const GetDetail = ({ resource }) => {
 
   return detail !== undefined ? (
     <div className="PBD">
-      <div className="PBD-title">
+      <div
+        className="PBD-title"
+        style={
+          detail.is_ai === 1
+            ? { backgroundColor: "rgb(222, 255, 224)" }
+            : { backgroundColor: "rgb(241, 241, 241)" }
+        }
+      >
         <div className="problemsName-pbd">
           <div>No.{detail.id}</div>
           <div className="problemInfo-pbd">
@@ -168,6 +176,14 @@ const GetDetail = ({ resource }) => {
         <Allotment defaultSizes={[1, 1]} minSize={400} snap={true}>
           <div className="PBD-problem PBD-scroll">
             <div className="PBD-pbTxt">
+              {detail.is_ai === 1 ? (
+                <div className="isAimade">
+                  <img src="../image/ai-file.png" alt="ai" width="35px" />
+                  <p>AI가 생성한 문제입니다.</p>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className="PBD-pbTitle">
                 <BsClipboardCheck size={25} />
                 <h2>문제 설명</h2>
@@ -266,7 +282,14 @@ const GetDetail = ({ resource }) => {
           </Allotment.Pane>
         </Allotment>
       </div>
-      <div className="PBD-menu">
+      <div
+        className="PBD-menu"
+        style={
+          detail.is_ai === 1
+            ? { backgroundColor: "rgb(222, 255, 224)" }
+            : { backgroundColor: "rgb(241, 241, 241)" }
+        }
+      >
         <Button
           variant="outline-secondary"
           id="submit_btn"

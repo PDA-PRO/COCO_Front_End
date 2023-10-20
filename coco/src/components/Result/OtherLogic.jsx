@@ -19,7 +19,13 @@ import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
 
-export const OtherLogic = ({ changeLogic, impCode, impCmt, task_id, sub_id }) => {
+export const OtherLogic = ({
+  changeLogic,
+  impCode,
+  impCmt,
+  task_id,
+  sub_id,
+}) => {
   console.log("one", impCode, impCmt);
   return (
     <div className="OC">
@@ -36,7 +42,13 @@ export const OtherLogic = ({ changeLogic, impCode, impCmt, task_id, sub_id }) =>
         </div>
       </div>
 
-      <AI_code func={1} code={impCode} cmt={impCmt} task_id={task_id} sub_id={sub_id} />
+      <AI_code
+        func={1}
+        code={impCode}
+        cmt={impCmt}
+        task_id={task_id}
+        sub_id={sub_id}
+      />
 
       <div className="OCmiddle">
         <div className="un">
@@ -60,8 +72,6 @@ export const OtherLogic = ({ changeLogic, impCode, impCmt, task_id, sub_id }) =>
 const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const [like, setLiked] = useState(0);
-;
-
   function makeNoLine(arr) {
     if (arr.length == 0) {
       return "";
@@ -151,18 +161,6 @@ const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
             <p>소요 메모리 : 200mb</p>
           </div> */}
         </div>
-
-        {like === 0 ? (
-          <div className="OC-liked" onClick={() => selectCode(func)}>
-            <AiOutlineLike size={24} />
-            <p>도움됐어요!</p>
-          </div>
-        ) : (
-          <div className="OC-liked" onClick={() => selectCode(func)}>
-            <AiFillLike size={24} color="skyblue" />
-            <p style={{ color: "skyblue" }}>도움됐어요?</p>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -213,7 +211,7 @@ const OCcontent = () => {
             <p>소요 메모리 : 200mb</p>
           </div> */}
         </div>
-        {like === 0 ? (
+        {/* {like === 0 ? (
           <div className="OC-liked" onClick={() => setLiked(1)}>
             <AiOutlineLike size={24} />
             <p>도움됐어요!</p>
@@ -223,7 +221,7 @@ const OCcontent = () => {
             <AiFillLike size={24} color="skyblue" />
             <p style={{ color: "skyblue" }}>도움됐어요!</p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

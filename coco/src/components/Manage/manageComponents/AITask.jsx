@@ -33,11 +33,11 @@ import axios from "axios";
 
 export const AITask = () => {
   const [template, setTemplate] = useState(
-    "문제에 입출력 예시, 테스트 케이스, 메모리 제한, 시간 제한이 있는 파이썬 알고리즘 문제 만들어줘"
+    "입출력 예시, 메모리 제한, 시간 제한이 있는 파이썬 알고리즘 문제 만들어줘"
   );
   const changePrompt = (e) => {
     var string =
-      "문제에 입출력 예시, 테스트 케이스, 메모리 제한, 시간 제한이 있는 ";
+      "입출력 예시, 메모리 제한, 시간 제한이 있는 ";
     switch (parseInt(e)) {
       case 1:
         return string + "반복문 알고리즘 문제 만들어줘";
@@ -238,14 +238,10 @@ export const AITask = () => {
               as="textarea"
               style={{ minHeight: "100px" }}
               defaultValue={
-                codeCheck === true
-                  ? template + " Python으로 예제 정답 코드도 같이 만들어줘"
-                  : template
+                template
               }
               key={
-                codeCheck === true
-                  ? template + " Python으로 예제 정답 코드도 같이 만들어줘"
-                  : template
+                template
               }
             />
           </InputGroup>
@@ -259,7 +255,7 @@ export const AITask = () => {
             />
           </div>
           {isAI === true ? (
-            <TaskReturn reAsk={Ask} askContent={sendAsk} json={json} />
+            <TaskReturn reAsk={Ask} askContent={sendAsk} json={json} codeCheck={codeCheck} />
           ) : (
             <></>
           )}
@@ -269,7 +265,7 @@ export const AITask = () => {
   );
 };
 
-const TaskReturn = ({ reAsk, askContent, json }) => {
+const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
 
   function extractSecondsFromString(str) {
@@ -628,12 +624,12 @@ const TaskReturn = ({ reAsk, askContent, json }) => {
       </div>
 
       {/* 코드 있으면 띄우기 */}
-      {info.code.length == 0 ? (
+      {codeCheck === false ? (
         <></>
       ) : (
         <>
           <h4>정답 예제 코드</h4>
-          <pre className="R-Code">{makeNoLine(info.code)}</pre>
+          <pre className="R-Code">{makeNoLine(json.code.code)}</pre>
         </>
       )}
 

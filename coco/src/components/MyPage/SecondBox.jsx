@@ -101,7 +101,7 @@ export const SecondBox = (props) => {
         <h3> - 맞은 문제 리스트</h3>
         <div className="taskList-split">
           {props.props.solved_list.map((e) => {
-            return <p onClick={() => movePage(e)}>No.{e}</p>;
+            return <p onClick={() => movePage(e)} key={e}>No.{e}</p>;
           })}
         </div>
       </div>
@@ -110,7 +110,7 @@ export const SecondBox = (props) => {
         <h3> - 틀린 문제 리스트</h3>
         <div className="taskList-split2">
           {props.props.unsolved_list.map((e) => {
-            return <p onClick={() => movePage(e)}>No.{e}</p>;
+            return <p onClick={() => movePage(e)} key={e}>No.{e}</p>;
           })}
         </div>
       </div>

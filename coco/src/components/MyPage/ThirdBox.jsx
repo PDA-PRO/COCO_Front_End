@@ -120,7 +120,7 @@ export const ThirdBox = (props) => {
       {props.props.map((e) => {
         const category = chCate(e.category);
         return (
-          <div className="myGuel" style={{ borderColor: category[1] }}>
+          <div className="myGuel" style={{ borderColor: category[1] }} key={e.id}>
             <h4>
               <span>{category[2]}</span>
               {category[0]}

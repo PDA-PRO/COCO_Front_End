@@ -37,7 +37,8 @@ export const API = {
   SELECTANSWER: `${BASE_URL}/room/select-answer`,
   LINT: `${BASE_URL}/lint`,
   ALARM: `${BASE_URL}/user/alarm`,
-  WPC: `${BASE_URL}/wpc`,
+  WPC: `${BASE_URL}/wpc/main`,
   LEVEL: `${BASE_URL}/user/level`,
-  AI: `${BASE_URL}/ai`
+  AI: `${BASE_URL}/ai`,
+  HOT: `${BASE_URL}/hot`,
 };

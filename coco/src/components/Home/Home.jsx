@@ -74,7 +74,7 @@ export const Home = () => {
           )}
 
           <Suspense fallback={<Loader />}>
-            <GetHot resource={fetchData("http://127.0.0.1:8000/hot")} />
+            <GetHot resource={fetchData(API.HOT)} />
           </Suspense>
 
           <div className="ad-box">

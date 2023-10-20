@@ -46,7 +46,7 @@ export const Home = () => {
               </span>
             </h2>
           </div>
-          {userInfo.id === "" ? (
+          {userInfo.id === undefined || userInfo.id === "" ? (
             <></>
           ) : (
             <div className={Large ? "homeGraph" : "else"}>

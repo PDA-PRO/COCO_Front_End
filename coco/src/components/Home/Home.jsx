@@ -32,8 +32,6 @@ export const Home = () => {
   const Phone = useMediaQuery({ maxWidth: 767.99999 });
   const path = window.location.pathname.split("/");
 
-  console.log(userInfo.id);
-
   return (
     <div>
       <Header />

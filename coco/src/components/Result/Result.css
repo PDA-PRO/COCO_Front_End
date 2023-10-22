@@ -184,6 +184,13 @@
   color: gray;
 }
 
+.ifRight {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  align-items: end;
+}
+
 .afterCorrect {
   display: flex;
   flex-flow: row nowrap;

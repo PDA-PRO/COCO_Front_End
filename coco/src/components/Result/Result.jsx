@@ -4,6 +4,7 @@ import { Footer } from "../Home/Footer";
 import { Header } from "../Home/Header";
 import "./Result.css";
 import fetchData from "../../api/fetchTask";
+import { TbListSearch, TbMessageCircleQuestion } from "react-icons/tb";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
 import { API } from "api/config";
@@ -28,6 +29,7 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 import axios from "axios";
+import { Improve } from "./Improve";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -62,7 +64,6 @@ const ResultBox = ({ resource, info }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const { id } = useParams();
   const [wpc, setWpc] = useState(0);
-  const [otherLogic, setOtherLogic] = useState(false);
 
   const problemList = resource.read();
 
@@ -239,10 +240,16 @@ const ResultBox = ({ resource, info }) => {
 
   // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
 
-  const changeLogic = () => {
+  // AI가 주는 개선된 코드, 개선내역 comment
+  const [improve, setImprove] = useState(false);
+  const [otherLogic, setOtherLogic] = useState(false);
+  const [improveCode, setImproveCode] = useState("");
+  const [improveComment, setImproveComment] = useState("");
+
+  const changeImprove = () => {
     const code = problemList.subDetail["code"];
 
-    if (otherLogic === false) {
+    if (improve === false) {
       Swal.fire({
         icon: "info",
         title:
@@ -271,7 +278,7 @@ const ResultBox = ({ resource, info }) => {
             .then((res) => {
               if (res.data.data === true) {
                 console.log(res.data.data);
-                setOtherLogic(!otherLogic);
+                setImprove(!improve);
                 setImproveCode(res.data.code);
                 setImproveComment(res.data.desc);
                 setTimeout(function () {
@@ -282,13 +289,9 @@ const ResultBox = ({ resource, info }) => {
         },
       });
     } else {
-      setOtherLogic(!otherLogic);
+      setImprove(!improve);
     }
   };
-
-  // AI가 주는 개선된 코드, 개선내역 comment
-  const [improveCode, setImproveCode] = useState("");
-  const [improveComment, setImproveComment] = useState("");
 
   return (
     <div className="Res">
@@ -312,7 +315,7 @@ const ResultBox = ({ resource, info }) => {
           </div>
         </div>
 
-        {otherLogic === false ? (
+        {improve === false ? (
           <>
             <div className="my_submit">
               <div className="fBox">
@@ -378,9 +381,15 @@ const ResultBox = ({ resource, info }) => {
               )}
             </div>
             {problemList.subDetail["status"] === 3 ? (
-              <div className="afterCorrect" onClick={() => changeLogic()}>
-                <p>코드 개선 요청 및 다른 로직 코드 보러가기</p>
-                <BsBoxArrowInRight size={23} />
+              <div className="ifRight">
+                <div className="afterCorrect" onClick={() => changeImprove()}>
+                  <p>AI 코드 개선 요청하기</p>
+                  <TbMessageCircleQuestion size={23} />
+                </div>
+                <div className="afterCorrect" onClick={() => changeLogic()}>
+                  <p>다른 로직의 코드 보러가기</p>
+                  <TbListSearch size={23} />
+                </div>
               </div>
             ) : problemList.subDetail["message"] == "TC 실패" ? (
               <>
@@ -417,8 +426,8 @@ const ResultBox = ({ resource, info }) => {
           </>
         ) : (
           <>
-            <OtherLogic
-              changeLogic={changeLogic}
+            <Improve
+              changeLogic={changeImprove}
               impCode={improveCode}
               impCmt={improveComment}
               task_id={info.task_id}

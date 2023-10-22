@@ -246,14 +246,17 @@ const ResultBox = ({ resource, info }) => {
   const [improveCode, setImproveCode] = useState("");
   const [improveComment, setImproveComment] = useState("");
 
+  const changeLogic = () => {
+    setOtherLogic(!otherLogic);
+  };
+
   const changeImprove = () => {
     const code = problemList.subDetail["code"];
-
+    setOtherLogic(false);
     if (improve === false) {
       Swal.fire({
         icon: "info",
-        title:
-          "AI가 코드의 개선점을 찾아 수정하고 있습니다.\n\n 다른 로직의 코드를 찾고 있습니다.",
+        title: "AI가 코드의 개선점을 찾아 수정하고 있습니다.",
         footer: "시간이 다소 소요될 수 있습니다.",
 
         showConfirmButton: false,
@@ -315,7 +318,7 @@ const ResultBox = ({ resource, info }) => {
           </div>
         </div>
 
-        {improve === false ? (
+        {improve === false && otherLogic === false ? (
           <>
             <div className="my_submit">
               <div className="fBox">
@@ -424,12 +427,18 @@ const ResultBox = ({ resource, info }) => {
               <Lint props={problemList.lint} />
             )}
           </>
-        ) : (
+        ) : improve === true && otherLogic === false ? (
           <>
             <Improve
               changeLogic={changeImprove}
               impCode={improveCode}
               impCmt={improveComment}
+            />
+          </>
+        ) : (
+          <>
+            <OtherLogic
+              changeLogic={changeLogic}
               task_id={info.task_id}
               sub_id={problemList.subDetail["id"]}
             />

@@ -1,36 +1,20 @@
 import React, { useState } from "react";
 import "./Result.css";
 import fetchData from "../../api/fetchTask";
-import Spinner from "react-bootstrap/Spinner";
-import {
-  BsSlashCircle,
-  BsCheckCircle,
-  BsBoxArrowInRight,
-  BsX,
-} from "react-icons/bs";
-import {
-  PiNumberCircleOneLight,
-  PiNumberCircleTwoLight,
-  PiNumberCircleThreeLight,
-} from "react-icons/pi";
-import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
+import Swal from "sweetalert2";
+import { BsX } from "react-icons/bs";
+import { TbListSearch, TbMessageCircleQuestion } from "react-icons/tb";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-export const OtherLogic = ({
-  changeLogic,
-  impCode,
-  impCmt,
-  task_id,
-  sub_id,
-}) => {
+export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
   return (
     <div className="OC">
       <div className="OCtop">
         <div className="un">
-          <PiNumberCircleTwoLight color="blue" size={23} />
+          <TbListSearch color="blue" size={23} />
           <h2>다른 로직의 코드</h2>
         </div>
 
@@ -47,20 +31,25 @@ export const OtherLogic = ({
 };
 
 const OCcontent = ({ task_id, sub_id }) => {
-  const { isFetching, data } = useQuery(["OC", 3], () =>
+  const { isFetching, data } = useQuery(["OC", sub_id], () =>
     axios.post(
       API.BASE_URL + "/code-cluster",
       {},
       {
         params: {
-          task_id: 1,
-          sub_id: 9,
+          task_id: task_id,
+          sub_id: sub_id,
         },
       }
     )
   );
   if (isFetching) {
-    return <Spinner />;
+    return Swal.fire({
+      icon: "info",
+      title: "AI가 다른 로직의 코드를 찾고 있습니다.",
+      footer: "시간이 다소 소요될 수 있습니다.",
+      showConfirmButton: false,
+    });
   }
   function makeNoLine(arr) {
     if (arr.length == 0) {

@@ -4,18 +4,14 @@ import axios from "axios";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
 import { BsX } from "react-icons/bs";
-import {
-  PiNumberCircleOneLight,
-  PiNumberCircleTwoLight,
-  PiNumberCircleThreeLight,
-} from "react-icons/pi";
+import { TbListSearch, TbMessageCircleQuestion } from "react-icons/tb";
 
-export const Improve = ({ changeLogic, impCode, impCmt, task_id, sub_id }) => {
+export const Improve = ({ changeLogic, impCode, impCmt }) => {
   return (
     <div className="OC">
       <div className="OCtop">
         <div className="un">
-          <PiNumberCircleOneLight color="blue" size={23} />
+          <TbMessageCircleQuestion color="blue" size={23} />
           <h2>AI가 작성한 개선된 코드</h2>
         </div>
 
@@ -26,20 +22,13 @@ export const Improve = ({ changeLogic, impCode, impCmt, task_id, sub_id }) => {
         </div>
       </div>
 
-      <AI_code
-        func={1}
-        code={impCode}
-        cmt={impCmt}
-        task_id={task_id}
-        sub_id={sub_id}
-      />
+      <AI_code func={1} code={impCode} cmt={impCmt} />
     </div>
   );
 };
 
-const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
+const AI_code = ({ func, code, cmt }) => {
   const userInfo = useAppSelector((state) => state.loginState);
-  const [like, setLiked] = useState(0);
   function makeNoLine(arr) {
     if (arr.length == 0) {
       return "";
@@ -65,42 +54,14 @@ const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
     }
   }
 
-  const selectCode = (type) => {
-    //개선 코드
-    if (type === 1) {
-      if (like) {
-        axios
-          .put(
-            API.AI + "/code-select",
-            {
-              task_id: task_id,
-              sub_id: sub_id,
-              check: 0,
-            },
-            { headers: { Authorization: "Bearer " + userInfo.access_token } }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setLiked(0);
-          });
-      } else {
-        axios
-          .put(
-            API.AI + "/code-select",
-            {
-              task_id: task_id,
-              sub_id: sub_id,
-              check: 0,
-            },
-            { headers: { Authorization: "Bearer " + userInfo.access_token } }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setLiked(1);
-          });
-      }
-    }
-  };
+  function addNewLineAfterDot(inputString) {
+    // 정규식을 사용하여 모든 '.'을 찾아서 '\n'을 추가
+    const resultString = inputString.replace(/\./g, ".\n");
+    return resultString;
+  }
+
+  var resString = addNewLineAfterDot(cmt);
+  console.log(resString);
 
   return (
     <div className="OCcontent">
@@ -115,19 +76,13 @@ const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
                 <img src="/image/chatbot.png" width="30px"></img>
                 <p style={{ color: "rgb(44, 179, 233)" }}>AI Comment</p>
               </div>
-              <p style={{ paddingLeft: "1em" }}>{cmt}</p>
+              <p style={{ whiteSpace: "pre-wrap", paddingLeft: "1em" }}>
+                {resString}
+              </p>
             </div>
           ) : (
             <></>
           )}
-          {/* <div className="c-un">
-              <BiTimeFive color="gray" size={20} />
-              <p>소요 시간 : 5ms</p>
-            </div>
-            <div className="c-un">
-              <BiMemoryCard color="gray" size={20} />
-              <p>소요 메모리 : 200mb</p>
-            </div> */}
         </div>
       </div>
     </div>

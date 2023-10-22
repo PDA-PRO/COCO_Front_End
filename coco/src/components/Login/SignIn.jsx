@@ -14,6 +14,7 @@ import Form from "react-bootstrap/Form";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -253,6 +254,7 @@ const FindEmailModal = (props) => {
           }
         )
         .then((res) => {
+          Swal.fire({ icon: "success", title: "비밀번호 재설정 완료!" });
           setResult("비밀번호를 재설정했습니다.");
         })
         .catch(({ response }) => {
@@ -285,10 +287,10 @@ const FindEmailModal = (props) => {
       <Modal.Body>
         <div className="loginBox">
           <FaRegUser size="25" />
-          <input ref={idRef} placeholder={"id를 입력하세요"} />
+          <input ref={idRef} placeholder={"ID를 입력하세요"} />
         </div>
         <div className="loginBox">
-          <FiMail size="25" />
+          <RiLockPasswordLine size="25" />
           <input
             type="password"
             ref={pwRef}
@@ -296,7 +298,7 @@ const FindEmailModal = (props) => {
           />
         </div>
         <div className="loginBox">
-          <FiMail size="25" />
+          <RiLockPasswordLine size="25" />
           <input
             type="password"
             ref={pw2Ref}
@@ -315,7 +317,7 @@ const FindEmailModal = (props) => {
       <Modal.Footer>
         <p className="findinLogin" onClick={Handler}>
           {" "}
-          비밀번호 찾기
+          비밀번호 재설정
         </p>
       </Modal.Footer>
     </Modal>

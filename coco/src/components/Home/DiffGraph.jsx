@@ -22,6 +22,7 @@ export const DiffGraph = ({ diff }) => {
       ]);
     }
   }, []);
+
   return (
     <div className="diffGraph">
       <h3>난이도 별 학습률</h3>

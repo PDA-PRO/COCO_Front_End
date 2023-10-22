@@ -38,7 +38,7 @@ export const PBD = () => {
 
 const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
-  console.log(detail.is_ai);
+
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(0);

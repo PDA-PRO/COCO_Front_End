@@ -201,7 +201,7 @@ const Modal = ({ show, onCloseButtonClick }) => {
                 {answerCode.length !== 0 ? (
                   <>
                     <h4>CODE</h4>
-                    <pre className="R-Code">{makeNoLine(`print("hello")`)}</pre>
+                    <pre className="R-Code">{makeNoLine(answerCode)}</pre>
                   </>
                 ) : (
                   <></>

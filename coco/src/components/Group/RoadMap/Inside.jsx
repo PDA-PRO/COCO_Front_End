@@ -11,8 +11,9 @@ import { Loader } from "../../Loader/Loader";
 import { ProblemBox } from "../../Problems/ProblemBox";
 import Pagination from "@mui/material/Pagination";
 import { useMediaQuery } from "react-responsive";
-import axios from "axios";
+import Swal from "sweetalert2";
 import { API } from "api/config";
+import axios from "axios";
 
 export const Inside = () => {
   const path = window.location.pathname.split("/");
@@ -40,15 +41,17 @@ export const Inside = () => {
 };
 
 const Content = ({ resource }) => {
+  const Phone = useMediaQuery({ maxWidth: 810 });
+  const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const userID = userInfo.id;
   const [page, setPage] = useState(1);
-
+  const path = window.location.pathname.split("/");
   const data = resource.read();
 
-  const navigate = useNavigate();
-
-  const path = window.location.pathname.split("/");
+  if (data === undefined) {
+    return <div>404 not found</div>;
+  }
 
   const goMypage = (e) => {
     navigate(`/mypage/${e}`);
@@ -56,8 +59,6 @@ const Content = ({ resource }) => {
   const goModifyRoadMap = () => {
     navigate(`/room/modifyRoadmap/${path.at(-2)}/${path.at(-1)}`);
   };
-
-  const Phone = useMediaQuery({ maxWidth: 810 });
 
   var date = data.roadmap.last_modify;
   var slicedDate = date.substring(0, 10);
@@ -81,10 +82,12 @@ const Content = ({ resource }) => {
     return res;
   };
 
+  console.log("푼 문제 번호", data.solved_list[`${userID}`]);
+
   const compare = (e) => {
-    if (!Object.hasOwn(data.solved_list, e)) {
-      return 0;
-    }
+    // if (!Object.hasOwn(data.solved_list, e)) {
+    //   return 0;
+    // }
     var idx = data.solved_list[`${userID}`].findIndex(
       (problem) => problem === e
     );
@@ -99,8 +102,14 @@ const Content = ({ resource }) => {
           headers: { Authorization: "Bearer " + userInfo.access_token },
         })
         .then(() => {
-          alert(`ROADMAP이 삭제되었습니다.`);
-          navigate(`/room/${path.at(-2)}`);
+          Swal.fire({
+            icon: "success",
+            title: `ROADMAP이 삭제되었습니다.`,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              navigate(`/room/${path.at(-2)}`);
+            }
+          });
         });
     }
   };

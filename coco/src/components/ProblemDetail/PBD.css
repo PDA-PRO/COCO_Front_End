@@ -1,4 +1,5 @@
 .PBD {
+  min-width: 958px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -17,7 +18,7 @@
   align-items: end;
   border-bottom: rgb(216, 216, 216) solid 1px;
   flex: 1 1 0;
-  background-color: rgb(241, 241, 241);
+  /* background-color: rgb(222, 255, 224); */
 }
 
 .problemsName-pbd {
@@ -107,7 +108,7 @@
   width: 100vw;
   flex: 18 1 0;
   font-family: "Pretendard-Regular";
-  font-size: 1.2rem;
+  font-size: 1.1em;
 }
 
 .PBD-body .PBD-problem {
@@ -246,6 +247,23 @@
   width: 10px;
 }
 
+.isAimade {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.isAimade p {
+  margin: 0 !important;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 0.9em !important;
+  color: rgb(85, 85, 85);
+}
+
 #dropdown-basic-button {
   background-color: rgb(241, 241, 241);
   border: none;
@@ -260,7 +278,7 @@
 }
 
 .PBD-scroll .cm-content {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
 }
 
 .PBD-scroll .cm-gutter {
@@ -275,14 +293,12 @@
 }
 
 .PBD-scroll .cm-line {
-  background-color: rgb(255, 255, 255);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;
 }
 
 .PBD-scroll .cm-activeLine {
-  background-color: rgb(255, 255, 255);
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;

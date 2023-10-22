@@ -1,11 +1,8 @@
 import React, { Suspense, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Footer } from "../Home/Footer";
 import { Header } from "../Home/Header";
-import { IoLogoPython } from "react-icons/io5";
 import "./Result.css";
-import { RiEmotionLaughLine, RiEmotionSadLine } from "react-icons/ri";
-import styled from "styled-components";
 import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
@@ -25,34 +22,44 @@ import {
 } from "react-icons/bs";
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineManageSearch } from "react-icons/md";
-import { BiRightArrowAlt } from "react-icons/bi";
 import { OtherLogic } from "./OtherLogic";
 import ReactDiffViewer from "react-diff-viewer";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
+import axios from "axios";
 
 export const Result = (code) => {
   const { id } = useParams();
   const locate = useLocation();
   const userInfo = useAppSelector((state) => state.loginState);
-
   const num = parseInt(id);
 
   return (
     <>
       <Header />
-      <Suspense fallback={<Spinner />}>
-        <ResultBox
-          resource={fetchData(API.RESULT + num, {
-            headers: { Authorization: "Bearer " + userInfo.access_token },
-          })}
-          info={locate.state.info}
-        />
-      </Suspense>
+      {locate.state !== null ? (
+        <Suspense fallback={<Spinner />}>
+          <ResultBox
+            resource={fetchData(API.RESULT + num, {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+            })}
+            info={locate.state.info}
+          />
+        </Suspense>
+      ) : (
+        <div className="Res">
+          <div>404 not found</div>
+        </div>
+      )}
+
       <Footer />
     </>
   );
 };
 
 const ResultBox = ({ resource, info }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
   const { id } = useParams();
   const [wpc, setWpc] = useState(0);
   const [otherLogic, setOtherLogic] = useState(false);
@@ -145,24 +152,24 @@ const ResultBox = ({ resource, info }) => {
   var wrongLines = [];
   var wrongStart = [];
   var wrongEnd = [];
+  var messages = [];
   for (let i = 0; i < problemList.lint.length; i++) {
     wrongLines.push(problemList.lint[i].line);
     wrongStart.push(problemList.lint[i].column);
     wrongEnd.push(problemList.lint[i].endColumn);
+    messages.push(problemList.lint[i].message);
   }
 
-  console.log("lint", problemList.lint);
-
-  function makeLine(arr, line, start, end) {
+  function makeLine(arr, line, start, end, message) {
     console.log(line, start, end);
-    function isRight(line, start, end) {
+    function isRight(line, start, end, message) {
       line.shift();
       start.shift();
       end.shift();
+      message.shift();
     }
 
     if (end[0] === null) {
-      console.log("여기 들어오긴 함?");
       const strings = arr.split("\n").map((str) => {
         const [num, val] = str.split("@");
         return (
@@ -172,10 +179,13 @@ const ResultBox = ({ resource, info }) => {
             {line[0] == num ? (
               <div className="codeTxt">
                 {val.slice(0, start[0] - 1)}
-                <u style={{ color: "red", fontWeight: "600" }}>
+                <u
+                  style={{ color: "red", fontWeight: "600", cursor: "pointer" }}
+                  title={message[0]}
+                >
                   {val.slice(start[0] - 1)}
                 </u>
-                {isRight(line, start, end)}
+                {isRight(line, start, end, message)}
               </div>
             ) : (
               <div className="codeTxt">{val}</div>
@@ -185,7 +195,6 @@ const ResultBox = ({ resource, info }) => {
       });
       return strings;
     } else {
-      console.log("일로 들어옴");
       const strings = arr.split("\n").map((str) => {
         const [num, val] = str.split("@");
         return (
@@ -195,11 +204,14 @@ const ResultBox = ({ resource, info }) => {
             {line[0] == num ? (
               <div className="codeTxt">
                 {val.slice(0, start[0])}
-                <u style={{ color: "red", fontWeight: "600" }}>
+                <u
+                  style={{ color: "red", fontWeight: "600", cursor: "pointer" }}
+                  title={message[0]}
+                >
                   {val.slice(start[0], end[0])}
                 </u>
                 {val.slice(end[0])}
-                {isRight(line, start, end)}
+                {isRight(line, start, end, message)}
               </div>
             ) : (
               <div className="codeTxt">{val}</div>
@@ -228,8 +240,55 @@ const ResultBox = ({ resource, info }) => {
   // ---------------- 코드 옆 라인 숫자 표시 위한 변수 선언 및 함수
 
   const changeLogic = () => {
-    setOtherLogic(!otherLogic);
+    const code = problemList.subDetail["code"];
+
+    if (otherLogic === false) {
+      Swal.fire({
+        icon: "info",
+        title:
+          "AI가 코드의 개선점을 찾아 수정하고 있습니다.\n\n 다른 로직의 코드를 찾고 있습니다.",
+        footer: "시간이 다소 소요될 수 있습니다.",
+
+        showConfirmButton: false,
+
+        didOpen: () => {
+          Swal.showLoading();
+          //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
+          axios
+            .post(
+              API.BASE_URL + "/ai-code/main",
+              {
+                code: code,
+                task_id: info.task_id,
+                sub_id: info.sub_id,
+              },
+              {
+                headers: {
+                  Authorization: "Bearer " + userInfo.access_token,
+                },
+              }
+            )
+            .then((res) => {
+              if (res.data.data === true) {
+                console.log(res.data.data);
+                setOtherLogic(!otherLogic);
+                setImproveCode(res.data.code);
+                setImproveComment(res.data.desc);
+                setTimeout(function () {
+                  Swal.close();
+                }, 1500);
+              }
+            });
+        },
+      });
+    } else {
+      setOtherLogic(!otherLogic);
+    }
   };
+
+  // AI가 주는 개선된 코드, 개선내역 comment
+  const [improveCode, setImproveCode] = useState("");
+  const [improveComment, setImproveComment] = useState("");
 
   return (
     <div className="Res">
@@ -246,10 +305,10 @@ const ResultBox = ({ resource, info }) => {
               style={{ alignItems: "center", justifyContent: "center" }}
             >
               <p>난이도 : </p>
-              {setLevel(info.status)}
+              {setLevel(problemList.subDetail.diff)}
             </div>
 
-            <p>정답률 : 54.6%</p>
+            <p>정답률 : {problemList.subDetail.rate}%</p>
           </div>
         </div>
 
@@ -286,19 +345,44 @@ const ResultBox = ({ resource, info }) => {
                 <p>내 제출 코드</p>
               </div>
               {problemList.subDetail["status"] === 3 ? (
-                <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+                <div className="ifCorrect">
+                  <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+                  <div className="timeAndMemory">
+                    <div className="c-un">
+                      <BiTimeFive color="gray" size={22} />
+                      <p>
+                        소요 시간 : {problemList.subDetail["used_time"] * 1000}
+                        ms
+                      </p>
+                    </div>
+                    <div className="c-un">
+                      <BiMemoryCard color="gray" size={22} />
+                      <p>
+                        소요 메모리 :{" "}
+                        {Math.ceil(problemList.subDetail["used_memory"] / 1024)}
+                        MB
+                      </p>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <pre className="R-Code">
-                  {makeLine(numberedData, wrongLines, wrongStart, wrongEnd)}
+                  {makeLine(
+                    numberedData,
+                    wrongLines,
+                    wrongStart,
+                    wrongEnd,
+                    messages
+                  )}
                 </pre>
               )}
             </div>
             {problemList.subDetail["status"] === 3 ? (
               <div className="afterCorrect" onClick={() => changeLogic()}>
-                <p>다른 로직 코드 보러가기</p>
+                <p>코드 개선 요청 및 다른 로직 코드 보러가기</p>
                 <BsBoxArrowInRight size={23} />
               </div>
-            ) : (
+            ) : problemList.subDetail["message"] == "TC 실패" ? (
               <>
                 {wpc === 1 ? (
                   <div className="afterWrong" onClick={() => setWpc(2)}>
@@ -314,30 +398,13 @@ const ResultBox = ({ resource, info }) => {
                   </div>
                 )}
               </>
-            )}
+            ) : null}
 
             {wpc === 1 ? (
-              <div className="wpcBox">
-                <div className="wpcItem">
-                  <p>내 제출 코드</p>
-                </div>
-
-                <div className="wpcItem">
-                  <p>AI 분석 후 코드</p>
-                </div>
-                <div className="differ">
-                  <ReactDiffViewer
-                    oldValue={problemList.subDetail["code"]}
-                    newValue={problemList.subDetail["code"]} // 여기에 WPC 받아온 code
-                    splitView={true}
-                    // hideLineNumbers={true}
-                    showDiffOnly={false}
-                    // codeFoldMessageRenderer={3}
-                  />
-                </div>
-
-                {/* <BiRightArrowAlt size={30} style={{ marginTop: "25px" }} /> */}
-              </div>
+              <WPC
+                sub_id={problemList.subDetail["id"]}
+                task_id={info.task_id}
+              />
             ) : (
               <></>
             )}
@@ -350,7 +417,13 @@ const ResultBox = ({ resource, info }) => {
           </>
         ) : (
           <>
-            <OtherLogic changeLogic={changeLogic} />
+            <OtherLogic
+              changeLogic={changeLogic}
+              impCode={improveCode}
+              impCmt={improveComment}
+              task_id={info.task_id}
+              sub_id={problemList.subDetail["id"]}
+            />
           </>
         )}
       </div>
@@ -358,17 +431,57 @@ const ResultBox = ({ resource, info }) => {
   );
 };
 
-// const WPC = () => {
-//   return (
-//     <>
-//       <p>태그</p>
-//     </>
-//   );
-// };
+const WPC = ({ sub_id, task_id }) => {
+  const userInfo = useAppSelector((state) => state.loginState);
+  const { isFetching, data, isError } = useQuery(
+    ["wpc1", sub_id],
+    () =>
+      axios.post(
+        API.WPC,
+        {},
+        {
+          params: {
+            sub_id: sub_id,
+            task_id: task_id,
+          },
+          headers: { Authorization: "Bearer " + userInfo.access_token },
+        }
+      ),
+    { retry: false }
+  );
+  if (isFetching) {
+    return <Spinner />;
+  } else {
+    if (isError) {
+      return <div>확장 기능이 존재하지 않습니다.</div>;
+    }
+    if (data.data.status !== 1) {
+      return <div>WPC 분석이 불가합니다.</div>;
+    } else {
+      return (
+        <div className="wpcBox">
+          <div className="wpcItem">
+            <p>내 제출 코드</p>
+          </div>
+
+          <div className="wpcItem">
+            <p>AI 분석 후 코드</p>
+          </div>
+          <div className="differ">
+            <ReactDiffViewer
+              oldValue={data.data.bug_code}
+              newValue={data.data.wpc_result}
+              splitView={true}
+              showDiffOnly={false}
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+};
 
 const Lint = ({ props }) => {
-  console.log(props.length);
-
   return (
     <div className="pylint">
       <div className="un" style={{ marginBottom: "1em" }}>

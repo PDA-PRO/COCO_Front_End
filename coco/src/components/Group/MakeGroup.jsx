@@ -8,12 +8,13 @@ import { GoSearch } from "react-icons/go";
 import { useState } from "react";
 import { Pagination } from "@mui/material";
 import { HiUserPlus, HiUserMinus, HiUserGroup } from "react-icons/hi2";
-import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useAppSelector } from "../../app/store";
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import Spinner from "react-bootstrap/Spinner";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");
@@ -36,7 +37,10 @@ export const MakeGroup = () => {
 
   const onCreateHanlder = (members) => {
     if (name === "" || desc === "") {
-      alert("스터디룸명과 스터디룸 설명을 모두 작성해주세요");
+      Swal.fire({
+        icon: "warning",
+        title: "스터디룸명과 스터디룸 설명을 모두 작성해주세요.",
+      });
     } else {
       axios
         .post(
@@ -49,8 +53,14 @@ export const MakeGroup = () => {
           { headers: { Authorization: "Bearer " + userInfo.access_token } }
         )
         .then((res) => {
-          alert("스터디룸을 생성하였습니다");
-          navigate(`/room/${res.data.code}`);
+          Swal.fire({
+            icon: "success",
+            title: "스터디룸을 생성하였습니다",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              navigate(`/room/${res.data.code}`);
+            }
+          });
         });
     }
   };
@@ -177,18 +187,32 @@ const SearchResult = (props) => {
 
   const addMembers = (e) => {
     if (e === userInfo.id || members.includes(e)) {
-      alert("이미 초대된 인원입니다.");
+      Swal.fire({
+        icon: "warning",
+        title: "이미 초대된 인원입니다.",
+      });
     } else {
-      alert(`id : ${e.id}님을 스터디에 추가하였습니다.`);
+      Swal.fire({
+        icon: "success",
+        title: `id : ${e.id}님을 스터디에 추가하였습니다.`,
+      });
+
       setMembers([...members, e]);
     }
   };
 
   const deleteMembers = (e) => {
     if (e === userInfo.id) {
-      alert("튜터를 스터디에서 제거할 수 없습니다.");
+      Swal.fire({
+        icon: "warning",
+        title: "튜터를 스터디에서 제거할 수 없습니다.",
+      });
     } else {
-      alert(`id : ${e}님을 스터디에서 제거하였습니다.`);
+      Swal.fire({
+        icon: "success",
+        title: `id : ${e}님을 스터디에서 제거하였습니다.`,
+      });
+
       setMembers(members.filter((member) => member.id !== e));
     }
   };
@@ -239,7 +263,7 @@ const SearchResult = (props) => {
 const UserBox = (info) => {
   return (
     <div className="userBox">
-      <p>Lv.</p>
+      <p>Lv.{info.info.level}</p>
       <p>{info.info.id}</p>
       <p>{info.info.name}</p>
       <p>{info.info.exp}</p>
@@ -253,7 +277,7 @@ const UserBox = (info) => {
 const NowMems = (info) => {
   return (
     <div className="mems">
-      <p>Lv.</p>
+      <p>Lv.{info.info.level}</p>
       <p>{info.info.id}</p>
       <p>{info.info.name}</p>
       <p>{info.info.exp}</p>

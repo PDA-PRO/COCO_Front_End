@@ -15,7 +15,6 @@ import { Comments } from "./Comments/Comments";
 import { WriteComment } from "./Comments/WriteComment";
 import { useState } from "react";
 import { useAppSelector } from "../../../app/store";
-import axios from "axios";
 import { useEffect } from "react";
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +22,8 @@ import { Loader } from "../../Loader/Loader";
 import CodeMirror from "@uiw/react-codemirror";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 export const BoardDetail = () => {
   return (
@@ -51,6 +52,7 @@ const GetBoardDetail = () => {
         params: { user_id: userInfo.id },
       })
   );
+
   const { isFetching: commentFetching, data: commentList } = useQuery(
     ["commentList", Number.parseInt(board_id)],
     () =>
@@ -61,21 +63,31 @@ const GetBoardDetail = () => {
 
   //게시글 상세 정보 조회 성공시 필요한 상태 변환
   useEffect(() => {
-    if (!isFetching) {
-      if (
-        boardData.data.user_id === userInfo.id ||
-        userInfo.ismanage === true
-      ) {
-        setIsMe(true);
+    if (boardData !== undefined) {
+      if (!isFetching) {
+        if (
+          boardData.data.user_id === userInfo.id ||
+          userInfo.ismanage === true
+        ) {
+          setIsMe(true);
+        }
+        setLike(boardData.data.is_board_liked);
+        setLikeNum(boardData.data.likes);
       }
-      setLike(boardData.data.is_board_liked);
-      setLikeNum(boardData.data.likes);
     }
   }, [isFetching]);
 
   //상세 정보 조회 중 로딩화면 출력
   if (isFetching) {
     return <Loader />;
+  }
+
+  if (boardData === undefined) {
+    return (
+      <div className="boardDetail">
+        <div>404 not found</div>
+      </div>
+    );
   }
 
   const commentShoot = (e) => {
@@ -133,7 +145,7 @@ const GetBoardDetail = () => {
         }
       })
       .catch(() => {
-        alert("인증실패");
+        Swal.fire({ icon: "error", title: "인증실패" });
       });
   };
 
@@ -155,7 +167,7 @@ const GetBoardDetail = () => {
         }
       })
       .catch(() => {
-        alert("인증실패");
+        Swal.fire({ icon: "error", title: "인증실패" });
       });
   };
 
@@ -251,12 +263,15 @@ const GetBoardDetail = () => {
                 className="cWrite"
                 onClick={() => {
                   if (userInfo.id === "") {
-                    let check = window.confirm(
-                      "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
-                    );
-                    if (check === true) {
-                      navigate("/login");
-                    }
+                    Swal.fire({
+                      icon: "warning",
+                      title:
+                        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까",
+                    }).then((res) => {
+                      if (res.isConfirmed) {
+                        navigate("/login");
+                      }
+                    });
                   } else {
                     commentShoot(1);
                   }
@@ -267,22 +282,29 @@ const GetBoardDetail = () => {
               </div>
             </div>
 
-            <div className="cBody">
-              {write ? (
-                <WriteComment commentShoot={commentShoot} />
-              ) : (
-                <div id="closeState"></div>
-              )}
-              {commentFetching ? (
-                <Loader />
-              ) : (
-                commentList.data.map((commentData) => {
-                  return (
-                    <Comments commentData={commentData} key={commentData.id} />
-                  );
-                })
-              )}
-            </div>
+            {boardData !== undefined ? (
+              <div className="cBody">
+                {write ? (
+                  <WriteComment commentShoot={commentShoot} />
+                ) : (
+                  <div id="closeState"></div>
+                )}
+                {commentFetching ? (
+                  <Loader />
+                ) : (
+                  commentList.data.map((commentData) => {
+                    return (
+                      <Comments
+                        commentData={commentData}
+                        key={commentData.id}
+                      />
+                    );
+                  })
+                )}
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
         </div>
       </div>

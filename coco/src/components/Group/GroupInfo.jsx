@@ -16,20 +16,23 @@ import { RiUserAddLine } from "react-icons/ri";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { MdClear } from "react-icons/md";
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import { QA } from "./QA/QA";
 import { RoadMap } from "./RoadMap/RoadMap";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import axios from "axios";
+
 
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");
   const userInfo = useAppSelector((state) => state.loginState);
   const userID = userInfo.id;
   const [page, setPage] = useState(1);
-  const { isLoading, isError, data, error } = useQuery({
+  const navigate = useNavigate();
+  const { isLoading, data } = useQuery({
     queryKey: ["roominfo"],
     queryFn: () =>
       axios.get(API.ROOM + path.at(-1), {
@@ -38,14 +41,13 @@ export const GroupInfo = () => {
         },
       }),
   });
+
   const moveWorkbook = () => {
     setPage(2);
   };
   const moveBoard = () => {
     setPage(1);
   };
-
-  const navigate = useNavigate();
 
   const moveWrite = (id) => {
     navigate(`/room/qa/write`, { state: id });
@@ -54,54 +56,64 @@ export const GroupInfo = () => {
   return (
     <>
       <Header />
-      <div className="groupInfo">
-        <div className="gi">
-          {isLoading ? <Spinner /> : <GiHeader info={data.data} />}
+      {data !== undefined ? (
+        <div className="groupInfo">
+          <div className="gi">
+            {isLoading ? <Spinner /> : <GiHeader info={data.data} />}
 
-          <div id="gi-B">
-            <div className="gi-GB">
-              <div className="gb-header">
-                {page === 1 ? (
-                  <div id="he1" onClick={() => moveWorkbook()}>
-                    <ImBooks size={25} color="green" />
-                    <p>학습 RoadMap 열기</p>
-                  </div>
+            <div id="gi-B">
+              <div className="gi-GB">
+                <div className="gb-header">
+                  {page === 1 ? (
+                    <div id="he1" onClick={() => moveWorkbook()}>
+                      <ImBooks size={25} color="green" />
+                      <p>학습 RoadMap 열기</p>
+                    </div>
+                  ) : (
+                    <div id="he1" onClick={() => moveBoard()}>
+                      <IoChatbubblesOutline size={25} color="green" />
+                      <p>Q & A 열기</p>
+                    </div>
+                  )}
+                  {page === 1 ? (
+                    <div id="he1" onClick={() => moveWrite(path.at(-1))}>
+                      <TfiPencil size={25} />
+                      <p>질문 작성</p>
+                    </div>
+                  ) : isLoading ? (
+                    <Spinner />
+                  ) : (
+                    <MakeRoadMap resource={data.data} />
+                  )}
+                </div>
+
+                {page == 1 ? (
+                  <Suspense fallback={<Spinner />}>
+                    <QA />
+                  </Suspense>
                 ) : (
-                  <div id="he1" onClick={() => moveBoard()}>
-                    <IoChatbubblesOutline size={25} color="green" />
-                    <p>Q & A 열기</p>
-                  </div>
-                )}
-                {page === 1 ? (
-                  <div id="he1" onClick={() => moveWrite(path.at(-1))}>
-                    <TfiPencil size={25} />
-                    <p>질문 작성</p>
-                  </div>
-                ) : isLoading ? (
-                  <Spinner />
-                ) : (
-                  <MakeRoadMap resource={data.data} />
+                  <Suspense fallback={<Spinner />}>
+                    <RoadMap userID={userID} path={path.at(-1)} />
+                  </Suspense>
                 )}
               </div>
 
-              {page == 1 ? (
-                <Suspense fallback={<Spinner />}>
-                  <QA />
-                </Suspense>
-              ) : (
-                <Suspense fallback={<Spinner />}>
-                  <RoadMap userID={userID} path={path.at(-1)} />
-                </Suspense>
-              )}
-            </div>
-
-            <div className="gi-ML">
-              {isLoading ? <Spinner /> : <MemberList resource={data.data} />}
-              {isLoading ? <Spinner /> : <LeaveOrDelete resource={data.data} />}
+              <div className="gi-ML">
+                {isLoading ? <Spinner /> : <MemberList resource={data.data} />}
+                {isLoading ? (
+                  <Spinner />
+                ) : (
+                  <LeaveOrDelete resource={data.data} />
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="groupInfo">
+          <div>404 not found</div>
+        </div>
+      )}
       <Footer />
     </>
   );
@@ -220,7 +232,10 @@ const InviteNewMember = (props) => {
         setUserList([...data.userlist]);
       })
       .catch(() => {
-        alert("검색에 실패하였습니다");
+        Swal.fire({
+          icon: "error",
+          title: "검색에 실패하였습니다.",
+        });
       });
   };
 
@@ -239,13 +254,22 @@ const InviteNewMember = (props) => {
         }
       )
       .then(() => {
-        alert(`${id}님을 초대하였습니다`);
+        Swal.fire({
+          icon: "success",
+          title: `${id}님을 초대하였습니다`,
+        });
       })
       .catch(({ response }) => {
         if (response.status == 409) {
-          alert("이미 초대된 아이디입니다.");
+          Swal.fire({
+            icon: "warning",
+            title: `이미 초대된 아이디입니다.`,
+          });
         } else {
-          alert("알 수 없는 오류");
+          Swal.fire({
+            icon: "error",
+            title: `Server Error.`,
+          });
         }
       });
   };
@@ -353,12 +377,21 @@ const LeaveOrDelete = ({ resource }) => {
         .then((res) => {
           console.log(res.data.code);
           if (res.data.code) {
-            alert(`스터디룸을 삭제하였습니다`);
-            navigate("/room");
+            Swal.fire({
+              icon: "success",
+              title: `스터디룸을 삭제하였습니다`,
+            }).then((res) => {
+              if (res.isConfirmed) {
+                navigate("/room");
+              }
+            });
           }
         })
         .catch(() => {
-          alert("스터디룸 삭제에 실패하였습니다");
+          Swal.fire({
+            icon: "error",
+            title: "스터디룸 삭제에 실패하였습니다.",
+          });
         });
     } else {
     }

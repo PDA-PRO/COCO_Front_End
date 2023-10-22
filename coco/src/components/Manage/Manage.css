@@ -1,153 +1,4 @@
-/*-------------로그인 섹션------------------*/
-.manageLogin {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  gap: 50px;
-  background-color: #222222;
-}
-
-.manageLogin h2 {
-  font-family: "Pretendard-Regular";
-  font-weight: 600;
-  font-size: 2.2rem;
-  color: skyblue;
-  width: 330px;
-  text-align: center;
-  border: 1px solid rgb(176, 229, 252);
-  padding: 10px;
-  margin-bottom: 70px;
-}
-
-.form__group {
-  position: relative;
-  padding: 15px 0 0;
-}
-.form__field {
-  font-family: "Pretendard-Regular";
-  width: 100%;
-  width: 330px;
-  border: 0;
-  border-bottom: 2px solid skyblue;
-  outline: 0;
-  font-size: 1.5rem;
-  color: #fff;
-  padding: 6px 0;
-  background: transparent;
-  transition: border-color 0.2s;
-}
-.form__field::placeholder {
-  color: transparent;
-}
-.form__field:placeholder-shown ~ .form__label {
-  font-size: 1.2rem;
-  cursor: text;
-  top: 20px;
-}
-.form__label {
-  position: absolute;
-  top: 0;
-  display: flex;
-  transition: 0.2s;
-  color: #9b9b9b;
-}
-.form__field:focus {
-  padding-bottom: 6px;
-  font-weight: 600;
-  border-width: 3px;
-  border-image: linear-gradient(to right, #71cafd, #3872ef);
-  border-image-slice: 1;
-}
-.form__field:focus ~ .form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.1s;
-  font-size: 1.1rem;
-  color: #3872ef;
-  font-weight: 600;
-}
-
-.form__field:required,
-.form__field:invalid {
-  box-shadow: none;
-}
-
-.manageLogin div[class*="box"] {
-  margin-top: 30px;
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.manageLogin .btn {
-  background-color: rgba(34, 34, 34, 0.1);
-  font-family: "Pretendard-Regular";
-  font-weight: 500;
-  font-size: 1.3rem;
-  line-height: 45px;
-  letter-spacing: 2px;
-  height: 60px;
-  text-align: center;
-  width: 330px;
-  cursor: pointer;
-}
-
-.manageLogin .btn-one {
-  color: skyblue;
-  transition: all 0.4s;
-  position: relative;
-}
-.manageLogin .btn-one span {
-  transition: all 0.3s;
-}
-.manageLogin .btn-one::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0;
-  transition: all 0.3s;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  border-top-style: solid;
-  border-bottom-style: solid;
-  border-top-color: rgba(255, 255, 255, 0.5);
-  border-bottom-color: rgba(255, 255, 255, 0.5);
-  transform: scale(0.1, 1);
-}
-.manageLogin .btn-one:hover span {
-  letter-spacing: 5px;
-}
-.manageLogin .btn-one:hover::before {
-  opacity: 1;
-  transform: scale(1, 1);
-}
-.manageLogin .btn-one::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  transition: all 0.3s;
-  background-color: rgba(34, 34, 34, 0.1);
-}
-.manageLogin .btn-one:hover::after {
-  opacity: 0;
-  transform: scale(0.1, 1);
-}
-
-/*-------------로그인 섹션------------------*/
-
+/*-------------공통 사용부 - 문제 업로드------------------*/
 .manage {
   display: flex;
   flex-flow: column;
@@ -189,11 +40,10 @@
 .m-upload {
   display: flex;
   flex-flow: column nowrap;
-  margin-top: 1.2rem;
-  margin-bottom: 1rem;
-  border: 2px solid darkgray;
-  border-radius: 30px;
-  padding: 3rem;
+  margin-top: 1.3rem;
+  border: 1px solid darkgray;
+  border-radius: 20px;
+  padding: 2rem;
   font-family: "Pretendard-Regular";
 }
 
@@ -250,7 +100,7 @@
 }
 
 .m-choLen {
-  margin-top: 158px;
+  margin-top: 30px;
 }
 
 .m-testCase {
@@ -556,4 +406,149 @@
 .tmem p {
   margin: 0 !important;
   cursor: pointer;
+}
+
+/*--------------------- AI 문제 업로드 ---------------------*/
+
+.howToUse {
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+  gap: 4px;
+}
+
+.howToUse h4 {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1.2em;
+  color: navy;
+}
+
+.howToUse p {
+  font-size: 1em;
+  margin: 0 !important;
+  color: rgb(87, 87, 87);
+}
+
+.template {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.template p {
+  font-size: 1.1em;
+  margin: 0 !important;
+  color: navy;
+}
+
+#demo-row-radio-buttons-group-label {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+}
+
+#caution {
+  color: gray;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+.AskToAI {
+  display: grid;
+  grid-template-columns: 90% 10%;
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.AskToAI #btn-ask {
+  color: skyblue;
+  cursor: pointer;
+}
+
+.AskToAI #btn-ask:hover {
+  color: rgb(88, 141, 221);
+}
+
+.m-upload-AI {
+  grid-column: 1/3;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 2rem;
+  font-family: "Pretendard-Regular";
+  width: 100%;
+}
+
+.btnDiv {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3vw;
+  height: 50px;
+  margin-top: 3rem !important;
+}
+
+#m-submit_btn-AI {
+  border: 1px solid #00ff00;
+}
+
+#m-submit_btn-AI:hover {
+  border: 1px solid #00ff00;
+  background-color: #00ff00 !important;
+}
+
+/*--------------------- AI 플러그인 관리 ---------------------*/
+
+.contentName {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contentName p {
+  margin: 0 !important;
+  font-size: 1em;
+  font-weight: 600;
+  color: navy;
+}
+
+.pluginBody {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: rgb(249, 249, 295);
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin: 0 25px 40px 25px;
+}
+
+.pluginBody .top {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.pluginBody .top p {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.explain {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.explain p {
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0 !important;
+}
+
+.MuiTypography-root {
+  font-family: "Pretendard-Regular" !important;
 }

@@ -5,13 +5,14 @@
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
     "@codemirror/lang-python": "^6.1.1",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@looop/quill-image-resize-module-react": "^3.1.5",
-    "@mui/material": "^5.11.3",
+    "@mui/icons-material": "^5.14.13",
+    "@mui/material": "^5.14.13",
     "@reduxjs/toolkit": "^1.9.0",
     "@tanstack/react-query": "^4.33.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -27,6 +28,7 @@
     "draftjs-to-html": "^0.9.1",
     "express": "^4.18.2",
     "html-to-draftjs": "^1.5.0",
+    "immutable": "^4.3.4",
     "jquery": "^3.7.0",
     "jszip": "^3.10.1",
     "jwt-decode": "^3.1.2",
@@ -37,6 +39,7 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-icons": "^4.10.1",
+    "react-lottie": "^1.2.3",
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-responsive": "^9.0.0",
@@ -47,12 +50,13 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
+    "sweetalert2": "^11.7.32",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -72,5 +76,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.2",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.23.2"
   }
 }

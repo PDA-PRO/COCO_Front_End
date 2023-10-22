@@ -15,12 +15,23 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
+import {
+  TiBatteryCharge,
+  TiBatteryLow,
+  TiBatteryMid,
+  TiBatteryHigh,
+  TiBatteryFull,
+} from "react-icons/ti";
 
 export const Block = (props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
   const Large = useMediaQuery({ minWidth: 1000 });
+
+  const board = props.info.board;
+  const problem = props.info.problem;
+
 
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
@@ -33,16 +44,61 @@ export const Block = (props) => {
   const [bgColor, setBgColor] = useState("white");
   const [date, setDate] = useState("");
 
+  const setLevel = (e) => {
+    switch (e) {
+      case 1:
+        return (
+          <TiBatteryLow
+            size={34}
+            color="rgb(98, 148, 255)"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 2:
+        return (
+          <TiBatteryMid
+            size={34}
+            color="#9DD84B"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 3:
+        return (
+          <TiBatteryHigh
+            size={34}
+            color="#ff7e00"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 4:
+        return (
+          <TiBatteryFull
+            size={34}
+            color="red"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+      case 5:
+        return (
+          <TiBatteryCharge
+            size={34}
+            color="#7d1b7e"
+            style={{ paddingBottom: "3px" }}
+          />
+        );
+    }
+  };
+
   useEffect(() => {
     const chCate = (e) => {
       if (e === 1) {
-        setCategory("'공지'");
+        setCategory("공지");
         setBgColor("rgb(231, 255, 211)");
       } else if (e === 2) {
-        setCategory("'Help'");
+        setCategory("Help");
         setBgColor("rgb(255, 248, 211)");
       } else if (e === 3) {
-        setCategory("'자유'");
+        setCategory("자유");
         setBgColor("rgb(237, 251, 255)");
       }
     };
@@ -72,115 +128,149 @@ export const Block = (props) => {
       return `${Math.floor(betweenTimeDay / 365)}년전`;
     }
 
-    chCate(props.info.category);
-    var originTime = props.info.time;
+    chCate(board.category);
+    var originTime = board.time;
     setDate(timeForToday(originTime));
-  }, [props.info]);
+  }, [board]);
 
   return (
     <div
       className="Block"
       style={{ marginTop: userInfo.id === "" ? "10rem" : "5rem" }}
     >
-      <div className="box1">
-        <div className="boxTitle">
-          <FaHotjar size={28} color="red" />
-          <h2>Hot 게시글</h2>
-        </div>
+      {board !== false ? (
+        <div className="box1">
+          <div className="boxTitle">
+            {/* <FaHotjar size={28} color="red" /> */}
+            <h2>인기 게시글</h2>
+          </div>
 
-        <div
-          className="blockBox"
-          style={{ backgroundColor: bgColor }}
-          onClick={() => {
-            moveBoard(props.info.board_id);
-          }}
-        >
-          <div className="blockContent">
-            <div className="blockTop">
-              <h3>{props.info.title}</h3>
-              <h4>{date}</h4>
-            </div>
-            <div className="blockSec">
-              <h3 id="blockCat">{category}</h3>
+          <div
+            className="blockBox"
+            style={{ backgroundColor: bgColor }}
+            onClick={() => {
+              moveBoard(board.board_id);
+            }}
+          >
+            <div className="blockContent">
+              <div className="blockTop">
+                <h3>{board.title}</h3>
+                <h4>{date}</h4>
+              </div>
+              <div className="blockSec">
+                <h3 id="blockCat">{category}</h3>
 
-              <div className="block_un">
-                <div className="unOne">
-                  <BsFillEyeFill
-                    color="rgb(112, 112, 112)"
-                    size={22}
-                    style={{ marginBottom: "3px" }}
-                  />
-                  <p>{props.info.views}</p>
-                </div>
-                <div className="unOne">
-                  <BsChatSquareTextFill
-                    color="rgb(112, 112, 112)"
-                    size={22}
-                    style={{ marginLeft: "10px" }}
-                  />
-                  <p>{props.info.comments}</p>
-                </div>
+                <div className="block_un">
+                  <div className="unOne">
+                    <BsFillEyeFill
+                      color="rgb(112, 112, 112)"
+                      size={15}
+                      style={{ marginBottom: "3px" }}
+                    />
+                    <p>{board.views}</p>
+                  </div>
+                  <div className="unOne">
+                    <BsChatSquareTextFill
+                      color="rgb(112, 112, 112)"
+                      size={15}
+                      style={{ marginLeft: "7px" }}
+                    />
+                    <p>{board.comments}</p>
+                  </div>
 
-                <div className="unOne">
-                  <BsHeartFill color="red" size={22} />
-                  <p style={{ color: "red" }}>{props.info.likes}</p>
+                  <div className="unOne">
+                    <BsHeartFill color="red" size={15} />
+                    <p style={{ color: "red" }}>{board.likes}</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="blockBody">
-              <p>작성자 : {props.info.user_id}</p>
+              <div className="blockBody">
+                <p>작성자 : {board.user_id}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="box2">
-        <div className="boxTitle">
-          <FaHotjar size={28} color="red" />
-          <h2>Hot 문제</h2>
+      ) : (
+        <div>
+          <div className="boxTitle">
+            {/* <FaHotjar size={28} color="red" /> */}
+            <h2/>
+          </div>
+          <div
+            className="box1Board shadow-drop-2-center"
+            onClick={() => navigate(`/board`)}
+          >게시글 쓰러가기</div>
         </div>
+      )}
 
-        <div
-          className="blockBox"
-          onClick={() => {
-            moveTask(props.info.problem_id);
-          }}
-          style={{ backgroundColor: "#f5f5f5" }}
-        >
-          <div className="blockContent">
-            <div className="blockTop2">
-              <div className="redBox">
-                <h3>No.{props.info.problem_id}</h3>
+      {problem !== false ? (
+        <div className="box2">
+          <div className="boxTitle">
+            {/* <FaHotjar size={28} color="red" /> */}
+            <h2>관심도 높은 문제</h2>
+          </div>
+
+          <div
+            className="blockBox"
+            onClick={() => {
+              moveTask(problem.problem_id);
+            }}
+            style={{ backgroundColor: "#f7f7f7" }}
+          >
+            <div className="blockContent">
+              <div className="blockTop2">
+                <div className="redBox">
+                  <h3>No.{problem.problem_id}</h3>
+                </div>
+
+                <h3>{problem.problem_title}</h3>
               </div>
 
-              <h3>{props.info.problem_title}</h3>
-            </div>
+              <div className="blockSec2">
+                <div className="un">
+                  <p>난이도 : </p>
+                  {setLevel(problem.problem_diff)}
+                </div>
 
-            <div className="blockSec2">
-              {Rating(`${props.info.problem_diff}`)}
-              <p>
-                정답률 :{" "}
-                <span
-                  style={
-                    props.info.problem_rate > 50
-                      ? { color: "#7472ce" }
-                      : { color: "red" }
-                  }
-                >
-                  {props.info.problem_rate}
-                </span>
-                %
-              </p>
-            </div>
+                <p>
+                  정답률 :{" "}
+                  <span
+                    style={
+                      problem.problem_rate > 50
+                        ? { color: "#7472ce" }
+                        : { color: "red" }
+                    }
+                  >
+                    {problem.problem_rate}%
+                  </span>
+                </p>
+              </div>
 
-            <div className="blockThird">
-              <p>시간 제한 : {props.info.problem_timeLimit}sec</p>
-              <p>메모리 제한 : {props.info.problem_memLimit}mb</p>
-              <p>총 제출수 : {props.info.problem_submitCount}</p>
+              <div className="blockThird">
+                <p>시간 제한 : {problem.problem_timeLimit}sec</p>
+                <p>메모리 제한 : {problem.problem_memLimit}mb</p>
+                <p>총 제출수 : {problem.problem_submitCount}</p>
+              </div>
             </div>
           </div>
         </div>
+      ) : (
+
+        <div>
+        <div className="boxTitle">
+          {/* <FaHotjar size={28} color="red" /> */}
+          <h2/>
+        </div>
+        <div
+          className="box2Problem shadow-drop-2-center"
+          onClick={() => navigate(`/problems`)}
+        >
+          문제 풀러가기
+        </div>
       </div>
+
+      )}
     </div>
   );
 };

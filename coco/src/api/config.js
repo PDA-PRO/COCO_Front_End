@@ -1,6 +1,7 @@
 const BASE_URL = "http://localhost:1000";
 
 export const API = {
+  BASE_URL: "http://localhost:1000",
   USER: `${BASE_URL}/user/`,
   PERMISSION: `${BASE_URL}/user/permission`,
   FINDID: `${BASE_URL}/user/findid/`,
@@ -37,4 +38,8 @@ export const API = {
   SELECTANSWER: `${BASE_URL}/room/select-answer`,
   LINT: `${BASE_URL}/lint`,
   ALARM: `${BASE_URL}/user/alarm`,
+  WPC: `${BASE_URL}/wpc/main`,
+  LEVEL: `${BASE_URL}/user/level`,
+  PLUGINSTATUS: `${BASE_URL}/plugin/status`,
+  HOT: `${BASE_URL}/hot`,
 };

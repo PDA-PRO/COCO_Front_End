@@ -1,6 +1,6 @@
-# COCO_Front_End
-충북대학교 소프트웨어학과
-CBNU SW Seniar Project COCO - React
+
+[![Build Status](https://app.travis-ci.com/PDA-PRO/COCO_Front_End.svg?branch=develop)](https://app.travis-ci.com/PDA-PRO/COCO_Front_End) # COCO_Front_End
+CBNU SW Seniar Project COCO - React JS
 
 ## Environmental preparation (Windows)
 

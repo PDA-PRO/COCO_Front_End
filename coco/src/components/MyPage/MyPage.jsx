@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Header } from "../Home/Header";
 import { Footer } from "../Home/Footer";
 import "./MyPage.css";
@@ -19,6 +19,7 @@ export const MyPage = () => {
   const path = window.location.pathname.split("/");
 
   var me = userInfo.id;
+
   var now = path.at(-1);
 
   return (

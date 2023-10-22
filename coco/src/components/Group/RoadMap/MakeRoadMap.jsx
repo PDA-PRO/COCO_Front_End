@@ -6,10 +6,10 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { GoSearch } from "react-icons/go";
 import { Suspense } from "react";
-import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/esm/Spinner";
+import Swal from "sweetalert2";
 import {
   TiBatteryCharge,
   TiBatteryLow,
@@ -29,6 +29,7 @@ import { API } from "api/config";
 import ReactQuill from "react-quill";
 import Quill from "quill";
 import ImageResize from "@looop/quill-image-resize-module-react";
+import axios from "axios";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -52,9 +53,11 @@ export const MakeRoadMap = () => {
       quillRef.current.value === "" ||
       tasks.length === 0
     ) {
-      alert(
-        "Roadmap 이름과 설명을 모두 작성해주세요.\n문제는 최소 1문제 이상 포함되어야 합니다."
-      );
+      Swal.fire({
+        icon: "warning",
+        title:
+          "Roadmap 이름과 설명을 모두 작성해주세요.\n문제는 최소 1문제 이상 포함되어야 합니다.",
+      });
     } else {
       axios
         .post(
@@ -72,23 +75,36 @@ export const MakeRoadMap = () => {
           }
         )
         .then((res) => {
-          alert("로드맵을 생성하였습니다");
-          navigate(`/room/${path.at(-1)}`);
+          Swal.fire({ icon: "success", title: "로드맵을 생성하였습니다" }).then(
+            (res) => {
+              if (res.isConfirmed) {
+                navigate(`/room/${path.at(-1)}`);
+              }
+            }
+          );
         });
     }
   };
 
   const addProblems = (e) => {
     if (tasks.includes(e)) {
-      alert("이미 추가된 문제입니다.");
+      Swal.fire({ icon: "warning", title: "이미 추가된 문제입니다." });
     } else {
-      alert(`No.${e}번 문제를 로드맵에 추가하였습니다.`);
+      Swal.fire({
+        icon: "success",
+        title: `No.${e}번 문제를 로드맵에 추가하였습니다.`,
+      });
+
       setTasks([...tasks, e]);
     }
   };
 
   const deleteProblem = (e) => {
-    alert(`No.${e}번 문제를 로드맵에서 제거하였습니다.`);
+    Swal.fire({
+      icon: "info",
+      title: `No.${e}번 문제를 로드맵에서 제거하였습니다.`,
+    });
+
     setTasks(tasks.filter((value) => value !== e));
   };
 

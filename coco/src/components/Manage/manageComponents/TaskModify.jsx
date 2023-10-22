@@ -1,4 +1,3 @@
-import "../Manage.css";
 import React from "react";
 import { useState, useMemo, useRef, useEffect, Suspense } from "react";
 import Form from "react-bootstrap/Form";
@@ -11,7 +10,6 @@ import {
 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import axios from "axios";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -22,6 +20,10 @@ import JSZip from "jszip";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../../api/fetchTask";
 import { API } from "api/config";
+import Swal from "sweetalert2";
+import "../Manage.css";
+import axios from "axios";
+
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -186,7 +188,7 @@ export const TaskModifyPage = ({ resource }) => {
       !TCCheck[0] ||
       categoryRef.current.getValue().length == 0
     ) {
-      return alert("정보 입력 부족");
+      return Swal.fire({ icon: "error", title: "정보 입력 부족" });
     } else {
       const formData = new FormData();
       //File 추가
@@ -221,9 +223,15 @@ export const TaskModifyPage = ({ resource }) => {
         })
         .then(function (response) {
           if (response.data.code === 1) {
-            alert(`${titleRef.current.value} 업데이트 성공`);
+            Swal.fire({
+              icon: "success",
+              title: `${titleRef.current.value} 업데이트 성공`,
+            });
           } else {
-            alert("ERROR - SERVER COMMUNICATION FAILED");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - SERVER COMMUNICATION FAILED",
+            });
           }
         });
     }

@@ -12,7 +12,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import fetchData from "../../api/fetchTask";
-import axios from "axios";
 import { useAppSelector } from "../../app/store";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
@@ -22,6 +21,8 @@ import { python } from "@codemirror/lang-python";
 import Form from "react-bootstrap/Form";
 import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -37,6 +38,7 @@ export const PBD = () => {
 
 const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
+  console.log(detail.is_ai);
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(0);
@@ -50,12 +52,14 @@ const GetDetail = ({ resource }) => {
   //코드 submit
   const submitCode = () => {
     if (userInfo.id === "") {
-      const check = window.confirm(
-        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
-      );
-      if (check === true) {
-        navigate("/login");
-      }
+      Swal.fire({
+        icon: "warning",
+        title: "로그인이 필요한 서비스입니다\n로그인 하시겠습니까?",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       Promise.resolve().then(
         axios
@@ -72,11 +76,17 @@ const GetDetail = ({ resource }) => {
             }
           )
           .then(function (response) {
-            alert(`${userInfo.id}님 ${detail.id} 제출완료`);
+            Swal.fire({
+              icon: "success",
+              title: `${userInfo.id}님 \n ${detail.id} 제출완료`,
+            });
             goToResult(userInfo.id, { state: { userid: userInfo.id } });
           })
           .catch(() => {
-            alert("인증실패");
+            Swal.fire({
+              icon: "error",
+              title: "ERROR - Server Identification Failed",
+            });
           })
       );
       return;
@@ -84,7 +94,6 @@ const GetDetail = ({ resource }) => {
   };
 
   const setMyTask = (task_id) => {
-    console.log(task_id);
     axios
       .post(
         API.MYTASK,
@@ -98,19 +107,26 @@ const GetDetail = ({ resource }) => {
       )
       .then((res) => {
         if (res.data === false) {
-          alert("이미 추가된 문제입니다");
+          Swal.fire({ icon: "error", title: "이미 추가된 문제입니다." });
         } else {
-          alert("내 문제집에 추가하였습니다");
+          Swal.fire({ icon: "success", title: "내 문제집에 추가하였습니다" });
         }
       })
       .catch(() => {
-        alert("내 문제집에 추가하지 못했습니다");
+        Swal.fire({ icon: "error", title: "내 문제집에 추가하지 못했습니다" });
       });
   };
 
-  return (
+  return detail !== undefined ? (
     <div className="PBD">
-      <div className="PBD-title">
+      <div
+        className="PBD-title"
+        style={
+          detail.is_ai === 1
+            ? { backgroundColor: "rgb(222, 255, 224)" }
+            : { backgroundColor: "rgb(241, 241, 241)" }
+        }
+      >
         <div className="problemsName-pbd">
           <div>No.{detail.id}</div>
           <div className="problemInfo-pbd">
@@ -121,6 +137,9 @@ const GetDetail = ({ resource }) => {
               </div>
               <div className="PBD-memLimit">
                 메모리 제한 : {detail.memLimit}MB
+              </div>
+              <div className="PBD-memLimit">
+                카테고리 : {detail.category.join(", ")}
               </div>
             </div>
           </div>
@@ -157,6 +176,14 @@ const GetDetail = ({ resource }) => {
         <Allotment defaultSizes={[1, 1]} minSize={400} snap={true}>
           <div className="PBD-problem PBD-scroll">
             <div className="PBD-pbTxt">
+              {detail.is_ai === 1 ? (
+                <div className="isAimade">
+                  <img src="../image/ai-file.png" alt="ai" width="35px" />
+                  <p>AI가 생성한 문제입니다.</p>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className="PBD-pbTitle">
                 <BsClipboardCheck size={25} />
                 <h2>문제 설명</h2>
@@ -208,7 +235,7 @@ const GetDetail = ({ resource }) => {
                     <BsQuestionLg size={25} color="red" />
                     <h2>입력 예시</h2>
                   </div>
-                  <p className="PBD-txt">{detail.inputEx1}</p>
+                  <p className="PBD-txt">{detail.inputEx2}</p>
                 </div>
 
                 <div>
@@ -217,7 +244,7 @@ const GetDetail = ({ resource }) => {
                     <h2>출력 예시</h2>
                   </div>
 
-                  <p className="PBD-txt">{detail.outputEx1}</p>
+                  <p className="PBD-txt">{detail.outputEx2}</p>
                 </div>
               </div>
             ) : (
@@ -255,7 +282,14 @@ const GetDetail = ({ resource }) => {
           </Allotment.Pane>
         </Allotment>
       </div>
-      <div className="PBD-menu">
+      <div
+        className="PBD-menu"
+        style={
+          detail.is_ai === 1
+            ? { backgroundColor: "rgb(222, 255, 224)" }
+            : { backgroundColor: "rgb(241, 241, 241)" }
+        }
+      >
         <Button
           variant="outline-secondary"
           id="submit_btn"
@@ -274,5 +308,7 @@ const GetDetail = ({ resource }) => {
         </Button>
       </div>
     </div>
+  ) : (
+    <div>404 not found</div>
   );
 };

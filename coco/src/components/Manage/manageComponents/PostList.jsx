@@ -1,8 +1,5 @@
-import "../Manage.css";
-
 import React, { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   BsFillEyeFill,
@@ -16,6 +13,10 @@ import {
 import Pagination from "@mui/material/Pagination";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
+import Swal from "sweetalert2";
+import "../Manage.css";
+import axios from "axios";
+
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
@@ -149,7 +150,6 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
   };
 
   const loadlist = (e) => {
-    console.log(info.id);
     axios
       .delete(API.BOARD, {
         params: { board_id: info.id },
@@ -158,7 +158,11 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
       .then(function (response) {
         setReload(response.data);
         setLoading(true);
-        alert(`id : ${info.id}, title : ${info.title} 게시글을 삭제했습니다.`);
+        Swal.fire({
+          icon: "success",
+          title: `id : ${info.id}, title : ${info.title} 게시글을 삭제했습니다.`,
+          timer: 1000,
+        });
       });
   };
 
@@ -186,6 +190,8 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
+
+  console.log(info);
 
   return (
     <div className="postList">

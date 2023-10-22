@@ -36,15 +36,12 @@
 .accordion-header button .check {
   grid-column: 2/3;
 } */
+
 .q_content {
   display: flex;
   flex-flow: column nowrap;
   padding: 10px;
   margin: 0px 10px 10px 10px;
-}
-
-.q_content:nth-child(1) {
-  border-bottom: 1px solid lightgray;
 }
 
 /* .makeAns:focus {
@@ -55,6 +52,38 @@
   background-color: rgb(245, 245, 245);
 
   border-radius: 15px;
+}
+
+.oneQuestion .R-Code {
+  padding: 0 0 1em 0;
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 15px;
+  cursor: text;
+  background-color: rgb(245, 245, 245);
+  margin: 2px 1vw !important;
+  white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.oneQuestion .R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 3% 95%;
+  column-gap: 13px;
+}
+
+.oneQuestion .codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.oneQuestion .codeLine .codeTxt {
+  grid-column: 2/3;
 }
 
 .contentBody p {
@@ -88,26 +117,39 @@
   color: gray;
 }
 
-.contentBody .cm-content {
-  background-color: rgb(245, 245, 245);
+.contentBody .qForAI {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 7px;
+  float: right;
+  padding: 10px 10px 0 0;
+  cursor: pointer;
 }
+
+.contentBody .qForAI:hover {
+  color: rgb(71, 183, 228);
+}
+
+/* .contentBody .cm-content {
+  background-color: rgb(245, 245, 245);
+} */
 
 .contentBody .cm-gutterElement {
   background-color: rgb(245, 245, 245);
   font-family: "Pretendard-Regular";
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .contentBody .cm-line {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;
 }
 
 .contentBody .cm-activeLine {
-  background-color: rgb(245, 245, 245);
+  /* background-color: rgb(245, 245, 245); */
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500;
@@ -128,20 +170,32 @@
   padding: 5px;
 }
 
+.nameAnddate .fromAI {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.fromAI h4 {
+  color: rgb(0, 22, 119) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .nameAnddate p:nth-child(1) {
   font-weight: 600 !important;
 }
 
 .nameAnddate p:nth-child(2) {
   color: gray;
-  font-weight: 500 !important;
-  font-size: 0.8em !important;
 }
 
 .ans {
   display: flex;
   flex-flow: column nowrap;
-  background-color: rgb(247, 252, 255);
   padding: 10px;
   border-radius: 15px;
   margin-bottom: 15px;
@@ -204,9 +258,38 @@
 }
 
 .ans .AnswerContent {
-  border-bottom: 1px solid lightgray;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 8px;
+}
+
+.ans h4 {
+  color: rgb(111, 86, 224);
+}
+.ans .R-Code {
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 15px;
+  cursor: text;
+  background-color: transparent !important;
+  margin: 2px 0.5vw !important;
+  white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+}
+
+.ans .R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 3% 95%;
+  column-gap: 13px;
+}
+
+.ans .codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
 }
 
 .makeAns {
@@ -250,4 +333,51 @@
   font-family: "Pretendard-Regular";
   font-size: 1em;
   font-weight: 500 !important;
+}
+
+.swal2-title {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 500 !important;
+  line-height: 100%;
+}
+
+.swal2-title h2 {
+  font-family: "Pretendard-Regular";
+  font-size: 1.2em;
+  font-weight: 500 !important;
+}
+
+.swal2-title p {
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+.swal2-title br {
+  height: 10px !important;
+}
+
+.swal2-footer {
+  font-family: "Pretendard-Regular";
+  font-size: 1em;
+  font-weight: 500 !important;
+  color: rgb(173, 173, 173) !important;
+}
+
+.swal2-actions button {
+  font-family: "Pretendard-Regular";
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+}
+
+.swalCode {
+  margin: 0 auto;
+  text-align: left !important;
+  white-space: pre-wrap;
+  width: max-content;
+  line-height: 120% !important;
+  max-height: 500px;
+  border-top: 1px solid lightgray;
+  padding-top: 10px;
 }

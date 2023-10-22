@@ -2,10 +2,10 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-import axios from "axios";
 import { useAppSelector } from "../../../../app/store";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 export const WriteComment = ({ commentShoot }) => {
   const userInfo = useAppSelector((state) => state.loginState);

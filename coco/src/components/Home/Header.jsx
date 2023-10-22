@@ -25,6 +25,9 @@ export const Header = (props) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
+  const path = window.location.pathname.split("/");
+  var now = path.at(-1);
+
   const handleClick = () => {
     setShow(!show);
   };
@@ -52,6 +55,10 @@ export const Header = (props) => {
         navigate("/login");
         break;
       case 6:
+        if (now !== id) {
+          navigate(`/mypage/${id}`);
+          window.location.reload();
+        }
         navigate(`/mypage/${id}`);
         break;
       case 7:
@@ -109,7 +116,7 @@ export const Header = (props) => {
           </div>
 
           <div>
-            {userInfo.id === "" ? (
+            {userInfo.id === undefined || userInfo.id === "" ? (
               <h3 onClick={() => movdPage(5)}>LOGIN</h3>
             ) : (
               <div ref={ref} onClick={handleClick}>

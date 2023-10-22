@@ -10,11 +10,11 @@ export const Footer = (props) => {
       case 1:
         window.open("https://www.instagram.com/lookin_min/");
         break;
-      case 3:
-        window.open("https://www.festival-ing.org");
-        break;
+      // case 3:
+      //   window.open("https://www.festival-ing.org");
+      //   break;
       case 4:
-        window.open("https://github.com/MinPangWon/COCO_Front_End");
+        window.open("https://github.com/PDA-PRO");
         break;
     }
   };
@@ -43,16 +43,18 @@ export const Footer = (props) => {
             color={props.props == 1 ? "black" : "rgb(124, 124, 124)"}
             size={30}
             onClick={() => move(1)}
+            title="INSTAGRAM으로 이동"
           />
-          <RiGooglePlayFill
+          {/* <RiGooglePlayFill
             color={props.props == 1 ? "black" : "rgb(124, 124, 124)"}
             size={30}
             onClick={() => move(3)}
-          />
+          /> */}
           <IoLogoGithub
             color={props.props == 1 ? "black" : "rgb(124, 124, 124)"}
             size={30}
             onClick={() => move(4)}
+            title="GitHub으로 이동"
           />
         </div>
         <div className="footerLogo">
@@ -72,7 +74,7 @@ export const Footer = (props) => {
 
           <div className="div2">
             <p>
-              <span className="TT">E-mail.</span>sncalphs@gmail.com
+              <span className="TT">E-mail.</span>ancx1234@naver.com
             </p>
             <p>
               <span className="TT">Instagram.</span>@lookin_min
@@ -87,7 +89,7 @@ export const Footer = (props) => {
         </div>
 
         <div className="txtz2">
-          <p>@ Copyright 2023 COCO All rights reserved</p>
+          <p>@ Copyright 2023 Ping-pong All rights reserved</p>
           <p onClick={() => handleClick(1)}>개인정보 처리방침</p>
           <p onClick={() => handleClick(2)}>서비스 이용약관</p>
         </div>

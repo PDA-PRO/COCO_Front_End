@@ -54,7 +54,7 @@ button.active {
 
 /* 로그인 박스 내부 한 칸(아이디, 비밀번호,...) */
 .loginBox {
-  margin: 0px 10px;
+  margin: 10px 10px;
   /* padding: 10px; */
   display: flex;
   flex-direction: column;
@@ -228,4 +228,17 @@ button.active {
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1em;
+}
+
+.findinLogin {
+  margin: 0 !important;
+  padding-right: 10px;
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.findinLogin:hover {
+  color: skyblue;
 }

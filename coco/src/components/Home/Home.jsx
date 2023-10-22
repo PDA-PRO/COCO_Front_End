@@ -27,9 +27,6 @@ export const Home = () => {
   };
 
   const Large = useMediaQuery({ minWidth: 1200 });
-  const Laptop = useMediaQuery({ maxWidth: 1199.99999, minWidth: 992 });
-  const Tablet = useMediaQuery({ maxWidth: 991.99999, minWidth: 768 });
-  const Phone = useMediaQuery({ maxWidth: 767.99999 });
   const path = window.location.pathname.split("/");
 
   return (
@@ -181,7 +178,6 @@ const GetNotice = ({ resource }) => {
 
 const MyGraph = ({ resource }) => {
   const detail = resource.read();
-  console.log(detail);
   return (
     <>
       <HomeGraph growth={detail.growth} />

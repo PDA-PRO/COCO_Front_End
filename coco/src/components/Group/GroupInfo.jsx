@@ -25,7 +25,6 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");
   const userInfo = useAppSelector((state) => state.loginState);
@@ -258,6 +257,9 @@ const InviteNewMember = (props) => {
           icon: "success",
           title: `${id}님을 초대하였습니다`,
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch(({ response }) => {
         if (response.status == 409) {

@@ -225,7 +225,9 @@ const FindIdModal = (props) => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={idHandler}>확인하기</Button>
+        <p className="findinLogin" onClick={idHandler}>
+          ID 찾기
+        </p>
       </Modal.Footer>
     </Modal>
   );
@@ -311,7 +313,10 @@ const FindEmailModal = (props) => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={Handler}>확인하기</Button>
+        <p className="findinLogin" onClick={Handler}>
+          {" "}
+          비밀번호 찾기
+        </p>
       </Modal.Footer>
     </Modal>
   );

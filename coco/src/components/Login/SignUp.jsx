@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignUp.css";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -23,6 +23,12 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [checkId, setCheckId] = useState(false); //id 중복 체크
   const [confirm, setConfirm] = useState([true, true, true]); //[이메일, PW, PW확인] 필드의 유효성 값
+
+  const new_id = useRef();
+  const new_name = useRef();
+  const new_email = useRef();
+  const new_pw = useRef();
+  const new_confirm = useRef();
 
   const changeConfirm = (idx, value) => {
     let confirmCopy = [...confirm];
@@ -100,6 +106,12 @@ export const SignUp = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    var name, id, pw, email;
+    name = new_name.current.value;
+    id = new_id.current.value;
+    email = new_email.current.value;
+    pw = new_pw.current.value;
+
     if (name === "" || id === "" || pw === "" || email === "") {
       return Swal.fire({
         icon: "error",
@@ -152,12 +164,20 @@ export const SignUp = () => {
     <form className="loginForm">
       <div className="loginBox" style={{ marginBottom: "20px" }}>
         <FaRegUser size="25" />
-        <input placeholder={"이름을 입력하세요"} onBlur={onNameHandler} />
+        <input
+          placeholder={"이름을 입력하세요"}
+          ref={new_name}
+          onBlur={onNameHandler}
+        />
       </div>
       <div className="loginBox" style={{ marginBottom: "20px" }}>
         <FaRegUserCircle size="25" />
         <div className="checkID">
-          <input placeholder={"아이디를 입력하세요"} onBlur={onIDHandler} />
+          <input
+            placeholder={"아이디를 입력하세요"}
+            ref={new_id}
+            onBlur={onIDHandler}
+          />
           <span onClick={checkIDs} title={"ID 중복 확인"}>
             <IoMdCheckmarkCircleOutline
               size={"25"}
@@ -171,6 +191,7 @@ export const SignUp = () => {
         <input
           placeholder={"이메일을 입력하세요"}
           onBlur={onEmailHandler}
+          ref={new_email}
           style={
             confirm[0]
               ? { backgroundColor: "rgb(236, 236, 236)" }
@@ -183,6 +204,7 @@ export const SignUp = () => {
         <input
           placeholder={"영문자, 숫자, 특수문자 포함 최소 8~15자"}
           type={"password"}
+          ref={new_pw}
           autoComplete={"false"}
           onBlur={onPWHandler}
           style={
@@ -197,6 +219,7 @@ export const SignUp = () => {
         <input
           placeholder={"비밀번호를 확인해주세요"}
           type={"password"}
+          ref={new_confirm}
           autoComplete={"false"}
           onBlur={onPWCheckHandler}
           style={

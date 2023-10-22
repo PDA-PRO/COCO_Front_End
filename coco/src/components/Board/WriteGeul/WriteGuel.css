@@ -110,9 +110,9 @@
   padding: 15px;
 }
 
-/* .helpCode .cm-content {
-  background-color: rgb(255, 255, 255);
-} */
+.cm-content {
+  letter-spacing: 2px !important;
+}
 
 .helpWrite .cm-gutter {
   background-color: rgb(247, 252, 255);

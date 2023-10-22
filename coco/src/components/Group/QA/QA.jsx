@@ -117,7 +117,7 @@ const Question = ({ resource }) => {
             Swal.showLoading();
             axios
               .post(
-                "http://localhost:8000/qa/main",
+                API.BASE_URL + "/qa/main",
                 {
                   content: content,
                   code: code,

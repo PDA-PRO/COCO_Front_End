@@ -18,6 +18,7 @@ import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export const OtherLogic = ({
   changeLogic,
@@ -53,18 +54,10 @@ export const OtherLogic = ({
       <div className="OCmiddle">
         <div className="un">
           <PiNumberCircleTwoLight color="blue" size={23} />
-          <h2>AI가 찾은 유사 로직의 코드</h2>
-        </div>
-      </div>
-      {/* <AI_code func={2} /> */}
-
-      <div className="OCmiddle">
-        <div className="un">
-          <PiNumberCircleThreeLight color="blue" size={23} />
           <h2>다른 로직의 코드</h2>
         </div>
       </div>
-      <OCcontent />
+      <OCcontent task_id={task_id} sub_id={sub_id} />
     </div>
   );
 };
@@ -166,12 +159,32 @@ const AI_code = ({ func, code, cmt, task_id, sub_id }) => {
   );
 };
 
-const OCcontent = () => {
+const OCcontent = ({ task_id, sub_id }) => {
+  const { isFetching, data } = useQuery(["OC", 3], () =>
+    axios.post(
+      API.BASE_URL + "/code-cluster",
+      {},
+      {
+        params: {
+          task_id: 1,
+          sub_id: 9,
+        },
+      }
+    )
+  );
+  if (isFetching) {
+    return <Spinner />;
+  }
   function makeNoLine(arr) {
     if (arr.length == 0) {
       return "";
     } else {
-      var dataArray = arr.split("\n");
+      arr.sort((a, b) => {
+        return b.distance - a.distance;
+      });
+      console.log(arr);
+      var max_dis = arr[0];
+      var dataArray = max_dis.code.split("\n");
 
       var numberedData = dataArray
         .map((item, index) => {
@@ -192,36 +205,15 @@ const OCcontent = () => {
     }
   }
 
-  const [like, setLiked] = useState(0);
-
   return (
     <div className="OCcontent">
       <div className="OC-Code">
-        <pre className="R-Code">{makeNoLine("print(hello)")}</pre>
+        <pre className="R-Code">{makeNoLine(data.data)}</pre>
       </div>
       <div className="OC-opi">
-        <div className="OC-txt">
+        {/* <div className="OC-txt">
           <p>작성자 : name</p>
-          {/* <div className="c-un">
-            <BiTimeFive color="gray" size={20} />
-            <p>소요 시간 : 5ms</p>
-          </div>
-          <div className="c-un">
-            <BiMemoryCard color="gray" size={20} />
-            <p>소요 메모리 : 200mb</p>
-          </div> */}
-        </div>
-        {/* {like === 0 ? (
-          <div className="OC-liked" onClick={() => setLiked(1)}>
-            <AiOutlineLike size={24} />
-            <p>도움됐어요!</p>
-          </div>
-        ) : (
-          <div className="OC-liked" onClick={() => setLiked(1)}>
-            <AiFillLike size={24} color="skyblue" />
-            <p style={{ color: "skyblue" }}>도움됐어요!</p>
-          </div>
-        )} */}
+        </div> */}
       </div>
     </div>
   );

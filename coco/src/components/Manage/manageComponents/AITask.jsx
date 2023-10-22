@@ -36,8 +36,7 @@ export const AITask = () => {
     "입출력 예시, 메모리 제한, 시간 제한이 있는 파이썬 알고리즘 문제 만들어줘"
   );
   const changePrompt = (e) => {
-    var string =
-      "입출력 예시, 메모리 제한, 시간 제한이 있는 ";
+    var string = "입출력 예시, 메모리 제한, 시간 제한이 있는 ";
     switch (parseInt(e)) {
       case 1:
         return string + "반복문 알고리즘 문제 만들어줘";
@@ -87,7 +86,7 @@ export const AITask = () => {
     } else {
       setSendAsk(e);
       const formData = new FormData();
-      formData.append("description", '<p>tmp</p>');
+      formData.append("description", "<p>tmp</p>");
       Swal.fire({
         icon: "question",
         title: "AI가 문제를 생성중입니다.",
@@ -96,26 +95,23 @@ export const AITask = () => {
         didOpen: () => {
           Swal.showLoading();
           axios
-          .post("http://localhost:8000/ai-task/main", 
-            {
+            .post(API.BASE_URL + "/ai-task/main", {
               content: e,
-              form_data: '<p>tmp</p>',
+              form_data: "<p>tmp</p>",
               is_final: false,
-            },
-          )
-          .then((res) => {
-            if (res.data.data == true) {
-              console.log(res.data)
-              setIsAI(true);
-              setJson({ ...res.data.result });
-              Swal.fire({
-                icon: "success",
-                title:
-                  "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
-              });
-            } else {
-   
-            }
+            })
+            .then((res) => {
+              if (res.data.data == true) {
+                console.log(res.data);
+                setIsAI(true);
+                setJson({ ...res.data.result });
+                Swal.fire({
+                  icon: "success",
+                  title:
+                    "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
+                });
+              } else {
+              }
             })
             .catch(() => {
               Swal.fire({
@@ -214,7 +210,6 @@ export const AITask = () => {
               style={{ width: "fit-content" }}
               disabled={true}
             />
-
           </FormGroup>
 
           <p id="caution">
@@ -237,12 +232,8 @@ export const AITask = () => {
               // placeholder="ex) 문제에 입출력예시, 테스트 케이스(최소 20개), 메모리제한, 시간제한이 있는 조건문 알고리즘 문제 만들어줘"
               as="textarea"
               style={{ minHeight: "100px" }}
-              defaultValue={
-                template
-              }
-              key={
-                template
-              }
+              defaultValue={template}
+              key={template}
             />
           </InputGroup>
 
@@ -255,7 +246,12 @@ export const AITask = () => {
             />
           </div>
           {isAI === true ? (
-            <TaskReturn reAsk={Ask} askContent={sendAsk} json={json} codeCheck={codeCheck} />
+            <TaskReturn
+              reAsk={Ask}
+              askContent={sendAsk}
+              json={json}
+              codeCheck={codeCheck}
+            />
           ) : (
             <></>
           )}
@@ -399,8 +395,8 @@ const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
       formData.append("description", quillRef.current.value);
 
       axios
-      .post("http://localhost:8000/ai-task/main", {
-          form_data: quillRef.current.value, 
+        .post(API.BASE_URL + "/ai-task/main", {
+          form_data: quillRef.current.value,
           task_data: {
             title: titleRef.current.value,
             inputDescription: inputDescRef.current.value,
@@ -417,8 +413,8 @@ const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
               .map((e) => e.value)
               .join(","),
           },
-          is_final: true
-      })
+          is_final: true,
+        })
         .then(function (response) {
           if (response.data.code === 1) {
             Swal.fire({

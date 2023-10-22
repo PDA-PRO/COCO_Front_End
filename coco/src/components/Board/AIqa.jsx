@@ -94,7 +94,7 @@ const Modal = ({ show, onCloseButtonClick }) => {
             Swal.showLoading();
             axios
               .post(
-                "http://localhost:8000/qa/main",
+                API.BASE_URL + "/qa/main",
                 {
                   content: content,
                   code: code,
@@ -106,7 +106,7 @@ const Modal = ({ show, onCloseButtonClick }) => {
                 }
               )
               .then((res) => {
-                console.log(res.data)
+                console.log(res.data);
                 if (res.data.result === true) {
                   Swal.fire({
                     icon: "success",

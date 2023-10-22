@@ -256,7 +256,7 @@ const ResultBox = ({ resource, info }) => {
           //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
           axios
             .post(
-              "http://localhost:8000/ai-code/main",
+              API.BASE_URL + "/ai-code/main",
               {
                 code: code,
                 task_id: info.task_id,

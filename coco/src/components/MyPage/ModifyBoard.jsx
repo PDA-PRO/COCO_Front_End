@@ -68,7 +68,7 @@ const GetBoardDetail = ({ resource, key }) => {
         )} */}
           <Update
             boardId={detail.id}
-            oldTitle={detail.title}
+            title={detail.title}
             contents={detail.context}
             category={detail.category}
             helpCode={detail.code}
@@ -79,7 +79,7 @@ const GetBoardDetail = ({ resource, key }) => {
 };
 
 const Update = ({ boardId, title, contents, category, helpCode }) => {
-  // console.log(boardId, title, contents, category, helpCode)
+  console.log(boardId, title, contents, category, helpCode)
   const [code, setCode] = useState(helpCode); //작성한 코드
   const [quillValue, setquillValue] = useState(contents); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref

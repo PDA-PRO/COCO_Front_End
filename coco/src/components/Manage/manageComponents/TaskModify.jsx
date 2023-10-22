@@ -24,7 +24,6 @@ import Swal from "sweetalert2";
 import "../Manage.css";
 import axios from "axios";
 
-
 Quill.register("modules/imageResize", ImageResize);
 
 export const TaskModify = () => {
@@ -279,8 +278,8 @@ export const TaskModifyPage = ({ resource }) => {
     }
   };
   return (
-    <>
-      <h2 className="mTi">TASK UPLOAD</h2>
+    <div className="mDofi">
+      <h2 className="mTi">TASK MODIFY</h2>
       <div className="m-upload">
         <InputGroup className="m-title">
           <InputGroup.Text id="inputGroup-sizing-default">
@@ -457,7 +456,7 @@ export const TaskModifyPage = ({ resource }) => {
           SUBMIT
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

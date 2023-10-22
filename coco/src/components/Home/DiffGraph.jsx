@@ -11,16 +11,13 @@ import {
 export const DiffGraph = ({ diff }) => {
   const [data, setData] = useState([0, 0, 0, 0, 0]);
   useEffect(() => {
-    let sum = diff["1"] + diff["2"] + diff["3"] + diff["4"] + diff["5"];
-    if (sum !== 0) {
-      setData([
-        Math.round((diff["1"] / sum) * 100, 0),
-        Math.round((diff["2"] / sum) * 100, 0),
-        Math.round((diff["3"] / sum) * 100, 0),
-        Math.round((diff["4"] / sum) * 100, 0),
-        Math.round((diff["5"] / sum) * 100, 0),
-      ]);
-    }
+    setData([
+      diff["1"] * 100,
+      diff["2"] * 100,
+      diff["3"] * 100,
+      diff["4"] * 100,
+      diff["5"] * 100,
+    ]);
   }, []);
 
   return (

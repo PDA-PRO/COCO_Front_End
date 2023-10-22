@@ -248,6 +248,18 @@
   min-height: 300px;
 }
 
+/*----------------------TASK Modify-------------------*/
+.mDofi {
+  padding: 1em 2vw;
+  padding-top: 50px;
+  font-family: "Pretendard-Regular";
+  background-color: rgb(241, 241, 241);
+}
+
+.mDofi .m-upload {
+  background-color: #fff;
+}
+
 /*--------------------- 유저 관리 ---------------------*/
 .divide-box {
   display: grid;

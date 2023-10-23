@@ -14,7 +14,7 @@ import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 
 export const FastWrite = () => {
   const [title, setTitle] = useState("");
@@ -65,12 +65,14 @@ export const FastWrite = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (userInfo.id === "") {
-      const check = window.confirm(
-        "로그인이 필요한 서비스입니다\n로그인 하시겠습니까"
-      );
-      if (check === true) {
-        navigate("/login");
-      }
+      Swal.fire({
+        icon: "warning",
+        title: "로그인이 필요한 서비스입니다\n로그인 하시겠습니까",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       addHandler.mutate();
     }

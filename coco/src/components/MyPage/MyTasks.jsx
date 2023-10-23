@@ -26,7 +26,6 @@ export const MyTasks = ({ props }) => {
           <h4>문제 제목</h4>
           <h4>난이도</h4>
           <h4>정답률</h4>
-          <h4>언어</h4>
           <h4>Solve</h4>
         </div>
 
@@ -109,33 +108,6 @@ export const MyTasksBox = (info) => {
     }
   };
 
-  const lan = (e1, e2) => {
-    if (e1 === 1 && e2 === 1) {
-      return (
-        <div>
-          <img src="/image/lan_c.png" height="30px" alt="아니 시발" />
-          <img
-            src="/image/python.png"
-            height="30px"
-            style={{ paddingRight: "10px" }}
-          />
-        </div>
-      );
-    } else if (e1 === 1 && e2 === 0) {
-      return (
-        <div>
-          <img src="/image/lan_c.png" height="30px" alt="" />
-        </div>
-      );
-    } else if (e1 === 0 && e2 === 1) {
-      return (
-        <div>
-          <img src="/image/python.png" height="30px" alt="" />
-        </div>
-      );
-    }
-  };
-
   const solve = (e) => {
     console.log(e);
     if (e === 1) {
@@ -162,7 +134,16 @@ export const MyTasksBox = (info) => {
   return (
     <div className="MyTasksBox">
       <h4 onClick={() => goDetail(info.info.id)}>No.{info.info.id}</h4>
-      <h4 onClick={() => goDetail(info.info.id)}>{info.info.title}</h4>
+      <h4
+        style={{
+          textOverflow: "ellipsis",
+          maxWidth: "429px",
+          textAlign: "center",
+        }}
+        onClick={() => goDetail(info.info.id)}
+      >
+        {info.info.title}
+      </h4>
       <h4>{setLevel(info.info.diff)}</h4>
       <h4
         style={{
@@ -177,7 +158,6 @@ export const MyTasksBox = (info) => {
         {info.info.rate}%
       </h4>
 
-      <h4>{lan(info.info.lan_c, info.info.lan_py)}</h4>
       <div style={{ margin: "0", textAlign: "center" }}>
         {solve(info.info.solved)}
       </div>

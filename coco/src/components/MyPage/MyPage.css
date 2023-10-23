@@ -430,7 +430,7 @@ tspan {
 
 .mp-FourthBox .BodyLeft .leftTop {
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.3fr;
+  grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr 0.3fr;
   align-items: center;
   border: 2px solid rgb(198, 209, 235);
   border-radius: 15px 15px 0 0;
@@ -452,7 +452,7 @@ tspan {
 .MyTasksBox {
   border-bottom: 2px solid rgb(198, 209, 235);
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.3fr;
+  grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr 0.3fr;
   align-items: center;
   padding: 11px 15px;
   cursor: pointer;

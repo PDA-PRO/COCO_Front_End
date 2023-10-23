@@ -115,7 +115,15 @@ export const Free = ({ title, cate }) => {
           }
         )
         .then(function (response) {
-          navigate(`/board/${response.data.id}`);
+          Swal.fire({
+            icon: "success",
+            title: "글 업로드 완료",
+            showConfirmButton: "false",
+            timer: 1000,
+          });
+          setTimeout(() => {
+            navigate(`/board/${response.data.id}`);
+          }, 1000);
         })
         .catch(() => {
           Swal.fire({

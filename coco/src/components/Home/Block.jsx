@@ -1,15 +1,10 @@
 import React from "react";
-import { FaHotjar } from "react-icons/fa";
-import styled from "styled-components";
-import { FaStar } from "react-icons/fa";
+
+import { LuPencil, LuClipboardCheck } from "react-icons/lu";
 import {
   BsFillEyeFill,
   BsChatSquareTextFill,
-  BsHeart,
   BsHeartFill,
-  BsFillLightbulbFill,
-  BsMegaphoneFill,
-  BsQuestionLg,
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +26,6 @@ export const Block = (props) => {
 
   const board = props.info.board;
   const problem = props.info.problem;
-
 
   const moveBoard = (e) => {
     navigate(`/board/${e}`);
@@ -192,15 +186,12 @@ export const Block = (props) => {
           </div>
         </div>
       ) : (
-        <div>
-          <div className="boxTitle">
-            {/* <FaHotjar size={28} color="red" /> */}
-            <h2/>
-          </div>
-          <div
-            className="box1Board shadow-drop-2-center"
-            onClick={() => navigate(`/board`)}
-          >게시글 쓰러가기</div>
+        <div
+          className="box1Board shadow-drop-2-center"
+          onClick={() => navigate(`/board`)}
+        >
+          <LuPencil size={25} color="green" />
+          <p>게시글 쓰러가기</p>
         </div>
       )}
 
@@ -256,65 +247,14 @@ export const Block = (props) => {
           </div>
         </div>
       ) : (
-
-        <div>
-        <div className="boxTitle">
-          {/* <FaHotjar size={28} color="red" /> */}
-          <h2/>
-        </div>
         <div
           className="box2Problem shadow-drop-2-center"
           onClick={() => navigate(`/problems`)}
         >
-          문제 풀러가기
+          <LuClipboardCheck size={25} color="navy" />
+          <p>문제 풀러가기</p>
         </div>
-      </div>
-
       )}
     </div>
   );
 };
-
-const ARRAY = [0, 1, 2, 3, 4];
-
-function Rating(n) {
-  const colored = [false, false, false, false, false];
-  for (let i = 0; i < n; i++) {
-    colored[i] = true;
-  }
-
-  return (
-    <Wrap>
-      <Stars>
-        {ARRAY.map((el, idx) => {
-          return (
-            <FaStar
-              key={idx}
-              size="22"
-              className={colored[el] && "yellowStar"}
-            />
-          );
-        })}
-      </Stars>
-    </Wrap>
-  );
-}
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Stars = styled.div`
-  display: flex;
-  padding-top: 0px;
-
-  & svg {
-    color: gray;
-    margin: 0 2px;
-  }
-
-  .yellowStar {
-    color: #fcc419;
-  }
-`;

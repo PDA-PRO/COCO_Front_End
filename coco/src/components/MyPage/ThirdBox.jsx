@@ -102,7 +102,7 @@ export const ThirdBox = (props) => {
                 icon: "success",
                 title: "게시글을 삭제하였습니다",
               });
-              setTimeout(() => window.location.reload(), 1500);
+              setTimeout(() => window.location.reload(), 1000);
             })
             .catch(() => {
               Swal.fire({
@@ -120,12 +120,27 @@ export const ThirdBox = (props) => {
       {props.props.map((e) => {
         const category = chCate(e.category);
         return (
-          <div className="myGuel" style={{ borderColor: category[1] }} key={e.id}>
+          <div
+            className="myGuel"
+            style={{ borderColor: category[1] }}
+            key={e.id}
+          >
             <h4>
               <span>{category[2]}</span>
               {category[0]}
             </h4>
-            <h3 onClick={() => moveDetail(e.id)}>{e.title}</h3>
+            <h3
+              style={{
+                textOverflow: "ellipsis",
+                maxWidth: "223px",
+                textAlign: "center",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+              }}
+              onClick={() => moveDetail(e.id)}
+            >
+              {e.title}
+            </h3>
             <h5>{timeForToday(e.time)}</h5>
             <div className="GuelBox">
               <div className="bBox">

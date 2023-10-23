@@ -545,7 +545,7 @@
   display: flex;
   flex-flow: column nowrap;
   background-color: #effffec5;
-  border-radius: 20px;
+  border-radius: 15px;
   align-items: center;
 }
 
@@ -586,7 +586,7 @@
 
 .lineG {
   background-color: #effffec5;
-  border-radius: 20px;
+  border-radius: 15px;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -611,17 +611,25 @@
 
 .diffGraph {
   background-color: #effffec5;
-  border-radius: 20px;
+  border-radius: 15px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 0.5em 0;
+}
+
+.diffGraph #exDiff {
+  font-size: 0.9em;
+  color: gray;
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  margin: 0 !important;
 }
 
 .diffGraph h3 {
   font-family: "Pretendard-Regular";
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 600;
   margin: 0 !important;
 }
@@ -721,7 +729,7 @@
 .Block .blockBox {
   width: 100%;
   height: 200px;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
@@ -888,7 +896,7 @@
   display: flex;
   flex-flow: column;
   background-color: #f7f7f7;
-  border-radius: 20px;
+  border-radius: 15px;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   color: rgb(29, 29, 29);
@@ -928,26 +936,40 @@
 
 .box1Board {
   height: 200px;
-  border: 3px dotted lightgreen;
+  border: 2px solid lightgreen;
   border-radius: 15px;
   font-family: "Pretendard-Regular";
-  font-size: 1.2em;
+  font-size: 1em;
   display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 
+.box1Board p {
+  font-weight: 600;
+  margin: 0 !important;
+}
+
 .box2Problem {
   height: 200px;
-  border: 3px dotted lightblue;
+  border: 2px solid lightblue;
   border-radius: 15px;
   font-family: "Pretendard-Regular";
-  font-size: 1.2em;
+  font-size: 1em;
   display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.box2Problem p {
+  font-weight: 600;
+  margin: 0 !important;
 }
 
 .shadow-drop-2-center:hover {

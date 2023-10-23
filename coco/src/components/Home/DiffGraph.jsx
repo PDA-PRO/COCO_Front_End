@@ -12,11 +12,11 @@ export const DiffGraph = ({ diff }) => {
   const [data, setData] = useState([0, 0, 0, 0, 0]);
   useEffect(() => {
     setData([
-      diff["1"] * 100,
-      diff["2"] * 100,
-      diff["3"] * 100,
-      diff["4"] * 100,
-      diff["5"] * 100,
+      Math.round(diff["1"] * 100),
+      Math.round(diff["2"] * 100),
+      Math.round(diff["3"] * 100),
+      Math.round(diff["4"] * 100),
+      Math.round(diff["5"] * 100),
     ]);
   }, []);
 
@@ -80,6 +80,8 @@ export const DiffGraph = ({ diff }) => {
           <p>{data[0]}%</p>
         </div>
       </div>
+
+      <p id="exDiff">(각 난이도 별 내가 푼 문제 수 / 총 문제 수) </p>
     </div>
   );
 };

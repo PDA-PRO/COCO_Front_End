@@ -9,12 +9,14 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
 export const SignUp = () => {
+  const navigate = useNavigate();
   const navigateToLogin = () => {
-    window.location.replace("/login");
+    navigate(0);
   };
 
   const [name, setName] = useState("");

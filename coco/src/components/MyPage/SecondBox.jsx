@@ -94,14 +94,21 @@ export const SecondBox = (props) => {
     <div className="mp-secBox">
       <div className="secBox-row">
         <h3>푼 문제 수 : {props.props.solved_list.length}</h3>
-        <h3>정답률 : {props.props.rate}%</h3>
+        <h3>
+          정답률 : {props.props.solved_list.length === 0 ? 0 : props.props.rate}
+          %
+        </h3>
       </div>
 
       <div className="secBox-col">
         <h3> - 맞은 문제 리스트</h3>
         <div className="taskList-split">
           {props.props.solved_list.map((e) => {
-            return <p onClick={() => movePage(e)} key={e}>No.{e}</p>;
+            return (
+              <p onClick={() => movePage(e)} key={e}>
+                No.{e}
+              </p>
+            );
           })}
         </div>
       </div>
@@ -110,7 +117,11 @@ export const SecondBox = (props) => {
         <h3> - 틀린 문제 리스트</h3>
         <div className="taskList-split2">
           {props.props.unsolved_list.map((e) => {
-            return <p onClick={() => movePage(e)} key={e}>No.{e}</p>;
+            return (
+              <p onClick={() => movePage(e)} key={e}>
+                No.{e}
+              </p>
+            );
           })}
         </div>
       </div>

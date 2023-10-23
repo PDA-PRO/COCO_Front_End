@@ -150,25 +150,29 @@ const GetBoardDetail = () => {
   };
 
   const onDeleteHandler = () => {
-    axios
-      .delete(
-        API.BOARD,
+    Swal.fire({ icon: "info", title: "정말 삭제하시겠습니까?" }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(
+            API.BOARD,
 
-        {
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-          params: {
-            board_id: boardData.data.id,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.code === 1) {
-          navigate(`/board`);
-        }
-      })
-      .catch(() => {
-        Swal.fire({ icon: "error", title: "인증실패" });
-      });
+            {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+              params: {
+                board_id: boardData.data.id,
+              },
+            }
+          )
+          .then((res) => {
+            if (res.data.code === 1) {
+              navigate(`/board`);
+            }
+          })
+          .catch(() => {
+            Swal.fire({ icon: "error", title: "인증실패" });
+          });
+      }
+    });
   };
 
   const CodeHere = () => {

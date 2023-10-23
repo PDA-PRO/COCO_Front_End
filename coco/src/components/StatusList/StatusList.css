@@ -101,7 +101,7 @@
 .statusListBox {
   border-bottom: 2px solid rgb(203, 219, 255);
   display: grid;
-  grid-template-columns: 0.5fr 1fr 0.5fr 1fr 0.7fr 0.5fr 1.3fr;
+  grid-template-columns: 0.5fr 1fr 0.5fr 1.5fr 0.7fr 0.5fr 1.3fr;
   align-items: center;
   justify-items: center;
   padding: 8px 20px;

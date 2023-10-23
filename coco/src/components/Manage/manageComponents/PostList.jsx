@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 import "../Manage.css";
 import axios from "axios";
 
-
 export const PostList = () => {
   const [page, setPage] = useState(1);
   const [reload, setReload] = useState(0);
@@ -198,7 +197,18 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
       <h4>
         <span>{cateIcon(info.category)}</span>
       </h4>
-      <h4 onClick={() => moveDetail(info.id)}>{info.title}</h4>
+      <h4
+        style={{
+          textOverflow: "ellipsis",
+          maxWidth: "226px",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+        onClick={() => moveDetail(info.id)}
+      >
+        {info.title}
+      </h4>
       <h4>{info.user_id}</h4>
       <h4>{timeForToday(info.time)}</h4>
       <h4>

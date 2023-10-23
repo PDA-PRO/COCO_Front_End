@@ -140,7 +140,17 @@ export const StatusListBox = (info) => {
         No. {info.info.task_id}
         <span>{setLevel(info.info.diff)}</span>
       </h5>
-      <h5>{info.info.title}</h5>
+      <h5
+        style={{
+          textOverflow: "ellipsis",
+          maxWidth: "223px",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
+        {info.info.title}
+      </h5>
       <h5>{lan(info.info.lang)}</h5>
       <h5>{setScore(info.info.status)}</h5>
       <h5>{remakeString(info.info.time)}</h5>

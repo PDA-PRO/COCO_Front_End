@@ -117,6 +117,13 @@ const ListBox = ({ info, token, setDel, setLoading }) => {
     <div className="taskList">
       <h4>No.{info.id}</h4>
       <h4
+        style={{
+          textOverflow: "ellipsis",
+          maxWidth: "223px",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
         onClick={() => {
           goDetail(info.id);
         }}

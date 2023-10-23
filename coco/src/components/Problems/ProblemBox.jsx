@@ -31,6 +31,11 @@ export const ProblemBox = ({
     navigate(`/problems/${e}`);
   };
 
+  const goDetail2 = (e) => {
+    var normal_path = "http://localhost:3000/";
+    window.open(`${normal_path}problems/${e}`);
+  };
+
   const nothing = () => {};
 
   const setLevel = (e) => {
@@ -66,7 +71,7 @@ export const ProblemBox = ({
       <h4>No.{info.id}</h4>
       <h4
         onClick={() => {
-          type === 1 || type === 2 ? goDetail(info.id) : nothing();
+          type === 1 || type === 2 ? goDetail2(info.id) : nothing();
         }}
       >
         {info.title}

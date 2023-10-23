@@ -12,6 +12,7 @@ export const WriteComment = ({ commentShoot }) => {
   const [context, setContext] = useState("");
   const board_id = window.location.pathname.split("/").at(-1);
   const queryClient = useQueryClient();
+
   const addCommentHandler = useMutation(
     () =>
       axios.post(

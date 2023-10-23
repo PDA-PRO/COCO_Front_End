@@ -30,6 +30,7 @@ import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 import axios from "axios";
 import { Improve } from "./Improve";
+import { useNavigate } from "react-router-dom";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -64,7 +65,7 @@ const ResultBox = ({ resource, info }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const { id } = useParams();
   const [wpc, setWpc] = useState(0);
-
+  const navigate = useNavigate();
   const problemList = resource.read();
 
   const setLang = (e) => {
@@ -296,13 +297,21 @@ const ResultBox = ({ resource, info }) => {
     }
   };
 
+  const goDetail = (e) => {
+    navigate(`/problems/${e}`);
+  };
+
   return (
     <div className="Res">
       <div className="res-body">
-        <div className="res-top">
+        <div
+          className="res-top"
+          onClick={() => goDetail(info.task_id)}
+          style={{ cursor: "pointer" }}
+        >
           <div className="box">
             <p className="taskNo">PROBLEM ID : No.{info.task_id}</p>
-            <p style={{ fontSize: "1.3em" }}>{info.title}</p>
+            <p style={{ fontSize: "1.2em" }}>{info.title}</p>
           </div>
 
           <div className="box">

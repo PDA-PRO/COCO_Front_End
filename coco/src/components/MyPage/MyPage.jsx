@@ -62,25 +62,6 @@ export const MyPage = () => {
                   userinfo={userInfo}
                 />
               </Suspense>
-              <h2>
-                <span>
-                  <GiBlackBook
-                    size={29}
-                    color="green"
-                    style={{ paddingBottom: "3px", marginRight: "13px" }}
-                  />
-                </span>
-                내 문제집
-              </h2>
-              <Suspense fallback={<Spinner />}>
-                <GetMyTasks
-                  resource={fetchData(API.MYTASK, {
-                    headers: {
-                      Authorization: "Bearer " + userInfo.access_token,
-                    },
-                  })}
-                />
-              </Suspense>
             </>
           ) : (
             <></>
@@ -94,11 +75,14 @@ export const MyPage = () => {
 
 const GetFirst = ({ resource, me, now }) => {
   const res = resource.read();
-  const userInfo = useAppSelector((state) => state.loginState);
 
   if (res == undefined) {
     return <Notfound />;
   }
+
+  const user = res.user_info;
+  const sub = res.sub_result;
+  const level = res.level;
 
   return (
     <>
@@ -112,7 +96,7 @@ const GetFirst = ({ resource, me, now }) => {
         </span>
         회원 정보
       </h2>
-      <FirstBox props={res[0]} key={res.id} />
+      <FirstBox props={user} level={level} key={now}  />
       <h2>
         <span>
           <BsGraphUp
@@ -123,30 +107,31 @@ const GetFirst = ({ resource, me, now }) => {
         </span>
         {me === now ? "내 역량" : `${now}님 역량`}
       </h2>
-      <Suspense fallback={<Spinner />}>
-        <GetSecond
-          resource={fetchData(API.TWO + now, {
-            headers: {
-              Authorization: "Bearer " + userInfo.access_token,
-            },
-          })}
-        />
-      </Suspense>
+      <SecondBox props={sub} key={now} />
     </>
   );
 };
 
-const GetSecond = ({ resource }) => {
-  const res = resource.read();
-  return <>{<SecondBox props={res} key={res.id} />}</>;
-};
-
 const GetThird = ({ resource, userinfo }) => {
   const res = resource.read();
-  return <>{<ThirdBox props={res} key={res.id} userinfo={userinfo} />}</>;
-};
 
-const GetMyTasks = ({ resource }) => {
-  const res = resource.read();
-  return <>{<MyTasks props={res} key={res.id} />}</>;
+  const board = res.board;
+  const task = res.task;
+
+  return (
+    <>
+      <ThirdBox props={board} key={userinfo.id} userinfo={userinfo} />
+      <h2>
+        <span>
+          <GiBlackBook
+            size={29}
+            color="green"
+            style={{ paddingBottom: "3px", marginRight: "13px" }}
+          />
+        </span>
+        내 문제집
+      </h2>
+      <MyTasks props={task} key={userinfo.id} />
+    </>
+  );
 };

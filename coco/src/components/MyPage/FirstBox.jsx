@@ -11,7 +11,7 @@ import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
 import axios from "axios";
-import {Notfound} from "../Notfound.jsx";
+import { Notfound } from "../Notfound.jsx";
 
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -26,6 +26,9 @@ export const FirstBox = (props) => {
   const refNewPW = useRef(null);
   const refconfirmNewPW = useRef(null);
   const [fileImage, setFileImage] = useState(userInfo.imagetoken);
+
+  const level = props.level;
+
   const saveFileImage = (e) => {
     axios
       .post(
@@ -201,13 +204,10 @@ export const FirstBox = (props) => {
             </div>
           </div>
 
-          <Suspense fallback={<Spinner />}>
-            <LevelField
-              resource={fetchData(API.LEVEL, {
-                params: { user_id: me },
-              })}
-            />
-          </Suspense>
+          <div className="levelField">
+            <h3>Level {level.level}</h3>
+            <p>다음 레벨까지 {level.points}pts</p>
+          </div>
 
           <div className="txtInputBox">
             <h3>
@@ -292,41 +292,12 @@ export const FirstBox = (props) => {
             <p>{now}</p>
           </div>
 
-          <Suspense fallback={<Spinner />}>
-            <LevelShow
-              resource={fetchData(API.LEVEL, {
-                params: { user_id: now },
-              })}
-            />
-          </Suspense>
+          <div className="levelShow">
+            <h3>Level {level.level}</h3>
+            <p>다음 레벨까지 {level.points}pts</p>
+          </div>
         </div>
       )}
     </>
-  );
-};
-
-const LevelField = ({ resource }) => {
-  const data = resource.read();
-  if (data === undefined){
-    return <Notfound/>
-  }
-  return (
-    <div className="levelField">
-      <h3>Level {data.level}</h3>
-      <p>다음 레벨까지 {data.points}pts</p>
-    </div>
-  );
-};
-
-const LevelShow = ({ resource }) => {
-  const data = resource.read();
-  if (data === undefined){
-    return <Notfound/>
-  }
-  return (
-    <div className="levelShow">
-      <h3>Level {data.level}</h3>
-      <p>다음 레벨까지 {data.points}pts</p>
-    </div>
   );
 };

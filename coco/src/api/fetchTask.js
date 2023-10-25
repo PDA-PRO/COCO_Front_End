@@ -9,7 +9,6 @@ function fetchTask(url, header = null) {
       flag = 0;
       return data;
     }).catch((e) => {
-      console.log('qewrqwerqw', e.response.status)
       flag = e.response.status;
     })
   } else {
@@ -17,7 +16,6 @@ function fetchTask(url, header = null) {
       flag = 0;
       return data;
     }).catch((e) => {
-      console.log('adfadfadsf', e.response.status)
       flag = e.response.status;
     });
   }

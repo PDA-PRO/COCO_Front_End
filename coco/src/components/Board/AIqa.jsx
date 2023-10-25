@@ -198,7 +198,7 @@ const Modal = ({ show, onCloseButtonClick }) => {
                     __html: answerContent,
                   }}
                 ></div>
-                {answerCode.length !== 0 ? (
+                {answerCode !== "False" ? (
                   <>
                     <h4>CODE</h4>
                     <pre className="R-Code">{makeNoLine(answerCode)}</pre>

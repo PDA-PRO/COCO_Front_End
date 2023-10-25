@@ -31,6 +31,7 @@ import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
 import axios from "axios";
 import { Improve } from "./Improve";
 import { useNavigate } from "react-router-dom";
+import { Notfound } from "components/Notfound";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -52,7 +53,7 @@ export const Result = (code) => {
         </Suspense>
       ) : (
         <div className="Res">
-          <div>404 not found</div>
+          <Notfound />
         </div>
       )}
 

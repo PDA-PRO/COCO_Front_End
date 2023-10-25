@@ -242,13 +242,13 @@ const Question = ({ resource }) => {
                 <h4>Answer</h4>
               </div>
 
-              {e.answers.map((ans, index) => {
+              {e.answers.map((ans) => {
                 return (
                   <Answer
                     info={ans}
                     room_id={path.at(-1)}
                     writer={e.writer}
-                    key={index}
+                    key={ans.a_id}
                   />
                 );
               })}
@@ -262,9 +262,13 @@ const Question = ({ resource }) => {
 };
 
 const Answer = ({ info, room_id, writer }) => {
+
   const userInfo = useAppSelector((state) => state.loginState);
-  const [isGood, setIsGood] = useState(info.check);
-  useEffect(() => {}, [isGood]);
+  const [isGood, setIsGood] = useState(0);
+
+  useEffect(() => {
+    setIsGood(info.check);
+  }, [info.check]);
 
   function makeNoLine(arr) {
     if (arr.length == 0) {

@@ -18,54 +18,36 @@ import { Notfound } from "../Notfound.jsx";
 export const MyPage = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const path = window.location.pathname.split("/");
-
-  var me = userInfo.id;
-
-  var now = path.at(-1);
-
+  const me = userInfo.id;
+  const now = path.at(-1);
   return (
     <>
       <Header />
       <div className="myPage">
         <div className="myPageBody">
           <Suspense fallback={<Spinner />}>
-            <GetFirst
-              resource={fetchData(API.ONE + path.at(-1), {
-                headers: {
-                  Authorization: "Bearer " + userInfo.access_token,
-                },
-              })}
-              me={userInfo.id}
-              now={path.at(-1)}
-            />
+            {me === now ? (
+              <GetFirst
+                resource={fetchData(API.MYPAGE + "1/" + path.at(-1), {
+                  headers: {
+                    Authorization: "Bearer " + userInfo.access_token,
+                  },
+                })}
+                me={userInfo.id}
+                now={path.at(-1)}
+              />
+            ) : (
+              <GetFirst
+                resource={fetchData(API.MYPAGE + "2/" + path.at(-1), {
+                  headers: {
+                    Authorization: "Bearer " + userInfo.access_token,
+                  },
+                })}
+                me={userInfo.id}
+                now={path.at(-1)}
+              />
+            )}
           </Suspense>
-
-          {me === now ? (
-            <>
-              <h2>
-                <span>
-                  <GiNotebook
-                    size={29}
-                    color="green"
-                    style={{ paddingBottom: "3px", marginRight: "13px" }}
-                  />
-                </span>
-                내 게시글
-              </h2>
-              <Suspense fallback={<Spinner />}>
-                <GetThird
-                  resource={fetchData(API.THREE + path.at(-1), {
-                    headers: {
-                      Authorization: "Bearer " + userInfo.access_token,
-                    },
-                  })}
-                  userinfo={userInfo}
-                />
-              </Suspense>
-            </>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
       <Footer />
@@ -75,6 +57,8 @@ export const MyPage = () => {
 
 const GetFirst = ({ resource, me, now }) => {
   const res = resource.read();
+  console.log(res);
+  const userInfo = useAppSelector((state) => state.loginState);
 
   if (res == undefined) {
     return <Notfound />;
@@ -83,6 +67,8 @@ const GetFirst = ({ resource, me, now }) => {
   const user = res.user_info;
   const sub = res.sub_result;
   const level = res.level;
+  const board = res.board;
+  const task = res.task;
 
   return (
     <>
@@ -96,7 +82,7 @@ const GetFirst = ({ resource, me, now }) => {
         </span>
         회원 정보
       </h2>
-      <FirstBox props={user} level={level} key={now}  />
+      <FirstBox props={user} level={level} key={now + 1} />
       <h2>
         <span>
           <BsGraphUp
@@ -107,31 +93,40 @@ const GetFirst = ({ resource, me, now }) => {
         </span>
         {me === now ? "내 역량" : `${now}님 역량`}
       </h2>
-      <SecondBox props={sub} key={now} />
-    </>
-  );
-};
+      <SecondBox props={sub} key={now + 2} />
 
-const GetThird = ({ resource, userinfo }) => {
-  const res = resource.read();
-
-  const board = res.board;
-  const task = res.task;
-
-  return (
-    <>
-      <ThirdBox props={board} key={userinfo.id} userinfo={userinfo} />
-      <h2>
-        <span>
-          <GiBlackBook
-            size={29}
-            color="green"
-            style={{ paddingBottom: "3px", marginRight: "13px" }}
+      {me === now ? (
+        <>
+          <h2>
+            <span>
+              <GiNotebook
+                size={29}
+                color="green"
+                style={{ paddingBottom: "3px", marginRight: "13px" }}
+              />
+            </span>
+            내 게시글
+          </h2>
+          <ThirdBox
+            props={board}
+            key={userInfo.id + "Board"}
+            userinfo={userInfo}
           />
-        </span>
-        내 문제집
-      </h2>
-      <MyTasks props={task} key={userinfo.id} />
+          <h2>
+            <span>
+              <GiBlackBook
+                size={29}
+                color="green"
+                style={{ paddingBottom: "3px", marginRight: "13px" }}
+              />
+            </span>
+            내 문제집
+          </h2>
+          <MyTasks props={task} key={userInfo.id + "Task"} />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

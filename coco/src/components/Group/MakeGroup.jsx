@@ -56,8 +56,8 @@ export const MakeGroup = () => {
           Swal.fire({
             icon: "success",
             title: "스터디룸을 생성하였습니다",
-          }).then((res) => {
-            if (res.isConfirmed) {
+          }).then((swalRes) => {
+            if (swalRes.isConfirmed) {
               navigate(`/room/${res.data.code}`);
             }
           });
@@ -231,6 +231,9 @@ const SearchResult = (props) => {
     <>
       {/* 검색 결과 리스트 */}
       {data.userlist.map((e) => {
+        if(e.id === userInfo.id){
+          return <></>;
+        }
         return <UserBox info={e} key={e.id} addMembers={addMembers} />;
       })}
       <div className="leftBottom" style={{ marginTop: "20px" }}>

@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:8000";
 
 export const API = {
-  BASE_URL: "http://localhost:8000",
+  BASE_URL: BASE_URL,
   USER: `${BASE_URL}/user/`,
   PERMISSION: `${BASE_URL}/user/permission`,
   FINDID: `${BASE_URL}/user/findid/`,

@@ -104,6 +104,7 @@ const BodyRight = ({ setFilter }) => {
 
   const onRateHander = (e) => {
     setRate(e);
+    console.log(rate)
   };
 
   const onDiffReset = () => {
@@ -120,7 +121,7 @@ const BodyRight = ({ setFilter }) => {
     setFilter({
       keyword: keywordRef.current.value,
       diff: diffList.join(","),
-      ratesort: rate,
+      rateSort: rate,
       category: asyncRef.current
         .getValue()
         .map((e) => e.value)
@@ -162,7 +163,7 @@ const BodyRight = ({ setFilter }) => {
                 <Form.Check
                   type="checkbox"
                   checked={diff[0]}
-                  value="1"
+                  value={1}
                   onChange={(e) => onDiffHanlder(e.target.value)}
                 />
                 <h5>Lv. 1</h5>
@@ -172,7 +173,7 @@ const BodyRight = ({ setFilter }) => {
                 <Form.Check
                   type="checkbox"
                   checked={diff[1]}
-                  value="2"
+                  value={2}
                   onChange={(e) => onDiffHanlder(e.target.value)}
                 />
                 <h5>Lv. 2</h5>

@@ -43,9 +43,10 @@ export const Guel = (props) => {
     function timeForToday(value) {
       const today = new Date();
       const timeValue = new Date(value);
-
+      const convertTime =  timeValue.getTime()+9 * 60 * 60 * 1000;
+      // console.log(today.getTime(), timeValue.getTime()+9 * 60 * 60 * 1000);
       const betweenTime = Math.floor(
-        (today.getTime() - timeValue.getTime()) / 1000 / 60
+        (today.getTime() - convertTime) / 1000 / 60
       );
       if (betweenTime < 1) return "방금전";
       if (betweenTime < 60) {

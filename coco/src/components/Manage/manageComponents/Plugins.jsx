@@ -141,7 +141,7 @@ const AIcontent = ({ pluginInfo }) => {
           {Able(pluginInfo.front && pluginInfo.back)}
           <FormGroup>
             <FormControlLabel
-              disabled={!pluginInfo.front && pluginInfo.back}
+              disabled={!pluginInfo.front || !pluginInfo.back}
               control={<Switch defaultChecked />}
               label={nowOn}
               checked={checked}

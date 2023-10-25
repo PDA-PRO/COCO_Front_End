@@ -24,6 +24,7 @@ import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
+import {Notfound} from "../../Notfound";
 
 export const BoardDetail = () => {
   return (
@@ -83,11 +84,7 @@ const GetBoardDetail = () => {
   }
 
   if (boardData === undefined) {
-    return (
-      <div className="boardDetail">
-        <div>404 not found</div>
-      </div>
-    );
+    return <Notfound/>
   }
 
   const commentShoot = (e) => {

@@ -24,6 +24,7 @@ import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
+import {Notfound} from "../Notfound.jsx";
 
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");
@@ -109,9 +110,7 @@ export const GroupInfo = () => {
           </div>
         </div>
       ) : (
-        <div className="groupInfo">
-          <div>404 not found</div>
-        </div>
+        <Notfound/>
       )}
       <Footer />
     </>

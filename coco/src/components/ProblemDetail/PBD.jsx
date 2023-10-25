@@ -23,6 +23,7 @@ import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axios from "axios";
+import {Notfound} from "../Notfound.jsx";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -309,6 +310,6 @@ const GetDetail = ({ resource }) => {
       </div>
     </div>
   ) : (
-    <div>404 not found</div>
+    <Notfound/>
   );
 };

@@ -14,6 +14,7 @@ import { useMediaQuery } from "react-responsive";
 import Swal from "sweetalert2";
 import { API } from "api/config";
 import axios from "axios";
+import {Notfound} from "../../Notfound";
 
 export const Inside = () => {
   const path = window.location.pathname.split("/");
@@ -50,7 +51,7 @@ const Content = ({ resource }) => {
   const data = resource.read();
 
   if (data === undefined) {
-    return <div>404 not found</div>;
+    return <Notfound/>;
   }
 
   const goMypage = (e) => {

@@ -13,6 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { useAppSelector } from "../../app/store";
 import { GiBlackBook, GiNotebook } from "react-icons/gi";
 import { API } from "api/config";
+import { Notfound } from "../Notfound.jsx";
 
 export const MyPage = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -27,16 +28,6 @@ export const MyPage = () => {
       <Header />
       <div className="myPage">
         <div className="myPageBody">
-          <h2>
-            <span>
-              <IoInformationCircleOutline
-                size={30}
-                color="green"
-                style={{ paddingBottom: "3px", marginRight: "8px" }}
-              />
-            </span>
-            회원 정보
-          </h2>
           <Suspense fallback={<Spinner />}>
             <GetFirst
               resource={fetchData(API.ONE + path.at(-1), {
@@ -44,27 +35,11 @@ export const MyPage = () => {
                   Authorization: "Bearer " + userInfo.access_token,
                 },
               })}
+              me={userInfo.id}
+              now={path.at(-1)}
             />
           </Suspense>
-          <h2>
-            <span>
-              <BsGraphUp
-                size={27}
-                color="green"
-                style={{ paddingBottom: "3px", marginRight: "13px" }}
-              />
-            </span>
-            {me === now ? "내 역량" : `${now}님 역량`}
-          </h2>
-          <Suspense fallback={<Spinner />}>
-            <GetSecond
-              resource={fetchData(API.TWO + path.at(-1), {
-                headers: {
-                  Authorization: "Bearer " + userInfo.access_token,
-                },
-              })}
-            />
-          </Suspense>
+
           {me === now ? (
             <>
               <h2>
@@ -117,9 +92,48 @@ export const MyPage = () => {
   );
 };
 
-const GetFirst = ({ resource }) => {
+const GetFirst = ({ resource, me, now }) => {
   const res = resource.read();
-  return <>{<FirstBox props={res[0]} key={res.id} />}</>;
+  const userInfo = useAppSelector((state) => state.loginState);
+
+  if (res == undefined) {
+    return <Notfound />;
+  }
+
+  return (
+    <>
+      <h2>
+        <span>
+          <IoInformationCircleOutline
+            size={30}
+            color="green"
+            style={{ paddingBottom: "3px", marginRight: "8px" }}
+          />
+        </span>
+        회원 정보
+      </h2>
+      <FirstBox props={res[0]} key={res.id} />
+      <h2>
+        <span>
+          <BsGraphUp
+            size={27}
+            color="green"
+            style={{ paddingBottom: "3px", marginRight: "13px" }}
+          />
+        </span>
+        {me === now ? "내 역량" : `${now}님 역량`}
+      </h2>
+      <Suspense fallback={<Spinner />}>
+        <GetSecond
+          resource={fetchData(API.TWO + now, {
+            headers: {
+              Authorization: "Bearer " + userInfo.access_token,
+            },
+          })}
+        />
+      </Suspense>
+    </>
+  );
 };
 
 const GetSecond = ({ resource }) => {

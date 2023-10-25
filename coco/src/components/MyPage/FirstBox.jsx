@@ -11,6 +11,7 @@ import fetchData from "../../api/fetchTask";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
 import axios from "axios";
+import {Notfound} from "../Notfound.jsx";
 
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -306,6 +307,9 @@ export const FirstBox = (props) => {
 
 const LevelField = ({ resource }) => {
   const data = resource.read();
+  if (data === undefined){
+    return <Notfound/>
+  }
   return (
     <div className="levelField">
       <h3>Level {data.level}</h3>
@@ -316,6 +320,9 @@ const LevelField = ({ resource }) => {
 
 const LevelShow = ({ resource }) => {
   const data = resource.read();
+  if (data === undefined){
+    return <Notfound/>
+  }
   return (
     <div className="levelShow">
       <h3>Level {data.level}</h3>

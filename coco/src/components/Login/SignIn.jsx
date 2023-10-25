@@ -236,6 +236,8 @@ const FindIdModal = (props) => {
 
 const FindEmailModal = (props) => {
   const idRef = useRef();
+  const nameRef = useRef();
+  const emailRef = useRef();
   const pwRef = useRef();
   const pw2Ref = useRef();
   const [result, setResult] = useState("");
@@ -243,16 +245,12 @@ const FindEmailModal = (props) => {
   const Handler = () => {
     if (pwRef.current.value == pw2Ref.current.value) {
       axios
-        .patch(
-          API.USER,
-          {},
-          {
-            params: {
-              pw: pwRef.current.value,
-              id: idRef.current.value,
-            },
-          }
-        )
+        .patch(API.UPDATEPW, {
+          pw: pwRef.current.value,
+          id: idRef.current.value,
+          name: nameRef.current.value,
+          email: emailRef.current.value,
+        })
         .then((res) => {
           Swal.fire({ icon: "success", title: "비밀번호 재설정 완료!" });
           setResult("비밀번호를 재설정했습니다.");
@@ -262,9 +260,7 @@ const FindEmailModal = (props) => {
           if (response.status == 404) {
             setResult("존재하는 id가 아닙니다.");
           } else if (response.status == 422) {
-            setResult(
-              "비밀번호는 영어, 숫자, 특수기호를 포함하고 8-15 길이여야합니다."
-            );
+            setResult(response.data.detail[0].msg);
           }
         });
     } else {
@@ -288,6 +284,14 @@ const FindEmailModal = (props) => {
         <div className="loginBox">
           <FaRegUser size="25" />
           <input ref={idRef} placeholder={"ID를 입력하세요"} />
+        </div>
+        <div className="loginBox">
+          <FaRegUser size="25" />
+          <input ref={nameRef} placeholder={"이름을 입력하세요"} />
+        </div>
+        <div className="loginBox">
+          <FaRegUser size="25" />
+          <input ref={emailRef} placeholder={"이메일을 입력하세요"} />
         </div>
         <div className="loginBox">
           <RiLockPasswordLine size="25" />

@@ -6,6 +6,7 @@ export const API = {
   PERMISSION: `${BASE_URL}/user/permission`,
   FINDID: `${BASE_URL}/user/findid/`,
   CHECKID: `${BASE_URL}/user/checkid/`,
+  UPDATEPW: `${BASE_URL}/user/pw/`,
   AUTHROUTER: `${BASE_URL}/auth`,
   LOGIN: `${BASE_URL}/auth/login/`,
   SIGNUP: `${BASE_URL}/auth/signup/`,

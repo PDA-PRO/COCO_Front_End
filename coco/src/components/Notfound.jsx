@@ -6,7 +6,7 @@ export const Notfound = () => {
     <div
       className="404"
       style={{
-        width: "98vw",
+        width: "100%",
         height: "46vh",
         display: "flex",
         flexFlow: "column nowrap",

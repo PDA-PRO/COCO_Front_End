@@ -61,7 +61,11 @@ const GetFirst = ({ resource, me, now }) => {
   const userInfo = useAppSelector((state) => state.loginState);
 
   if (res == undefined) {
-    return <Notfound />;
+    return (
+      <div style={{ width: "100%" }}>
+        <Notfound />
+      </div>
+    );
   }
 
   const user = res.user_info;

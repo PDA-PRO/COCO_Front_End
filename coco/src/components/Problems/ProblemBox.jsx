@@ -90,7 +90,7 @@ export const ProblemBox = ({
         {info.rate}%
       </h4>
       {type === 1 ? (
-        <h4 onClick={() => addProblems(info.id)}>
+        <h4 onClick={() => addProblems(info)}>
           <BsJournalPlus size={23} color="purple" />
         </h4>
       ) : type === 2 ? (

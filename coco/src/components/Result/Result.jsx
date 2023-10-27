@@ -478,13 +478,60 @@ const WPC = ({ sub_id, task_id }) => {
     { retry: false }
   );
   if (isFetching) {
-    return <Spinner />;
+    return Swal.fire({
+      icon: "info",
+      title: "WPC AI가 코드를 분석중입니다.",
+      showConfirmButton: false,
+      showLoading: true,
+    });
   } else {
     if (isError) {
-      return <div>확장 기능이 존재하지 않습니다.</div>;
+      return (
+        <div
+          style={{
+            width: "100%",
+            minHeight: "120px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p
+            style={{
+              margin: "0",
+              fontFamily: "Pretendard-Regular",
+              fontWeight: "600",
+              fontSize: "1.1em",
+            }}
+          >
+            확장 기능이 존재하지 않습니다.
+          </p>
+        </div>
+      );
     }
     if (data.data.status !== 1) {
-      return <div>WPC 분석이 불가합니다.</div>;
+      return (
+        <div
+          style={{
+            width: "100%",
+            minHeight: "120px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p
+            style={{
+              margin: "0",
+              fontFamily: "Pretendard-Regular",
+              fontWeight: "600",
+              fontSize: "1.1em",
+            }}
+          >
+            WPC 분석이 불가합니다.
+          </p>
+        </div>
+      );
     } else {
       return (
         <div className="wpcBox">

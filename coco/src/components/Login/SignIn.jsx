@@ -63,7 +63,11 @@ export const SignIn = () => {
         )
         .then(function (response) {
           if (response.status == 200) {
-            alert(`${id}님 안녕하세요`);
+            Swal.fire({
+              icon: "success",
+              title: `${id}님 안녕하세요`,
+            });
+
             let jwt_role = jwtdecode(response.data.access_token).role;
             let jwt_id = jwtdecode(response.data.access_token).sub;
             let jwt_name = jwtdecode(response.data.access_token).name;

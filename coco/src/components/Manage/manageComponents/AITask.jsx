@@ -15,7 +15,7 @@ import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
+
 import CreatableSelect from "react-select/creatable";
 import JSZip from "jszip";
 import { API } from "api/config";
@@ -134,8 +134,6 @@ export const AITask = () => {
   const handleCheckChange = (e) => {
     setCodeCheck(!codeCheck);
   };
-
-  console.log(template);
 
   return (
     <>
@@ -391,43 +389,53 @@ const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
       const formData = new FormData();
       //File 추가
 
-      //quill editor에 의해 생성된 메인 설명의 html을 form-data에 삽입
-      formData.append("description", quillRef.current.value);
+      Swal.fire({
+        icon: "info",
+        title: "문제 업로드 중입니다.",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
 
-      axios
-        .post(API.BASE_URL + "/ai-task/main", {
-          form_data: quillRef.current.value,
-          task_data: {
-            title: titleRef.current.value,
-            inputDescription: inputDescRef.current.value,
-            inputEx1: inputEx1Ref.current.value,
-            inputEx2: inputEx2Ref.current.value,
-            outputDescription: outputDescRef.current.value,
-            outputEx1: outputEx1Ref.current.value,
-            outputEx2: outputEx2Ref.current.value,
-            diff: diffRef.current.value,
-            timeLimit: timeRef.current.value,
-            memLimit: memRef.current.value,
-            category: categoryRef.current
-              .getValue()
-              .map((e) => e.value)
-              .join(","),
-          },
-          is_final: true,
-        })
-        .then(function (response) {
-          if (response.data.code === 1) {
-            Swal.fire({
-              icon: "success",
-              title: `${titleRef.current.value} 업로드 성공`,
+          //quill editor에 의해 생성된 메인 설명의 html을 form-data에 삽입
+          formData.append("description", quillRef.current.value);
+
+          axios
+            .post(API.BASE_URL + "/ai-task/main", {
+              form_data: quillRef.current.value,
+              task_data: {
+                title: titleRef.current.value,
+                inputDescription: inputDescRef.current.value,
+                inputEx1: inputEx1Ref.current.value,
+                inputEx2: inputEx2Ref.current.value,
+                outputDescription: outputDescRef.current.value,
+                outputEx1: outputEx1Ref.current.value,
+                outputEx2: outputEx2Ref.current.value,
+                diff: diffRef.current.value,
+                timeLimit: timeRef.current.value,
+                memLimit: memRef.current.value,
+                category: categoryRef.current
+                  .getValue()
+                  .map((e) => e.value)
+                  .join(","),
+              },
+              is_final: true,
+            })
+            .then(function (response) {
+              if (response.data.code === 1) {
+                Swal.fire({
+                  icon: "success",
+                  title: `${titleRef.current.value} 업로드 성공`,
+                });
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: `ERROR - SERVER COMMUNICATION FAILED`,
+                });
+              }
             });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: `ERROR - SERVER COMMUNICATION FAILED`,
-            });
-          }
-        });
+        },
+      });
     }
   };
 

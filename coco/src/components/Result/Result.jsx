@@ -290,6 +290,12 @@ const ResultBox = ({ resource, info }) => {
                   Swal.close();
                 }, 1500);
               }
+            })
+            .catch(() => {
+              Swal.fire({
+                icon: "error",
+                title: "AI Plugin 사용 불가\n\n404 NOT FOUND",
+              });
             });
         },
       });
@@ -302,6 +308,16 @@ const ResultBox = ({ resource, info }) => {
     navigate(`/problems/${e}`);
   };
 
+  function removeSubstringFromStart(inputString, targetSubstring) {
+    const index = inputString.indexOf(targetSubstring);
+
+    if (index !== -1) {
+      return inputString.slice(0, index).trim();
+    }
+
+    return inputString;
+  }
+
   return (
     <div className="Res">
       <div className="res-body">
@@ -312,7 +328,9 @@ const ResultBox = ({ resource, info }) => {
         >
           <div className="box">
             <p className="taskNo">PROBLEM ID : No.{info.task_id}</p>
-            <p style={{ fontSize: "1.2em" }}>{info.title}</p>
+            <p style={{ fontSize: "1.2em" }}>
+              {removeSubstringFromStart(info.title, "wpc")}
+            </p>
           </div>
 
           <div className="box">
@@ -478,12 +496,28 @@ const WPC = ({ sub_id, task_id }) => {
     { retry: false }
   );
   if (isFetching) {
-    return Swal.fire({
-      icon: "info",
-      title: "WPC AI가 코드를 분석중입니다.",
-      showConfirmButton: false,
-      showLoading: true,
-    });
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          minHeight: "120px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "Pretendard-Regular",
+            margin: "0",
+            fontSize: "1.2em",
+            fontWeight: "600",
+          }}
+        >
+          is Loading...
+        </p>
+      </div>
+    );
   } else {
     if (isError) {
       return (

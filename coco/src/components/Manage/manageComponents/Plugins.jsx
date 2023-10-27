@@ -85,7 +85,7 @@ const AIcontent = ({ pluginInfo }) => {
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
-    if (checked === true) {
+    if (checked == true) {
       axios
         .put(API.PLUGINSTATUS, {
           plugin: pluginInfo.plugin,
@@ -123,12 +123,10 @@ const AIcontent = ({ pluginInfo }) => {
     }
   };
 
-  console.log(checked);
-
   return (
     <>
       <div className="contentName">
-        {pluginInfo.front && pluginInfo.back ? (
+        {checked == true ? (
           <BsPlugin color="rgb(0, 201, 0)" size={23} />
         ) : (
           <BsPlugin color="red" size={23} />

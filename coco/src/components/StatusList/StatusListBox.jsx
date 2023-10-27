@@ -27,6 +27,16 @@ export const StatusListBox = (info) => {
     navigate(`/result/${e}`, { state: { info: info.info } });
   };
 
+  function removeSubstringFromStart(inputString, targetSubstring) {
+    const index = inputString.indexOf(targetSubstring);
+
+    if (index !== -1) {
+      return inputString.slice(0, index).trim();
+    }
+
+    return inputString;
+  }
+
   var status = "대기";
   switch (info.info.status) {
     case 1:
@@ -149,7 +159,7 @@ export const StatusListBox = (info) => {
           overflow: "hidden",
         }}
       >
-        {info.info.title}
+        {removeSubstringFromStart(info.info.title, "wpc")}
       </h5>
       <h5>{lan(info.info.lang)}</h5>
       <h5>{setScore(info.info.status)}</h5>

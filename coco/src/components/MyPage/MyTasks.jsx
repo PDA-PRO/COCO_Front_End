@@ -58,6 +58,9 @@ const GetProblems = ({ resource }) => {
 export const MyTasksBox = (info) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
+
+  console.log(info.info);
+
   const goDetail = (e) => {
     navigate(`/problems/${e}`);
   };
@@ -109,7 +112,6 @@ export const MyTasksBox = (info) => {
   };
 
   const solve = (e) => {
-    console.log(e);
     if (e === 1) {
       return (
         <p style={{ margin: "0", textAlign: "center" }}>
@@ -131,6 +133,16 @@ export const MyTasksBox = (info) => {
     }
   };
 
+  function removeSubstringFromStart(inputString, targetSubstring) {
+    const index = inputString.indexOf(targetSubstring);
+
+    if (index !== -1) {
+      return inputString.slice(0, index).trim();
+    }
+
+    return inputString;
+  }
+
   return (
     <div className="MyTasksBox">
       <h4 onClick={() => goDetail(info.info.id)}>No.{info.info.id}</h4>
@@ -142,7 +154,7 @@ export const MyTasksBox = (info) => {
         }}
         onClick={() => goDetail(info.info.id)}
       >
-        {info.info.title}
+        {removeSubstringFromStart(info.info.title, "wpc")}
       </h4>
       <h4>{setLevel(info.info.diff)}</h4>
       <h4

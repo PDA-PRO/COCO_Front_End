@@ -83,6 +83,16 @@ export const Block = (props) => {
     }
   };
 
+  function removeSubstringFromStart(inputString, targetSubstring) {
+    const index = inputString.indexOf(targetSubstring);
+
+    if (index !== -1) {
+      return inputString.slice(0, index).trim();
+    }
+
+    return inputString;
+  }
+
   useEffect(() => {
     const chCate = (e) => {
       if (e === 1) {
@@ -100,7 +110,7 @@ export const Block = (props) => {
     function timeForToday(value) {
       const today = new Date();
       const timeValue = new Date(value);
-      const convertTime =  timeValue.getTime()+9 * 60 * 60 * 1000;
+      const convertTime = timeValue.getTime() + 9 * 60 * 60 * 1000;
 
       const betweenTime = Math.floor(
         (today.getTime() - convertTime) / 1000 / 60
@@ -216,7 +226,9 @@ export const Block = (props) => {
                   <h3>No.{problem.problem_id}</h3>
                 </div>
 
-                <h3>{problem.problem_title}</h3>
+                <h3>
+                  {removeSubstringFromStart(problem.problem_title, "wpc")}
+                </h3>
               </div>
 
               <div className="blockSec2">

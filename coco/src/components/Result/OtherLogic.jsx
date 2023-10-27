@@ -32,24 +32,47 @@ export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
 
 const OCcontent = ({ task_id, sub_id }) => {
   const { isFetching, data } = useQuery(["OC", sub_id], () =>
-    axios.post(
-      API.BASE_URL + "/code-cluster",
-      {},
-      {
-        params: {
-          task_id: task_id,
-          sub_id: sub_id,
-        },
-      }
-    )
+    axios
+      .post(
+        API.BASE_URL + "/code-cluster/main",
+        {},
+        {
+          params: {
+            task_id: task_id,
+            sub_id: sub_id,
+          },
+        }
+      )
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "AI Plugin 사용 불가\n\n404 NOT FOUND",
+        });
+      })
   );
   if (isFetching) {
-    return Swal.fire({
-      icon: "info",
-      title: "AI가 다른 로직의 코드를 찾고 있습니다.",
-      footer: "시간이 다소 소요될 수 있습니다.",
-      showConfirmButton: false,
-    });
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          minHeight: "120px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "Pretendard-Regular",
+            margin: "0",
+            fontSize: "1.2em",
+            fontWeight: "600",
+          }}
+        >
+          is Loading...
+        </p>
+      </div>
+    );
   }
   function makeNoLine(arr) {
     if (arr.length == 0) {

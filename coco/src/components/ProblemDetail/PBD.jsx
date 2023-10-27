@@ -23,7 +23,7 @@ import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axios from "axios";
-import {Notfound} from "../Notfound.jsx";
+import { Notfound } from "../Notfound.jsx";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -39,12 +39,27 @@ export const PBD = () => {
 
 const GetDetail = ({ resource }) => {
   const detail = resource.read(); //api fetch 결과
+  function removeSubstringFromStart(inputString, targetSubstring) {
+    const index = inputString.indexOf(targetSubstring);
 
+    if (index !== -1) {
+      return inputString.slice(0, index).trim();
+    }
+
+    return inputString;
+  }
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(0);
   var code = "";
   //submit이후 결과창 이동
+
+  function hasAiIgnoreCase(arr) {
+    return arr.some(
+      (item) => typeof item === "string" && item.toLowerCase().includes("ai")
+    );
+  }
+
   const goToResult = (e) => {
     navigate(`/status?user_id=${userInfo.id}`, {
       state: { user_id: userInfo.id },
@@ -123,7 +138,7 @@ const GetDetail = ({ resource }) => {
       <div
         className="PBD-title"
         style={
-          detail.is_ai === 1
+          hasAiIgnoreCase(detail.category) === true
             ? { backgroundColor: "rgb(222, 255, 224)" }
             : { backgroundColor: "rgb(241, 241, 241)" }
         }
@@ -131,7 +146,8 @@ const GetDetail = ({ resource }) => {
         <div className="problemsName-pbd">
           <div>No.{detail.id}</div>
           <div className="problemInfo-pbd">
-            {detail.title}
+            {removeSubstringFromStart(detail.title, "wpc")}
+
             <div className="PBD-secTitle">
               <div className="PBD-timeLimit">
                 시간제한 : {detail.timeLimit}s
@@ -177,7 +193,7 @@ const GetDetail = ({ resource }) => {
         <Allotment defaultSizes={[1, 1]} minSize={400} snap={true}>
           <div className="PBD-problem PBD-scroll">
             <div className="PBD-pbTxt">
-              {detail.is_ai === 1 ? (
+              {hasAiIgnoreCase(detail.category) === true ? (
                 <div className="isAimade">
                   <img src="../image/ai-file.png" alt="ai" width="35px" />
                   <p>AI가 생성한 문제입니다.</p>
@@ -286,7 +302,7 @@ const GetDetail = ({ resource }) => {
       <div
         className="PBD-menu"
         style={
-          detail.is_ai === 1
+          hasAiIgnoreCase(detail.category) === true
             ? { backgroundColor: "rgb(222, 255, 224)" }
             : { backgroundColor: "rgb(241, 241, 241)" }
         }
@@ -310,6 +326,6 @@ const GetDetail = ({ resource }) => {
       </div>
     </div>
   ) : (
-    <Notfound/>
+    <Notfound />
   );
 };

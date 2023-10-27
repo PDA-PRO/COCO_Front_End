@@ -36,6 +36,16 @@ export const ProblemBox = ({
     window.open(`${normal_path}problems/${e}`);
   };
 
+  function removeSubstringFromStart(inputString, targetSubstring) {
+    const index = inputString.indexOf(targetSubstring);
+
+    if (index !== -1) {
+      return inputString.slice(0, index).trim();
+    }
+
+    return inputString;
+  }
+
   const nothing = () => {};
 
   const setLevel = (e) => {
@@ -74,7 +84,7 @@ export const ProblemBox = ({
           type === 1 || type === 2 ? goDetail2(info.id) : nothing();
         }}
       >
-        {info.title}
+        {removeSubstringFromStart(info.title, "wpc")}
       </h4>
       <h4>{setLevel(info.diff)}</h4>
       <h4

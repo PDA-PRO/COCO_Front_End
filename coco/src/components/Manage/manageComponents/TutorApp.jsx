@@ -6,11 +6,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../../../app/store";
 import Swal from "sweetalert2";
 import axios from "axios";
+import _ from "lodash";
 
 export const TutorApp = () => {
   const userInfo = useAppSelector((state) => state.loginState);
   const { data: tutorRequest, isFetching: isFetching1 } = useQuery({
-    queryKey: ["tutorrequestlist"],
+    queryKey: ["tutorlist", "request"],
     queryFn: () =>
       axios.get(API.REQUESTTUTOR, {
         headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -69,16 +70,27 @@ const Applier = ({ info }) => {
         }
       ),
     {
-      onSuccess: () => {
-        // 요청이 성공한 경우
-        console.log("onSuccess");
-        queryClient.invalidateQueries("tutorlist"); // queryKey 유효성 제거
+      onSuccess: (res) => {
+        //queryClient.invalidateQueries() 를 이용하여 튜터리스트를 업데이트하면 아직 db에 변경사항이 적용되기 전에 요청을 해서 받아오기 때문에 캐쉬를 직접 조작해줘야함
+        queryClient.setQueryData(["tutorlist", "request"], (oldData) => {
+          let newData = _.cloneDeep(oldData);
+          newData.data = newData.data.filter((a) => a.user_id != info.user_id);
+          return newData;
+        });
+        queryClient.setQueryData(["tutorlist"], (oldData) => {
+          let newData = _.cloneDeep(oldData);
+          newData.data.userlist = [
+            ...newData.data.userlist,
+            { id: info.user_id },
+          ];
+          return newData;
+        });
+        Swal.fire({ icon: "success", title: "튜터에 추가되었습니다." });
       },
     }
   );
   const addTutor = () => {
     updateMutation.mutate();
-    Swal.fire({ icon: "success", title: "튜터에 추가되었습니다." });
   };
 
   return (
@@ -104,7 +116,7 @@ const TMem = ({ info }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const updateMutation = useMutation(
+  const delateMutation = useMutation(
     () =>
       axios.patch(
         API.PERMISSION,
@@ -114,16 +126,21 @@ const TMem = ({ info }) => {
         }
       ),
     {
-      onSuccess: () => {
-        // 요청이 성공한 경우
-        console.log("onSuccess");
-        queryClient.invalidateQueries("tutorlist"); // queryKey 유효성 제거
+      onSuccess: (res) => {
+        //queryClient.invalidateQueries() 를 이용하여 튜터리스트를 업데이트하면 아직 db에 변경사항이 적용되기 전에 요청을 해서 받아오기 때문에 캐쉬를 직접 조작해줘야함
+        queryClient.setQueryData(["tutorlist"], (oldData) => {
+          let newData = _.cloneDeep(oldData);
+          newData.data.userlist = newData.data.userlist.filter(
+            (a) => a.id != info.id
+          );
+          return newData;
+        });
+        Swal.fire({ icon: "success", title: "튜터에서 제거되었습니다." });
       },
     }
   );
   const delTutor = () => {
-    updateMutation.mutate();
-    Swal.fire({ icon: "success", title: "튜터에서 제거되었습니다." });
+    delateMutation.mutate();
   };
 
   return (

@@ -114,15 +114,13 @@ const UserList = ({ userList, page, setPage, setReload, setLoading }) => {
         }
       )
       .then((res) => {
-        if (res.data == true) {
-          Swal.fire({
-            icon: "success",
-            title: `${user_id}님을 관리자에 추가하였습니다`,
-          });
+        Swal.fire({
+          icon: "success",
+          title: `${user_id}님을 관리자에 추가하였습니다`,
+        });
 
-          setReload(`add${user_id}`);
-          setLoading(true);
-        }
+        setReload(`add${user_id}`);
+        setLoading(true);
       })
       .catch(() => {
         Swal.fire({
@@ -185,14 +183,12 @@ const Managers = ({ managerList, setReload, setLoading }) => {
         }
       )
       .then((res) => {
-        if (res.data == true) {
-          Swal.fire({
-            icon: "success",
-            title: `${user_id}님을 관리자에서 삭제하였습니다`,
-          });
-          setReload(`remove${user_id}`);
-          setLoading(true);
-        }
+        Swal.fire({
+          icon: "success",
+          title: `${user_id}님을 관리자에서 삭제하였습니다`,
+        });
+        setReload(`remove${user_id}`);
+        setLoading(true);
       })
       .catch(() => {
         Swal.fire({

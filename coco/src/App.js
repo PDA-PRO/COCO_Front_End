@@ -31,8 +31,8 @@ import { Alarm } from "components/Alarm/Alarm";
 
 function App() {
   /* 토큰이 유효하지 않으면 토큰 초기화*/
-  const dispatch = useAppDispatch;
-  const userInfo = useAppSelector(state => state.loginState);
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((state) => state.loginState);
   if (!checkToken(userInfo.access_token)) {
     dispatch({
       type: "loginSlice/logout",
@@ -43,39 +43,164 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <AuthRouter role={0}>
+                <Home />
+              </AuthRouter>
+            }
+          />
           <Route path="/login" element={<Login />} />
-          <Route path="/room" element={<Group />} />
-          <Route path="/room/:id" element={<GroupInfo />} />
-          <Route path="/tutor" element={<Tutor />} />
-          <Route path="/makeroom" element={<MakeGroup />} />
-          <Route path="/problems" element={<Problems />} />
-          <Route path="/problems/:id" element={<PBD />} />
-          <Route path="/result/:id" element={<Result />} />
-          <Route path="/board" element={<Board />} />
-          <Route path="/room/qa/write" element={<GroupBoard />} />
-          <Route path="/room/roadmap/:room_id/:id" element={<Inside />} />
-          <Route path="/room/createRoadmap/:id" element={<MakeRoadMap />} />
+          <Route
+            path="/room"
+            element={
+              <AuthRouter role={0}>
+                <Group />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/room/:id"
+            element={
+              <AuthRouter role={0}>
+                <GroupInfo />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/tutor"
+            element={
+              <AuthRouter role={0}>
+                <Tutor />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/makeroom"
+            element={
+              <AuthRouter role={0}>
+                <MakeGroup />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/problems"
+            element={
+              <AuthRouter role={0}>
+                <Problems />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/problems/:id"
+            element={
+              <AuthRouter role={0}>
+                <PBD />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/result/:id"
+            element={
+              <AuthRouter role={0}>
+                <Result />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/board"
+            element={
+              <AuthRouter role={0}>
+                <Board />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/room/qa/write"
+            element={
+              <AuthRouter role={0}>
+                <GroupBoard />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/room/roadmap/:room_id/:id"
+            element={
+              <AuthRouter role={0}>
+                <Inside />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/room/createRoadmap/:id"
+            element={
+              <AuthRouter role={0}>
+                <MakeRoadMap />
+              </AuthRouter>
+            }
+          />
           <Route
             path="/room/modifyRoadmap/:room_id/:id"
             element={<ModifyRoadMap />}
           />
-          <Route path="/board/:id" element={<BoardDetail />} />
-          <Route path="/board_modify/:id" element={<ModifyBoard />} />
-          <Route path="/mypage/:id" element={<MyPage />} />
-          <Route path="/alarm" element={<Alarm />} />
-          <Route path="/manage" element={<Manage />} />
+          <Route
+            path="/board/:id"
+            element={
+              <AuthRouter role={0}>
+                <BoardDetail />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/board_modify/:id"
+            element={
+              <AuthRouter role={0}>
+                <ModifyBoard />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/mypage/:id"
+            element={
+              <AuthRouter role={0}>
+                <MyPage />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/alarm"
+            element={
+              <AuthRouter role={0}>
+                <Alarm />
+              </AuthRouter>
+            }
+          />
+          <Route
+            path="/manage"
+            element={
+              <AuthRouter role={1}>
+                <Manage />
+              </AuthRouter>
+            }
+          />
           <Route path="/manage/modify/:id" element={<TaskModify />} />
           <Route
             path="/write"
             element={
-              <WriteGeul />
-              // <AuthRouter role={0}>
-              //   <WriteGeul />
-              // </AuthRouter>
+              <AuthRouter role={0}>
+                <WriteGeul />
+              </AuthRouter>
             }
           />
-          <Route path="/status" element={<StatusList />} />
+          <Route
+            path="/status"
+            element={
+              <AuthRouter role={0}>
+                <StatusList />
+              </AuthRouter>
+            }
+          />
           <Route path="*" element={<div>없는 페이지입니다.</div>} />
         </Routes>
       </div>

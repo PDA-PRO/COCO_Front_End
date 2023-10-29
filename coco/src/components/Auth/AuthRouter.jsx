@@ -1,8 +1,6 @@
 import { checkToken } from "../../app/authentication";
 import { useAppSelector } from "../../app/store";
 import { useNavigate } from "react-router-dom";
-import { Login } from "../../components/Login/Login";
-import { useState } from "react";
 import { useAppDispatch } from "../../app/store";
 import { API } from "api/config";
 import axios from "axios";
@@ -11,33 +9,39 @@ export const AuthRouter = ({ role, children }) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [state, setstate] = useState("pending");
 
-  if (checkToken(userInfo.access_token)) {
-    //토큰이 유효하다면
+  if (role >= 1) {
     axios
       .get(API.AUTHROUTER, {
         headers: { Authorization: "Bearer " + userInfo.access_token },
       })
       .then(function (response) {
-        if (response.status == 200) {
-          if (response.data.role >= role) {
-            setstate("pass");
-          } else {
-            alert("권한부족");
-            navigate("/");
-            setstate("error");
-          }
+        if (response.data.role < role) {
+          alert("권한부족");
+          navigate("/");
         }
       })
       .catch((err) => {
-        setstate("error");
+        alert("권한부족");
         dispatch({
           type: "loginSlice/logout",
         });
+        navigate("/");
       });
+    return children;
   } else {
-    return <Login />;
+    if (userInfo.access_token == "") {
+      return children;
+    } else {
+      if (checkToken(userInfo.access_token)) {
+        return children;
+      } else {
+        alert("로그인 유효기간이 만료됐습니다.");
+        dispatch({
+          type: "loginSlice/logout",
+        });
+        return children;
+      }
+    }
   }
-  return state == "pending" ? <></> : state == "pass" ? children : <Login />;
 };

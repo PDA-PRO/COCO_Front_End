@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "http://localhost:1000";
 
 export const API = {
   BASE_URL: BASE_URL,
@@ -40,4 +40,5 @@ export const API = {
   LEVEL: `${BASE_URL}/user/level`,
   PLUGINSTATUS: `${BASE_URL}/plugin/status`,
   HOT: `${BASE_URL}/hot`,
+  MYTASK: `${BASE_URL}/mytask/`,
 };

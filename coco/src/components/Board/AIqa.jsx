@@ -75,61 +75,65 @@ const Modal = ({ show, onCloseButtonClick }) => {
   }
 
   const QforAI = (content, code, id) => {
-    Swal.fire({
-      icon: "question",
-      title: content + `<pre class="swalCode">${code}</pre>` + "\n",
+    if (content === "") {
+      Swal.fire({ icon: "warning", title: "질문 내용을 입력해주세요" });
+    } else {
+      Swal.fire({
+        icon: "question",
+        title: content + `<pre class="swalCode">${code}</pre>` + "\n",
 
-      showCancelButton: true,
-      confirmButtonText: "TRY",
-      footer: "시간이 다소 소요될 수 있습니다.",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        //여기에 axios 호출
-        Swal.fire({
-          icon: "info",
-          title: "AI가 답변을 생성하고 있습니다.",
-          showConfirmButton: false,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-            axios
-              .post(
-                API.BASE_URL + "/qa/main",
-                {
-                  content: content,
-                  code: code,
-                },
-                {
-                  headers: {
-                    Authorization: "Bearer " + userInfo.access_token,
+        showCancelButton: true,
+        confirmButtonText: "TRY",
+        footer: "시간이 다소 소요될 수 있습니다.",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //여기에 axios 호출
+          Swal.fire({
+            icon: "info",
+            title: "AI가 답변을 생성하고 있습니다.",
+            showConfirmButton: false,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              axios
+                .post(
+                  API.BASE_URL + "/qa/main",
+                  {
+                    content: content,
+                    code: code,
                   },
-                }
-              )
-              .then((res) => {
-                console.log(res.data);
-                if (res.data.result === true) {
+                  {
+                    headers: {
+                      Authorization: "Bearer " + userInfo.access_token,
+                    },
+                  }
+                )
+                .then((res) => {
+                  console.log(res.data);
+                  if (res.data.result === true) {
+                    Swal.fire({
+                      icon: "success",
+                      title: "AI로부터 답변이 등록되었습니다.",
+                      timer: 1000,
+                      showConfirmButton: false,
+                    }).then(() => {
+                      setAnswer(true);
+                      setAnswerContent(res.data.content);
+                      setAnswerCode(res.data.code);
+                    });
+                  }
+                })
+                .catch(() => {
                   Swal.fire({
-                    icon: "success",
-                    title: "AI로부터 답변이 등록되었습니다.",
-                    timer: 1000,
-                    showConfirmButton: false,
-                  }).then(() => {
-                    setAnswer(true);
-                    setAnswerContent(res.data.content);
-                    setAnswerCode(res.data.code);
+                    icon: "error",
+                    title: "답변 생성 ai를 사용할 수 없습니다.",
                   });
-                }
-              })
-              .catch(() => {
-                Swal.fire({
-                  icon: "error",
-                  title: "답변 생성 ai를 사용할 수 없습니다.",
                 });
-              });
-          },
-        });
-      }
-    });
+            },
+          });
+        }
+      });
+    }
   };
 
   if (!show) {

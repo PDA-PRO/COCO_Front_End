@@ -7,21 +7,16 @@ import {
   BsArrowDownRight,
   BsArrowUpLeft,
   BsUiChecksGrid,
-  BsFileEarmarkZip,
 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-
 import CreatableSelect from "react-select/creatable";
-import JSZip from "jszip";
 import { API } from "api/config";
 import { SiAskubuntu } from "react-icons/si";
 import Swal from "sweetalert2";
-import { Suspense } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -108,7 +103,7 @@ export const AITask = () => {
                 Swal.fire({
                   icon: "success",
                   title:
-                    "AI가 답변을 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
+                    "AI가 문제를 생성했습니다. \n 수정해야할 부분을 수정하고 업로드하세요!",
                 });
               } else {
               }
@@ -641,14 +636,6 @@ const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
 
       <div className="btnDiv">
         <Button
-          variant="outline-primary"
-          id="m-request_btn"
-          onClick={() => reAsk(askContent)}
-        >
-          다시 요청하기
-        </Button>
-
-        <Button
           variant="outline-secondary"
           id="m-submit_btn-AI"
           onClick={onSubmitHandler}
@@ -669,7 +656,11 @@ const CheckCategory = ({ userInfo, categoryRef }) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });
+        if (value.data[i] == "ai") {
+          categoryRef.current.setValue([{ value: "ai", label: "ai" }]);
+        }
       }
+
       setIsLoading(false);
       return setOptions(option);
     });

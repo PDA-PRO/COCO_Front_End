@@ -171,6 +171,13 @@ const Managers = ({ managerList, setReload, setLoading }) => {
   const managers = managerList;
   const userInfo = useAppSelector((state) => state.loginState);
   const minusMananger = (user_id) => {
+    if (user_id === "admin") {
+      return Swal.fire({
+        icon: "warning",
+        title: "admin관리자는 삭제할 수 없습니다.",
+      });
+    }
+
     axios
       .patch(
         API.PERMISSION,

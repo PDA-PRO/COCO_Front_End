@@ -50,11 +50,9 @@ export const Comments = ({ commentData }) => {
   function timeForToday(value) {
     const today = new Date();
     const timeValue = new Date(value);
-    const convertTime =  timeValue.getTime()+9 * 60 * 60 * 1000;
+    const convertTime = timeValue.getTime() + 9 * 60 * 60 * 1000;
 
-    const betweenTime = Math.floor(
-      (today.getTime() - convertTime) / 1000 / 60
-    );
+    const betweenTime = Math.floor((today.getTime() - convertTime) / 1000 / 60);
     if (betweenTime < 1) return "방금전";
     if (betweenTime < 60) {
       return `${betweenTime}분전`;
@@ -115,7 +113,7 @@ export const Comments = ({ commentData }) => {
             onClick={onLikesHandler}
             style={{ color: like === true ? "red" : "gray" }}
           >
-            <BsFillHeartFill size={23} />
+            <BsFillHeartFill size={20} />
             <p>{likeNum}</p>
           </div>
         )}
@@ -124,7 +122,7 @@ export const Comments = ({ commentData }) => {
         <p id="commentCon">{commentData.context}</p>
         {isMe ? (
           <BsTrash
-            size={20}
+            size={18}
             color="red"
             style={{ cursor: "pointer" }}
             onClick={deleteCommentHandler.mutate}

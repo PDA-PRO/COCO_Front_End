@@ -65,12 +65,12 @@
 .boardDetail .BDtitle h2 {
   font-family: "GmarketSansMedium" !important;
   font-weight: 700;
-  font-size: 1.7em;
+  font-size: 1.4em;
 }
 
 .boardDetail .BDtitle .BD_idAndTime h3 {
   font-family: "Pretendard-Regular";
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1em;
 }
 
@@ -82,13 +82,30 @@
   margin-bottom: 5rem;
 }
 
+.boardDetail .BDContent-help {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2vw;
+  align-items: start;
+  margin-top: 2em;
+}
+
 .BDContent .BDTxt {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  padding: 0 1vw;
+  min-height: 150px;
+  margin-top: 15px;
+}
+
+.BDContent-help .BDTxt {
   font-family: "Pretendard-Regular";
   font-weight: 550;
   font-size: 1.1em;
   padding: 0 1vw;
   min-height: 200px;
-  margin-top: 15px;
 }
 
 .BDCode {
@@ -103,54 +120,43 @@
   justify-content: center;
   gap: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px solid lightgray;
-}
-
-.BDCode h2 {
-  text-align: center;
-  color: #89d0ff;
-  font-family: "GmarketSansMedium" !important;
-  font-weight: 700;
-  font-size: 1.7em;
-  margin: 0 !important;
-  padding-top: 6px;
 }
 
 .BDCode .BD_showCode {
-  padding: 20px 1vw;
+  min-height: 150px;
+}
 
-  min-height: 300px;
-  border-radius: 50px;
+.BD_showCode .R-Code {
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(78, 78, 78);
+  border-radius: 15px;
+  cursor: text;
+  background-color: rgb(231, 231, 231) !important;
+  margin: 2px 0.5vw !important;
+  white-space: pre-wrap;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3px;
+  padding: 1em;
+}
+
+.BD_showCode .R-Code .codeLine {
+  display: grid;
+  grid-template-columns: 3% 95%;
+  column-gap: 13px;
+}
+
+.BD_showCode .codeLine .codeNum {
+  grid-column: 1/2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
 }
 
 /* .BD_showCode .cm-content {
   background-color: rgb(255, 255, 255);
 } */
-
-.BD_showCodel .cm-gutter {
-  background-color: rgb(255, 255, 255);
-}
-
-.BD_showCode .cm-gutterElement {
-  background-color: transparent;
-  font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 500;
-}
-
-.BD_showCode .cm-line {
-  /* background-color: rgb(255, 255, 255); */
-  font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 500;
-}
-
-.BD_showCode .cm-activeLine {
-  /* background-color: rgb(255, 255, 255); */
-  font-family: "Pretendard-Regular";
-  font-size: 1.1em;
-  font-weight: 500;
-}
 
 .BD_showCode .BDContent p {
   font-family: "Pretendard-Regular";
@@ -186,8 +192,8 @@
 
 .comments h2 {
   font-family: "GmarketSansMedium" !important;
-  font-weight: 650;
-  font-size: 1.5em;
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
 .comments .cWrite {
@@ -252,7 +258,7 @@
 
 .commentContext .commentHead p {
   font-family: "Pretendard-Regular";
-  font-weight: 550;
+  font-weight: 500;
   font-size: 1em;
   margin: 0 !important;
   padding-bottom: 2px;
@@ -260,8 +266,8 @@
 
 .commentContext .commentHead .cUserID {
   font-family: "Pretendard-Regular";
-  font-weight: 550;
-  font-size: 1.1em;
+  font-weight: 500;
+  font-size: 1em;
   margin: 0 !important;
 }
 
@@ -274,8 +280,8 @@
 
 .commentContext .commentBody p {
   font-family: "Pretendard-Regular";
-  font-weight: 550;
-  font-size: 1.1em;
+  font-weight: 500;
+  font-size: 1em;
   margin: 0 !important;
 }
 

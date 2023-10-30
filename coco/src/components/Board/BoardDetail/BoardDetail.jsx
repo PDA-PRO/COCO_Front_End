@@ -24,7 +24,7 @@ import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
-import {Notfound} from "../../Notfound";
+import { Notfound } from "../../Notfound";
 
 export const BoardDetail = () => {
   return (
@@ -84,7 +84,7 @@ const GetBoardDetail = () => {
   }
 
   if (boardData === undefined) {
-    return <Notfound/>
+    return <Notfound />;
   }
 
   const commentShoot = (e) => {
@@ -98,11 +98,9 @@ const GetBoardDetail = () => {
   function timeForToday(value) {
     const today = new Date();
     const timeValue = new Date(value);
-    const convertTime =  timeValue.getTime()+9 * 60 * 60 * 1000;
+    const convertTime = timeValue.getTime() + 9 * 60 * 60 * 1000;
 
-    const betweenTime = Math.floor(
-      (today.getTime() - convertTime) / 1000 / 60
-    );
+    const betweenTime = Math.floor((today.getTime() - convertTime) / 1000 / 60);
     if (betweenTime < 1) return "방금전";
     if (betweenTime < 60) {
       return `${betweenTime}분전`;
@@ -174,17 +172,36 @@ const GetBoardDetail = () => {
   };
 
   const CodeHere = () => {
+    function makeNoLine(arr) {
+      if (arr.length == 0) {
+        return "";
+      } else {
+        var dataArray = arr.split("\n");
+
+        var numberedData = dataArray
+          .map((item, index) => {
+            return `${index + 1}@${item}`;
+          })
+          .join("\n");
+
+        const strings = numberedData.split("\n").map((str) => {
+          const [num, val] = str.split("@");
+          return (
+            <div className="codeLine">
+              <n className="codeNum">{num}.</n>
+              <n className="codeTxt">{val}</n>
+            </div>
+          );
+        });
+        return strings;
+      }
+    }
+
     const code = boardData.data.code;
     return (
       <div className="BDCode">
-        <div className="BD_codeTop">
-          <BsCode size={33} />
-          <h2>CODE</h2>
-          <BsCodeSlash size={33} />
-        </div>
-
         <div className="BD_showCode">
-          <CodeMirror width="100%" value={code} readOnly={true} />
+          <pre className="R-Code">{makeNoLine(code)}</pre>
         </div>
         <p></p>
       </div>
@@ -244,21 +261,34 @@ const GetBoardDetail = () => {
             </div>
           </div>
 
-          <div className="BDContent">
-            <div className="BDTxt">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: boardData.data.context,
-                }}
-              />
-            </div>
+          {boardData.data.category === 2 ? (
+            <div className="BDContent-help">
+              <div className="BDTxt">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: boardData.data.context,
+                  }}
+                />
+              </div>
 
-            {boardData.data.category === 2 ? <CodeHere /> : <></>}
-          </div>
+              <CodeHere />
+            </div>
+          ) : (
+            <div className="BDContent">
+              <div className="BDTxt">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: boardData.data.context,
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
           <div className="comments">
             <div className="cHead">
               <div className="cUn1">
-                <VscCommentDiscussion size={35} color="#6BE52E" />
+                <VscCommentDiscussion size={25} color="#6BE52E" />
                 <h2>댓글</h2>
               </div>
               <div
@@ -279,8 +309,8 @@ const GetBoardDetail = () => {
                   }
                 }}
               >
-                <SlPencil size={20} />
-                <p>댓글 작성</p>
+                <SlPencil size={18} />
+                <p style={{ fontSize: "1em" }}>댓글 작성</p>
               </div>
             </div>
 

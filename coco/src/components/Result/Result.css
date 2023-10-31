@@ -309,20 +309,52 @@
 /*-------------------------------다른 로직 코드 확인하기 CSS ---------------------------------*/
 
 .OC {
-  display: flex;
-  flex-flow: column nowrap;
-  padding: 1.3rem 1vw;
+  display: grid;
+  grid-template-columns: 0.95fr 1fr;
+
+  column-gap: 1vw;
+  align-items: center;
+  border-top: 1px solid lightgray;
+  padding-top: 1em;
+  padding-right: 1vw;
+  position: relative;
 }
 
-.OC .OCtop {
+#sorry {
+  position: absolute;
+  width: 100%;
+  top: 50px;
+  left: 55%;
+}
+
+.OC #close {
+  grid-column: 1/3;
+  justify-self: end;
+}
+
+#close .un {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 5px;
+  font-family: "Pretendard-Regular";
+  cursor: pointer;
+  color: gray;
 }
 
-.OCtop h2 {
+#close .un p {
+  margin: 0 !important;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+#close .un:hover {
+  text-decoration: underline;
+  color: red;
+  font-weight: 600;
+}
+
+.OC h2 {
   font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 1em;
@@ -346,31 +378,13 @@
   color: navy !important;
 }
 
-.OCtop p {
-  font-family: "Pretendard-Regular";
-  font-weight: 500;
-  font-size: 1em;
-  margin: 0 !important;
-}
-
-.OCtop .un:nth-child(2) {
-  cursor: pointer;
-  color: gray;
-}
-
-.OCtop .un:nth-child(2):hover {
-  color: red;
-  text-decoration: underline;
-}
-
 .OCcontent {
   display: flex;
   flex-flow: column nowrap;
   justify-content: start;
 
-  border-bottom: 1px solid lightgray;
   margin-bottom: 10px;
-  padding: 7px 0.5vw;
+  padding: 7px 0;
 }
 
 .OCcontent .OC-Code {
@@ -424,6 +438,47 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
+}
+
+/*------------------------------ AI 코드 개선 CSS ---------------------------------*/
+.IC {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1.3rem 1vw;
+  border-top: 1px solid lightgray;
+}
+
+.IC .ICtop {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.ICtop h2 {
+  font-family: "Pretendard-Regular";
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 !important;
+  color: navy !important;
+}
+
+.ICtop p {
+  font-family: "Pretendard-Regular";
+  font-weight: 500;
+  font-size: 1em;
+  margin: 0 !important;
+}
+
+.ICtop .un:nth-child(2) {
+  cursor: pointer;
+  color: gray;
+}
+
+.ICtop .un:nth-child(2):hover {
+  color: red;
+  text-decoration: underline;
 }
 
 .aiComment {

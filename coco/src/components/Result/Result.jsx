@@ -346,131 +346,128 @@ const ResultBox = ({ resource, info }) => {
           </div>
         </div>
 
-        {improve === false && otherLogic === false ? (
-          <>
-            <div className="my_submit">
-              <div className="fBox">
-                <p className="taskNo2">SUBMIT ID : No.{info.sub_id}</p>
-                <div className="box">
-                  <div className="un2">
-                    <p>제출 언어 : </p>
-                    {setLang(info.lang)}
-                  </div>
-                </div>
-              </div>
-
-              <div className="fBox">
-                <div className="scoring">
-                  <div className="un">
-                    <p>채점 결과 : </p>
-                    {isCorrect(problemList.subDetail["status"])}
-                  </div>
-                  <p className="message">{problemList.subDetail["message"]}</p>
-                </div>
-                <div className="un">
-                  <p className="time">제출 시간 : {formattedDate}</p>
-                </div>
+        <div className="my_submit">
+          <div className="fBox">
+            <p className="taskNo2">SUBMIT ID : No.{info.sub_id}</p>
+            <div className="box">
+              <div className="un2">
+                <p>제출 언어 : </p>
+                {setLang(info.lang)}
               </div>
             </div>
+          </div>
 
-            <div className="myCode">
+          <div className="fBox">
+            <div className="scoring">
               <div className="un">
-                <VscListFlat size={30} color="darkgray" />
-                <p>내 제출 코드</p>
+                <p>채점 결과 : </p>
+                {isCorrect(problemList.subDetail["status"])}
               </div>
-              {problemList.subDetail["status"] === 3 ? (
-                <div className="ifCorrect">
-                  <pre className="R-Code">{makeNoLine(numberedData)}</pre>
-                  <div className="timeAndMemory">
-                    <div className="c-un">
-                      <BiTimeFive color="gray" size={22} />
-                      <p>
-                        소요 시간 : {problemList.subDetail["used_time"] * 1000}
-                        ms
-                      </p>
-                    </div>
-                    <div className="c-un">
-                      <BiMemoryCard color="gray" size={22} />
-                      <p>
-                        소요 메모리 :{" "}
-                        {Math.ceil(problemList.subDetail["used_memory"] / 1024)}
-                        MB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <pre className="R-Code">
-                  {makeLine(
-                    numberedData,
-                    wrongLines,
-                    wrongStart,
-                    wrongEnd,
-                    messages
-                  )}
-                </pre>
-              )}
+              <p className="message">{problemList.subDetail["message"]}</p>
             </div>
-            {problemList.subDetail["status"] === 3 ? (
-              <div className="ifRight">
-                <div className="afterCorrect" onClick={() => changeImprove()}>
-                  <p>AI 코드 개선 요청하기</p>
-                  <TbMessageCircleQuestion size={23} />
+            <div className="un">
+              <p className="time">제출 시간 : {formattedDate}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="myCode">
+          <div className="un">
+            <VscListFlat size={30} color="darkgray" />
+            <p>내 제출 코드</p>
+          </div>
+          {problemList.subDetail["status"] === 3 ? (
+            <div className="ifCorrect">
+              <pre className="R-Code">{makeNoLine(numberedData)}</pre>
+              <div className="timeAndMemory">
+                <div className="c-un">
+                  <BiTimeFive color="gray" size={22} />
+                  <p>
+                    소요 시간 : {problemList.subDetail["used_time"] * 1000}
+                    ms
+                  </p>
                 </div>
-                <div className="afterCorrect" onClick={() => changeLogic()}>
-                  <p>다른 로직의 코드 보러가기</p>
-                  <TbListSearch size={23} />
+                <div className="c-un">
+                  <BiMemoryCard color="gray" size={22} />
+                  <p>
+                    소요 메모리 :{" "}
+                    {Math.ceil(problemList.subDetail["used_memory"] / 1024)}
+                    MB
+                  </p>
                 </div>
               </div>
-            ) : problemList.subDetail["message"] == "TC 실패" ? (
-              <>
-                {wpc === 1 ? (
-                  <div className="afterWrong" onClick={() => setWpc(2)}>
-                    {/* 이름은 나중에 바꾸는걸로... */}
-                    <p>닫기</p>
-                    <BsX size={25} color="red" />
-                  </div>
-                ) : (
-                  <div className="afterWrong" onClick={() => setWpc(1)}>
-                    {/* 이름은 나중에 바꾸는걸로... */}
-                    <p>WPC 확인하기</p>
-                    <BsBoxArrowInRight size={23} />
-                  </div>
-                )}
-              </>
-            ) : null}
-
+            </div>
+          ) : (
+            <pre className="R-Code">
+              {makeLine(
+                numberedData,
+                wrongLines,
+                wrongStart,
+                wrongEnd,
+                messages
+              )}
+            </pre>
+          )}
+        </div>
+        {problemList.subDetail["status"] === 3 ? (
+          improve === false && otherLogic === false ? (
+            <div className="ifRight">
+              <div className="afterCorrect" onClick={() => changeImprove()}>
+                <p>AI 코드 개선 요청하기</p>
+                <TbMessageCircleQuestion size={23} />
+              </div>
+              <div className="afterCorrect" onClick={() => changeLogic()}>
+                <p>유사 / 다른 로직의 코드 보러가기</p>
+                <TbListSearch size={23} />
+              </div>
+            </div>
+          ) : (
+            <></>
+          )
+        ) : problemList.subDetail["message"] == "TC 실패" ? (
+          <>
             {wpc === 1 ? (
-              <WPC
-                sub_id={problemList.subDetail["id"]}
-                task_id={info.task_id}
-              />
+              <div className="afterWrong" onClick={() => setWpc(2)}>
+                {/* 이름은 나중에 바꾸는걸로... */}
+                <p>닫기</p>
+                <BsX size={25} color="red" />
+              </div>
             ) : (
-              <></>
+              <div className="afterWrong" onClick={() => setWpc(1)}>
+                {/* 이름은 나중에 바꾸는걸로... */}
+                <p>WPC 확인하기</p>
+                <BsBoxArrowInRight size={23} />
+              </div>
             )}
+          </>
+        ) : null}
 
-            {problemList.subDetail["status"] === 3 ? (
-              <></>
-            ) : (
-              <Lint props={problemList.lint} />
-            )}
-          </>
-        ) : improve === true && otherLogic === false ? (
-          <>
-            <Improve
-              changeLogic={changeImprove}
-              impCode={improveCode}
-              impCmt={improveComment}
-            />
-          </>
+        {improve === true && otherLogic === false ? (
+          <Improve
+            changeLogic={changeImprove}
+            impCode={improveCode}
+            impCmt={improveComment}
+          />
+        ) : improve === false && otherLogic === true ? (
+          <OtherLogic
+            changeLogic={changeLogic}
+            task_id={info.task_id}
+            sub_id={problemList.subDetail["id"]}
+          />
         ) : (
-          <>
-            <OtherLogic
-              changeLogic={changeLogic}
-              task_id={info.task_id}
-              sub_id={problemList.subDetail["id"]}
-            />
-          </>
+          <></>
+        )}
+
+        {wpc === 1 ? (
+          <WPC sub_id={problemList.subDetail["id"]} task_id={info.task_id} />
+        ) : (
+          <></>
+        )}
+
+        {problemList.subDetail["status"] === 3 ? (
+          <></>
+        ) : (
+          <Lint props={problemList.lint} />
         )}
       </div>
     </div>

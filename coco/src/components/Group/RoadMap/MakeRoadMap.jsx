@@ -265,9 +265,7 @@ export const MakeRoadMap = () => {
                 <h4>정답률</h4>
                 <h4>DEL</h4>
               </div>
-              <Suspense fallback={<Spinner />}>
-                <MyTasksList tasks={tasks} deleteProblem={deleteProblem} />
-              </Suspense>
+              <MyTasksList tasks={tasks} deleteProblem={deleteProblem} />
             </div>
           </div>
           <Button

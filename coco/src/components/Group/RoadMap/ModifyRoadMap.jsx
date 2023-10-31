@@ -53,7 +53,7 @@ export const ModifyRoadMap = () => {
   useEffect(() => {
     if (!isFetching) {
       nameRef.current.value = data.data.roadmap.name;
-      setTasks([...data.data.problem_list.map((e) => e.id)]);
+      setTasks([...data.data.problem_list]);
     }
   }, [isFetching]);
 
@@ -69,6 +69,7 @@ export const ModifyRoadMap = () => {
           "Roadmap 이름과 설명을 모두 작성해주세요.\n문제는 최소 1문제 이상 포함되어야 합니다.",
       });
     } else {
+      let task_ids = tasks.map((a) => a.id);
       axios
         .put(
           API.ROOMROADMAP + path.at(-2),
@@ -76,7 +77,7 @@ export const ModifyRoadMap = () => {
             id: path.at(-1),
             name: nameRef.current.value,
             desc: quillRef.current.value,
-            tasks: tasks,
+            tasks: task_ids,
           },
           {
             headers: {
@@ -97,13 +98,15 @@ export const ModifyRoadMap = () => {
   };
 
   const addProblems = (e) => {
+    console.log(e);
     if (tasks.includes(e)) {
       Swal.fire({ icon: "warning", title: "이미 추가된 문제입니다." });
     } else {
       Swal.fire({
         icon: "success",
-        title: `No.${e}번 문제를 로드맵에 추가하였습니다.`,
+        title: `No.${e.id}번 문제를 로드맵에 추가하였습니다.`,
       });
+
       setTasks([...tasks, e]);
     }
   };
@@ -113,7 +116,8 @@ export const ModifyRoadMap = () => {
       icon: "info",
       title: `No.${e}번 문제를 로드맵에서 제거하였습니다.`,
     });
-    setTasks(tasks.filter((value) => value !== e));
+
+    setTasks(tasks.filter((value) => value.id !== e));
   };
 
   // --------------------------- quill editor 관련 함수 ----------------------
@@ -267,20 +271,7 @@ export const ModifyRoadMap = () => {
                 <h4>정답률</h4>
                 <h4>DEL</h4>
               </div>
-              <Suspense fallback={<Spinner />}>
-                <MyTasksList
-                  resource={fetchData(API.TASK, {
-                    params: {
-                      size: 10,
-                      page: page,
-                    },
-                  })}
-                  setPage={setPage}
-                  page={page}
-                  tasks={tasks}
-                  deleteProblem={deleteProblem}
-                />
-              </Suspense>
+              <MyTasksList tasks={tasks} deleteProblem={deleteProblem} />
             </div>
           </div>
           <Button
@@ -510,8 +501,6 @@ const TasksList = ({ setFilter }) => {
 const GetProblems = ({ resource, page, setPage, addProblems }) => {
   const problemList = resource.read();
 
-  // console.log("이거 안되냐" + tasks);
-
   return (
     <>
       {problemList.tasks.map((e) => {
@@ -533,33 +522,12 @@ const GetProblems = ({ resource, page, setPage, addProblems }) => {
   );
 };
 
-const MyTasksList = ({ resource, page, setPage, tasks, deleteProblem }) => {
-  const problemList = resource.read();
-  const problemsId = problemList.tasks;
-
-  var myList = []; // 내가 선택한 문제들만 들어있는 배열
-
-  function extractFieldAsArray(objects, field) {
-    const fieldArray = objects.map((obj) => obj[field]);
-    return fieldArray;
-  }
-
-  const pTasks = extractFieldAsArray(problemsId, "id");
-
-  myList = pTasks.filter((value) => tasks.includes(value));
-
-  function filterObjectsByFieldValues(objects, field, valuesToMatch) {
-    const filteredObjects = objects.filter((obj) =>
-      valuesToMatch.includes(obj[field])
-    );
-    return filteredObjects;
-  }
-
-  const matched = filterObjectsByFieldValues(problemsId, "id", myList);
+const MyTasksList = ({ tasks, deleteProblem }) => {
+  const [page, setPage] = useState(1);
 
   return (
     <>
-      {matched.map((e) => {
+      {tasks.slice(10 * (page - 1), 10 * page).map((e) => {
         return (
           <ProblemBox
             info={e}
@@ -571,7 +539,7 @@ const MyTasksList = ({ resource, page, setPage, tasks, deleteProblem }) => {
       })}
       <div className="leftBottom">
         <Pagination
-          count={Math.ceil(problemList.total / problemList.size)}
+          count={Math.ceil(tasks.length / 10)}
           variant="outlined"
           shape="rounded"
           defaultPage={1}

@@ -12,20 +12,27 @@ import { useQuery } from "@tanstack/react-query";
 export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
   return (
     <div className="OC">
-      <div className="OCtop">
-        <div className="un">
-          <TbListSearch color="blue" size={23} />
-          <h2>다른 로직의 코드</h2>
-        </div>
-
+      <div id="close">
         <div className="un" onClick={() => changeLogic()}>
           {/* 이름은 나중에 바꾸는걸로... */}
           <p>닫기</p>
           <BsX size={28} color="red" />
         </div>
       </div>
-
-      <OCcontent task_id={task_id} sub_id={sub_id} />
+      <div className="itemCode">
+        <div className="un" style={{ marginLeft: "1vw" }}>
+          <TbListSearch color="blue" size={23} />
+          <h2>다른 로직의 코드</h2>
+        </div>
+        <OCcontent task_id={task_id} sub_id={sub_id} />
+      </div>
+      <div className="itemCode">
+        <div className="un" style={{ marginLeft: "1vw" }}>
+          <TbListSearch color="blue" size={23} />
+          <h2>유사 로직의 코드</h2>
+        </div>
+        <OCcontent task_id={task_id} sub_id={sub_id} />
+      </div>
     </div>
   );
 };

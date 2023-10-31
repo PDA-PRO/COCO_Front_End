@@ -8,8 +8,8 @@ import { TbListSearch, TbMessageCircleQuestion } from "react-icons/tb";
 
 export const Improve = ({ changeLogic, impCode, impCmt }) => {
   return (
-    <div className="OC">
-      <div className="OCtop">
+    <div className="IC">
+      <div className="ICtop">
         <div className="un">
           <TbMessageCircleQuestion color="blue" size={23} />
           <h2>AI가 작성한 개선된 코드</h2>

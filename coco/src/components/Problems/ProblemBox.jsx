@@ -32,7 +32,7 @@ export const ProblemBox = ({
   };
 
   const goDetail2 = (e) => {
-    var normal_path = "http://localhost:3000/";
+    var normal_path = `${window.location.protocol}//${window.location.host}/`;
     window.open(`${normal_path}problems/${e}`);
   };
 

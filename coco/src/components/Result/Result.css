@@ -323,7 +323,7 @@
   position: absolute;
   width: 100%;
   top: 50px;
-  left: 0%;
+  left: 55%;
 }
 
 .OC #close {
@@ -482,6 +482,12 @@
 .ICtop .un:nth-child(2):hover {
   color: red;
   text-decoration: underline;
+}
+
+.ICcontent {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
 }
 
 .aiComment {

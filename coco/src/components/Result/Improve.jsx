@@ -61,13 +61,13 @@ const AI_code = ({ func, code, cmt }) => {
   }
 
   var resString = addNewLineAfterDot(cmt);
-  console.log(resString);
 
   return (
-    <div className="OCcontent">
+    <div className="ICcontent">
       <div className="OC-Code">
         <pre className="R-Code">{makeNoLine(code)}</pre>
       </div>
+      <hr />
       <div className="OC-opi">
         <div className="OC-txt">
           {func === 1 ? (

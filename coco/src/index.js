@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ImageResize from "@looop/quill-image-resize-module-react";
+import Quill from "quill";
 export let persistor = persistStore(store);
 // Create a client
 const queryClient = new QueryClient({
@@ -17,6 +19,8 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+Quill.register("modules/imageResize", ImageResize);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

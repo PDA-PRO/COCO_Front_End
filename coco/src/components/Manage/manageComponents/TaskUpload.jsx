@@ -13,17 +13,12 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
 import CreatableSelect from "react-select/creatable";
 import JSZip from "jszip";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
 import axios from "axios";
-
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const TaskUpload = () => {
   const titleRef = useRef();
@@ -387,6 +382,7 @@ export const TaskUpload = () => {
               </Form.Label>
               <Form.Control
                 type="file"
+                accept=".zip"
                 onChange={(e) => {
                   fileMeta(e.target.files[0]);
                 }}

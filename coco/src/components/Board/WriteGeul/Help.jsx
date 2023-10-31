@@ -4,8 +4,6 @@ import "./WriteGuel.css";
 import Button from "react-bootstrap/Button";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
@@ -13,8 +11,6 @@ import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axios from "axios";
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const Help = ({ title }) => {
   const [code, setCode] = useState(""); //작성한 코드

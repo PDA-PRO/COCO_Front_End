@@ -13,8 +13,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
+
 import CreatableSelect from "react-select/creatable";
 import JSZip from "jszip";
 import Spinner from "react-bootstrap/esm/Spinner";
@@ -23,8 +22,6 @@ import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
 import axios from "axios";
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const TaskModify = () => {
   var path = window.location.pathname;
@@ -81,12 +78,6 @@ export const TaskModifyPage = ({ resource }) => {
         label: taskData.category[i],
       });
     }
-    // 테스트 케이스 수정
-    // const filedata = new File([taskData], "testcase.zip", {
-    //   type: "application/x-zip-compressed",
-    // });
-    // setTestCase(filedata);
-    // fileMeta(taskData);
   }, []);
 
   // --------------------------- quill editor 관련 함수 ----------------------
@@ -238,7 +229,6 @@ export const TaskModifyPage = ({ resource }) => {
 
   const fileMeta = (zipfile) => {
     const zip = new JSZip();
-    console.log(zipfile);
     if (zipfile) {
       zip.loadAsync(zipfile).then((zip) => {
         let inputContent = [];
@@ -435,6 +425,7 @@ export const TaskModifyPage = ({ resource }) => {
                 문제에 대한 Test Case (.zip)
               </Form.Label>
               <Form.Control
+                accept=".zip"
                 type="file"
                 fi
                 onChange={(e) => {

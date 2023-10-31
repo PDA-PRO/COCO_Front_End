@@ -5,13 +5,9 @@ import Button from "react-bootstrap/Button";
 import { useAppSelector } from "../../../app/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axios from "axios";
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const Free = ({ title, cate }) => {
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수

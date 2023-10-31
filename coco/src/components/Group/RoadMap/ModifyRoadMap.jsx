@@ -26,13 +26,9 @@ import fetchData from "../../../api/fetchTask";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import ReactQuill from "react-quill";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const ModifyRoadMap = () => {
   const [tasks, setTasks] = useState([]);

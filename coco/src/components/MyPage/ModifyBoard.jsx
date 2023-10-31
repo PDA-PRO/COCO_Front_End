@@ -16,14 +16,10 @@ import Swal from "sweetalert2";
 import { API } from "api/config";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import axios from "axios";
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const ModifyBoard = () => {
   var path = window.location.pathname;
@@ -66,27 +62,27 @@ const GetBoardDetail = ({ resource, key }) => {
             category={detail.category}
           />
         )} */}
-          <Update
-            boardId={detail.id}
-            title={detail.title}
-            contents={detail.context}
-            category={detail.category}
-            helpCode={detail.code}
-          />
+        <Update
+          boardId={detail.id}
+          title={detail.title}
+          contents={detail.context}
+          category={detail.category}
+          helpCode={detail.code}
+        />
       </div>
     </>
   );
 };
 
 const Update = ({ boardId, title, contents, category, helpCode }) => {
-  console.log(boardId, title, contents, category, helpCode)
+  console.log(boardId, title, contents, category, helpCode);
   const [code, setCode] = useState(helpCode); //작성한 코드
   const [quillValue, setquillValue] = useState(contents); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
   const userInfo = useAppSelector((state) => state.loginState); //로컬스토리지에 저장된 유저 정보 접근
   const navigate = useNavigate();
   const [newTitle, setNewTitle] = useState(`${title}`); // 제목
-  
+
   const onTitleHandler = (e) => {
     setNewTitle(e.currentTarget.value);
   };
@@ -168,7 +164,6 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
       imageResize: {
         modules: ["Resize", "DisplaySize"],
       },
-      
     };
   }, []);
 
@@ -178,7 +173,7 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
     } else {
       axios
         .put(
-          API.BOARD+'update-board',
+          API.BOARD + "update-board",
           {
             board_id: boardId,
             title: newTitle,

@@ -11,10 +11,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "@looop/quill-image-resize-module-react";
-
-Quill.register("modules/imageResize", ImageResize);
 
 export const WriteHelp = ({ title, room_id }) => {
   const [code, setCode] = useState(""); //작성한 코드
@@ -22,7 +18,6 @@ export const WriteHelp = ({ title, room_id }) => {
   const navigate = useNavigate();
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
   const quillRef = useRef(); // quill editor에 접근하기 위한 ref
-
 
   const imageHandler = () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.

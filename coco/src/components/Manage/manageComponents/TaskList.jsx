@@ -98,20 +98,28 @@ const ListBox = ({ info, token, setDel, setLoading }) => {
     navigate(`/problems/${e}`);
   };
   const loadlist = (e) => {
-    axios
-      .delete(API.TASK, {
-        params: { task_id: info.id },
-        headers: { Authorization: "Bearer " + token },
-      })
-      .then(() => {
-        Swal.fire({
-          icon: "success",
-          title: `id : ${info.id}, 제목 : ${info.title} 문제를 삭제했습니다.`,
-        });
+    Swal.fire({
+      icon: "warning",
+      title:
+        "문제 삭제 시 예기치 못한 에러가 발생할 수 있습니다.\n정말로 삭제하시겠습니까?",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(API.TASK, {
+            params: { task_id: info.id },
+            headers: { Authorization: "Bearer " + token },
+          })
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              title: `id : ${info.id}, 제목 : ${info.title} 문제를 삭제했습니다.`,
+            });
 
-        setDel(info.id);
-        setLoading(true);
-      });
+            setDel(info.id);
+            setLoading(true);
+          });
+      }
+    });
   };
   return (
     <div className="taskList">

@@ -3,11 +3,13 @@ import "./Result.css";
 import fetchData from "../../api/fetchTask";
 import Swal from "sweetalert2";
 import { BsX } from "react-icons/bs";
-import { TbListSearch, TbMessageCircleQuestion } from "react-icons/tb";
+import { TbListSearch } from "react-icons/tb";
 import { API } from "api/config";
 import { useAppSelector } from "../../app/store";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { Notfound } from "components/Notfound";
+import { Sorry } from "components/Sorry";
 
 export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
   return (
@@ -19,25 +21,31 @@ export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
           <BsX size={28} color="red" />
         </div>
       </div>
-      <div className="itemCode">
+      <div className="itemCode" style={{ position: "relative" }}>
         <div className="un" style={{ marginLeft: "1vw" }}>
           <TbListSearch color="blue" size={23} />
           <h2>다른 로직의 코드</h2>
         </div>
-        <OCcontent task_id={task_id} sub_id={sub_id} />
+        <div style={{ minHeight: "200px" }}>
+          <OCcontent task_id={task_id} sub_id={sub_id} />
+        </div>
       </div>
       <div className="itemCode">
         <div className="un" style={{ marginLeft: "1vw" }}>
           <TbListSearch color="blue" size={23} />
           <h2>유사 로직의 코드</h2>
         </div>
-        <SCcontent task_id={task_id} sub_id={sub_id} />
+        <div style={{ minHeight: "200px" }}>
+          <SCcontent task_id={task_id} sub_id={sub_id} />
+        </div>
       </div>
     </div>
   );
 };
 
 const OCcontent = ({ task_id, sub_id }) => {
+  const [isOn, setIsOn] = useState(false);
+
   const { isFetching, data } = useQuery(["OC", sub_id], () =>
     axios
       .post(
@@ -50,10 +58,17 @@ const OCcontent = ({ task_id, sub_id }) => {
           },
         }
       )
+      .then(() => {
+        setIsOn(true);
+      })
       .catch(() => {
         Swal.fire({
           icon: "error",
           title: "AI Plugin 사용 불가\n\n404 NOT FOUND",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            return <Notfound />;
+          }
         });
       })
   );
@@ -113,21 +128,22 @@ const OCcontent = ({ task_id, sub_id }) => {
     }
   }
 
-  return (
+  return isOn === false ? (
+    <div id="sorry">
+      <Sorry />
+    </div>
+  ) : (
     <div className="OCcontent">
       <div className="OC-Code">
         <pre className="R-Code">{makeNoLine(data.data)}</pre>
-      </div>
-      <div className="OC-opi">
-        {/* <div className="OC-txt">
-          <p>작성자 : name</p>
-        </div> */}
       </div>
     </div>
   );
 };
 
 const SCcontent = ({ task_id, sub_id }) => {
+  const [isOn, setIsOn] = useState(false);
+
   const { isFetching, data } = useQuery(["OC", sub_id], () =>
     axios
       .post(
@@ -140,10 +156,17 @@ const SCcontent = ({ task_id, sub_id }) => {
           },
         }
       )
+      .then(() => {
+        setIsOn(true);
+      })
       .catch(() => {
         Swal.fire({
           icon: "error",
           title: "AI Plugin 사용 불가\n\n404 NOT FOUND",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            return <Notfound />;
+          }
         });
       })
   );
@@ -203,15 +226,14 @@ const SCcontent = ({ task_id, sub_id }) => {
     }
   }
 
-  return (
+  return isOn === false ? (
+    <div id="sorry" style={{ display: "none" }}>
+      <Sorry />
+    </div>
+  ) : (
     <div className="OCcontent">
       <div className="OC-Code">
         <pre className="R-Code">{makeNoLine(data.data)}</pre>
-      </div>
-      <div className="OC-opi">
-        {/* <div className="OC-txt">
-          <p>작성자 : name</p>
-        </div> */}
       </div>
     </div>
   );

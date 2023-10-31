@@ -311,11 +311,20 @@
 .OC {
   display: grid;
   grid-template-columns: 0.95fr 1fr;
+
   column-gap: 1vw;
   align-items: center;
   border-top: 1px solid lightgray;
   padding-top: 1em;
   padding-right: 1vw;
+  position: relative;
+}
+
+#sorry {
+  position: absolute;
+  width: 100%;
+  top: 50px;
+  left: 55%;
 }
 
 .OC #close {

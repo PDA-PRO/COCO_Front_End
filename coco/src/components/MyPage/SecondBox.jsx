@@ -19,7 +19,7 @@ import {
 export const SecondBox = (props) => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
-  const path = window.location.pathname.split("/");
+  const path = decodeURI(window.location.pathname).split("/");
 
   var me = userInfo.id;
   var now = path.at(-1);

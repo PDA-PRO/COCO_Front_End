@@ -17,7 +17,7 @@ import { Notfound } from "../Notfound.jsx";
 
 export const MyPage = () => {
   const userInfo = useAppSelector((state) => state.loginState);
-  const path = window.location.pathname.split("/");
+  const path = decodeURI(window.location.pathname).split("/");
   const me = userInfo.id;
   const now = path.at(-1);
   return (

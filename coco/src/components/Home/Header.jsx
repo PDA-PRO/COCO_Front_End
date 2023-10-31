@@ -55,10 +55,6 @@ export const Header = (props) => {
         navigate("/login");
         break;
       case 6:
-        if (now !== id) {
-          navigate(`/mypage/${id}`);
-          window.location.reload();
-        }
         navigate(`/mypage/${id}`);
         break;
       case 7:

@@ -16,7 +16,7 @@ import { Notfound } from "../Notfound.jsx";
 export const FirstBox = (props) => {
   const userInfo = useAppSelector((state) => state.loginState);
   const dispatch = useAppDispatch();
-  const path = window.location.pathname.split("/");
+  const path = decodeURI(window.location.pathname).split("/");
 
   var me = userInfo.id;
   var now = path.at(-1);

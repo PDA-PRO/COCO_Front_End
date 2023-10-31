@@ -68,7 +68,8 @@ export const Footer = (props) => {
               1 충북대학교 S1-4 116호
             </p>
             <p>
-              <span className="TT">Team.</span>Ping-pong in CBNU-SW
+              <span className="TT">Team.</span>Ping-pong in CBNU Department of
+              Computer Science
             </p>
           </div>
 

@@ -32,7 +32,7 @@ export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
         <h2>유사 로직의 코드</h2>
       </div>
 
-      <div className="codeTwo">
+      <div className="codeTwo" style={{ minHeight: "200px" }}>
         <OCcontent task_id={task_id} sub_id={sub_id} />
       </div>
     </div>
@@ -57,15 +57,26 @@ const OCcontent = ({ task_id, sub_id }) => {
       .then(() => {
         setIsOn(true);
       })
-      .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "AI Plugin 사용 불가\n\n404 NOT FOUND",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            return <Notfound />;
-          }
-        });
+      .catch((res) => {
+        if (res.response.status == 500) {
+          Swal.fire({
+            icon: "error",
+            title: "충분한 정답 코드가 존재하지 않습니다.",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              return <Notfound />;
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "AI Plugin 사용 불가\n\n404 NOT FOUND",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              return <Notfound />;
+            }
+          });
+        }
       })
   );
   if (isFetching) {

@@ -316,7 +316,6 @@
   align-items: center;
   border-top: 1px solid lightgray;
   padding-top: 1em;
-  padding-right: 1vw;
   position: relative;
 }
 
@@ -378,13 +377,17 @@
   color: navy !important;
 }
 
-.OCcontent {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: start;
+.OC .codeTwo {
+  grid-column: 1/3;
 
-  margin-bottom: 10px;
-  padding: 7px 0;
+  padding-right: 0.5vw;
+}
+
+.OCcontent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-top: 10px;
+  column-gap: 1vw;
 }
 
 .OCcontent .OC-Code {
@@ -394,14 +397,14 @@
 }
 
 .OC-Code .R-Code {
-  padding: 1em 2vw;
+  padding: 1em 1.5vw;
   font-size: 1em;
   font-weight: 500;
   color: rgb(78, 78, 78);
   border-radius: 15px;
   cursor: text;
   background-color: rgb(245, 245, 245);
-  margin: 15px 1vw !important;
+  margin: 15px 0 !important;
   white-space: pre-wrap;
   display: flex;
   flex-flow: column nowrap;

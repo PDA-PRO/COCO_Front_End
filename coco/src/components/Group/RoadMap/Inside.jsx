@@ -14,7 +14,7 @@ import { useMediaQuery } from "react-responsive";
 import Swal from "sweetalert2";
 import { API } from "api/config";
 import axios from "axios";
-import {Notfound} from "../../Notfound";
+import { Notfound } from "../../Notfound";
 
 export const Inside = () => {
   const path = window.location.pathname.split("/");
@@ -51,7 +51,7 @@ const Content = ({ resource }) => {
   const data = resource.read();
 
   if (data === undefined) {
-    return <Notfound/>;
+    return <Notfound />;
   }
 
   const goMypage = (e) => {
@@ -96,23 +96,28 @@ const Content = ({ resource }) => {
   };
 
   const deleteRoadmap = (e) => {
-    if (window.confirm("정말 ROADMAP을 삭제하시겠습니까?")) {
-      axios
-        .delete(`${API.ROOMROADMAP}${path.at(-2)}`, {
-          params: { roadmap_id: path.at(-1) },
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-        })
-        .then(() => {
-          Swal.fire({
-            icon: "success",
-            title: `ROADMAP이 삭제되었습니다.`,
-          }).then((res) => {
-            if (res.isConfirmed) {
-              navigate(`/room/${path.at(-2)}`);
-            }
+    Swal.fire({
+      icon: "question",
+      title: "정말 ROADMAP을 삭제하시겠습니까?",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(`${API.ROOMROADMAP}${path.at(-2)}`, {
+            params: { roadmap_id: path.at(-1) },
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          })
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              title: `ROADMAP이 삭제되었습니다.`,
+            }).then((res) => {
+              if (res.isConfirmed) {
+                navigate(`/room/${path.at(-2)}`);
+              }
+            });
           });
-        });
-    }
+      }
+    });
   };
 
   return (

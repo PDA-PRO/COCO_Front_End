@@ -386,7 +386,7 @@ const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
 
       Swal.fire({
         icon: "info",
-        title: "문제 업로드 중입니다.",
+        title: "AI가 테스트 케이스를 생성 후\n\n문제 업로드 중입니다.",
         showConfirmButton: false,
         timerProgressBar: true,
         didOpen: () => {

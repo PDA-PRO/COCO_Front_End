@@ -24,7 +24,7 @@ import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
-import {Notfound} from "../Notfound.jsx";
+import { Notfound } from "../Notfound.jsx";
 
 export const GroupInfo = () => {
   var path = window.location.pathname.split("/");
@@ -110,7 +110,7 @@ export const GroupInfo = () => {
           </div>
         </div>
       ) : (
-        <Notfound/>
+        <Notfound />
       )}
       <Footer />
     </>
@@ -366,36 +366,39 @@ const LeaveOrDelete = ({ resource }) => {
   const navigate = useNavigate();
 
   const onDeleteHandler = (group_id) => {
-    let val = window.confirm("정말 스터디룸을 삭제하시겠습니까?");
-    if (val === true) {
-      axios // 여기 api 주소만 바꾸면 끝
-        .delete(API.ROOM, {
-          params: {
-            room_id: group_id,
-          },
-          headers: { Authorization: "Bearer " + userInfo.access_token },
-        })
-        .then((res) => {
-          console.log(res.data.code);
-          if (res.data.code) {
+    Swal.fire({
+      icon: "question",
+      title: "정말 스터디룸을 삭제하시겠습니까?",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios // 여기 api 주소만 바꾸면 끝
+          .delete(API.ROOM, {
+            params: {
+              room_id: group_id,
+            },
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+          })
+          .then((res) => {
+            console.log(res.data.code);
+            if (res.data.code) {
+              Swal.fire({
+                icon: "success",
+                title: `스터디룸을 삭제하였습니다`,
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  navigate("/room");
+                }
+              });
+            }
+          })
+          .catch(() => {
             Swal.fire({
-              icon: "success",
-              title: `스터디룸을 삭제하였습니다`,
-            }).then((res) => {
-              if (res.isConfirmed) {
-                navigate("/room");
-              }
+              icon: "error",
+              title: "스터디룸 삭제에 실패하였습니다.",
             });
-          }
-        })
-        .catch(() => {
-          Swal.fire({
-            icon: "error",
-            title: "스터디룸 삭제에 실패하였습니다.",
           });
-        });
-    } else {
-    }
+      }
+    });
   };
 
   return (

@@ -143,10 +143,10 @@ const OCcontent = ({ task_id, sub_id }) => {
   ) : (
     <div className="OCcontent">
       <div className="OC-Code">
-        <pre className="R-Code">{makeNoLine("print()")}</pre>
+        <pre className="R-Code">{makeNoLine(data.data)}</pre>
       </div>
       <div className="OC-Code">
-        <pre className="R-Code">{makeNoLine("print()")}</pre>
+        <pre className="R-Code">{makeNoLine(data.data)}</pre>
       </div>
     </div>
   );

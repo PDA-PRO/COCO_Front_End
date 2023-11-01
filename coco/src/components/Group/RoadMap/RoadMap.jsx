@@ -67,7 +67,7 @@ const Road = (props) => {
       <div className="barOrigin">
         <div className="barContent" style={{ width: `${percentage}%` }}></div>
       </div>
-      <p>마지막 업데이트 날짜 : {date}</p>
+      <p id="roadDate">마지막 업데이트 날짜 : {date}</p>
     </div>
   );
 };

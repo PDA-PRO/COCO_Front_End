@@ -143,6 +143,7 @@ const MakeRoadMap = ({ resource }) => {
 };
 
 const GiHeader = ({ info }) => {
+  const navigate = useNavigate();
   return (
     <div className="gi-head">
       {/* <LiaSchoolSolid size={30} /> */}
@@ -153,13 +154,17 @@ const GiHeader = ({ info }) => {
         </div>
 
         <div>
-          <p>전체 스터디 랭킹 : 3위</p>
           <p>현재 튜티 수 : {info.members.length - 1}명</p>
         </div>
       </div>
       <div className="headTwo">
         <p>{info.desc}</p>
-        <p>튜터 : {info.leader}님</p>
+        <p
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate(`/mypage/${info.leader}`)}
+        >
+          튜터 : {info.leader}님
+        </p>
       </div>
     </div>
   );

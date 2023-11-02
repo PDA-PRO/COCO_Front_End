@@ -40,9 +40,7 @@ export const OtherLogic = ({ changeLogic, task_id, sub_id }) => {
 };
 
 const OCcontent = ({ task_id, sub_id }) => {
-  const [isOn, setIsOn] = useState(false);
-
-  const { isFetching, data } = useQuery(["OC", sub_id], () =>
+  const { isError, isFetching, data } = useQuery(["OC", sub_id], () =>
     axios
       .post(
         API.BASE_URL + "/code-cluster/main",
@@ -54,9 +52,6 @@ const OCcontent = ({ task_id, sub_id }) => {
           },
         }
       )
-      .then(() => {
-        setIsOn(true);
-      })
       .catch((res) => {
         if (res.response.status == 500) {
           Swal.fire({
@@ -106,7 +101,7 @@ const OCcontent = ({ task_id, sub_id }) => {
     );
   }
 
-  function makeNoLine(arr) {
+  function makeNoLine(arr, type) {
     if (arr.length == 0) {
       return "";
     } else {
@@ -115,7 +110,12 @@ const OCcontent = ({ task_id, sub_id }) => {
       });
 
       var max_dis = arr[0];
-      var dataArray = max_dis.split("\n");
+      if (type === 1) {
+        max_dis = arr[0];
+      } else if (type === 0) {
+        max_dis = arr[arr.length - 1];
+      }
+      var dataArray = max_dis.code.split("\n");
 
       var numberedData = dataArray
         .map((item, index) => {
@@ -136,17 +136,17 @@ const OCcontent = ({ task_id, sub_id }) => {
     }
   }
 
-  return isOn === false ? (
+  return isError === true ? (
     <div id="sorry">
       <Sorry />
     </div>
   ) : (
     <div className="OCcontent">
       <div className="OC-Code">
-        <pre className="R-Code">{makeNoLine(data.data)}</pre>
+        <pre className="R-Code">{makeNoLine(data.data, 1)}</pre>
       </div>
       <div className="OC-Code">
-        <pre className="R-Code">{makeNoLine(data.data)}</pre>
+        <pre className="R-Code">{makeNoLine(data.data, 0)}</pre>
       </div>
     </div>
   );

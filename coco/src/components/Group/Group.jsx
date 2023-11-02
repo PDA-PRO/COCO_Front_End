@@ -20,11 +20,9 @@ import { Tutor } from "./Tutor/Tutor";
 import { HiArrowUturnLeft } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { checkToken } from "../../app/authentication";
 
 export const Group = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
   const [query, setQuery] = useState();
   const [tutor, setTutor] = useState(0);
@@ -36,12 +34,6 @@ export const Group = () => {
   const movePage = () => {
     navigate("/makeroom");
   };
-  if (!checkToken(userInfo.access_token)) {
-    console.log("토큰 만료");
-    dispatch({
-      type: "loginSlice/logout",
-    });
-  }
 
   return (
     <>

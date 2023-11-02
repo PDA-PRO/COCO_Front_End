@@ -33,7 +33,7 @@ export const GroupInfo = () => {
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const { isLoading, data } = useQuery({
-    queryKey: ["roominfo"],
+    queryKey: ["roominfo", path.at(-1), userID],
     queryFn: () =>
       axios.get(API.ROOM + path.at(-1), {
         headers: {

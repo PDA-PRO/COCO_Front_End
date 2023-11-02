@@ -1,7 +1,8 @@
 version: "3.2"
 services:
   frontend:
-    container_name: con_front
+    image: styughjvbn/coco_frontend
+    container_name: coco_frontend
     build:
       context: ./coco/
       dockerfile: Dockerfile

@@ -5,6 +5,8 @@
 ## 개요
 
 - 반응형 지원
+- 재사용 가능한 컴포넌트
+- 직관적인 UI/UX
 
 ## 빠른 시작
 
@@ -27,8 +29,6 @@
    sudo apt-get update
    sudo apt-get install docker-ce docker-ce-cli containerd.io
    sudo usermod -aG docker
-   sudo curl -L "https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-   sudo chmod +x /usr/local/bin/docker-compose
    ```
 
 2. 도커 컴포즈 설치
@@ -68,4 +68,25 @@
 
 ## FAQ
 
+### 도커 권한 문제
+
+아래와 같은 오류 메시지와 함께 `docker pull` 명령어가 작동하지 않는다
+
+```
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.40/containers/json: dial unix /var/run/docker.sock: connect: permi
+ssion denied
+```
+
+### 해결 방법
+
+docker group에 해당 유저 추가
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+---
 ## 라이선스
+[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0)

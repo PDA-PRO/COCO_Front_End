@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:1000";
+const BASE_URL = "http://localhost:80/api";
 
 export const API = {
   BASE_URL: BASE_URL,

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import "./PBD.css";
 import Button from "react-bootstrap/Button";
 import { IoLogoPython } from "react-icons/io5";

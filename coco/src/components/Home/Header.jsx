@@ -3,11 +3,7 @@ import "./Home.css";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store";
-import {
-  AiOutlineMenu,
-  AiOutlineArrowDown,
-  AiFillExclamationCircle,
-} from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
 import { IoIosArrowDown, IoMdLogOut } from "react-icons/io";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";

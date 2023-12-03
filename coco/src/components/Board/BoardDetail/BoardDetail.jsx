@@ -3,8 +3,6 @@ import { Header } from "../../Home/Header";
 import { Footer } from "../../Home/Footer";
 import "./BD.css";
 import {
-  BsCode,
-  BsCodeSlash,
   BsFillEyeFill,
   BsFillChatSquareDotsFill,
   BsFillHeartFill,
@@ -19,7 +17,6 @@ import { useEffect } from "react";
 import { BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
-import CodeMirror from "@uiw/react-codemirror";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";

@@ -7,8 +7,7 @@ import { SlPin } from "react-icons/sl";
 import { Block } from "./Block";
 import Spinner from "react-bootstrap/esm/Spinner";
 import fetchData from "../../api/fetchTask";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useAppSelector } from "../../app/store";
 import { HomeGraph } from "./HomeGraph";
 import { DiffGraph } from "./DiffGraph";
 import { useMediaQuery } from "react-responsive";
@@ -16,7 +15,6 @@ import { Loader } from "../Loader/Loader";
 import { API } from "api/config";
 
 export const Home = () => {
-  const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
 
   const navigate = useNavigate();

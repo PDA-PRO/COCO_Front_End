@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { GoSearch } from "react-icons/go";
 import { HiUserPlus, HiUserMinus } from "react-icons/hi2";

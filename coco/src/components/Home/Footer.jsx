@@ -1,6 +1,5 @@
 import React from "react";
 import { IoLogoInstagram, IoLogoGithub } from "react-icons/io5";
-import { RiGooglePlayFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 

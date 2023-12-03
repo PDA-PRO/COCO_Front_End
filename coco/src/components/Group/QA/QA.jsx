@@ -12,8 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BsDashCircle, BsCheckCircle } from "react-icons/bs";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { BiInfoSquare } from "react-icons/bi";
-import { AiOutlineRobot, AiOutlineQuestionCircle } from "react-icons/ai";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -262,7 +261,6 @@ const Question = ({ resource }) => {
 };
 
 const Answer = ({ info, room_id, writer }) => {
-
   const userInfo = useAppSelector((state) => state.loginState);
   const [isGood, setIsGood] = useState(0);
 

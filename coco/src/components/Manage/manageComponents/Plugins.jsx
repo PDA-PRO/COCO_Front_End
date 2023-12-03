@@ -1,7 +1,6 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import "../Manage.css";
 import { BsPlugin } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";

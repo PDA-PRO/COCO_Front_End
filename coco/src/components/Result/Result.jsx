@@ -24,7 +24,7 @@ import {
 import { VscListFlat } from "react-icons/vsc";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { OtherLogic } from "./OtherLogic";
-import ReactDiffViewer from "react-diff-viewer";
+import ReactDiffViewer from "react-diff-viewer-continued";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";

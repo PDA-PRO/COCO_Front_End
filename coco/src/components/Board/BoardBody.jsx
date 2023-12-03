@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import "./Board.css";
 import { Guel } from "./Guel";
 import Spinner from "react-bootstrap/Spinner";

@@ -3,7 +3,7 @@ import { FaRegUserCircle, FaRegUser } from "react-icons/fa";
 import { CgPassword } from "react-icons/cg";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useAppDispatch } from "../../app/store";
 import Modal from "react-bootstrap/Modal";
 import { FiMail } from "react-icons/fi";
 import { HiOutlineIdentification } from "react-icons/hi";

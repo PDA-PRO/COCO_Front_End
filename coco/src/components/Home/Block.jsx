@@ -1,5 +1,4 @@
 import React from "react";
-
 import { LuPencil, LuClipboardCheck } from "react-icons/lu";
 import {
   BsFillEyeFill,
@@ -8,7 +7,7 @@ import {
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
 import {
   TiBatteryCharge,
@@ -20,7 +19,6 @@ import {
 
 export const Block = (props) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.loginState);
   const Large = useMediaQuery({ minWidth: 1000 });
 

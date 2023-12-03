@@ -33,7 +33,6 @@ export const API = {
   RESULT: `${BASE_URL}/result/`,
   STATUS: `${BASE_URL}/status/`,
   REQUESTTUTOR: `${BASE_URL}/request-tutor`,
-  SELECTANSWER: `${BASE_URL}/room/select-answer`,
   LINT: `${BASE_URL}/lint`,
   ALARM: `${BASE_URL}/user/alarm`,
   WPC: `${BASE_URL}/wpc/main`,

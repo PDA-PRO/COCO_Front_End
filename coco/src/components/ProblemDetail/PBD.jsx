@@ -51,7 +51,7 @@ const GetDetail = ({ resource }) => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const [codeLang, setcodeLang] = useState(0);
-  var code = "";
+  const [code, setCode] = useState("");
   //submit이후 결과창 이동
 
   function hasAiIgnoreCase(arr) {
@@ -291,7 +291,7 @@ const GetDetail = ({ resource }) => {
                   value=""
                   extensions={codeLang == 1 ? [cpp()] : [python()]}
                   onChange={(val) => {
-                    code = val;
+                    setCode(val);
                   }}
                 />
               </div>

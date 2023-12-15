@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const MakeGroup = () => {
   const [name, setName] = useState("");
@@ -42,7 +42,7 @@ export const MakeGroup = () => {
         title: "스터디룸명과 스터디룸 설명을 모두 작성해주세요.",
       });
     } else {
-      axios
+      axiosInstance
         .post(
           API.ROOM,
           {
@@ -66,7 +66,7 @@ export const MakeGroup = () => {
   };
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(API.USER, {
         params: { keyword: query, size: 5, page: page },
       })
@@ -231,7 +231,7 @@ const SearchResult = (props) => {
     <>
       {/* 검색 결과 리스트 */}
       {data.userlist.map((e) => {
-        if(e.id === userInfo.id){
+        if (e.id === userInfo.id) {
           return <></>;
         }
         return <UserBox info={e} key={e.id} addMembers={addMembers} />;

@@ -27,7 +27,7 @@ import fetchData from "../../../api/fetchTask";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import ReactQuill from "react-quill";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const MakeRoadMap = () => {
   const [tasks, setTasks] = useState([]);
@@ -56,11 +56,10 @@ export const MakeRoadMap = () => {
       });
     } else {
       let task_ids = tasks.map((a) => a.id);
-      axios
+      axiosInstance
         .post(
           API.ROOMROADMAP,
           {
-            id: path.at(-1),
             name: updateName,
             desc: quillRef.current.value,
             tasks: task_ids,
@@ -68,6 +67,9 @@ export const MakeRoadMap = () => {
           {
             headers: {
               Authorization: "Bearer " + userInfo.access_token,
+            },
+            urlParams: {
+              room_id: path.at(-1),
             },
           }
         )
@@ -123,7 +125,7 @@ export const MakeRoadMap = () => {
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
       //현재 에디터 커서 위치값을 가져온다
       const range = editor.getSelection();
-      axios
+      axiosInstance
         .post(
           API.IMAGE,
           {
@@ -290,7 +292,7 @@ const TasksList = ({ setFilter }) => {
   const asyncRef = useRef();
 
   useEffect(() => {
-    axios.get(API.CATEGORY).then((value) => {
+    axiosInstance.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });

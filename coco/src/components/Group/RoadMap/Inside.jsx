@@ -13,7 +13,7 @@ import Pagination from "@mui/material/Pagination";
 import { useMediaQuery } from "react-responsive";
 import Swal from "sweetalert2";
 import { API } from "api/config";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 import { Notfound } from "../../Notfound";
 
 export const Inside = () => {
@@ -26,12 +26,13 @@ export const Inside = () => {
         <div className="inside-body">
           <Suspense fallback={<Loader />}>
             <Content
-              resource={fetchData(
-                `${API.ROOMROADMAP}${path.at(-2)}/${path.at(-1)}`,
-                {
-                  headers: { Authorization: "Bearer " + userInfo.access_token },
-                }
-              )}
+              resource={fetchData(API.ROOMROADMAP, {
+                headers: { Authorization: "Bearer " + userInfo.access_token },
+                urlParams: {
+                  room_id: path.at(-2),
+                  roadmap_id: path.at(-1),
+                },
+              })}
             />
           </Suspense>
         </div>
@@ -101,10 +102,13 @@ const Content = ({ resource }) => {
       title: "정말 ROADMAP을 삭제하시겠습니까?",
     }).then((res) => {
       if (res.isConfirmed) {
-        axios
-          .delete(`${API.ROOMROADMAP}${path.at(-2)}`, {
-            params: { roadmap_id: path.at(-1) },
+        axiosInstance
+          .delete(API.ROOMROADMAP, {
             headers: { Authorization: "Bearer " + userInfo.access_token },
+            urlParams: {
+              room_id: path.at(-2),
+              roadmap_id: path.at(-1),
+            },
           })
           .then(() => {
             Swal.fire({

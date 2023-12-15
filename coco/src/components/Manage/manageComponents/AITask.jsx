@@ -300,7 +300,7 @@ const TaskReturn = ({ reAsk, askContent, json, codeCheck }) => {
       const range = editor.getSelection();
       axios
         .post(
-          API.IMAGEUPLOAD,
+          API.IMAGE,
           {
             file: file, // 파일
           },

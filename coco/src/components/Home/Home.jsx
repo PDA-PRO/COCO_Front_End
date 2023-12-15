@@ -62,9 +62,9 @@ export const Home = () => {
 
               <Suspense fallback={<Spinner />}>
                 <MyGraph
-                  resource={fetchData(API.MYSTATUS + userInfo.id, {
-                    headers: {
-                      Authorization: "Bearer " + userInfo.access_token,
+                  resource={fetchData(API.MYSTATUS, {
+                    urlParams: {
+                      user_id: userInfo.id,
                     },
                   })}
                 />

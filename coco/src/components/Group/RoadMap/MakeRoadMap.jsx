@@ -125,7 +125,7 @@ export const MakeRoadMap = () => {
       const range = editor.getSelection();
       axios
         .post(
-          API.IMAGEUPLOAD,
+          API.IMAGE,
           {
             file: file, // 파일
           },

@@ -32,7 +32,7 @@ export const FirstBox = (props) => {
   const saveFileImage = (e) => {
     axios
       .post(
-        API.IMAGEUPLOAD,
+        API.IMAGE,
         {
           file: e.target.files[0],
         },
@@ -69,7 +69,7 @@ export const FirstBox = (props) => {
   // 파일 삭제
   const deleteFileImage = () => {
     axios
-      .delete(API.IMAGEDELETE, {
+      .delete(API.IMAGE, {
         headers: {
           Authorization: "Bearer " + userInfo.access_token,
         },
@@ -174,13 +174,7 @@ export const FirstBox = (props) => {
             <>
               <img
                 onError={onErrorImg}
-                src={
-                  API.IMAGEDOWNLOAD +
-                  "4/" +
-                  userInfo.id +
-                  ".jpg?time=" +
-                  fileImage
-                }
+                src={API.IMAGE + "/4/" + userInfo.id + ".jpg?time=" + fileImage}
                 className="userImg"
               />
             </>
@@ -284,7 +278,7 @@ export const FirstBox = (props) => {
             <>
               <img
                 onError={onErrorImg}
-                src={API.IMAGEDOWNLOAD + "4/" + now + ".jpg?time=" + fileImage}
+                src={API.IMAGE + "/4/" + now + ".jpg?time=" + fileImage}
                 className="userImg"
               />
             </>

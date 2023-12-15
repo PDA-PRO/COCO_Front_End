@@ -33,7 +33,7 @@ export const Free = ({ title, cate }) => {
       const range = editor.getSelection();
       axiosInstance
         .post(
-          API.IMAGEUPLOAD,
+          API.IMAGE,
           {
             file: file, // 파일
           },

@@ -39,7 +39,7 @@ export const API = {
   CATEGORY: `${BASE_URL}/tasks/category`,
   SUBMISSION: `${BASE_URL}/submission`,
   STATUS: `${BASE_URL}/status`,
-  RESULT: `${BASE_URL}/result`,
+  RESULT: `${BASE_URL}/result/:sub_id`,
 
   //플러그인 관련 api
   PLUGINSTATUS: `${BASE_URL}/plugin/status`,

@@ -24,7 +24,9 @@ export const ModifyBoard = () => {
       <Header />
       <Suspense fallback={<Spinner />}>
         <GetBoardDetail
-          resource={fetchData(API.BOARD + path.at(-1))}
+          resource={fetchData(API.BOARD, {
+            urlParams: { board_id: path.at(-1) },
+          })}
           key={path.at(-1)}
         />
       </Suspense>

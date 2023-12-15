@@ -82,7 +82,7 @@ const GetDetail = ({ resource }) => {
       });
     } else {
       Promise.resolve().then(
-        axios
+        axiosInstance
           .post(
             API.SUBMISSION,
             {
@@ -114,7 +114,7 @@ const GetDetail = ({ resource }) => {
   };
 
   const setMyTask = (task_id) => {
-    axios
+    axiosInstance
       .post(
         API.MYTASK,
         {},

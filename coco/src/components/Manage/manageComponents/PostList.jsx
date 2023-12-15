@@ -15,7 +15,7 @@ import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
@@ -24,7 +24,7 @@ export const PostList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(API.BOARD, {
         params: {
           size: 10,
@@ -149,9 +149,11 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
   };
 
   const loadlist = (e) => {
-    axios
+    axiosInstance
       .delete(API.BOARD, {
-        params: { board_id: info.id },
+        urlParams: {
+          board_id: info.id,
+        },
         headers: { Authorization: "Bearer " + userinfo.access_token },
       })
       .then(function (response) {
@@ -168,11 +170,9 @@ const ListPost = ({ info, userinfo, setReload, setLoading }) => {
   function timeForToday(value) {
     const today = new Date();
     const timeValue = new Date(value);
-    const convertTime =  timeValue.getTime()+9 * 60 * 60 * 1000;
+    const convertTime = timeValue.getTime() + 9 * 60 * 60 * 1000;
 
-    const betweenTime = Math.floor(
-      (today.getTime() - convertTime) / 1000 / 60
-    );
+    const betweenTime = Math.floor((today.getTime() - convertTime) / 1000 / 60);
     if (betweenTime < 1) return "방금전";
     if (betweenTime < 60) {
       return `${betweenTime}분전`;

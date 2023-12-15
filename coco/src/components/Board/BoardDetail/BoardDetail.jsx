@@ -20,8 +20,8 @@ import { Loader } from "../../Loader/Loader";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { Notfound } from "../../Notfound";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const BoardDetail = () => {
   return (
@@ -46,16 +46,22 @@ const GetBoardDetail = () => {
   const { isFetching, data: boardData } = useQuery(
     ["boardlist", board_id],
     () =>
-      axios.get(API.BOARD + board_id, {
+      axiosInstance.get(API.BOARD, {
         params: { user_id: userInfo.id },
+        urlParams: {
+          board_id: board_id,
+        },
       })
   );
 
   const { isFetching: commentFetching, data: commentList } = useQuery(
     ["commentList", Number.parseInt(board_id)],
     () =>
-      axios.get(API.COMMENT, {
-        params: { user_id: userInfo.id, board_id: board_id },
+      axiosInstance.get(API.COMMENT, {
+        params: { user_id: userInfo.id },
+        urlParams: {
+          board_id: board_id,
+        },
       })
   );
 
@@ -117,15 +123,18 @@ const GetBoardDetail = () => {
   }
 
   const onLikesHandler = () => {
-    axios
+    axiosInstance
       .patch(
         API.BAORDLIKE,
-        {
-          board_id: boardData.data.id,
-          type: like,
-        },
+        {},
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          params: {
+            like_type: like,
+          },
+          urlParams: {
+            board_id: boardData.data.id,
+          },
         }
       )
       .then(() => {
@@ -145,17 +154,13 @@ const GetBoardDetail = () => {
   const onDeleteHandler = () => {
     Swal.fire({ icon: "info", title: "정말 삭제하시겠습니까?" }).then((res) => {
       if (res.isConfirmed) {
-        axios
-          .delete(
-            API.BOARD,
-
-            {
-              headers: { Authorization: "Bearer " + userInfo.access_token },
-              params: {
-                board_id: boardData.data.id,
-              },
-            }
-          )
+        axiosInstance
+          .delete(API.BOARD, {
+            headers: { Authorization: "Bearer " + userInfo.access_token },
+            urlParams: {
+              board_id: boardData.data.id,
+            },
+          })
           .then((res) => {
             if (res.data.code === 1) {
               navigate(`/board`);

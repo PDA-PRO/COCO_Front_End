@@ -10,7 +10,7 @@ import { python } from "@codemirror/lang-python";
 import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const Help = ({ title }) => {
   const [code, setCode] = useState(""); //작성한 코드
@@ -36,7 +36,7 @@ export const Help = ({ title }) => {
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
       //현재 에디터 커서 위치값을 가져온다
       const range = editor.getSelection();
-      axios
+      axiosInstance
         .post(
           API.IMAGEUPLOAD,
           {
@@ -103,7 +103,7 @@ export const Help = ({ title }) => {
     if (title === "" || quillValue === "") {
       return Swal.fire({ icon: "error", title: "완전히 입력해주세요." });
     } else {
-      axios
+      axiosInstance
         .post(
           API.BOARD,
           {

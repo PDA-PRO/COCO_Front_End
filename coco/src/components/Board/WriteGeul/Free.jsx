@@ -7,7 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const Free = ({ title, cate }) => {
   const [quillValue, setquillValue] = useState(""); // 메인 설명 html State !필수
@@ -31,7 +31,7 @@ export const Free = ({ title, cate }) => {
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
       //현재 에디터 커서 위치값을 가져온다
       const range = editor.getSelection();
-      axios
+      axiosInstance
         .post(
           API.IMAGEUPLOAD,
           {
@@ -98,7 +98,7 @@ export const Free = ({ title, cate }) => {
     if (title === "" || quillValue === "") {
       return Swal.fire({ icon: "error", title: "완전히 입력해주세요" });
     } else {
-      axios
+      axiosInstance
         .post(
           API.BOARD,
           {

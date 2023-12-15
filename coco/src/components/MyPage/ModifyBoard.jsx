@@ -166,11 +166,10 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
     if (newTitle === "" || quillValue === "") {
       return Swal.fire({ icon: "error", title: "완전히 입력해주세요." });
     } else {
-      axios
+      axiosInstance
         .put(
-          API.BOARD + "update-board",
+          API.BOARD,
           {
-            board_id: boardId,
             title: newTitle,
             context: quillValue,
             category: category,
@@ -178,6 +177,9 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
+            urlParams: {
+              board_id: boardId,
+            },
           }
         )
         .then(function (response) {

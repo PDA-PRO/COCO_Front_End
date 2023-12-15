@@ -7,7 +7,7 @@ import { useAppSelector } from "../../../app/store";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 //페이지 네이션, 문제 삭제시 리스트 재호출, 첫 렌더링을 모두 api 호출 한번에 해결하려면
 //이 방법밖에 생각이 나질 않았습니다. suspense를 쓰지 말아주세요
@@ -18,7 +18,7 @@ export const TaskList = () => {
   const [taskList, setTaskList] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios
+    axiosInstance
       .get(API.TASK, {
         params: {
           size: 10,
@@ -104,10 +104,12 @@ const ListBox = ({ info, token, setDel, setLoading }) => {
         "문제 삭제 시 예기치 못한 에러가 발생할 수 있습니다.\n정말로 삭제하시겠습니까?",
     }).then((res) => {
       if (res.isConfirmed) {
-        axios
+        axiosInstance
           .delete(API.TASK, {
-            params: { task_id: info.id },
             headers: { Authorization: "Bearer " + token },
+            urlParams: {
+              task_id: info.id,
+            },
           })
           .then(() => {
             Swal.fire({

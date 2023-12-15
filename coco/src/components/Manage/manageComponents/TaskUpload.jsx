@@ -18,7 +18,7 @@ import JSZip from "jszip";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const TaskUpload = () => {
   const titleRef = useRef();
@@ -60,7 +60,7 @@ export const TaskUpload = () => {
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
       //현재 에디터 커서 위치값을 가져온다
       const range = editor.getSelection();
-      axios
+      axiosInstance
         .post(
           API.IMAGE,
           {
@@ -148,7 +148,7 @@ export const TaskUpload = () => {
       //quill editor에 의해 생성된 메인 설명의 html을 form-data에 삽입
       formData.append("description", quillRef.current.value);
 
-      axios
+      axiosInstance
         .post(API.TASK, formData, {
           headers: {
             "Content-Type": `multipart/form-data; `,
@@ -411,7 +411,7 @@ const CheckCategory = ({ userInfo, categoryRef }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    axios.get(API.CATEGORY).then((value) => {
+    axiosInstance.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });
@@ -423,7 +423,7 @@ const CheckCategory = ({ userInfo, categoryRef }) => {
 
   const handleCreate = (inputValue) => {
     setIsLoading(true);
-    axios
+    axiosInstance
       .post(
         API.CATEGORY,
         {},

@@ -19,7 +19,7 @@ import { IoSchoolOutline } from "react-icons/io5";
 import { Tutor } from "./Tutor/Tutor";
 import { HiArrowUturnLeft } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const Group = () => {
   const navigate = useNavigate();
@@ -184,7 +184,7 @@ const GetGroups = ({ query }) => {
   const { data: GroupList } = useQuery(
     ["roomlist", page, query],
     () =>
-      axios.get(API.ROOM, {
+      axiosInstance.get(API.ROOM, {
         params: {
           size: 5,
           page: page,

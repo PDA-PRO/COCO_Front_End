@@ -14,7 +14,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const QA = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -24,10 +24,13 @@ export const QA = () => {
   const { data } = useQuery(
     ["qa", path.at(-1), page],
     () => {
-      return axios.get(API.ROOMQUESTION + path.at(-1), {
+      return axiosInstance.get(API.ROOMQUESTION, {
         params: { size: 5, page: page },
         headers: {
           Authorization: "Bearer " + userInfo.access_token,
+        },
+        urlParams: {
+          room_id: path.at(-1),
         },
       });
     },
@@ -106,7 +109,6 @@ const Question = ({ resource }) => {
       footer: "시간이 다소 소요될 수 있습니다.",
     }).then((result) => {
       if (result.isConfirmed) {
-        //여기에 axios 호출
         Swal.fire({
           icon: "info",
           title: "AI가 답변을 생성하고 있습니다.",
@@ -114,7 +116,7 @@ const Question = ({ resource }) => {
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
-            axios
+            axiosInstance
               .post(
                 API.BASE_URL + "/qa/main",
                 {
@@ -296,16 +298,20 @@ const Answer = ({ info, room_id, writer }) => {
   const Good = () => {
     if (userInfo.id === writer) {
       if (isGood) {
-        axios
+        axiosInstance
           .put(
             API.SELECTANSWER,
             {
-              room_id: room_id,
               a_id: info.a_id,
               select: 0,
               ans_writer: info.ans_writer,
             },
-            { headers: { Authorization: "Bearer " + userInfo.access_token } }
+            {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+              urlParams: {
+                room_id: room_id,
+              },
+            }
           )
           .then((res) => {
             if (res.data.code) {
@@ -327,16 +333,20 @@ const Answer = ({ info, room_id, writer }) => {
             });
           });
       } else {
-        axios
+        axiosInstance
           .put(
             API.SELECTANSWER,
             {
-              room_id: room_id,
               a_id: info.a_id,
               select: 1,
               ans_writer: info.ans_writer,
             },
-            { headers: { Authorization: "Bearer " + userInfo.access_token } }
+            {
+              headers: { Authorization: "Bearer " + userInfo.access_token },
+              urlParams: {
+                room_id: room_id,
+              },
+            }
           )
           .then((res) => {
             if (res.data.code) {
@@ -435,17 +445,19 @@ const MakeAnswer = ({ room_id, q_id }) => {
   }, []);
 
   const uploadAnswer = () => {
-    axios
+    axiosInstance
       .post(
         API.ROOMANSWER,
         {
-          room_id: room_id,
           q_id: q_id,
           answer: quillValue,
           code: code,
         },
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          urlParams: {
+            room_id: room_id,
+          },
         }
       )
       .then(function (response) {

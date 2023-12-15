@@ -21,7 +21,7 @@ import fetchData from "../../../api/fetchTask";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import "../Manage.css";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const TaskModify = () => {
   var path = window.location.pathname;
@@ -29,7 +29,11 @@ export const TaskModify = () => {
   return (
     <>
       <Suspense fallback={<Spinner />}>
-        <TaskModifyPage resource={fetchData(API.TASK + path.at(-1))} />
+        <TaskModifyPage
+          resource={fetchData(API.TASK, {
+            urlParams: { task_id: path.at(-1) },
+          })}
+        />
       </Suspense>
     </>
   );
@@ -99,9 +103,9 @@ export const TaskModifyPage = ({ resource }) => {
       console.log(quillRef.current.value);
       console.log(editor.getText());
       const range = editor.getSelection();
-      axios
+      axiosInstance
         .post(
-          API.IMAGEUPLOAD,
+          API.IMAGE,
           {
             file: file, // 파일
           },
@@ -187,14 +191,13 @@ export const TaskModifyPage = ({ resource }) => {
       //quill editor에 의해 생성된 메인 설명의 html을 form-data에 삽입
       formData.append("description", quillRef.current.value);
 
-      axios
+      axiosInstance
         .put(API.TASK, formData, {
           headers: {
             "Content-Type": `multipart/form-data; `,
             Authorization: "Bearer " + userInfo.access_token,
           },
           params: {
-            task_id: taskData.id,
             title: titleRef.current.value,
             inputDescription: inputDescRef.current.value,
             inputEx1: inputEx1Ref.current.value,
@@ -209,6 +212,9 @@ export const TaskModifyPage = ({ resource }) => {
               .getValue()
               .map((e) => e.value)
               .join(","),
+          },
+          urlParams: {
+            task_id: taskData.id,
           },
         })
         .then(function (response) {
@@ -456,7 +462,7 @@ const CheckCategory = ({ userInfo, categoryRef, defaultValue }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    axios.get(API.CATEGORY).then((value) => {
+    axiosInstance.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });
@@ -468,7 +474,7 @@ const CheckCategory = ({ userInfo, categoryRef, defaultValue }) => {
 
   const handleCreate = (inputValue) => {
     setIsLoading(true);
-    axios
+    axiosInstance
       .post(
         API.CATEGORY,
         {},

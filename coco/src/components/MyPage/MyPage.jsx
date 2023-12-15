@@ -28,9 +28,12 @@ export const MyPage = () => {
           <Suspense fallback={<Spinner />}>
             {me === now ? (
               <GetFirst
-                resource={fetchData(API.MYPAGE + "1/" + path.at(-1), {
+                resource={fetchData(API.MYPAGE, {
                   headers: {
                     Authorization: "Bearer " + userInfo.access_token,
+                  },
+                  urlParams: {
+                    user_id: path.at(-1),
                   },
                 })}
                 me={userInfo.id}
@@ -38,9 +41,12 @@ export const MyPage = () => {
               />
             ) : (
               <GetFirst
-                resource={fetchData(API.MYPAGE + "2/" + path.at(-1), {
+                resource={fetchData(API.MYPAGE, {
                   headers: {
                     Authorization: "Bearer " + userInfo.access_token,
+                  },
+                  urlParams: {
+                    user_id: path.at(-1),
                   },
                 })}
                 me={userInfo.id}

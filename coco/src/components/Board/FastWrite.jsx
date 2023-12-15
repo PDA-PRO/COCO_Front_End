@@ -13,7 +13,7 @@ import "react-quill/dist/quill.bubble.css";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 import Swal from "sweetalert2";
 
 export const FastWrite = () => {
@@ -25,7 +25,7 @@ export const FastWrite = () => {
   const queryClient = useQueryClient();
   const addHandler = useMutation(
     () =>
-      axios.post(
+      axiosInstance.post(
         API.BOARD,
         {
           title: title,
@@ -38,16 +38,18 @@ export const FastWrite = () => {
       ),
     {
       onSuccess: (res) => {
-        // 요청이 성공한 경우
-        queryClient.setQueryData(
-          ["boardlist"],
-          (oldData) => {
-            let newData = _.cloneDeep(oldData);
-            newData.data.boardlist = [res.data, ...oldData.data.boardlist];
-            return newData;
-          },
-          { exact: true }
-        );
+        queryClient.invalidateQueries(["boardlist"]);
+
+        // // 요청이 성공한 경우
+        // queryClient.setQueryData(
+        //   ["boardlist"],
+        //   (oldData) => {
+        //     let newData = _.cloneDeep(oldData);
+        //     newData.data.boardlist = [res.data, ...oldData.data.boardlist];
+        //     return newData;
+        //   },
+        //   { exact: true }
+        // );
       },
     }
   );

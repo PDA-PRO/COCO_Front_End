@@ -6,7 +6,7 @@ import { FastWrite } from "./FastWrite";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import { AIqa } from "./AIqa";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 import { PiWarningLight } from "react-icons/pi";
 
 export const BoardBody = () => {
@@ -63,7 +63,7 @@ export const BoardBody = () => {
 
 const GetList = () => {
   const { isFetching, data: boardList } = useQuery(["boardlist"], () =>
-    axios.get(API.BOARD)
+    axiosInstance.get(API.BOARD)
   );
   if (isFetching) {
     return <Spinner />;

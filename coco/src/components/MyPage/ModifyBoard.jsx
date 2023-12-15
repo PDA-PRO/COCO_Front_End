@@ -24,7 +24,9 @@ export const ModifyBoard = () => {
       <Header />
       <Suspense fallback={<Spinner />}>
         <GetBoardDetail
-          resource={fetchData(API.BOARD + path.at(-1))}
+          resource={fetchData(API.BOARD, {
+            urlParams: { board_id: path.at(-1) },
+          })}
           key={path.at(-1)}
         />
       </Suspense>
@@ -101,7 +103,7 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
       const range = editor.getSelection();
       axios
         .post(
-          API.IMAGEUPLOAD,
+          API.IMAGE,
           {
             file: file, // 파일
           },
@@ -166,11 +168,10 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
     if (newTitle === "" || quillValue === "") {
       return Swal.fire({ icon: "error", title: "완전히 입력해주세요." });
     } else {
-      axios
+      axiosInstance
         .put(
-          API.BOARD + "update-board",
+          API.BOARD,
           {
-            board_id: boardId,
             title: newTitle,
             context: quillValue,
             category: category,
@@ -178,6 +179,9 @@ const Update = ({ boardId, title, contents, category, helpCode }) => {
           },
           {
             headers: { Authorization: "Bearer " + userInfo.access_token },
+            urlParams: {
+              board_id: boardId,
+            },
           }
         )
         .then(function (response) {

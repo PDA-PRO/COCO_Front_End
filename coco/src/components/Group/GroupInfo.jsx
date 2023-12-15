@@ -23,7 +23,7 @@ import { RoadMap } from "./RoadMap/RoadMap";
 import { API } from "api/config";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 import { Notfound } from "../Notfound.jsx";
 
 export const GroupInfo = () => {
@@ -33,11 +33,14 @@ export const GroupInfo = () => {
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const { isLoading, data } = useQuery({
-    queryKey: ["roominfo", path.at(-1), userID],
+    queryKey: ["roominfo", path.at(-1), 11],
     queryFn: () =>
-      axios.get(API.ROOM + path.at(-1), {
+      axiosInstance.get(API.ROOM, {
         headers: {
           Authorization: "Bearer " + userInfo.access_token,
+        },
+        urlParams: {
+          room_id: path.at(-1),
         },
       }),
   });
@@ -227,7 +230,7 @@ const InviteNewMember = (props) => {
   };
 
   const onSubmitHandler = (e) => {
-    axios
+    axiosInstance
       .get(API.USER, {
         params: { keyword: search },
       })
@@ -243,16 +246,18 @@ const InviteNewMember = (props) => {
   };
 
   const onInviteHanlder = (id) => {
-    axios
+    axiosInstance
       .put(
         API.ROOMMEMBER,
         {
-          room_id: props.group_id,
           user_id: id,
         },
         {
           headers: {
             Authorization: "Bearer " + props.userInfo.access_token,
+          },
+          urlParams: {
+            room_id: props.group_id,
           },
         }
       )
@@ -376,9 +381,9 @@ const LeaveOrDelete = ({ resource }) => {
       title: "정말 스터디룸을 삭제하시겠습니까?",
     }).then((res) => {
       if (res.isConfirmed) {
-        axios // 여기 api 주소만 바꾸면 끝
+        axiosInstance // 여기 api 주소만 바꾸면 끝
           .delete(API.ROOM, {
-            params: {
+            urlParams: {
               room_id: group_id,
             },
             headers: { Authorization: "Bearer " + userInfo.access_token },

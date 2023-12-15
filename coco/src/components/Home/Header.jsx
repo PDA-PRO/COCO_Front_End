@@ -120,8 +120,8 @@ export const Header = (props) => {
                   )}
                   <img
                     src={
-                      API.IMAGEDOWNLOAD +
-                      "4/" +
+                      API.IMAGE +
+                      "/4/" +
                       userInfo.id +
                       ".jpg?time=" +
                       userInfo.imagetoken
@@ -147,8 +147,8 @@ export const Header = (props) => {
                       <div className="bodyOverlay">
                         <img
                           src={
-                            API.IMAGEDOWNLOAD +
-                            "4/" +
+                            API.IMAGE +
+                            "/4/" +
                             userInfo.id +
                             ".jpg?time=" +
                             userInfo.imagetoken
@@ -247,8 +247,8 @@ export const Header = (props) => {
 
                       <img
                         src={
-                          API.IMAGEDOWNLOAD +
-                          "4/" +
+                          API.IMAGE +
+                          "/4/" +
                           userInfo.id +
                           ".jpg?time=" +
                           userInfo.imagetoken

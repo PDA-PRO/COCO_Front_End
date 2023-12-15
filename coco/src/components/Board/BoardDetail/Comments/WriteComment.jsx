@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAppSelector } from "../../../../app/store";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const WriteComment = ({ commentShoot }) => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -15,14 +15,16 @@ export const WriteComment = ({ commentShoot }) => {
 
   const addCommentHandler = useMutation(
     () =>
-      axios.post(
+      axiosInstance.post(
         API.COMMENT,
         {
           context: context,
-          board_id: board_id,
         },
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          urlParams: {
+            board_id: board_id,
+          },
         }
       ),
     {

@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../../app/store";
 import { useEffect } from "react";
 import { API } from "api/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const Comments = ({ commentData }) => {
   //commentData: id, context, write_time, likes, user_id, board_id
@@ -16,9 +16,9 @@ export const Comments = ({ commentData }) => {
   const queryClient = useQueryClient();
   const deleteCommentHandler = useMutation(
     () =>
-      axios.delete(API.COMMENT, {
+      axiosInstance.delete(API.COMMENT, {
         headers: { Authorization: "Bearer " + userInfo.access_token },
-        params: {
+        urlParams: {
           board_id: commentData.board_id,
           comment_id: commentData.id,
         },
@@ -72,16 +72,19 @@ export const Comments = ({ commentData }) => {
   }
 
   const onLikesHandler = () => {
-    axios
+    axiosInstance
       .patch(
         API.COMMENTLIKE,
-        {
-          board_id: commentData.board_id,
-          comment_id: commentData.id,
-          type: like,
-        },
+        {},
         {
           headers: { Authorization: "Bearer " + userInfo.access_token },
+          params: {
+            like_type: like,
+          },
+          urlParams: {
+            board_id: commentData.board_id,
+            comment_id: commentData.id,
+          },
         }
       )
       .then(() => {

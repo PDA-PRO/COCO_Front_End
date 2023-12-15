@@ -6,7 +6,6 @@ import { Footer } from "../../Home/Footer";
 import { GoPencil } from "react-icons/go";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
-
 import { WriteHelp } from "./WriteHelp";
 
 export const GroupBoard = () => {

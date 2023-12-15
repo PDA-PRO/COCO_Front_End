@@ -22,7 +22,7 @@ import Form from "react-bootstrap/Form";
 import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 import { Notfound } from "../Notfound.jsx";
 
 export const PBD = () => {
@@ -31,7 +31,11 @@ export const PBD = () => {
   return (
     <>
       <Suspense fallback={<>문제가 존재하지 않습니다</>}>
-        <GetDetail resource={fetchData(API.TASK + path.at(-1))} />
+        <GetDetail
+          resource={fetchData(API.TASK, {
+            urlParams: { task_id: path.at(-1) },
+          })}
+        />
       </Suspense>
     </>
   );
@@ -78,7 +82,7 @@ const GetDetail = ({ resource }) => {
       });
     } else {
       Promise.resolve().then(
-        axios
+        axiosInstance
           .post(
             API.SUBMISSION,
             {
@@ -110,7 +114,7 @@ const GetDetail = ({ resource }) => {
   };
 
   const setMyTask = (task_id) => {
-    axios
+    axiosInstance
       .post(
         API.MYTASK,
         {},

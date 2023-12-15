@@ -28,7 +28,7 @@ import { API } from "api/config";
 import ReactQuill from "react-quill";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const ModifyRoadMap = () => {
   const [tasks, setTasks] = useState([]);
@@ -45,8 +45,12 @@ export const ModifyRoadMap = () => {
   const { data, isFetching } = useQuery(
     ["roadmap", path.at(-2), path.at(-1)],
     () =>
-      axios.get(`${API.ROOMROADMAP}${path.at(-2)}/${path.at(-1)}`, {
+      axiosInstance.get(API.ROOMROADMAP, {
         headers: { Authorization: "Bearer " + userInfo.access_token },
+        urlParams: {
+          room_id: path.at(-2),
+          roadmap_id: path.at(-1),
+        },
       })
   );
 
@@ -70,11 +74,10 @@ export const ModifyRoadMap = () => {
       });
     } else {
       let task_ids = tasks.map((a) => a.id);
-      axios
+      axiosInstance
         .put(
-          API.ROOMROADMAP + path.at(-2),
+          API.ROOMROADMAP,
           {
-            id: path.at(-1),
             name: nameRef.current.value,
             desc: quillRef.current.value,
             tasks: task_ids,
@@ -82,6 +85,10 @@ export const ModifyRoadMap = () => {
           {
             headers: {
               Authorization: "Bearer " + userInfo.access_token,
+            },
+            urlParams: {
+              room_id: path.at(-2),
+              roadmap_id: path.at(-1),
             },
           }
         )
@@ -137,9 +144,9 @@ export const ModifyRoadMap = () => {
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
       //현재 에디터 커서 위치값을 가져온다
       const range = editor.getSelection();
-      axios
+      axiosInstance
         .post(
-          API.IMAGEUPLOAD,
+          API.IMAGE,
           {
             file: file, // 파일
           },
@@ -296,7 +303,7 @@ const TasksList = ({ setFilter }) => {
   const asyncRef = useRef();
 
   useEffect(() => {
-    axios.get(API.CATEGORY).then((value) => {
+    axiosInstance.get(API.CATEGORY).then((value) => {
       var option = [];
       for (let i = 0; i < value.data.length; i++) {
         option.push({ value: value.data[i], label: value.data[i] });

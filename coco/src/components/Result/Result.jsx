@@ -28,7 +28,7 @@ import ReactDiffViewer from "react-diff-viewer-continued";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { BiTimeFive, BiMemoryCard } from "react-icons/bi";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 import { Improve } from "./Improve";
 import { useNavigate } from "react-router-dom";
 import { Notfound } from "components/Notfound";
@@ -45,8 +45,9 @@ export const Result = (code) => {
       {locate.state !== null ? (
         <Suspense fallback={<Spinner />}>
           <ResultBox
-            resource={fetchData(API.RESULT + num, {
+            resource={fetchData(API.RESULT, {
               headers: { Authorization: "Bearer " + userInfo.access_token },
+              urlParams: { sub_id: num },
             })}
             info={locate.state.info}
           />
@@ -265,8 +266,8 @@ const ResultBox = ({ resource, info }) => {
 
         didOpen: () => {
           Swal.showLoading();
-          //axios 받아서 then걸고, 불러와지면 setOtherLogic 변경
-          axios
+          //axiosInstance 받아서 then걸고, 불러와지면 setOtherLogic 변경
+          axiosInstance
             .post(
               API.BASE_URL + "/ai-code/main",
               {
@@ -479,7 +480,7 @@ const WPC = ({ sub_id, task_id }) => {
   const { isFetching, data, isError } = useQuery(
     ["wpc1", sub_id],
     () =>
-      axios.post(
+      axiosInstance.post(
         API.WPC,
         {},
         {

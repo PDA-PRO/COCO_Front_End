@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { API } from "api/config";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const ThirdBox = (props) => {
   const navigate = useNavigate();
@@ -87,12 +87,12 @@ export const ThirdBox = (props) => {
     Swal.fire({ icon: "question", title: "게시글을 삭제하시겠습니까?" }).then(
       (result) => {
         if (result.isConfirmed) {
-          axios
+          axiosInstance
             .delete(API.BOARD, {
               headers: {
                 Authorization: "Bearer " + props.userinfo.access_token,
               },
-              params: {
+              urlParams: {
                 board_id: e,
               },
             })

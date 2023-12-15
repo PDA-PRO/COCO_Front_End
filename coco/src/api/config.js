@@ -27,7 +27,7 @@ export const API = {
   MYSTATUS: `${BASE_URL}/my_status/:user_id`,
   TASK: `${BASE_URL}/task`,
   CATEGORY: `${BASE_URL}/task/category`,
-  MYPAGE: `${BASE_URL}/mypage`,
+  MYPAGE: `${BASE_URL}/mypage/:user_id`,
   SUBMISSION: `${BASE_URL}/submission`,
   RESULT: `${BASE_URL}/result`,
   STATUS: `${BASE_URL}/status`,

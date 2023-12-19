@@ -31,10 +31,7 @@ export const StatusList = () => {
     navigate(0);
   };
 
-  useEffect(() => {
-    console.log(filter);
-    console.log(userInfo);
-  }, [filter]);
+  useEffect(() => {}, [filter]);
 
   return (
     <div>

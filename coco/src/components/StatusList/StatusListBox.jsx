@@ -20,9 +20,10 @@ export const StatusListBox = (info) => {
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
   const canHover =
-    ((info.info.is_solved && userInfo.id !== "") ||
+    userInfo.role == 1 ||
+    (((info.info.is_solved && userInfo.id !== "") ||
       info.info.user_id === userInfo.id) &&
-    info.info.status > 2;
+      info.info.status > 2);
   const goDetail = (e) => {
     navigate(`/result/${e}`, { state: { info: info.info } });
   };

@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
 import "./PBD.css";
 import Button from "react-bootstrap/Button";
-import { IoLogoPython } from "react-icons/io5";
 import {
   BsClipboardCheck,
   BsArrowDownRight,
   BsArrowUpLeft,
   BsQuestionLg,
   BsExclamationLg,
+  BsCodeSquare,
 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -16,14 +16,13 @@ import { useAppSelector } from "../../app/store";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import CodeMirror from "@uiw/react-codemirror";
-import { cpp } from "@codemirror/lang-cpp";
-import { python } from "@codemirror/lang-python";
-import Form from "react-bootstrap/Form";
+import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { IoMdPaperPlane } from "react-icons/io";
 import { API } from "api/config";
 import Swal from "sweetalert2";
 import axiosInstance from "api/axiosWithPathParameter";
 import { Notfound } from "../Notfound.jsx";
+import { CustomSelect } from "components/CustomSelect";
 
 export const PBD = () => {
   var path = window.location.pathname;
@@ -54,7 +53,11 @@ const GetDetail = ({ resource }) => {
   }
   const navigate = useNavigate();
   const userInfo = useAppSelector((state) => state.loginState);
-  const [codeLang, setcodeLang] = useState(0);
+  const [codeLang, setcodeLang] = useState({
+    value: 0,
+    label: "python",
+    highlighter: "python",
+  });
   const [code, setCode] = useState("");
   //submit이후 결과창 이동
 
@@ -89,7 +92,7 @@ const GetDetail = ({ resource }) => {
               taskid: detail.id,
               sourcecode: code,
               callbackurl: "string",
-              lang: codeLang,
+              lang: codeLang.value,
             },
             {
               headers: { Authorization: "Bearer " + userInfo.access_token },
@@ -275,28 +278,25 @@ const GetDetail = ({ resource }) => {
           <Allotment.Pane snap={false}>
             <div className="PBD-input">
               <div className="PBD-pbTitle">
-                <IoLogoPython size={25} color="skyblue" />
+                <BsCodeSquare size={25} />
                 <h2>코드 입력 : </h2>
                 <div>
-                  <Form.Select
-                    size="sm"
-                    aria-label="F"
-                    onChange={(e) => {
-                      setcodeLang(e.currentTarget.value);
+                  <CustomSelect
+                    onChange={(newValue, actionMeta) => {
+                      setcodeLang(newValue);
                     }}
-                  >
-                    <option value={0}>Python3</option>
-                    <option value={1}>C</option>
-                  </Form.Select>
+                    defaultValue={codeLang}
+                  />
                 </div>
               </div>
               <div className="PBD-scroll">
                 <CodeMirror
                   value=""
-                  extensions={codeLang == 1 ? [cpp()] : [python()]}
+                  extensions={[loadLanguage(codeLang.highlighter)]}
                   onChange={(val) => {
                     setCode(val);
                   }}
+                  basicSetup={{ autocompletion: false }}
                 />
               </div>
             </div>

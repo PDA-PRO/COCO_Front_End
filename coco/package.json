@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@codemirror/lang-cpp": "^6.0.2",
-    "@codemirror/lang-python": "^6.1.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@looop/quill-image-resize-module-react": "^3.1.5",
@@ -13,6 +11,7 @@
     "@tanstack/react-query": "^4.33.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
+    "@uiw/codemirror-extensions-langs": "^4.21.21",
     "@uiw/react-codemirror": "^4.19.7",
     "allotment": "^1.17.1",
     "axios": "^1.1.3",

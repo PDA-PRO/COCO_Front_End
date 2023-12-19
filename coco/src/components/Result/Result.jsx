@@ -45,7 +45,7 @@ export const Result = (code) => {
       {locate.state !== null ? (
         <Suspense fallback={<Spinner />}>
           <ResultBox
-            resource={fetchData(API.RESULT, {
+            resource={fetchData(API.SUBMISSION, {
               headers: { Authorization: "Bearer " + userInfo.access_token },
               urlParams: { sub_id: num },
             })}
@@ -69,26 +69,6 @@ const ResultBox = ({ resource, info }) => {
   const [wpc, setWpc] = useState(0);
   const navigate = useNavigate();
   const problemList = resource.read();
-
-  const setLang = (e) => {
-    switch (e) {
-      case 0:
-        return (
-          <div className="un2">
-            <img src="/image/python.png" height="27px" alt="" />
-            <p style={{ fontWeight: "600" }}>Python 3</p>
-          </div>
-        );
-
-      case 1:
-        return (
-          <div className="un2">
-            <img src="/image/lan_c2.png" height="27px" alt="" />
-            <p>C</p>
-          </div>
-        );
-    }
-  };
 
   const setLevel = (e) => {
     switch (e) {
@@ -353,7 +333,7 @@ const ResultBox = ({ resource, info }) => {
             <div className="box">
               <div className="un2">
                 <p>제출 언어 : </p>
-                {setLang(info.lang)}
+                <p style={{ fontWeight: "600" }}>{info.lang}</p>
               </div>
             </div>
           </div>

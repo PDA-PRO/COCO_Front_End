@@ -107,22 +107,6 @@ export const StatusListBox = (info) => {
     }
   };
 
-  const lan = (e) => {
-    if (e === 1) {
-      return (
-        <div>
-          <img src="./image/lan_c.png" height="27px" alt="" />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <img src="./image/python.png" height="27px" alt="" />
-        </div>
-      );
-    }
-  };
-
   const remakeString = (e) => {
     let ymd = e.substring(0, 10);
     let time = e.substring(11);
@@ -161,7 +145,7 @@ export const StatusListBox = (info) => {
       >
         {removeSubstringFromStart(info.info.title, "wpc")}
       </h5>
-      <h5>{lan(info.info.lang)}</h5>
+      <h5>{info.info.lang}</h5>
       <h5>{setScore(info.info.status)}</h5>
       <h5>{remakeString(info.info.time)}</h5>
     </div>

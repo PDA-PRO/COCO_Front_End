@@ -13,6 +13,7 @@ import { GoSearch } from "react-icons/go";
 import { useAppSelector } from "../../app/store";
 import { useMediaQuery } from "react-responsive";
 import { API } from "api/config";
+import { CustomSelect } from "components/CustomSelect";
 
 export const StatusList = () => {
   const userInfo = useAppSelector((state) => state.loginState);
@@ -68,7 +69,7 @@ export const StatusList = () => {
           </div>
           <Suspense fallback={<Spinner />}>
             <Getsubmits
-              resource={fetchData(API.STATUS, {
+              resource={fetchData(API.SUBMISSION, {
                 params: {
                   task_id: filter.task_id,
                   lang: filter.lang,
@@ -130,26 +131,9 @@ const OptionBox = ({ filter, setFilter, isLogin }) => {
       </div>
 
       <div className="sortBox">
-        <p>
-          <span style={{ color: "#8b00ff" }}>C언어</span> 제출만 보기
-        </p>
-        <Form.Check
-          type="radio"
-          name="group1"
-          onChange={() => {
-            filter.lang = 1;
-            setFilter({ ...filter });
-          }}
-          style={{ marginRight: "20px" }}
-        />
-        <p>
-          <span style={{ color: "#50bcdf" }}>Python 3</span> 제출만 보기
-        </p>
-        <Form.Check
-          type="radio"
-          name="group1"
-          onChange={() => {
-            filter.lang = 0;
+        <CustomSelect
+          onChange={(newValue, actionMeta) => {
+            filter.lang = newValue.value;
             setFilter({ ...filter });
           }}
         />

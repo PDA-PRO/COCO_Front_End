@@ -91,7 +91,6 @@ const GetDetail = ({ resource }) => {
             {
               taskid: detail.id,
               sourcecode: code,
-              callbackurl: "string",
               lang: codeLang.value,
             },
             {

@@ -32,6 +32,7 @@ import axiosInstance from "api/axiosWithPathParameter";
 import { Improve } from "./Improve";
 import { useNavigate } from "react-router-dom";
 import { Notfound } from "components/Notfound";
+import Collapse from "react-bootstrap/Collapse";
 
 export const Result = (code) => {
   const { id } = useParams();
@@ -448,7 +449,11 @@ const ResultBox = ({ resource, info }) => {
         {problemList.subDetail["status"] === 3 ? (
           <></>
         ) : (
-          <Lint props={problemList.lint} />
+          <ScoringDetail
+            num_of_tc={problemList.subDetail["num_of_tc"]}
+            lint={problemList.lint}
+            tc={problemList.tcDetail}
+          />
         )}
       </div>
     </div>
@@ -568,23 +573,81 @@ const WPC = ({ sub_id, task_id }) => {
   }
 };
 
-const Lint = ({ props }) => {
+const ScoringDetail = ({ lint, tc, num_of_tc }) => {
   return (
-    <div className="pylint">
+    <div className="detail">
       <div className="un" style={{ marginBottom: "1em" }}>
         <MdOutlineManageSearch size={30} color="lightgreen" />
         <p>채점결과 세부사항</p>
       </div>
-      {props.map((e) => {
-        return <LintDetail info={e} />;
-      })}
+
+      {/* <p>오류 분석</p>
+      <div className="detail_box">
+        {lint.map((e) => {
+          return <LintDetail info={e} />;
+        })}
+      </div> */}
+
+      <p>테스트 케이스 정보</p>
+      <div className="detail_box">
+        {tc.map((e) => {
+          return <TcDetail tc_info={e} num_of_tc={num_of_tc} />;
+        })}
+      </div>
+    </div>
+  );
+};
+
+const TcDetail = ({ tc_info, num_of_tc }) => {
+  const [open, setOpen] = useState(false);
+
+  switch (tc_info.status) {
+    case 1:
+      tc_info.status = "런타임 오류";
+      tc_info.reason = tc_info.stderr;
+      break;
+    case 2:
+      tc_info.status = "시간 초과";
+      tc_info.reason = "추가 사항 없음";
+      break;
+    case 3:
+      tc_info.status = "메모리 초과";
+      tc_info.reason = "추가 사항 없음";
+      break;
+    case 4:
+      tc_info.status = "TC 틀림";
+      tc_info.reason = tc_info.stdout;
+      break;
+    case 5:
+      tc_info.status = "컴파일 오류";
+      tc_info.reason = tc_info.stderr;
+      break;
+    default:
+      break;
+  }
+  return (
+    <div className="tc_detail_box">
+      <div
+        className="tc_detail"
+        onClick={() => setOpen(!open)}
+        aria-controls="wrong_reason"
+        aria-expanded={open}
+      >
+        <p style={{ width: "100px" }}>{`${num_of_tc} / ${tc_info.tc_num}`}</p>
+        <p>{tc_info.status}</p>
+      </div>
+      <Collapse in={open}>
+        <p id="wrong_reason" onClick={() => setOpen(!open)}>
+          {tc_info.reason}
+        </p>
+      </Collapse>
     </div>
   );
 };
 
 const LintDetail = (info) => {
   return (
-    <div className="detail">
+    <div className="pylint">
       <li>
         Line : <u style={{ color: "red" }}>No. {info.info.line}</u>
       </li>

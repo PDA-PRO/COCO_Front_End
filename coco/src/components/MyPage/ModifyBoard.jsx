@@ -16,6 +16,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import axios from "axios";
+import axiosInstance from "api/axiosWithPathParameter";
 
 export const ModifyBoard = () => {
   const path = decodeURI(window.location.pathname).split("/");

@@ -301,6 +301,7 @@
 .detail .tc_detail_box #wrong_reason {
   border-top: #d3d3d3 solid 2px;
   margin: 1em;
+  white-space: pre-wrap;
 }
 
 .pylint li {

@@ -1,18 +1,18 @@
 version: "3.2"
 services:
   frontend:
-    image: styughjvbn/coco_frontend
-    container_name: coco_frontend
-    build:
+    image: styughjvbn/coco_frontend # 이미지 이름
+    container_name: coco_frontend # 컨테이너 이름
+    build: #빌드에 필요한 docker 파일 경로 및 파일 이름
       context: ./coco/
       dockerfile: Dockerfile
-    ports:
+    ports: #host 80 포트와 컨테이너 내부 80포트 연결
       - "80:80"
     stdin_open: true
-    networks:
+    networks: # 리버스 프록시를 위한 네트워크에 컨테이너 연결
       - coco_proxy
 
-networks:
-  coco_proxy:
+networks: #도커 네트워크 리스트
+  coco_proxy: #리버스 프록시를 위한 네트워크
     name: coco_proxy
     attachable: true

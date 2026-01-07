@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = `${window.location.origin}/api`;
 
 export const API = {
   BASE_URL: BASE_URL,
